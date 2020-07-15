@@ -42,7 +42,7 @@ The introduction should provide an overview of the work you set out to do and pr
 
 *firstly, we used agglomerative hierarchical clustering to identify contaminated upgradient wells in our 'illinois' dataset (thoughts, maybe we want to expand/use a bigger dataset) using Ward's Method
 
-*then, we separated our data into two parts -- one dataset containing these contamianted upgradient wells and another dataset containing UNcontaminated upgradient wells
+*then, we separated our data into two parts -- one dataset containing these contaminated upgradient wells and another dataset containing UNcontaminated upgradient wells
 
 *then, we randomly sampled (with replacement) (500) times from the measurements of the chemical from non-contaminated upgradient wells to create an empirical distribution of naturally occurring chemical levels. this serves as the set of imputed "corrected" measurements of the chemical for each contaminated upgradient well
 
@@ -53,6 +53,14 @@ The introduction should provide an overview of the work you set out to do and pr
 *we can then take the median of these (500) values as the estimate of the contamination caused by the disposal area (for the given chemical) and then use the 2.5 percentile and 97.5 percentile of the distribution as a bootstrap-type confidence interval.
 
 *we found that the first disposal area didn't have any obvious contamination b/c the difference that we calculated (upgrad - downgradient) was mostly 0, while for the second disposal area the different was much greater than 0
+
+---
+
+*everything below is just ideas on where to go from here
+
+*something that needs to be mentioned is that the chemical concentration values for some of the wells are strange in that the instruments that were used to measure concentrations had a certain threshold value that they were able to detect. for example, the tool they used can only detect antimony at concentrations above 0.0010000 and if the actual concentration were lower, it reports it as 0.0010000. this leads to a LOT of data points which have these meaningless threshold values as measurements, which may have drastically affected our analysis...
+
+*this could potentially be something interesting to explore, and try to find a way that missing data imputation techniques work and explore how it might be relevant to this dataset?
 
 ## Resources for new(er) users {#resources}
 
