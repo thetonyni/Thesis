@@ -4,6 +4,7 @@ output:
   html_document: default
 ---
 # Introduction {#intro}
+
 <!--
 Each chapter file must start with a chapter header (e.g., # Chapter name). Notice we have also included a label after the chapter name ({# intro}) so we can refer back to this chapter later in the text if want to (e.g., by using \@ref(intro)). This also helps you debut potential issues as you knit.
 
@@ -29,6 +30,8 @@ The introduction should provide an overview of the work you set out to do and pr
 *HOWEVER this might be overstated? we wanted to investigate whether or not if this was true.
 
 *wells are split into 2 different types - upgradient and downgradient
+
+<!-- insert picture here -->
 
 *upgradient wells (background wells) measures groundwater chemical levels BEFORE passing through a coal ash dump while downgradient wells monitor the groundwater AFTER it passes through an ash dump
 
