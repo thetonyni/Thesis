@@ -26,7 +26,7 @@ acknowledgments: |
     paste(readLines("00b-acknowledgments.Rmd"), 
     collapse = '\n  ')`
 # Update the .bib filename below as needed
-bibliography: bib/thesis.bib
+bibliography: bib/library.bib #change
 csl: csl/apa.csl
 # Uncomment the following to include any additional LaTeX packages
 # header-includes:
