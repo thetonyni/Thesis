@@ -168,6 +168,12 @@ Use this space to thank those who have helped you in the thesis process (profess
 
 % Fix from pandoc about cslreferences?
 % https://github.com/mpark/wg21/issues/54
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{cslreferences}%
+  {\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces}%
+  {\par}
 
 % Added by CII
 %%% Copied from knitr
@@ -236,20 +242,28 @@ The introduction should provide an overview of the work you set out to do and pr
 \section{Draft of Introduction}\label{draft-of-introduction}}
 \begin{itemize}
 \item
-  (coal ash report - car) coal one of the most dangerous combustible fossil fuels is comprised of a long list of dangerous chemicals -- including substances such as arsenic, radium, other carcinogens, metals that can impair developing children's brains, toxins dangerous to aquatic life, etc.
+  (coal ash report - car) coal one of the most dangerous combustible fossil fuels is comprised of a long list of dangerous chemicals -- including substances such as arsenic, radium, other carcinogens, metals that can impair developing children's brains, toxins dangerous to aquatic life, etc\footnote{Kelderman et al. (2019)}
 \item
-  power plants produce 100mil tons of coal ash every year, which is dumped into landfills and waste ponds
+  power plants produce 100mil tons of coal ash every year, which is dumped into landfills and waste ponds\footnote{Kelderman et al. (2019)}
 \item
-  only recently (2015) have complaints and lawsuit arisen in which certain ecological organizations have attempted to sue the EPA to regulate disposal of coal ash
+  only recently (2015) have complaints and lawsuit arisen in which certain ecological organizations have attempted to sue the EPA to regulate disposal of coal ash\footnote{Kelderman et al. (2019)}
 \item
-  this coal ash rule has forced power companies to make publicly available data regarding chemical concentrations in 265 coal plants containing ponds and landfills (about 3/4 of all coal power plants across the US)
+  this coal ash rule has forced power companies to make publicly available data regarding chemical concentrations in 265 coal plants containing ponds and landfills (about 3/4 of all coal power plants across the US)\footnote{Kelderman et al. (2019)}
 \item
-  environmental agencies have concluded that the groundwater under basically all coal plants are contaminated
+  environmental agencies have concluded that the groundwater under basically all coal plants are contaminated\footnote{Kelderman et al. (2019)}
 \item
   HOWEVER this might be overstated? we wanted to investigate whether or not if this was true.
 \item
   wells are split into 2 different types - upgradient and downgradient
 \end{itemize}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figures/upgradientdowngradient} 
+
+}
+
+\caption{Difference Between Upgradient and Downgradient Wells}\label{fig:upgradientdowngradient}
+\end{figure}
 \begin{itemize}
 \item
   upgradient wells (background wells) measures groundwater chemical levels BEFORE passing through a coal ash dump while downgradient wells monitor the groundwater AFTER it passes through an ash dump
@@ -331,6 +345,11 @@ Corrections may be made to the body of the thesis, but every such correction wil
 \setlength{\leftskip}{0.20in}
 \setlength{\parskip}{8pt}
 
+\hypertarget{refs}{}
+\begin{cslreferences}
+\leavevmode\hypertarget{ref-Kelderman2019}{}%
+Kelderman, K., Kunstman, B., Roy, H., Sivakumar, N., Mccormick, S., \& Bernhardt, C. (2019). Coal's Poisonous Legacy: Groundwater Contaminated by Coal Ash Across the U.S.
+\end{cslreferences}
 % Index?
 
 \end{document}

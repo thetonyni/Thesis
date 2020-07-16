@@ -17,21 +17,25 @@ The introduction should provide an overview of the work you set out to do and pr
 
 ## Draft of Introduction
 
-* (coal ash report - car) coal one of the most dangerous combustible fossil fuels is comprised of a long list of dangerous chemicals -- including substances such as arsenic, radium, other carcinogens, metals that can impair developing children's brains, toxins dangerous to aquatic life, etc.
+* (coal ash report - car) coal one of the most dangerous combustible fossil fuels is comprised of a long list of dangerous chemicals -- including substances such as arsenic, radium, other carcinogens, metals that can impair developing children's brains, toxins dangerous to aquatic life, etc ^[@Kelderman2019]
 
-* power plants produce 100mil tons of coal ash every year, which is dumped into landfills and waste ponds
+* power plants produce 100mil tons of coal ash every year, which is dumped into landfills and waste ponds ^[@Kelderman2019]
 
-* only recently (2015) have complaints and lawsuit arisen in which certain ecological organizations have attempted to sue the EPA to regulate disposal of coal ash
+* only recently (2015) have complaints and lawsuit arisen in which certain ecological organizations have attempted to sue the EPA to regulate disposal of coal ash ^[@Kelderman2019]
 
-* this coal ash rule has forced power companies to make publicly available data regarding chemical concentrations in 265 coal plants containing ponds and landfills (about 3/4 of all coal power plants across the US)
+* this coal ash rule has forced power companies to make publicly available data regarding chemical concentrations in 265 coal plants containing ponds and landfills (about 3/4 of all coal power plants across the US) ^[@Kelderman2019]
 
-* environmental agencies have concluded that the groundwater under basically all coal plants are contaminated
+* environmental agencies have concluded that the groundwater under basically all coal plants are contaminated ^[@Kelderman2019]
 
 * HOWEVER this might be overstated? we wanted to investigate whether or not if this was true.
 
 * wells are split into 2 different types - upgradient and downgradient
 
 <!-- insert picture here -->
+
+```{r, echo = FALSE, upgradientdowngradient, fig.cap="Difference Between Upgradient and Downgradient Wells", out.width = '100%'}
+include_graphics(path = "figures/upgradientdowngradient.jpg")
+```
 
 * upgradient wells (background wells) measures groundwater chemical levels BEFORE passing through a coal ash dump while downgradient wells monitor the groundwater AFTER it passes through an ash dump
 
