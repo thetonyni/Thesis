@@ -1,0 +1,36 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Methodology {#methodology}
+
+<!--
+Each chapter file must start with a chapter header (e.g., # Chapter name). Notice we have also included a label after the chapter name ({# intro}) so we can refer back to this chapter later in the text if want to (e.g., by using \@ref(intro)). This also helps you debut potential issues as you knit.
+
+You can knit chapters all at once using the index file, or individually. When you knit a single chapter, every other chapter will have a one-sentence placeholder to make knitting easier.
+
+You can re-name each chapter file (e.g., change this filename from "01-chap1.Rmd" to "01-introduction.Rmd"), just make sure you also update the filename in the list of rmd files in _bookdown.yml.
+-->
+
+The introduction should provide an overview of the work you set out to do and provide structure for the remainder of the document.
+
+## Plan of Action
+
+* we wanted to identify these contaminated upgradient wells and then "correct" these measurements
+
+* firstly, we used agglomerative hierarchical clustering to identify contaminated upgradient wells in our 'illinois' dataset (thoughts, maybe we want to expand/use a bigger dataset) using Ward's Method
+
+* then, we separated our data into two parts -- one dataset containing these contaminated upgradient wells and another dataset containing UNcontaminated upgradient wells
+ 
+* then, we randomly sampled (with replacement) (500) times from the measurements of the chemical from non-contaminated upgradient wells to create an empirical distribution of naturally occurring chemical levels. this serves as the set of imputed "corrected" measurements of the chemical for each contaminated upgradient well
+
+* then, we identify the specific 'disposal_area' that the contaminated wells belong to and FILTERED to have a dataset contain only the downgradient wells that corresponded to the upgradient wells -- calculating the average of the downgradient wells (for the illinois dataset, we only had contaminated upgradient wells from TWO disposal areas)
+
+* finally, we subtracted each of the (500) imputed upgradient measurements from the average downgradient measure. This creates a distribution of (500) values of the contaminant concentrations caused by the disposal area. 
+
+* we can then take the median of these (500) values as the estimate of the contamination caused by the disposal area (for the given chemical) and then use the 2.5 percentile and 97.5 percentile of the distribution as a bootstrap-type confidence interval.
+
+* we found that the first disposal area didn't have any obvious contamination b/c the difference that we calculated (upgrad - downgradient) was mostly 0, while for the second disposal area the different was much greater than 0
+
+
