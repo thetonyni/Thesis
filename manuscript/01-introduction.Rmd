@@ -44,3 +44,21 @@ include_graphics(path = "figures/upgradientdowngradient.jpg")
 * typically, we would estimate the amount of chemical contamination, for this example -- arsenic -- caused by a coal ash dump with the equation: downgradient arsenic concentration minus upgradient arsenic concentration
 
 * however, because there may be retired/unregulated upgradient wells that are occasionally contaminated already, this might be inaccurate
+
+## Data
+<!-- 
+WHERE THE DATA CAME FROM
+whichever website (talk about environmental integrity project) and what they did to get this data (use xlsx for this)
+this data was publcicaly available, but EIP collated it someway to make it public
+the data is NOT just a single of coalset, give examples of contaminants that it’s taking measurements on
+many sites within sites
+-->
+
+## Statistical Approaches
+<!-- brief 2/3 sentences of work that has already been done -->
+
+* we have already conducted a preliminary investigation using a variety of machine learning techniques to aid us in identifying potential contaminated upgradient wells
+
+* we have also utilized bootstrapping and imputation techniques to correct for their measurements through by accounting for the innate contamination which may be caused by factors such as retired and unregulated wells
+
+* our methodologies have yet to account for another problem however, involving limit of detection problem which arises from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount
