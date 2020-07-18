@@ -54,6 +54,16 @@ the data is NOT just a single of coalset, give examples of contaminants that itâ
 many sites within sites
 -->
 
+* EXPLAIN COAL ASH RULE HERE AND HOW THE EIP (Environmental Integrity Project) HAS HELPED MAKE THIS RULE
+
+* the data used in the study is compiled and wrangled by the Environmental Integrity Project
+
+* they obtained the data from an online, publicaly available database containing groundwater monitoring results from the first "Annual Groundwater Monitoring and Corrective Action Reports" collected from coal plants and coal ash dumps which are regulated under the federal "Coal Ash Rule"
+
+* WE MAY WANT TO CITE THIS WEBSITE https://environmentalintegrity.org/coal-ash-groundwater-contamination/ (this also contains good background knowledge to write the first bullet point above)
+
+* TALK ABOUT VARIABLES AND WELLS/SITES HERE AND WHAT THEY MEAN
+
 ## Statistical Approaches
 <!-- brief 2/3 sentences of work that has already been done -->
 
