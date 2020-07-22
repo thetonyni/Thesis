@@ -242,19 +242,17 @@ The introduction should provide an overview of the work you set out to do and pr
 \section{Background}\label{background}}
 \begin{itemize}
 \item
-  (coal ash report - car) coal one of the most dangerous combustible fossil fuels is comprised of a long list of dangerous chemicals -- including substances such as arsenic, radium, other carcinogens, metals that can impair developing children's brains, toxins dangerous to aquatic life, etc (``Coal Ash Groundwater Contamindation: Documenting Coal Ash Pollution,'' n.d.)
+  (coal ash report - car) coal one of the most dangerous combustible fossil fuels is comprised of a long list of dangerous chemicals -- including substances such as arsenic, radium, other carcinogens, metals that can impair developing children's brains, toxins dangerous to aquatic life, etc (Kelderman et al., 2019)
 \item
-  power plants produce 100mil tons of coal ash every year, which is dumped into landfills and waste ponds
+  power plants produce 100mil tons of coal ash every year, which is dumped into landfills and waste ponds (Kelderman et al., 2019)
 \item
-  only recently (2015) have complaints and lawsuit arisen in which certain ecological organizations have attempted to sue the EPA to regulate disposal of coal ash
+  only recently (2015) have complaints and lawsuit arisen in which certain ecological organizations have attempted to sue the EPA to regulate disposal of coal ash (Kelderman et al., 2019)
 \item
-  this coal ash rule has forced power companies to make publicly available data regarding chemical concentrations in 265 coal plants containing ponds and landfills (about 3/4 of all coal power plants across the US)
+  this coal ash rule has forced power companies to make publicly available data regarding chemical concentrations in 265 coal plants containing ponds and landfills (about 3/4 of all coal power plants across the US) (Kelderman et al., 2019)
 \item
-  environmental agencies have concluded that the groundwater under basically all coal plants are contaminated
+  environmental agencies have concluded that the groundwater under basically all coal plants are contaminated (Kelderman et al., 2019)
 \item
   HOWEVER this might be overstated? we wanted to investigate whether or not if this was true.
-\item
-  wells are split into 2 different types - upgradient and downgradient
 \end{itemize}
 \begin{figure}
 
@@ -274,30 +272,40 @@ The introduction should provide an overview of the work you set out to do and pr
 \item
   however, because there may be retired/unregulated upgradient wells that are occasionally contaminated already, this might be inaccurate
 \end{itemize}
+\begin{itemize}
+\item
+  END GOAL IS TO CORRECT THE CONTAMINATED VALUES
+\item
+  we have already conducted a preliminary investigation using a variety of machine learning techniques to aid us in identifying potential contaminated upgradient wells
+\item
+  we have also utilized bootstrapping and imputation techniques to correct for their measurements through by accounting for the innate contamination which may be caused by factors such as retired and unregulated wells
+\item
+  our methodologies have yet to account for another problem however, involving limit of detection problem which arises from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount
+\end{itemize}
 \hypertarget{data}{%
 \section{Data}\label{data}}
 
-\hypertarget{coal-ash-rule}{%
-\subsection{Coal Ash Rule}\label{coal-ash-rule}}
+\hypertarget{coalashrule}{%
+\subsection{Coal Ash Rule}\label{coalashrule}}
 \begin{itemize}
 \item
-  A large coal ash spill at the Tennessee Valley Authority (TVA) which occured on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US (``Disposal of Coal Combustion Residuals from Electric Utilities Rulemakings,'' n.d.)
+  A large coal ash spill at the Tennessee Valley Authority (TVA) which occured on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US (Environmental Protection Agency, 2020)
 \item
-  This was known as the Coal Ash Rule, passed on December 19, 2014
+  This was known as the Coal Ash Rule, passed on December 19, 2014 (Environmental Protection Agency, 2020)
 \item
-  Changes were made to the Coal Ash Rule over the years in the form of `amendments,' one of which made required facility information and data to be made publicaly available to the public (April 15, 2015 rule change)
+  Changes were made to the Coal Ash Rule over the years in the form of `amendments,' one of which made required facility information and data to be made publicaly available to the public (April 15, 2015 rule change) (Environmental Protection Agency, 2020)
 \end{itemize}
 \hypertarget{source-of-data}{%
 \subsection{Source of Data}\label{source-of-data}}
 \begin{itemize}
 \item
-  the data used in the study are from the results published in ``Annual Groundwater Monitorying and Corrective Action Reports'' which were made available to the public in March 2018 (``Coal Ash Groundwater Contamindation: Documenting Coal Ash Pollution,'' n.d.)
+  the data used in the study are from the results published in ``Annual Groundwater Monitoring and Corrective Action Reports'' which were made available to the public in March 2018 (Environmental Integrity Project, 2020)
 \item
-  these reports are in PDF format and are thousands of pages long, which makes it difficult for individuals to look through the data in a meaningful way
+  these reports are in PDF format and are thousands of pages long, which makes it difficult for individuals to look through the data in a meaningful way (Environmental Integrity Project, 2020)
 \item
-  the EIP wranged the data into a more accessible machine-readable format which contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants
+  the EIP wranged the data into a more accessible machine-readable format which contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants (Environmental Integrity Project, 2020)
 \item
-  they obtained the data from an online, publicly available database containing groundwater monitoring results from the first ``Annual Groundwater Monitoring and Corrective Action Reports'' in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule
+  they obtained the data from an online, publicly available database containing groundwater monitoring results from the first ``Annual Groundwater Monitoring and Corrective Action Reports'' in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule (Environmental Integrity Project, 2020)
 \end{itemize}
 \hypertarget{variables}{%
 \subsection{Variables}\label{variables}}
@@ -309,25 +317,19 @@ The introduction should provide an overview of the work you set out to do and pr
 \item
   each observation represents a well
 \item
+  wells are split into 2 different types - upgradient and downgradient wells
+\item
   variables consist of information regard chemical contaminant concentrations and specifics regarding the well
 \item
-  major problem is that some wells only have measurements for certain chemicals and don't have them for others
-\end{itemize}
-\hypertarget{statistical-approaches}{%
-\section{Statistical Approaches}\label{statistical-approaches}}
-\begin{itemize}
+  from the 19 different contaminants (antimony, arsenic, boron, etc. \ldots) a major problem is that some wells only have measurements for certain chemicals and don't have them for others
 \item
-  we have already conducted a preliminary investigation using a variety of machine learning techniques to aid us in identifying potential contaminated upgradient wells
-\item
-  we have also utilized bootstrapping and imputation techniques to correct for their measurements through by accounting for the innate contamination which may be caused by factors such as retired and unregulated wells
-\item
-  our methodologies have yet to account for another problem however, involving limit of detection problem which arises from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount
+  we are currently using information from plants within illinois but there is data for all the states in the US
 \end{itemize}
 \hypertarget{methodology}{%
 \chapter{Methodology}\label{methodology}}
 
-\hypertarget{plan-of-action}{%
-\section{Plan of Action}\label{plan-of-action}}
+\hypertarget{planofaction}{%
+\section{Plan of Action}\label{planofaction}}
 \begin{itemize}
 \item
   we wanted to identify these contaminated upgradient wells and then ``correct'' these measurements
@@ -345,6 +347,30 @@ The introduction should provide an overview of the work you set out to do and pr
   we can then take the median of these (500) values as the estimate of the contamination caused by the disposal area (for the given chemical) and then use the 2.5 percentile and 97.5 percentile of the distribution as a bootstrap-type confidence interval.
 \item
   we found that the first disposal area didn't have any obvious contamination b/c the difference that we calculated (upgrad - downgradient) was mostly 0, while for the second disposal area the different was much greater than 0
+\end{itemize}
+\hypertarget{clustering}{%
+\section{Clustering}\label{clustering}}
+\begin{itemize}
+\item
+  unsupervised ml task whose goal is to divide the data in to clusters without knowing what the groups will look like beforehand (Lantz, 2013)
+\item
+  used mainly for knowledge discovery rather than prediction (Lantz, 2013)
+\item
+  many different ways to go about conducting a clustering based investigation, k-means clustering is the method used to try to find relationships between the wells
+\item
+  our reasons to using this is to see whether if we can identify contaminated wells from uncontaminated wells (we don't anticipate it working due to the messed-up data, but MAYBE we would want to do some sort of study where we 1. run clustering with the messed up data and compare it to 2. run clustering with the corrected data (whatever that might be))
+\end{itemize}
+\hypertarget{kmeans}{%
+\subsection{K-Means Clustering}\label{kmeans}}
+\begin{itemize}
+\item
+  very popular and widely used clustering algorithm even since its inception decades ago (Lantz, 2013)
+\item
+  STRENGTHS: uses simple ideas to identify clsuters that can be explained in non-statistical terms, is flexible and has lots of parameters which can be adjusted to address its issues, and it is efficient (Lantz, 2013)
+\item
+  WEAKNESSES: not as sophisticated than some recent clustering techniques which have arisen recently, since it uses randomness within it, the clusters which it finds is not guaranteed to be optimal, requires a guess as to how many clusters may naturally exist in the data in order for the algorithm to run (Lantz, 2013)
+\item
+  HOW IT WORKS: (add in later, if relevant?)
 \end{itemize}
 \hypertarget{corrections}{%
 \chapter*{Corrections}\label{corrections}}
@@ -369,13 +395,16 @@ Corrections may be made to the body of the thesis, but every such correction wil
 \hypertarget{refs}{}
 \begin{cslreferences}
 \leavevmode\hypertarget{ref-EIP2020}{}%
-Coal Ash Groundwater Contamindation: Documenting Coal Ash Pollution. (n.d.). Retrieved from \url{https://environmentalintegrity.org/coal-ash-groundwater-contamination/}
+Environmental Integrity Project. (2020). Coal Ash Groundwater Contamination: Documenting Coal Ash Pollution. Retrieved from \url{https://environmentalintegrity.org/coal-ash-groundwater-contamination/}
 
 \leavevmode\hypertarget{ref-Car2020}{}%
-Disposal of Coal Combustion Residuals from Electric Utilities Rulemakings. (n.d.). Retrieved from \url{https://www.epa.gov/coalash/coal-ash-rule}
+Environmental Protection Agency. (2020). Disposal of Coal Combustion Residuals from Electric Utilities Rulemakings. Retrieved from \url{https://www.epa.gov/coalash/coal-ash-rule}
 
 \leavevmode\hypertarget{ref-Kelderman2019}{}%
 Kelderman, K., Kunstman, B., Roy, H., Sivakumar, N., Mccormick, S., \& Bernhardt, C. (2019). Coal's Poisonous Legacy: Groundwater Contaminated by Coal Ash Across the U.S.
+
+\leavevmode\hypertarget{ref-Lantz2013}{}%
+Lantz, B. (2013). \emph{Machine Learning with R}. Birmingham: Packt Publishing.
 \end{cslreferences}
 % Index?
 

@@ -15,7 +15,7 @@ You can re-name each chapter file (e.g., change this filename from "01-chap1.Rmd
 
 The introduction should provide an overview of the work you set out to do and provide structure for the remainder of the document.
 
-## Background
+## Background {#background}
 
 * (coal ash report - car) coal one of the most dangerous combustible fossil fuels is comprised of a long list of dangerous chemicals -- including substances such as arsenic, radium, other carcinogens, metals that can impair developing children's brains, toxins dangerous to aquatic life, etc [@Kelderman2019]
 
@@ -53,7 +53,7 @@ include_graphics(path = "figures/upgradientdowngradient.jpg")
 
 * our methodologies have yet to account for another problem however, involving limit of detection problem which arises from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount
 
-## Data
+## Data {#data}
 <!-- 
 WHERE THE DATA CAME FROM
 whichever website (talk about environmental integrity project) and what they did to get this data (use xlsx for this)
@@ -62,7 +62,7 @@ the data is NOT just a single of coalset, give examples of contaminants that itâ
 many sites within sites
 -->
 
-### Coal Ash Rule
+### Coal Ash Rule {#coalashrule}
 
 <!-- EXPLAIN COAL ASH RULE HERE AND HOW THE EIP (Environmental Integrity Project) HAS HELPED MAKE THIS RULE -->
 
@@ -82,7 +82,7 @@ many sites within sites
 
 * they obtained the data from an online, publicly available database containing groundwater monitoring results from the first "Annual Groundwater Monitoring and Corrective Action Reports" in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule [@EIP2020]
 
-### Variables
+### Variables {#variables}
 <!-- TALK ABOUT VARIABLES AND WELLS/SITES HERE AND WHAT THEY MEAN -->
 
 * a coal ash site consists of multiple disposal areas
@@ -95,9 +95,7 @@ many sites within sites
 
 * variables consist of information regard chemical contaminant concentrations and specifics regarding the well
 
-* major problem is that some wells only have measurements for certain chemicals and don't have them for others
-
-* for example -- (name some chemicals) blah blah blah total of 21 total chemicals
+* from the 19 different contaminants (antimony, arsenic, boron, etc. ...) a major problem is that some wells only have measurements for certain chemicals and don't have them for others
 
 * we are currently using information from plants within illinois but there is data for all the states in the US
 
