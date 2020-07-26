@@ -61,4 +61,5 @@ getOverThreshold <- function(df){
 ```{r}
 #using the function on data
 overthreshold_df <- getOverThreshold(df) #df with all observations over threshold value
+glimpse(overthreshold_df)
 ```
