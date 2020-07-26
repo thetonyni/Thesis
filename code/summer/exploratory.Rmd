@@ -1,0 +1,303 @@
+---
+title: "Exploratory Analysis"
+author: "Tony Ni, Antonella Basso, Jose Lopez"
+date: "6/11/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+```{r, include = FALSE}
+library(mdsr)
+library(tidyverse)
+library(ggplot2)
+```
+
+## Reading in Data
+
+```{r}
+setwd("~/harvard-summer-biostats")
+illinois <- read_csv("data/illinois.csv") #read in data
+```
+
+## Checking unique/distinct levels
+
+```{r}
+#check how many observations there
+nrow(illinois)
+
+#checking distincts sites
+unique(illinois$site)
+
+#checking distinct gradient
+unique(illinois$gradient)
+
+#checking distinct gradient
+unique(illinois$measurement.unit)
+
+#checking disposal area
+unique(illinois$disposal.area)
+
+#checking type (L = land fuel, SI = surface impoundement, M = mixed/multiunit)
+#there will be multiple different dumpsites at a powerplant site. some sites are wet (ponds of water where they throw ash of water), some sits are dry landfill (heaps of coal ash), the type is just a 
+unique(illinois$type)
+
+illinois %>%
+  group_by(type) %>%
+  summarize(n())
+
+illinois %>%
+  group_by(measurement.unit) %>%
+  summarize(n())
+
+#checking wells
+illinois %>%
+  group_by(well.id) %>%
+  summarize(n())
+```
+
+Tony: Molybdenum to Thallium
+
+use illinois and newyork
+
+lower detection limit (if a chemical is really low, it can't differentiate beyond a certain low level, it might be the values with all teh same values)
+
+all of the contaminants are harmful, some chemicals are more useful for detecting coal contamination (most important/indicative of coal contamination is boron (occurs at really high levels in coal)),
+
+looking at the report given to us might be good about the different chemicals in coal (if we are curious)
+
+total dissolved solids are probably not important, imprevise measurement of how much "crap is in the water" - doesnt represent any toxic chemicals
+
+## Wrangling
+
+```{r, warning = FALSE}
+illinois1 <- illinois %>%
+  select(site, disposal.area, type, well.id, gradient, contaminant, 
+         measurement.unit, concentration) %>%
+  mutate(well.id_contaminant = paste0(well.id, "_", contaminant)) %>% #for future use
+  rename(c("disposal_area" = "disposal.area", "well_id" = "well.id",
+           "unit" = "measurement.unit"))
+
+#fixing 'contaminant' string by removing everything after the comma
+illinois1$contaminant=gsub(", total", "", illinois1$contaminant)
+
+#testing
+avg_contaminant <- illinois1 %>%
+  group_by(well_id, contaminant) %>% 
+  summarise_each(funs(mean)) %>%
+  select(1,2,8) #selecting only numeric columns
+
+#temporarily uniting columns for joining in next step
+temp <- avg_contaminant %>%
+  unite("well.id_contaminant", well_id, contaminant)
+
+#joining orig dataframe and avg_contaminant dataframe
+combined <- left_join(temp, illinois1, by = "well.id_contaminant") %>%
+  distinct(well.id_contaminant, .keep_all = TRUE) %>%
+  separate(well.id_contaminant, c('well_id', 'contaminant'), sep="_") %>%
+  select(1:8)
+
+#spreading to wide data frame format to add missing info
+combined2 <- combined %>% #collapse empty rows
+  spread(contaminant, concentration.x) %>%
+  group_by(well_id) %>%
+  summarise_each(funs(first(.[!is.na(.)]))) %>%
+  select(-c(unit))
+
+#gathering back to long data frame format
+combined3 <- combined2 %>%
+  gather("contaminant", "concentration", 6:26)
+```
+
+## Summary Statistics
+
+```{r}
+illinois %>%
+  group_by(contaminant) %>%
+  summarize(mean_concentration = mean(concentration))
+```
+
+## Visualizations
+
+```{r}
+#looking at one specific well and the contaminant concentrations within it
+
+ggplot(data = combined3 %>%
+         filter(well_id == "03R"), aes(x = contaminant, y = concentration,
+                                       fill = contaminant)) + 
+  geom_bar(stat = "identity", show.legend = FALSE) + 
+  xlab("Contaminant") +
+  ylab("Concentration") +
+  ggtitle("Concentration of Contaminants in Well 03R") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+#looking at one contaminant for all wells (counts)
+
+ggplot(data = combined3 %>%
+         filter(contaminant == "Antimony"), 
+       aes(x = well_id, y = concentration, fill = well_id)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  xlab("Well ID") +
+  ylab("Concentration") +
+  ggtitle("Concentration of Antimony across Wells") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+The histogram is incompehensible, there are way too many wells in Illinois. 
+Unsure, but having to make all these plots constantly seems unreasonable for all of these potential wells and contaminants to look through, maybe choose only those wells with concentration values greater than some certain value? (0.001 maybe?)
+
+```{r}
+ggplot(data = combined3 %>%
+         filter(contaminant == "Antimony"),
+       aes(x = well_id, y = concentration, fill = well_id)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  xlab("Well ID") +
+  ylab("Concentration") +
+  ggtitle("Concentration of Antimony across Wells") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+levels(as.factor(combined3$well_id))
+```
+
+#Comparing Upgradient Wells
+
+```{r}
+#get the first 10 highest avg mg/l (not ph or total sulfate)
+#not pH, total dissolve solids, or radium b/c different units
+
+dont_use <- c("pH", "Radium 226+228", "Total Dissolved Solids")
+
+#pull out the names (from top 10 high to low avg concentrations) of contaminants
+chemicals <- combined3 %>%
+	filter(contaminant != "pH") %>% #take our nonuseful contaminants
+  filter(contaminant != "Radium 226+228") %>%
+  filter(contaminant != "Total Dissolved Solids") %>%
+	group_by(contaminant) %>% 
+	summarise(avg_conc = mean(concentration, na.rm = TRUE)) %>%
+	arrange(desc(avg_conc)) %>%
+  slice(1:10) %>% #there only seem to be 5 chemicals of nonzero(basically) values
+	pull(contaminant)
+
+chemicals
+
+combined3 %>%
+	group_by(contaminant) %>% 
+	summarise(avg_conc = mean(concentration))
+
+```
+
+Is doing the mean of concentrations amongst all wells OK to do? Some wells like arsenic have wells with 0.001 (sign that measurement was insignificant/below threshold), and taking the avg sometimes makes it return NA as the mean (I THINK??? what does NA mean...?) ASK LULI (i think some of the chemicals in the paper had thresholds of DANGER that were in mg and others in microg, how would we account for this...?)
+
+>
+
+https://postimg.cc/ZCc072JM
+
+```{r}
+#plot in a faceted grid bar plots of concentration vs. contaminant for all wells
+ggplot(data = combined3 %>%
+        filter(gradient == "Upgradient") %>%
+        filter(contaminant %in% chemicals), 
+      aes(x = contaminant, y = concentration)) + 
+      geom_bar(stat = "Identity") +
+      facet_wrap(well_id ~ .) +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+The concentration of calcium is so high in some of the wells, it makes it difficult to look at the other contaminants' concentration across all wells, perhaps we should make different facetted plots for all contaminants.
+
+```{r}
+#Boron
+ggplot(data = combined3 %>%
+        filter(gradient == "Upgradient") %>%
+        filter(contaminant %in% chemicals) %>%
+        filter(contaminant == "Boron"), 
+      aes(x = contaminant, y = concentration)) + 
+      geom_bar(stat = "Identity") +
+      facet_wrap(well_id ~ .) +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+Let's make a histogram to show distribution of certain contaminants:
+
+```{r}
+#Molybdenum
+ggplot(data = combined3 %>%
+        filter(gradient == "Upgradient") %>%
+        filter(contaminant == "Molybdenum"), 
+      aes(x = concentration)) + 
+      geom_histogram() +
+      geom_vline(xintercept = 40/1000) + #threshold value
+  xlab("Concentration (mg/L)") +
+  ylab("Count") +
+  ggtitle("Distribution of Molybdenum amongst all Upgradient Wells") +
+  theme_bw()
+
+#pH
+ggplot(data = combined3 %>%
+        filter(gradient == "Upgradient") %>%
+        filter(contaminant == "pH"), 
+      aes(x = concentration)) + 
+      geom_histogram() +
+  xlab("units") +
+  ylab("Count") +
+  ggtitle("Distribution of pH amongst all Upgradient Wells") +
+  theme_bw()
+
+#Radium 226+228
+ggplot(data = combined3 %>%
+        filter(gradient == "Upgradient") %>%
+        filter(contaminant == "Radium 226+228"), 
+      aes(x = concentration)) + 
+      geom_histogram() +
+      geom_vline(xintercept = 5) + #threshold value
+  xlab("Concentration (pCi/L)") +
+  ylab("Count") +
+  ggtitle("Distribution of Radium 226+228 amongst all Upgradient Wells") +
+  theme_bw()
+
+#Selenium
+ggplot(data = combined3 %>%
+        filter(gradient == "Upgradient") %>%
+        filter(contaminant == "Selenium"), 
+      aes(x = concentration)) + 
+      geom_histogram() +
+      geom_vline(xintercept = 50/1000) + #threshold value
+  xlab("Concentration (mg/L)") +
+  ylab("Count") +
+  ggtitle("Distribution of Selenium amongst all Upgradient Wells") +
+  theme_bw()
+
+#Sulfate
+ggplot(data = combined3 %>%
+        filter(gradient == "Upgradient") %>%
+        filter(contaminant == "Sulfate"), 
+      aes(x = concentration)) + 
+      geom_histogram() +
+      geom_vline(xintercept = 500) + #threshold value
+  xlab("Concentration (mg/L)") +
+  ylab("Count") +
+  ggtitle("Distribution of Sulfate amongst all Upgradient Wells") +
+  theme_bw()
+
+#Thallium
+ggplot(data = combined3 %>%
+        filter(gradient == "Upgradient") %>%
+        filter(contaminant == "Thallium"), 
+      aes(x = concentration)) + 
+      geom_histogram() +
+      geom_vline(xintercept = 2/1000) + #threshold value
+  xlab("Concentration (mg/L)") +
+  ylab("Count") +
+  ggtitle("Distribution of Thallium amongst all Upgradient Wells") +
+  theme_bw()
+```
+
+```{r, eval = FALSE}
+#exporting data
+write.csv(combined3,"data/long_illinois.csv", row.names = FALSE)
+write.csv(combined2,"data/wide_illinois.csv", row.names = FALSE)
+```
+

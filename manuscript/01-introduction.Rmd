@@ -32,7 +32,7 @@ The introduction should provide an overview of the work you set out to do and pr
 <!-- insert picture here -->
 
 ```{r, echo = FALSE, upgradientdowngradient, fig.cap="Difference Between Upgradient and Downgradient Wells", out.width = '100%'}
-include_graphics(path = "figures/upgradientdowngradient.jpg")
+knitr::include_graphics(path = "figures/upgradientdowngradient.jpg")
 ```
 
 * upgradient wells (background wells) measures groundwater chemical levels BEFORE passing through a coal ash dump while downgradient wells monitor the groundwater AFTER it passes through an ash dump
