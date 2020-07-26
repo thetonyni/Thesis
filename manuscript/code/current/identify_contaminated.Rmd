@@ -36,13 +36,18 @@ threshold <- c(6/1000, 10/1000, 2, 4/1000, 3, 5/1000, NA, NA, 100/1000,
                6/1000, NA, 15/1000, 40/1000, 2/1000, 40/1000, NA, 5, 
                50/1000, 500, 2/1000, NA)
 
+#combining names and values into a df
 contam_t <- cbind(contaminant, threshold) %>%
   na.omit()
 ```
 
 ```{r}
 #creating function to obtain all observations with values above threshold
-#for upgradient wells
+#for upgradient  (kind of janky)
+
+#it would be REALLY useful it the function could detect if values
+#were repeated a lot (so that we can exclude the values where
+#the repeated values/limited by device observations are excluded)
 
 getOverThreshold <- function(df){
   datalist = list()
