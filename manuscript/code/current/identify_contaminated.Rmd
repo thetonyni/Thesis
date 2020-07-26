@@ -19,22 +19,17 @@ library(tidyverse)
 
 ```{r}
 df <- read_csv("data/long_illinois.csv") #read in data
-df1 <- na.omit(df) #get rid of na's
 ```
 
 ## Introduction
 
-Classification techniques allow you to use explanatory variables to make "rules" which classify observations according to categories of some categorical response variable (it could be quantitative that you made into categorical). In our case, the goal of a classification analysis would be to use the variables to accurately classify the wells as being dangerous or safe. The various classification methods make decision rules to accomplish this. 
-
-Since we don't have a variable labelling a well as being dangerous or safe, we have to make a LARGE assumption and assume that wells with contaminant concentration values over the threshold is considered to be dangerous.
-
-We will pull out the observatiosn with concentrations past the threshold and place them within a new dataset.
+We are seeking to identify the contaminated wells manually (with filters).
 
 ## More Wrangling
 
 ```{r}
 #creating vector of contaminants
-contaminant <- unique(df1$contaminant)
+contaminant <- unique(df$contaminant)
 
 #creating vector of threshold values for each contaminant
 threshold <- c(6/1000, 10/1000, 2, 4/1000, 3, 5/1000, NA, NA, 100/1000, 
@@ -43,8 +38,12 @@ threshold <- c(6/1000, 10/1000, 2, 4/1000, 3, 5/1000, NA, NA, 100/1000,
 
 contam_t <- cbind(contaminant, threshold) %>%
   na.omit()
+```
 
+```{r}
 #creating function to obtain all observations with values above threshold
+#for upgradient wells
+
 getOverThreshold <- function(df){
   datalist = list()
   for(i in 1:nrow(contam_t)){ #for each contaminant i
@@ -57,20 +56,9 @@ getOverThreshold <- function(df){
   
   return(toReturn)
 }
+```
 
-overthreshold_df <- getOverThreshold(df1) #df with all observations over threshold value
-
-df2 <- overthreshold_df %>% #all of the well are over the threshold
-  mutate(status = "dangerous")
-
-df3 <- full_join(df1, df2) %>% #join together
-    mutate(status = if_else(is.na(status), "safe", status)) #else, under
-
-df4 <- df3 %>% #collapse empty rows
-  spread(contaminant, concentration) %>%
-  group_by(well_id) %>%
-  summarise_each(funs(first(.[!is.na(.)]))) %>%
-  filter(gradient == "Upgradient") %>%
-  na.omit()
-  
+```{r}
+#using the function on data
+overthreshold_df <- getOverThreshold(df) #df with all observations over threshold value
 ```
