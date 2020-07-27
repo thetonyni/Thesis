@@ -3,6 +3,12 @@ output:
   pdf_document: default
   html_document: default
 ---
+
+```{r load_packages2, include = FALSE}
+library(mosaic)
+library(knitr)
+```
+
 # Methodology {#methodology}
 
 ## Plan of Action {#planofaction}
@@ -11,7 +17,10 @@ output:
 
 * we will use manual code to flag contaminated vs noncontaminated wells (filter) using threshold values (this table is from coal ash pdf, but could make manual one)
 
-<!-- insert picture here -->
+
+*INSERT TABLE OF THRESHOLD VALUES HERE (working on it atm! sorry :())
+
+
 * firstly, we used agglomerative hierarchical clustering to identify contaminated upgradient wells in our 'illinois' dataset (thoughts, maybe we want to expand/use a bigger dataset) using Ward's Method
 
 * then, we separated our data into two parts -- one dataset containing these contaminated upgradient wells and another dataset containing UNcontaminated upgradient wells
