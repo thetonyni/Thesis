@@ -18,7 +18,7 @@ library(tidyverse)
 ## Reading in Data
 
 ```{r}
-df <- read_csv("data/long_illinois.csv") #read in data
+df <- read_csv("code/current/data/long_illinois.csv") #read in data
 ```
 
 ## Introduction
@@ -43,7 +43,7 @@ contam_t <- cbind(contaminant, threshold) %>%
 
 ```{r}
 #creating function to obtain all observations with values above threshold
-#for upgradient  (kind of janky)
+#for upgradient  
 
 #it would be REALLY useful it the function could detect if values
 #were repeated a lot (so that we can exclude the values where
@@ -68,3 +68,10 @@ getOverThreshold <- function(df){
 overthreshold_df <- getOverThreshold(df) #df with all observations over threshold value
 glimpse(overthreshold_df)
 ```
+
+This currently DOES identify the wells that seem to be contaminated (where our definition of contamination being the concentration of a chemical being over the threshold). However, there are other factors that we would like to cnosider. Is a single chemical being over the threshold enough for a well to be considered "contaminated"? Do we want to be more loose and say that like if FOUR (completely random number) chemical concentrations are over -- THEN it is contaminated, otherwise, not?
+
+```{r}
+
+```
+
