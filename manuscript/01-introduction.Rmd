@@ -25,9 +25,9 @@ Only recently have these complaints and lawsuits regarding the disposing practic
 
 This rule has forced over 265 coal power plants -- about 3/4 of all coal power plants in the US - to make data regarding chemical concentrations publicly available to the general population. [@Kelderman2019]
 
-* environmental agencies have concluded that the groundwater under basically all coal plants are contaminated [@Kelderman2019]
+In their analysis using this data, the Environmental Integrty Project -- a non-profit organization dedicated to issues involving environmental justice have concluded that essentially all groundwater under coal plants are contaminated. [@Kelderman2019]
 
-* HOWEVER this might be overstated? we wanted to investigate whether or not if this was true.
+However, is this really the case? There are many naturally occuring chemicals existing in groundwater as as such, perhaps their claims are overstated.
 
 <!-- insert picture here -->
 
@@ -35,16 +35,15 @@ This rule has forced over 265 coal power plants -- about 3/4 of all coal power p
 knitr::include_graphics(path = "figures/upgradientdowngradient.jpg")
 ```
 
-* upgradient wells (background wells) measures groundwater chemical levels BEFORE passing through a coal ash dump while downgradient wells monitor the groundwater AFTER it passes through an ash dump
+Typically in a coal ash plant, there exists two types of wells: upgradient wells and downgradient wells. These wells are essential to measure the amount of contamination being caused by coal ash. Upgradient wells, also known as background wells, measures the concentrations of chemicals in groundwater before it passes through an coal ash dump. Conversely, downgradient wells measure the concentrations of chemicals in groundwater after it passes through a coal ash dump.
 
-* we have reason to believe that many chemicals are NATURALLY OCCURING and as such, the statement made my environmental agencies regarding all groundwater being contaminated may be overstated
+With this information, typically -- one estimates the amount of chemical contamination caused by a coal as dump by subtracting the upgradient concentration from the downgradient concentration of a chemical (downgradient concentration - upgradient concentration).
 
-* typically, we would estimate the amount of chemical contamination, for this example -- arsenic -- caused by a coal ash dump with the equation: downgradient arsenic concentration minus upgradient arsenic concentration
-
-* however, because there may be retired/unregulated upgradient wells that are occasionally contaminated already, this might be inaccurate
+However, due to the lack of proper reporting guidelines prior to the enactment of the Coal Ash Rule, we believe that there may be retired or even unregulated upgradient wells which can cause the concentrations of chemicals being recorded from these upgradient wells to be inaccurate or even completely wrong.
 
 <!-- mayhaps remove the stat lingo BELOW -->
 
+Our end goal remains the same as the EIP: to identify contaminated groundwater in coal plants -- but 
 * END GOAL IS TO CORRECT THE CONTAMINATED VALUES
 
 * we have already conducted a preliminary investigation using a variety of machine learning techniques to aid us in identifying potential contaminated upgradient wells
