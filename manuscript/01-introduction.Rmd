@@ -25,9 +25,9 @@ Only recently have these complaints and lawsuits regarding the disposing practic
 
 This rule has forced over 265 coal power plants -- about 3/4 of all coal power plants in the US - to make data regarding chemical concentrations publicly available to the general population. [@Kelderman2019]
 
-In their analysis using this data, the Environmental Integrty Project -- a non-profit organization dedicated to issues involving environmental justice have concluded that essentially all groundwater under coal plants are contaminated. [@Kelderman2019]
+In their analysis using this data, the Environmental Integrity Project -- a non-profit organization dedicated to issues involving environmental justice have concluded that essentially all groundwater under coal plants are contaminated. [@Kelderman2019]
 
-However, is this really the case? There are many naturally occuring chemicals existing in groundwater as as such, perhaps their claims are overstated.
+However, is this really the case? There are many naturally occurring chemicals existing in groundwater as as such, perhaps their claims are overstated.
 
 <!-- insert picture here -->
 
@@ -43,14 +43,11 @@ However, due to the lack of proper reporting guidelines prior to the enactment o
 
 <!-- mayhaps remove the stat lingo BELOW -->
 
-Our end goal remains the same as the EIP: to identify contaminated groundwater in coal plants -- but 
-* END GOAL IS TO CORRECT THE CONTAMINATED VALUES
+Our end goal remains the same as the EIP: to identify contaminated groundwater in coal plants -- but to attempt to find a way to effectively correct the improper/inaccurate values resulting from LOD errors and other factors which the EIP may not have considered. 
 
-* we have already conducted a preliminary investigation using a variety of machine learning techniques to aid us in identifying potential contaminated upgradient wells
+The limit of detection problem stems from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount, thus affecting the measurements recorded.
 
-* we have also utilized bootstrapping and imputation techniques to correct for their measurements through by accounting for the innate contamination which may be caused by factors such as retired and unregulated wells
-
-* our methodologies have yet to account for another problem however, involving limit of detection problem which arises from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount
+Our plan is to utilize bootstrapping and imputation techniques to correct for these measurements by accounting for the innate contamination which may be caused by factors such as retired and unregulated wells that were mentioned before.
 
 ## Data {#data}
 <!-- 
