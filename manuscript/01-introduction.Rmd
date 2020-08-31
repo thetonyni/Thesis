@@ -11,9 +11,10 @@ Each chapter file must start with a chapter header (e.g., # Chapter name). Notic
 You can knit chapters all at once using the index file, or individually. When you knit a single chapter, every other chapter will have a one-sentence placeholder to make knitting easier.
 
 You can re-name each chapter file (e.g., change this filename from "01-chap1.Rmd" to "01-introduction.Rmd"), just make sure you also update the filename in the list of rmd files in _bookdown.yml.
--->
 
 The introduction should provide an overview of the work you set out to do and provide structure for the remainder of the document.
+
+-->
 
 ## Background {#background}
 
@@ -62,36 +63,31 @@ many sites within sites
 
 <!-- EXPLAIN COAL ASH RULE HERE AND HOW THE EIP (Environmental Integrity Project) HAS HELPED MAKE THIS RULE -->
 
-* A large coal ash spill at the Tennessee Valley Authority (TVA) which occured on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US  [@Car2020]
+A large coal ash spill at the Tennessee Valley Authority (TVA) which occured on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US.  [@Car2020]
 
-* This was known as the Coal Ash Rule, passed on December 19, 2014 [@Car2020]
+This was known as the Coal Ash Rule, passed on December 19, 2014. [@Car2020]
 
-* Changes were made to the Coal Ash Rule over the years in the form of 'amendments,' one of which made required facility information and data to be made publicaly available to the public (April 15, 2015 rule change) [@Car2020]
+Changes were made to the Coal Ash Rule over the years in the form of 'amendments,' one of which made required facility information and data to be made publicaly available to the public (April 15, 2015 rule change) [@Car2020]
 
 ### Source of Data
 
-* the data used in the study are from the results published in "Annual Groundwater Monitoring and Corrective Action Reports" which were made available to the public in March 2018  [@EIP2020]
+The data used in the study are from the results published in "Annual Groundwater Monitoring and Corrective Action Reports" which were made available to the public in March 2018 as a result of the Coal Ash Rule.  [@EIP2020]
 
-* these reports are in PDF format and are thousands of pages long, which makes it difficult for individuals to look through the data in a meaningful way [@EIP2020]
+These reports are in PDF format and are thousands of pages long, which makes it difficult for individuals to look through the data in a meaningful way. [@EIP2020]
 
-* the EIP wranged the data into a more accessible machine-readable format which contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants [@EIP2020]
 
-* they obtained the data from an online, publicly available database containing groundwater monitoring results from the first "Annual Groundwater Monitoring and Corrective Action Reports" in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule [@EIP2020]
+The EIP obtained the data from an online, publicly available database containing groundwater monitoring results from the first "Annual Groundwater Monitoring and Corrective Action Reports" in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule [@EIP2020]
+
+
+They wrangled the data into a more accessible machine-readable format which contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants, which is downloadable from the EIP's website. [@EIP2020]
+
+\newpage
 
 ### Variables {#variables}
 <!-- TALK ABOUT VARIABLES AND WELLS/SITES HERE AND WHAT THEY MEAN -->
 
-* a coal ash site consists of multiple disposal areas
+The dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells which represent an observation in the dataset. There are two types of wells -- upgradient and downgradient wells. The variables consist of information regarding the specific chemical concentrations of each well. From the 19 different contaminants (antimony, arsenic, boron, etc.) a major problem is that some wells only have measurements for certain chemicals and don't have them for others.
 
-* within these disposal areas lie multiple wells
+### Plan of Action
 
-* each observation represents a well
-
-* wells are split into 2 different types - upgradient and downgradient wells
-
-* variables consist of information regard chemical contaminant concentrations and specifics regarding the well
-
-* from the 19 different contaminants (antimony, arsenic, boron, etc. ...) a major problem is that some wells only have measurements for certain chemicals and don't have them for others
-
-* we are currently using information from plants within illinois but there is data for all the states in the US
-
+Within the report, the EIP mentions certain restrictions within the data that have caused their data to  potentially  be  inaccurate  (specifically,  with  limit  of  detection  problems,  and  a  large  amount of missing chemical data).  The limit of detection problem comes when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to have duplicate, wrong values – which can cause for misguided analysis.The other issue is less guided/formed, but for brevity, we think that a lot of the issues in the data comes from the potential possibility of contamination during data collection from investigators from non coal-ash sources.  This may include things like: retired/unregulated wells which are old and have chemicals leaking into the groundwater, mismanagement in measuring, etc.My project hopes to work with methods on handling this missing data – alongside investing potential uses of bootstrapping and other resampling methods (potentially?)  in order to try to come up with a more statistically accurate and sound result by looking to assuage the problems that the EIP faced in their analysis.  Specifically, to find a way to split up the data into ”uncontaminated” and ”contaminated” wells in order to find the natural distribution of chemicals in each – and doing to so in the face of data corrupted by LOD problems and inaccuracies.  I’m hoping to apply and compare different ways of altering the data to account for these myriad of issues in order to look for more salient findings that the EIP might have missed or if not, to see if improvements can be made regarding the way that contaminated coal ash wells are being identified.

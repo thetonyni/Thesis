@@ -1,0 +1,40 @@
+---
+title: "exploratory"
+author: "Tony Ni"
+date: "8/30/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Libraries
+library(mosaic)
+library(tidyverse)
+```
+
+```{r}
+import_df <- read_csv("code/current/data/chemical_data.csv")
+glimpse(import_df)
+
+northeast <- import_df %>%
+  filter(state %in% c("ME", "NH", "VT", "NY", "PA", "NJ", "MD", "MA", "DE", "RI", "CT")) %>%
+  mutate(region = "northeast")
+
+midwest <- import_df %>%
+  filter(state %in% c("OH", "IN", "MI", "IL", "WI", "MN", "IA", "MO", "ND", "SD", "NE", "KS"))%>%
+  mutate(region = "midwest")
+
+west <- import_df %>%
+  filter(state %in% c("WA", "MT", "OR", "ID", "WY", "CA", "NV", "UT", "CO", "AZ", "NM", "AK", "HI"))
+
+south <- import_df %>%
+  filter(state %in% c("WV", "VA", "KY", "TN", "NC", "SC", "GA", "FL", "MS", "AL", "LA", "AR", "OK", "TX", "PR"))
+```
+
+```{r}
+
+```
+
