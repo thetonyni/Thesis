@@ -1,0 +1,71 @@
+---
+title: "limit_of_detection"
+author: "Tony Ni"
+date: "9/2/2020"
+output: pdf_document
+---
+
+## Why the Limit of Detection (LOD) Value is Not an Appropriate Specification for Automotive Emissions Analyzers
+
+\begin{itemize}
+  \item Very specific study on checking the reliability of analyzers (for vehicle emissions) at low concentrations.
+  \item Generally, you want to have a low LOD value
+  \item The general form of the equation used to determine LOD is of the form:
+  $$LOD = k * s_{zero}$$
+  where "k is the constant for defining LOD" and $s_{zero}$ is the standard deviation of the zero/blank"
+  \item 2 or 3 SDs is often what is used, refer to picture (I think it's neat)
+  \item Limit of quantification (LOQ) and limit of detection (LOD) are often concepts which are mixed up
+  \item LOQ is the "minimum value that users of analytical instrumentation can report a value"
+\end{itemize}
+
+## A Model of Measurement Precision at Low Concentrations
+
+\begin{itemize}
+  \item Article focusing on the precision of measurements at low concentrations, seeks to explore how effective the total variance model performs
+  \item The method detection limit (MDL) is a "method's ability to determine an analyte in a sample matrix, regardless of its source of origin" - it is estimated from data
+  \item Background noise always exists, even when there is no analyte present
+  \item EPA definition of method detection limit is as follows: "method detection limit (MDL) is the minimum concentration of a substance that can be measured and reported with 99% confidence that the analyte concentration is greater than zero and is determined from analysis of a sample in a given matrix containing the analyte..."
+  \item In the total variance model -- we can't measure the actual analyte concentration. We have to estimate it from the measured concentrations. These measurements innately contain random errors. Palleton (look for source? 1985) suggests that at low concentrations, total error consists of: background noise $b_i$ and analytical error $a_i$ -- both of which are random, independent, and normally distributed with mean 0 (refer to diagram in paper, nice figure/picture)
+\end{itemize}
+
+## Statistical methods for assays with limits of detection: Serum bile acid as a differentiator between patients with normal colons, adenomas, and colorectal cancer
+
+\begin{itemize}
+  \item THIS SOURCE LOOKS REALLY GOOD. BACKSOURCE FROM HERE AND FIND MORE FROM THIS PAPER'S CITATIONS
+  \item There are many different ways that researchers are dealing with detection limits, which are ubiquitous in the scientific realm. Substitution, nonparametric methods, and maximum likelihood methods are all ways to combat this problem.
+  \item Substitution is the worst way, nonparametric ways do better, maximum likelihood methods are the best
+\end{itemize}
+
+## A Study of the Precision of Lead Measurements at Concentrations Near the Method Limit of Detection
+
+## Real-time detection of intentional chemical contamination in the distributional system
+
+\begin{itemize}
+  \item "80% of the US population is served by 14% of the utilities," so if something were to get into the water distribution system, it can easily spread amongst the US population which is why contamination in water services is so important.
+  \item "Miller and Miller (2000) defined the LOD as being equal to blank + 3(SD)":
+  $$Limit of Detection = \gamma_{B} \ + 3\sigma_B$$
+  \item Note: in their case, the blank is 0 because they are measuring the different between normal/control/baseline conditions against the contaminant
+  \item Recommends using artificial neural networks with large datasets (to help detect contamination)
+  \item The rest of the article focuses on their experiment to try to detect contamination in real-time.
+\end{itemize}
+
+## A Distribution-Based Multiple Imputation Method for Handling Bivariate Pesticide Data with Values below the Limit of Detection
+
+## When Nothing Is Something : Understanding Detection Limits
+
+\begin{itemize}
+	\item There are many different forms of detection limits, ranging from: thresholds at which something can be detected (instrument detection limit) or the limit to which a lab reports a value based regulatory requirements (reporting limit).
+	\item Detection limits are constantly changing: as technology improves, so too does our ability to accurately measure substances.
+	\item Reporting limits can often be used be misleading as non-statisticians may often interpret ND (non-detect) as nullity, when in fact it only means that the measurement falls below a certain limit.
+	\item The rest of the paper focus on environmental law practices and cases in which LOD has played a role in.
+\end{itemize}
+
+## Diffusional impacts of nanoparticles on microdisc and microwire electrodes: The limit of detection and first passage statistics
+
+## Lowering the detection limit for arsenic: Implications for a future practical quantitation limit
+
+## Estimating Population Distributions When Some Data Are Below a Limit of Detection by Using a Reverse Kaplan-Meier Estimator
+
+## Statistical tests for latent class in censored data due to detection limit
+
+## A Simple Definition of Detection Limit

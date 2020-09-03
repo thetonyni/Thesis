@@ -16,9 +16,11 @@ library(tidyverse)
 ```
 
 ```{r}
+#importing in full dataset
 import_df <- read_csv("code/current/data/chemical_data.csv")
-glimpse(import_df)
 
+
+#breaking apart into different datasets for each region
 northeast <- import_df %>%
   filter(state %in% c("ME", "NH", "VT", "NY", "PA", "NJ", "MD", "MA", "DE", "RI", "CT")) %>%
   mutate(region = "northeast")
@@ -28,13 +30,26 @@ midwest <- import_df %>%
   mutate(region = "midwest")
 
 west <- import_df %>%
-  filter(state %in% c("WA", "MT", "OR", "ID", "WY", "CA", "NV", "UT", "CO", "AZ", "NM", "AK", "HI"))
+  filter(state %in% c("WA", "MT", "OR", "ID", "WY", "CA", "NV", "UT", "CO", "AZ", "NM", "AK", "HI")) %>%
+  mutate(region = "west")
 
 south <- import_df %>%
-  filter(state %in% c("WV", "VA", "KY", "TN", "NC", "SC", "GA", "FL", "MS", "AL", "LA", "AR", "OK", "TX", "PR"))
+  filter(state %in% c("WV", "VA", "KY", "TN", "NC", "SC", "GA", "FL", "MS", "AL", "LA", "AR", "OK", "TX", "PR")) %>%
+  mutate(region = "south")
+
+#rejoin them back together for future ref. if needed
+full <- list(northeast, midwest, west, south) %>% 
+  reduce(full_join)
+
+ggplot(full, aes(x = region)) + 
+  geom_bar(aes(fill = region), show.legend = FALSE) +
+  ggtitle("Number of Wells according to Region") +
+  xlab("Region") +
+  ylab("Count")
 ```
 
 ```{r}
 
 ```
+
 

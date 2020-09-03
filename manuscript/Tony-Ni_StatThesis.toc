@@ -7,7 +7,7 @@
 \contentsline {section}{\numberline {1.2}Data}{3}{section.1.2}%
 \contentsline {subsection}{\numberline {1.2.1}Coal Ash Rule}{3}{subsection.1.2.1}%
 \contentsline {subsection}{\numberline {1.2.2}Source of Data}{4}{subsection.1.2.2}%
-\contentsline {subsection}{\numberline {1.2.3}Variables}{4}{subsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.2.3}Variables}{5}{subsection.1.2.3}%
 \contentsline {subsection}{\numberline {1.2.4}Plan of Action}{5}{subsection.1.2.4}%
 \contentsline {chapter}{Chapter 2: Methodology}{7}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Plan of Action}{7}{section.2.1}%
