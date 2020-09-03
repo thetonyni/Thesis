@@ -38,6 +38,15 @@ output: pdf_document
 
 ## A Study of the Precision of Lead Measurements at Concentrations Near the Method Limit of Detection
 
+\begin{itemize}
+  \item Study involving generating collection of measurements on samples near the limit of detection. Gave 5 labs samples of lead with low concentrations and asked them to measure them, forbade them from recording values as "less than MDL" and they had to record a number.
+  \item Method Detection Limit (MDL) is often misunderstood -- it isn't involved with bias, it only deals with precision.
+  \item Throwing away/Discarding values that are below of the LOD gets rid of tons of useful information
+  \item The MDL is a statistical concepet more so than a chemical concept. It is a statistic which is estimated from the given data.
+  \item The way that chemists/researchers report low concentrations are varied and not standardized. Some may report: "ported. They may report the datum to the data analyst as ( 1 ) trace, ( 2 ) the letters ND ( not detected ), ( 3 ) the numerical value of MDL itself, (4) a "less than" value, that is, the numerical value of the MDL preceded by a "<" sign, (5) zero, (6) some value between zero and the MDL, for example, one-half the MDL, (7) the actual measured concentration even if it is below the MDL ( that is, whether the value is positive or negative ), ( 8 ) the actual measured value followed by the MDL in parenthesis, or (9) the actual measured value with a statement of its precision (for example, $2  \pm 4$ Mg/L, where the $\pm$ value indicates the pre cision of the estimate ). The last three methods are the best."
+  \item Paper emphasizes not throwing away ANY numerical values, but doesn't reallyl talk about how to perform statistical analysis with these values...
+\end{itemize}
+
 ## Real-time detection of intentional chemical contamination in the distributional system
 
 \begin{itemize}
