@@ -60,8 +60,6 @@ output: pdf_document
 	\item The rest of the paper focus on environmental law practices and cases in which LOD has played a role in.
 \end{itemize}
 
-## Diffusional impacts of nanoparticles on microdisc and microwire electrodes: The limit of detection and first passage statistics
-
 ## Lowering the detection limit for arsenic: Implications for a future practical quantitation limit
 
 ## Estimating Population Distributions When Some Data Are Below a Limit of Detection by Using a Reverse Kaplan-Meier Estimator
