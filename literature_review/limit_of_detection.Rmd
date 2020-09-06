@@ -60,6 +60,15 @@ output: pdf_document
 
 ## A Distribution-Based Multiple Imputation Method for Handling Bivariate Pesticide Data with Values below the Limit of Detection
 
+\begin{itemize}
+  \item Study exploring different options to handle LOD laboratory data -- specifically with regards to multiple imputation methods for left-censored data. They concluded that "the distribution-based MI method" worked well for bivariate data where the values were < LOD.
+  \item LOD entries still contain information that a lot of people don't realize -- specifically information that the values is between 0 and the LOD.
+  \item Lots of different approaches has already been done to handle this (they cited Helsel 2005b, 2010)
+  \item Substitution methods are easy to implement, but are biased (common values: LOD/2, LOD/sqrt(2), LOD) but are discouraged b/c results in estimates of parameters being biased
+  \item What this study used was distribution-based multiple imputation methods -- they used MLEs to estimate distribution parameters based on all datas (< LOD and those not). They repeatedly imput the values to create multiple complete sets of data, and then analyzed each one individually
+  \item Mathematically, they created a log-likelihood function with all the data, then derived MLEs of each parameters on multiple bootstrapped datasets. Each bootstrap data gives different estimates for the mean, sd, etc. (refer to article for math)
+\end{itemize}
+
 ## When Nothing Is Something : Understanding Detection Limits
 
 \begin{itemize}
