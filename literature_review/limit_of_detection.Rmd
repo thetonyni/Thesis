@@ -80,6 +80,11 @@ output: pdf_document
 
 ## Lowering the detection limit for arsenic: Implications for a future practical quantitation limit
 
+\begin{itemize}
+  \item States can set their own regulatory standards regarding the maximum contaminant levels for chemicals. (own thoughts: maybe this is another issue...)
+  \item Rest of the article is focused on chemical instruments in measuring things, not relevant...
+\end{itemize}
+
 ## Estimating Population Distributions When Some Data Are Below a Limit of Detection by Using a Reverse Kaplan-Meier Estimator
 
 ## Statistical tests for latent class in censored data due to detection limit
