@@ -318,7 +318,9 @@ Within the report, the EIP mentions certain restrictions within the data that ha
 \item
   There are many different ways that researchers are dealing with detection limits, which are ubiquitous in the scientific realm. Substitution, nonparametric methods, and maximum likelihood methods are all ways to combat this problem. (Lafleur et al., 2011)
 \item
-  Detection limits are constantly changing: as technology improves, so too does our ability to accurately measure substances (Elias, Goodman, Elias, \& Goodman, 1999)
+  Detection limits are constantly changing: as technology improves, so too does our ability to accurately measure substances (Elias \& Goodman, 1999)
+\item
+  Reporting limits can often be used be misleading as non-statisticians (practices in environmental law) may often interpret ND (non-detect) as nullity, when in fact it only means that the measurement falls below a certain limit (Elias \& Goodman, 1999)
 \item
   Substitution is the worst way, nonparametric ways do better, maximum likelihood methods are the best (Lafleur et al., 2011)
 \item
@@ -337,12 +339,21 @@ Within the report, the EIP mentions certain restrictions within the data that ha
 \hypertarget{Substitution}{%
 \subsection{Substitution Approach}\label{Substitution}}
 \begin{itemize}
-\tightlist
 \item
   Substitution methods are easy to implement, but are biased (common values: LOD/2, LOD/sqrt(2), LOD) but are discouraged b/c results in estimates of parameters being biased (Chen et al., 2011)
+\item
+  First method they tried was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and is recommended to be used when few data us below LOD or when data is not highly skewed Through their study, they found that there really isn't a difference between these two methods (Glass \& Gray, 2001)
 \end{itemize}
-\hypertarget{distribution-based-multiple-imputation-approach}{%
-\subsection{Distribution-Based Multiple Imputation Approach}\label{distribution-based-multiple-imputation-approach}}
+\hypertarget{kaplan-meier-estimate-approach-kaplan-meier}{%
+\subsection{Kaplan-Meier Estimate Approach (\#Kaplan-Meier)}\label{kaplan-meier-estimate-approach-kaplan-meier}}
+\begin{itemize}
+\item
+  Suggests using the reverse Kaplan-Meier (KM) estimator to estimate the distribution function and population percentiles for data where there is ``left-censored data'' (data point is below a certain value but known by how much) (Gillespie et al., 2010)
+\item
+  After their study, they found that even though THEORETICALLY the reverse KM is for left-censored data (just like KM is for right-censored data), it is still limited in its usage since all it does it estimate a distribution function (it's really just an exploratory thing, they said) (Gillespie et al., 2010)
+\end{itemize}
+\hypertarget{distribution-based-multiple-imputation-approach-dbml}{%
+\subsection{Distribution-Based Multiple Imputation Approach (\#DBML)}\label{distribution-based-multiple-imputation-approach-dbml}}
 \begin{itemize}
 \item
   Study exploring different options to handle LOD laboratory data -- specifically with regards to multiple imputation methods for left-censored data. They concluded that ``the distribution-based MI method'' worked well for bivariate data where the values were \textless{} LOD. (Chen et al., 2011)
@@ -353,7 +364,30 @@ Within the report, the EIP mentions certain restrictions within the data that ha
 \end{itemize}
 \hypertarget{write-about-other-approaches-here}{%
 \subsection{Write about other approaches here}\label{write-about-other-approaches-here}}
-
+\begin{itemize}
+\item
+  Another method is ``Cohen's Method'' where one extrapolates the left hand side of distribution based on the distribution of the uncensored data and then calculate the MLE estimate of the arithmetic mean -- found to be unreliable with data with outliers, this method can ONLY be used with data where there is a single LOD. From their study they found that this method gave high, unlikely results of the mean (Glass \& Gray, 2001)
+\item
+  Imputing from a uniform is useful when you don't know the distribution of the data (Canales, 2018)
+\end{itemize}
+\hypertarget{comparison-between-different-methods}{%
+\subsection{Comparison between different methods}\label{comparison-between-different-methods}}
+\begin{itemize}
+\item
+  Compared 5 methods: found that in terms of performance: imputation method using MLE to estimate distribution parameters and then imputing censored data points with values from this distribution below the LOD \textgreater{} imputation from a uniform distribution \textgreater{} other 3 methods (substitution, log-normal MLE to estimate mean and SD, and kaplan-meier estimate) (Canales, 2018)
+\item
+  KM method is better than MLE for data where there are TONS of missing data or if data is highly skewed (distribution not assumed in KM method) (Canales, 2018)
+\item
+  Uses RMSE (root mean squared error) to see how close the estimated values are to the true values (lower RMSE means closer estimation to known values) (Canales, 2018)
+\end{itemize}
+\hypertarget{packages}{%
+\subsection{Packages}\label{packages}}
+\begin{itemize}
+\item
+  MLE and KM methods were implemented using the NADA package (\url{https://cran.r-project.org/web/packages/NADA/NADA.pdf}) in R (\texttt{cenmle} and \texttt{cenfit} functions) where data is labeled as censored or uncensored, for censored values, LOD is used as a placeholder, since these methods aren't imputation methods -- these censored values weren't replaced. Instead, summary statistics were generated with the entire data set (including the censored data) (Canales, 2018)
+\item
+  The imputations methods used mostly followed the general ideas: we have to assume the entire data set follows a particular distribution. Then we use this distribution to impute in values for the censored data. The MLE imputation method uses MLE methods to estimate the parameters of a distribution to fit the dataset, then values lower than the LOD are imputed FROM this dataset for all censored values (they used the function \texttt{fitdistcens} from the R package \texttt{fitdistRplus}). The second uniform imputation method assumes a uniform distribution with minimum 0, maximum LOD -- for all values less than the LOD, then the left-censored values are replaced with a number randomly selected from this uniform distribution. (Canales, 2018)
+\end{itemize}
 \hypertarget{corrections}{%
 \chapter*{Corrections}\label{corrections}}
 \addcontentsline{toc}{chapter}{Corrections}
@@ -385,17 +419,26 @@ Berthouex, P. (2020). A Study of the Precision of Lead Measurements at Concentra
 \leavevmode\hypertarget{ref-Byer2019}{}%
 Byer, D., \& Carlson, K. H. (2019). Real-time detection of intentional chemical contamination in the distributional system, \emph{97}(7), 130--133.
 
+\leavevmode\hypertarget{ref-Canales2018}{}%
+Canales, R. (2018). Methods for Handling Left-Censored Data in Quantitative Microbial Risk Assessment, \emph{84}(20), 1--10.
+
 \leavevmode\hypertarget{ref-Chen2011}{}%
 Chen, H., Quandt, S. A., Grzywacz, J. G., Arcury, T. A., Environmental, S., Perspectives, H., \ldots{} Arcury, T. A. (2011). A Distribution-Based Multiple Imputation Method for Handling Bivariate Pesticide Data with Values below the Limit of Detection, \emph{119}(3), 351--356. \url{http://doi.org/10.1289/ehp.l002124}
 
 \leavevmode\hypertarget{ref-Elias1999}{}%
-Elias, D., Goodman, R. C., Elias, D., \& Goodman, R. C. (1999). When Nothing Is Something : Understanding Detection Limits, \emph{13}(4), 519--521.
+Elias, D., \& Goodman, R. C. (1999). When Nothing Is Something : Understanding Detection Limits, \emph{13}(4), 519--521.
 
 \leavevmode\hypertarget{ref-EIP2020}{}%
 Environmental Integrity Project. (2020). Coal Ash Groundwater Contamination: Documenting Coal Ash Pollution. Retrieved from \url{https://environmentalintegrity.org/coal-ash-groundwater-contamination/}
 
 \leavevmode\hypertarget{ref-Car2020}{}%
 Environmental Protection Agency. (2020). Disposal of Coal Combustion Residuals from Electric Utilities Rulemakings. Retrieved from \url{https://www.epa.gov/coalash/coal-ash-rule}
+
+\leavevmode\hypertarget{ref-Gillespie2010}{}%
+Gillespie, B. W., Chen, Q., Reichert, H., Franzblau, A., Lepkowski, J., Adriaens, P., \ldots{} Garabrant, D. H. (2010). Estimating Population Distributions When Some Data Are Below a Limit of Detection by Using a Reverse Kaplan-Meier Estimator. \emph{Epidemiology}, \emph{21}. \url{http://doi.org/10.1097/EDE.0b013e3181ce9fD8}
+
+\leavevmode\hypertarget{ref-Glass2001}{}%
+Glass, D. C., \& Gray, C. N. (2001). Estimating mean exposures from censored data: Exposure to benzene in the Australian petroleum industry. \emph{Annals of Occupational Hygiene}, \emph{45}(4), 275--282. \url{http://doi.org/10.1016/S0003-4878(01)00022-9}
 
 \leavevmode\hypertarget{ref-Kelderman2019}{}%
 Kelderman, K., Kunstman, B., Roy, H., Sivakumar, N., Mccormick, S., \& Bernhardt, C. (2019). Coal's Poisonous Legacy: Groundwater Contaminated by Coal Ash Across the U.S.
