@@ -13,13 +13,27 @@ library(knitr)
 
 ## Overview {#overview}
 
-* There are many different ways that researchers are dealing with detection limits, which are ubiquitous in the scientific realm. Substitution, nonparametric methods, and maximum likelihood methods are all ways to combat this problem. [@Lafleur2011]
+* What is  the of detection (LOD)? LOD is often thought of as being closely related to analytical chemistry, but it actually lies close to the realm of statistics as well. By definition, a limit of detection is the lowest value reported which is different than the blank (generally zero) with some confidence level.
+
+* What is the problem with LOD? As a concept closely related to missing data, LOD values are often can lead to bad practices (in terms of statistical analysis) leading to analysis and/or conclusions which are heavily flawed if not accounted for and dealt with.
+
+* [FIND SOURCE TALKING ABOUT LEFT CENSORED VS RIGHT CENSORED DATA]
+
+* Some individuals have argued for simply just throwing away/discarding values that are below of the LOD, which is of course the easiest way to deal with them -- but that gets rid of tons of useful information [@Berthouex2020] and honestly, is not good statistical practice.
+
+* These LOD entries still contain information that a lot of people don't realize -- specifically information that the values is between 0 and the LOD, which is actually very useful information. [@Chen2011]
+
+* On the same vein, reporting limits can often be used be misleading as non-statisticians (practices in environmental law) may often interpret ND (non-detect) as nullity, when in fact it only means that the measurement falls below a certain limit [@Elias1999]
+
+* Statisticians over past century have come up with methods to deal with this issue (some good... and some... kind of absolutely terrible). There are many different ways that researchers are dealing with detection limits, which are ubiquitous in the scientific realm. Some of the most common methods involve substitution, nonparametric, and maximum likelihood methods. [@Lafleur2011]
+
+* Of course, these methods aren't the only way to deal with it, but it is what we have come up with for now. Detection limits are constantly changing as time passes and because of that -- techniques and ways to combat it will gradually evolve and change (for the better) to deal with it
 
 * Detection limits are constantly changing: as technology improves, so too does our ability to accurately measure substances [@Elias1999]
 
-* Reporting limits can often be used be misleading as non-statisticians (practices in environmental law) may often interpret ND (non-detect) as nullity, when in fact it only means that the measurement falls below a certain limit [@Elias1999]
+## Reporting
 
-* Substitution is the worst way, nonparametric ways do better, maximum likelihood methods are the best [@Lafleur2011]
+* The way that chemists/researchers indicate whether or not if a value is a LOD value or not varies across labs and as such isn't standardized... Some may use`ND`, `< value`, `0`, `some value between 0 and LOD`, etc. [@Berthouex2020]
 
 * The general form of the equation used to determine LOD is of the form:
   $$LOD = k * s_{zero}$$
@@ -27,19 +41,21 @@ library(knitr)
   
 * 2 or 3 SDs is often what is used, refer to picture (I think it's neat) [@Akard2002]
 
-* Throwing away/Discarding values that are below of the LOD gets rid of tons of useful information [@Berthouex2020]
+* [INCLUDE SOME MORE MATH ABOUT THIS WHEN WRITING THIS UP, refer to these papers]
 
-*  LOD entries still contain information that a lot of people don't realize -- specifically information that the values is between 0 and the LOD. [@Chen2011]
+## Approaches {#Approaches}
 
-* The way that chemists/researchers report low concentrations are varied and not standardized. Some may report: "ported. They may report the datum to the data analyst as ( 1 ) trace, ( 2 ) the letters ND ( not detected ), ( 3 ) the numerical value of MDL itself, (4) a "less than" value, that is, the numerical value of the MDL preceded by a "<" sign, (5) zero, (6) some value between zero and the MDL, for example, one-half the MDL, (7) the actual measured concentration even if it is below the MDL ( that is, whether the value is positive or negative ), ( 8 ) the actual measured value followed by the MDL in parenthesis, or (9) the actual measured value with a statement of its precision (for example, $2  \pm 4$ Mg/L, where the $\pm$ value indicates the precision of the estimate ). The last three methods are the best." [@Berthouex2020]
+* Substitution is the worst way, nonparametric ways do better, maximum likelihood methods are the best [@Lafleur2011]
 
-### Substitution Approach {#Substitution}
+### Substitution Approach {#Substitution} 
 
-* Substitution methods are easy to implement, but are biased (common values: LOD/2, LOD/sqrt(2), LOD) but are discouraged b/c results in estimates of parameters being biased [@Chen2011]
+* Substitution methods are biased but easy to implement which is why they are often used (common values: LOD/2, LOD/sqrt(2), LOD) but are discouraged b/c results in estimates of parameters being biased [@Chen2011]
 
-* First method they tried was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and is recommended to be used when few data us below LOD or when data is not highly skewed  Through their study, they found that there really isn't a difference between these two methods [@Glass2001]
+* In a study performed by [Glass] to investigate the effectivenss of LOD approaches, they used a variety of substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods. [@Glass2001]
 
 ### Kaplan-Meier Estimate Approach (#Kaplan-Meier)
+
+* Kaplan-Meier Estimation is a common technique used to deal with right-censored data, but can also be used for left-censored values as well -- in the form of the Reverse Kaplan-Meier Estimation.
 
 * Suggests using the reverse Kaplan-Meier (KM) estimator to estimate the distribution function and population percentiles for data where there is "left-censored data" (data point is below a certain value but known by how much) [@Gillespie2010]
 
@@ -49,7 +65,7 @@ library(knitr)
 
 * Study exploring different options to handle LOD laboratory data -- specifically with regards to multiple imputation methods for left-censored data. They concluded that "the distribution-based MI method" worked well for bivariate data where the values were < LOD. [@Chen2011]
 
-* What this study used was distribution-based multiple imputation methods -- they used MLEs to estimate distribution parameters based on all datas (< LOD and those not). They repeatedly imput the values to create multiple complete sets of data, and then analyzed each one individually [@Chen2011]
+* They also ivnestigated distribution-based multiple imputation methods -- they used MLEs to estimate distribution parameters based on all datas (< LOD and those not). They repeatedly imput the values to create multiple complete sets of data, and then analyzed each one individually [@Chen2011]
 
 * Mathematically, they created a log-likelihood function with all the data, then derived MLEs of each parameters on multiple bootstrapped datasets. Each bootstrap data gives different estimates for the mean, sd, etc. (refer to article for math) [@Chen2011]
 
@@ -69,6 +85,8 @@ library(knitr)
 
 ### Packages
 
-* MLE and KM methods were implemented using the NADA package (https://cran.r-project.org/web/packages/NADA/NADA.pdf) in R (`cenmle` and `cenfit` functions) where data is labeled as censored or uncensored, for censored values, LOD is used as a placeholder, since these methods aren't imputation methods -- these censored values weren't replaced. Instead, summary statistics were generated with the entire data set (including the censored data) [@Canales2018]
+* Probably will not be included, just here for my own reference!
 
-* The imputations methods used mostly followed the general ideas: we have to assume the entire data set follows a particular distribution. Then we use this distribution to impute in values for the censored data. The MLE imputation method uses MLE methods to estimate the parameters of a distribution to fit the dataset, then values lower than the LOD are imputed FROM this dataset for all censored values (they used the function `fitdistcens` from the R package `fitdistRplus`). The second uniform imputation method assumes a uniform distribution with minimum 0, maximum LOD -- for all values less than the LOD, then the left-censored values are replaced with a number randomly selected from this uniform distribution. [@Canales2018]
+* "MLE and KM methods were implemented using the NADA package (https://cran.r-project.org/web/packages/NADA/NADA.pdf) in R (`cenmle` and `cenfit` functions) where data is labeled as censored or uncensored, for censored values, LOD is used as a placeholder, since these methods aren't imputation methods -- these censored values weren't replaced. Instead, summary statistics were generated with the entire data set (including the censored data)" [@Canales2018]
+
+* "The imputations methods used mostly followed the general ideas: we have to assume the entire data set follows a particular distribution. Then we use this distribution to impute in values for the censored data. The MLE imputation method uses MLE methods to estimate the parameters of a distribution to fit the dataset, then values lower than the LOD are imputed FROM this dataset for all censored values (they used the function `fitdistcens` from the R package `fitdistRplus`). The second uniform imputation method assumes a uniform distribution with minimum 0, maximum LOD -- for all values less than the LOD, then the left-censored values are replaced with a number randomly selected from this uniform distribution." [@Canales2018]
