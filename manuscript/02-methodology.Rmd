@@ -33,7 +33,7 @@ library(knitr)
 
 ## Reporting
 
-* The way that chemists/researchers indicate whether or not if a value is a LOD value or not varies across labs and as such isn't standardized... Some may use`ND`, `< value`, `0`, `some value between 0 and LOD`, etc. [@Berthouex2020]
+* The way that chemists/researchers indicate whether or not if a value is a LOD value or not varies across labs and as such isn't standardized... Some may use `ND`, `< value`, `0`, `some value between 0 and LOD`, etc. [@Berthouex2020]
 
 * The general form of the equation used to determine LOD is of the form:
   $$LOD = k * s_{zero}$$
@@ -51,9 +51,11 @@ library(knitr)
 
 * Substitution methods are biased but easy to implement which is why they are often used (common values: LOD/2, LOD/sqrt(2), LOD) but are discouraged b/c results in estimates of parameters being biased [@Chen2011]
 
-* In a study performed by [Glass] to investigate the effectivenss of LOD approaches, they used a variety of substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods. [@Glass2001]
+* In a study performed by [Glass] to investigate the effectiveness of LOD approaches, they used a variety of substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods. [@Glass2001]
 
-### Kaplan-Meier Estimate Approach (#Kaplan-Meier)
+*NAIVE SUBSTITUTION
+
+### Kaplan-Meier Estimate Approach {#Kaplan-Meier}
 
 * Kaplan-Meier Estimation is a common technique used to deal with right-censored data, but can also be used for left-censored values as well -- in the form of the Reverse Kaplan-Meier Estimation.
 
@@ -61,7 +63,7 @@ library(knitr)
 
 * After their study, they found that even though THEORETICALLY the reverse KM is for left-censored data (just like KM is for right-censored data), it is still limited in its usage since all it does it estimate a distribution function (it's really just an exploratory thing, they said) [@Gillespie2010]
 
-### Distribution-Based Multiple Imputation Approach (#DBML)
+### Distribution-Based Multiple Imputation Approach {#DBML}
 
 * Study exploring different options to handle LOD laboratory data -- specifically with regards to multiple imputation methods for left-censored data. They concluded that "the distribution-based MI method" worked well for bivariate data where the values were < LOD. [@Chen2011]
 
