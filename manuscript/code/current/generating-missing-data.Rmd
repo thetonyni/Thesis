@@ -8,30 +8,21 @@ output: pdf_document
 Playing around with how to make vectors and datasets with missing values...
 
 Some websites/sources:
-\itemize{begin}
-  \item https://cran.r-project.org/web/packages/missMethods/vignettes/Generating-missing-values.html
-  \item https://rmisstastic.netlify.app/how-to/generate/misssimul
-\itemize{end}
+
+https://cran.r-project.org/web/packages/missMethods/vignettes/Generating-missing-values.html
+https://rmisstastic.netlify.app/how-to/generate/misssimul
 
 ```{r}
 library(tidyverse)
 library(missMethods) #package for generating missing data
+library(NADA) #package for mle for left censored data
 ```
 
-Assuming normal distribution (refer to technotes pdf file) for contaminant values in groundwater data, I'm going to try to see what sort of mean and sd we should have for a random element (in this case Boron)
+## Generating missing data
 
-```{r}
-antimony_illinois <- read_csv("code/current/data/long_illinois.csv") %>%
-  filter(contaminant %in% "Antimony") %>%
-  drop_na()
+Assuming normal distribution (refer to technotes pdf file) for contaminant values in groundwater data...
 
-antimony_illinois <- antimony_illinois %>%
-  mutate(log_concentration = log(concentration),
-         mean_log = mean(log_concentration),
-         sd_log = sd(log_concentration))
-```
-
-Ok let's just try to pull random numbers from a logNormal(-5.341781, 2.41328) distribution for a "artificial" dataset.
+Ok let's just try to pull random numbers from a Normal(10, 1) distribution for a "artificial" dataset.
 
 ```{r}
 set.seed(7271999)
@@ -39,9 +30,9 @@ set.seed(7271999)
 num <- 100
 
 id <- seq(1, num, by = 1)
-value <- rlnorm(n = num, 
-               meanlog = antimony_illinois$mean_log,
-               sdlog = antimony_illinois$sd_log)
+value <- rnorm(n = num, 
+               mean = 10,
+               sd = 1)
 
 my_df <- as.data.frame(cbind(id, value))
 ```
@@ -53,6 +44,8 @@ my_df2 <- delete_MAR_censoring(ds = my_df, #dataframe
                      p = 0.3, #probability that a value is missing
                      cols_mis = "id",
                      cols_ctrl = "value")
+
+glimpse(my_df2)
 ```
 
 Uh... I don't think the methods in this package are what we're looking for... This `delete_MAR_censoring` "generate MAR values using a censoring mechanism. This leads to a missing value in `id`, if the value is below the 30% quantile of `value`" We really only have 1 numeric variable of interest here...
@@ -62,18 +55,87 @@ Maybe we can just do it by hand...
 Let's just say something like, for any value below `some number`, we make a new column and mark it as being censored/below limit of detection. I just chose 0.005 as a completely arbitrary value...
 
 ```{r}
-threshold <- 0.005
+threshold <- 9
 
 my_df3 <- my_df %>%
   mutate(below_detection = case_when(value <= threshold ~ "T",
                                      value > threshold ~ "F"))
+tibble(my_df3)
 ```
 
-Now let's try visualizing the artificial dataset we just generated:
+Great! This is basically the general format of how missing values are encoded in the groundwater data -- there is a variable called called `<` which is `<` is the value is below the LOD and left blank ` ` if not. This is exactly what we want! This is a bit weird because it doesn't make sense to have negative concentrations, but it's not worth it to try to fix it since we just want some artificial dataset to work with at the moment (may be in the future though)...
+
+
+## Playing around with missing data
+
+Now, we want to try playing around with this dataset, let's try seeing what our sample mean and sd are -- as a comparison point.
 
 ```{r}
-#unsure what sort of plot might even be useful here lol
+mean(my_df3$value)
+sd(my_df3$value)
 ```
+
+Now, let's make the values for which the observations in which `below_detection` is `T` -- NA.
+
+```{r}
+my_df4 <- my_df3 %>%
+  mutate(value = if_else(
+    below_detection == "F", value, NA_real_))
+
+glimpse(my_df4)
+```
+
+### Substitution Approach
+
+Ok, let's true our substitution approach where we impute in the missing values with value/2 and value/sqrt(2). Um... for this artificial dataset, we don't really have a LOD but let's make it an arbitrary value 9.
+
+First, replacing all our missing values with LOD/2
+
+```{r}
+lod_div_2 <- my_df4 %>%
+  mutate(value = if_else(
+  below_detection == "T", 9/2, value))
+
+mean(lod_div_2$value)
+sd(lod_div_2$value)
+```
+
+Next, replacing all our missing value with LOD/sqrt(2)
+
+```{r}
+lod_div_sqrt2 <- my_df4 %>%
+  mutate(value = if_else(
+  below_detection == "T", 9/sqrt(2), value))
+
+mean(lod_div_sqrt2$value)
+sd(lod_div_sqrt2$value)
+```
+
+The original mean and sd of our artificial dataset is 0.95 and 3.37 respectively.
+
+The mean and sd we get from LOD/2 substitution method yields 9.613 and 1.97 respectively.
+
+The mean and sd we get from LOD/sqrt(2 substitution method yields 9.812 and 1.45 respectively.
+
+We can see that this method is OK... It doesn't really capture the true mean and sd very well...
+
+### MLE Approach
+
+Now using the MLE approach, we can use the `cen_mle` function to compute statistics when the data contains left-censored values.
+
+```{r}
+my_df5 <- my_df4 %>%
+  mutate(below_detection = as.logical(below_detection))
+
+mle_res = cenmle(my_df5$value, my_df5$below_detection, conf.int=0.95, dist = "gaussian")
+
+mean(mle_res)
+sd(mle_res)
+```
+
+We obtain a mean of 10.24 and a sd of 0.82. This method performs much better than the substitution method!
+
+
 
 
 
