@@ -12,6 +12,9 @@ Some websites/sources:
 https://cran.r-project.org/web/packages/missMethods/vignettes/Generating-missing-values.html
 https://rmisstastic.netlify.app/how-to/generate/misssimul
 
+Look through this website:
+https://www.itrcweb.org/gsmc-1/Content/GW%20Stats/5%20Methods%20in%20indiv%20Topics/5%207%20Nondetects.htm#:~:text=Robust%20ROS%20is%20semi%2Dparametric,are%20made%20for%20the%20nondetects.&text=ROS%20assumes%20that%20all%20data,non%2Dnegative)%20statistical%20population.
+
 ```{r}
 library(tidyverse)
 library(missMethods) #package for generating missing data
@@ -20,19 +23,24 @@ library(NADA) #package for mle for left censored data
 
 ## Generating missing data
 
-Assuming normal distribution (refer to technotes pdf file) for contaminant values in groundwater data...
+Assuming log-normal distribution, which is the most common distribution for censored water data, (refer to technotes pdf file) for contaminant values in groundwater data...
 
-Ok let's just try to pull random numbers from a Normal(10, 1) distribution for a "artificial" dataset.
+Ok let's just try to pull random numbers from a logormal(1, 1) distribution for a "artificial" dataset.
 
 ```{r}
 set.seed(7271999)
 
-num <- 100
+num <- 1000
+
+m <- 1
+s <- 1
+location <- log(m^2 / sqrt(s^2 + m^2))
+shape <- sqrt(log(1 + (s^2 / m^2)))
+print(paste("location:", location))
+print(paste("shape:", shape))
 
 id <- seq(1, num, by = 1)
-value <- rnorm(n = num, 
-               mean = 10,
-               sd = 1)
+value <- rlnorm(num, location, shape)
 
 my_df <- as.data.frame(cbind(id, value))
 ```
@@ -52,10 +60,10 @@ Uh... I don't think the methods in this package are what we're looking for... Th
 
 Maybe we can just do it by hand...
 
-Let's just say something like, for any value below `some number`, we make a new column and mark it as being censored/below limit of detection. I just chose 0.005 as a completely arbitrary value...
+Let's just say something like, for any value below `some number`, we make a new column and mark it as being censored/below limit of detection. I just chose 0.5 as a completely arbitrary value...
 
 ```{r}
-threshold <- 9
+threshold <- 0.3
 
 my_df3 <- my_df %>%
   mutate(below_detection = case_when(value <= threshold ~ "T",
@@ -85,6 +93,7 @@ my_df4 <- my_df3 %>%
 glimpse(my_df4)
 ```
 
+
 ### Substitution Approach
 
 Ok, let's true our substitution approach where we impute in the missing values with value/2 and value/sqrt(2). Um... for this artificial dataset, we don't really have a LOD but let's make it an arbitrary value 9.
@@ -111,11 +120,13 @@ mean(lod_div_sqrt2$value)
 sd(lod_div_sqrt2$value)
 ```
 
-The original mean and sd of our artificial dataset is 0.95 and 3.37 respectively.
+We know the true population mean and sd of the distribution we pulled samples from is lognormal(1, 1)
 
-The mean and sd we get from LOD/2 substitution method yields 9.613 and 1.97 respectively.
+The sample mean and sd of our artificial dataset is 0.95 and 0.905 respectively.
 
-The mean and sd we get from LOD/sqrt(2 substitution method yields 9.812 and 1.45 respectively.
+The mean and sd we get from LOD/2 substitution method yields 1.56 amd 1.46 respectively.
+
+The mean and sd we get from LOD/sqrt(2 substitution method yields 1.82 and 2.02 respectively.
 
 We can see that this method is OK... It doesn't really capture the true mean and sd very well...
 
@@ -133,7 +144,26 @@ mean(mle_res)
 sd(mle_res)
 ```
 
-We obtain a mean of 10.24 and a sd of 0.82. This method performs much better than the substitution method!
+We obtain a mean of 1.08 and sd of 0.92. This method performs much better than the substitution method!
+
+### Kaplan Meier Approach
+
+This method doesn't have any distributional assumptions, which is an advantage it has over the MLE approach:
+
+```{r}
+km_res = cenfit(my_df$value, my_df5$below_detection, conf.int=0.95)
+plot(km_res) #plots cdf of value
+
+mean(km_res)
+sd(km_res)
+```
+
+We obtain a mean of 0.97 and sd of 0.89. This method is comparable to the MLE method!
+
+### Imputation Method with MLE
+
+### Imputation Method with KM
+
 
 
 
