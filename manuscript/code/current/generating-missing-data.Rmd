@@ -19,6 +19,7 @@ https://www.itrcweb.org/gsmc-1/Content/GW%20Stats/5%20Methods%20in%20indiv%20Top
 library(tidyverse)
 library(missMethods) #package for generating missing data
 library(NADA) #package for mle for left censored data
+library(fitdistrplus) #package for mle imputation method
 ```
 
 ## Generating missing data
@@ -161,6 +162,25 @@ sd(km_res)
 We obtain a mean of 0.97 and sd of 0.89. This method is comparable to the MLE method!
 
 ### Imputation Method with MLE
+
+```{r}
+#use fitdistcens from fitdistrplus package
+#first arg df of 2 cols named left, right -- left is NA for censored obs, or value if not censored -- right is value
+
+my_df5 <- my_df3 %>%
+  mutate(left = if_else(
+    below_detection == "F", value, NA_real_),
+         right = value) %>%
+  dplyr::select(left, right)
+
+fitdistcens(my_df5, "lnorm")
+
+"location: -0.346573590279973"
+"shape: 0.832554611157698"
+```
+
+We obtain a meanlog of -0.43 and sdlog of 0.93 (which compared to the original meanlog of -0.43 and sdlog of 0.937) is VERY close!
+
 
 ### Imputation Method with KM
 
