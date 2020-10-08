@@ -1,0 +1,113 @@
+---
+title: "simulation-study"
+author: "Tony Ni"
+date: "10/8/2020"
+output: pdf_document
+---
+
+```{r}
+library(tidyverse)
+library(missMethods) #package for generating missing data
+library(NADA) #package for mle for left censored data
+library(fitdistrplus) #package for mle imputation method
+```
+
+```{r}
+#set seed
+set.seed(7271999)
+
+#size of a sample
+n <- 100 #100 sets in A, B, C, and D
+
+#number of samples
+sampsize_1 <- 50 #A and B
+sampesize_2 <- 500 #C and D
+
+#specify distribution we are pulling random samples from
+mean = 0
+sd = 1
+
+#set arbitrary threshold (values below this are considered left-censored)
+threshold <- 0
+
+#creating df outside of loop to store summary stats of methods
+store_names <- c("set", "method", "x_bar", "s^2")
+store_df <- as.data.frame(matrix(, ncol = 4, nrow = 0))
+names(store_df) <- store_names
+```
+
+<!-- 
+for(i in 1:n){
+  value <- rnorm(n = sampsize_1, mean = mean, sd = sd)
+  id <- seq(1, sampsize_1, by = 1)
+  current_df <- as.data.frame(cbind(id, value))
+  
+  #creating modified df to have censored info
+  modified_df <- current_df %>%
+    #below is T if value below threshold, else F
+    mutate(below = case_when(value <= threshold ~ "T", 
+                             value > threshold ~ "F")
+    ) %>%
+    #hide values below threshold
+    mutate(value = if_else(
+      below == "F", value, NA_real_)
+    )
+  
+  #approach #1: substitution
+  substitution_df <- modified_df %>%
+    mutate(imputed_value = if_else(
+      below == "T", 9/2, value)
+    )
+  
+  #getting summary stats for substitution df
+  store_df[i, 1] <- "A"
+  store_df[i, 2] <- "substitution"
+  store_df[i, 3] <- mean(substitution_df$imputed_value)
+  store_df[i, 4] <- sd(substitution_df$imputed_value)
+  
+}
+-->
+
+```{r}
+#writing substitution function
+substitution_function <- function(n, samplesize){
+  for(i in 1:n){
+    value <- rnorm(n = samplesize, mean = mean, sd = sd)
+    id <- seq(1, samplesize, by = 1)
+    current_df <- as.data.frame(cbind(id, value))
+    
+    #creating modified df to have censored info
+    modified_df <- current_df %>%
+      #below is T if value below threshold, else F
+      mutate(below = case_when(value <= threshold ~ "T", 
+                               value > threshold ~ "F")
+      ) %>%
+      #hide values below threshold
+      mutate(value = if_else(
+        below == "F", value, NA_real_)
+      )
+    
+    #approach #1: substitution
+    substitution_df <- modified_df %>%
+      mutate(imputed_value = if_else(
+        below == "T", 9/2, value)
+      )
+    
+    #getting summary stats for substitution df
+    store_df[i, 1] <- paste("samples=", n, ", size=", samplesize, sep = "")
+    store_df[i, 2] <- "substitution"
+    store_df[i, 3] <- mean(substitution_df$imputed_value)
+    store_df[i, 4] <- sd(substitution_df$imputed_value)
+  }
+  return(store_df)
+}
+```
+
+```{r}
+#testing substitution function
+
+test_df <- substitution_function(500, 1000)
+```
+
+
+

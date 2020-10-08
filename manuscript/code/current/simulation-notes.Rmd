@@ -30,7 +30,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * create a function to apply all of these functions to the generated data
 
-
 * FOR NEXT WEEK: focus on understanding what a simulation study IS -- put on pause the codework
 
 * read the morris paper on simulation studies and then thinking about what it is i want to show with this simulation study (there is the big picture: comparison of how these methods perform vs the truth BUT what are we making these comparisons based off of, how do we know substitution method is better/worse etc. HOW DO WE COMPARE THE ACTUAL DISTRIBUTION OF VALUES -- usually just summary statistics... we might look at overall mean and median of values or summary statistics based off on whether or not if they are LOD values -- how does avg values compare btwn methods)
@@ -39,6 +38,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * verifying what the functions are outputting, can you get the rawdata, if so how? if not, are there anyways where we can? 
 
+--
+
+* when we know methods are dependent, can we use these methods that assume independence?
+
+* in this world, we assume measurements are independent (from random sample), we are trying to figure out how we can fill in info from LOD in this dataset to estimate the average concentration despite having this LOD problems
+
+* make new chapter 1 (not with water in the future)
+
+* performance metrics -- if you know method is performing well if when you generate data based on mean of 5 and use methods to fill in values, when you repeatedly the method, you get values close to 5, that your empirical/simulated mean is about 5
+
+* coverage, and confidence intervals could useful!
+
+* start small!!!!! before trying to scale up!
+
 ### ADEMPS
 
 #### Aims
@@ -46,6 +59,8 @@ knitr::opts_chunk$set(echo = TRUE)
 * Q: what are the aims of the study?
 
 * A: (1) investigate effectiveness (accuracy?) of methods designed to estimate summary statistics (mean and sd) of left-censored data
+
+* come up with reasonable distribution, by comparing methods, we're trying to see which one better captures that distribution
 
 #### Data-Generating Mechanisms
 
@@ -56,13 +71,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * A: resampling from a simple lognormal distribution (not based on real data, for ease of calculations/comprehension)
 
-* A: data generated from $n_{obs} = 1000$ wells that represent a possible collection of chemical concentration measurements (unrealistic, but simple -- i personally think drawing it from the actual data itself might be not as useful? we could also vary the sample size to see how the methods perform when different % of the data is censored (refer to Bolks2014 -- "different methods work better depending on small/large values of n and small/large percent of data censored))
+* A: data generated from $n_{obs} = 1000$ wells that represent a possible collection of chemical concentration measurements (unrealistic, but simple -- i personally think drawing it from the actual data itself might be not as useful? we could also vary the sample size to see how the methods perform when different % of the data is censored (refer to Bolks2014 -- "different methods work better depending on small/large values of n and small/large percent of data censored)) (MIGHT PUSH UP VALUE UP A BIT)
 
 * A: values talked about in paper are $n < 50$ compared to $n \ge 50$ and $<50 \%$ data censored compared to $50 - 80 \%$ censored ($>80\%$ is too high to compute summary statistics)
 
 * A: let $X_i$ be the concentration of an arbitrary chemical at a well with $X_i \in \text{Lognormal}(\mu, \sigma^2)$
 
-* A: factors we might consider varying is the sample size $n$ and the percent of data censored
+* A: factors we might consider varying is the sample size $n$ and the percent of data censored (this may be too crazy, may have to prune down, ALSO CONSIDER UNDERLYING DISTRIBUTION)
 
 * A: $\mu = 1$ and $\sigma^2 = 1$
 
@@ -75,6 +90,8 @@ knitr::opts_chunk$set(echo = TRUE)
 * A: we want to observe the mean estimator $\bar{X}$, which is the estimator of $\mu$ 
 
 * A: we want to observe the variance estimator $s^2$, which is the estimator of $\sigma^2$
+
+* A:our final estimand is probably an indicator (is it over the threshold)
 
 #### Methods
 

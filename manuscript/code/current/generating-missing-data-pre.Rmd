@@ -161,6 +161,8 @@ plot(km_res) #plots cdf of value
 
 mean(km_res)
 sd(km_res)
+
+predict(km_res)
 ```
 
 We obtain a mean of 0.97 and sd of 0.89. This method is comparable to the MLE method!
@@ -179,8 +181,13 @@ my_df5 <- my_df3 %>%
 
 fitdistcens(my_df5, "lnorm")
 
+obj <- fitdistcens(my_df5, "lnorm")
+
 "location: -0.346573590279973"
 "shape: 0.832554611157698"
+
+coef(obj)
+
 ```
 
 We obtain a meanlog of -0.43 and sdlog of 0.93 (which compared to the original meanlog of -0.43 and sdlog of 0.937) is VERY close!
