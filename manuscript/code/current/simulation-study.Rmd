@@ -12,6 +12,8 @@ library(NADA) #package for mle for left censored data
 library(fitdistrplus) #package for mle imputation method
 ```
 
+# Preliminary
+
 ```{r}
 #set seed
 set.seed(7271999)
@@ -68,6 +70,8 @@ for(i in 1:n){
 }
 -->
 
+# Substitution
+
 ```{r}
 #writing substitution function
 substitution_function <- function(n, samplesize){
@@ -105,9 +109,66 @@ substitution_function <- function(n, samplesize){
 
 ```{r}
 #testing substitution function
-
-test_df <- substitution_function(500, 1000)
+substitution_df <- substitution_function(500, 1000)
 ```
+
+# ALL METHODS COMBINED 
+
+```{r}
+#writing function to run all methods combined
+all_function <- function(n, samplesize){
+  for(i in 1:n){
+    value <- rnorm(n = samplesize, mean = mean, sd = sd)
+    id <- seq(1, samplesize, by = 1)
+    current_df <- as.data.frame(cbind(id, value))
+    
+    #creating modified df to have censored info
+    modified_df <- current_df %>%
+      #below is T if value below threshold, else F
+      mutate(below = case_when(value <= threshold ~ "T", 
+                               value > threshold ~ "F")
+      ) %>%
+      #hide values below threshold
+      mutate(value = if_else(
+        below == "F", value, NA_real_)
+      )
+    
+    #approach #1: substitution
+    substitution_df <- modified_df %>%
+      mutate(imputed_value = if_else(
+        below == "T", 9/2, value)
+      )
+
+    #getting summary stats for substitution df
+    store_df[i, 1] <- paste("samples=", n, ", size=", samplesize, sep = "")
+    store_df[i, 2] <- "substitution"
+    store_df[i, 3] <- mean(substitution_df$imputed_value)
+    store_df[i, 4] <- sd(substitution_df$imputed_value)
+    
+    #approach #2: mle
+    mle_df <- modified_df %>%
+      mutate(below = as.logical(below))
+
+    mle_res = cenmle(mle_df$value, mle_df$below, 
+                     conf.int=0.95, dist = "gaussian")
+    
+    #getting summary stats for mle df
+    store_df[i+n, 1] <- paste("samples=", n, ", size=", samplesize, sep = "")
+    store_df[i+n, 2] <- "mle"
+    store_df[i+n, 3] <- coef(summary(mle_res))["(Intercept)"]
+    store_df[i+n, 4] <- sd(mle_res)
+    
+  }
+  return(store_df)
+}
+```
+
+```{r}
+test_all_df <- all_function(500, 100)
+```
+
+
+
 
 
 
