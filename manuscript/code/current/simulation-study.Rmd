@@ -33,7 +33,7 @@ sd = 1
 threshold <- 0
 
 #creating df outside of loop to store summary stats of methods
-store_names <- c("set", "method", "x_bar", "s^2")
+store_names <- c("num_samples", "method", "x_bar", "s^2")
 store_df <- as.data.frame(matrix(ncol = 4, nrow = 0))
 names(store_df) <- store_names
 ```
@@ -140,7 +140,7 @@ all_function <- function(n, samplesize){
       )
 
     #getting summary stats for substitution
-    store_df[i, 1] <- paste("samples=", n, ", size=", samplesize, sep = "")
+    store_df[i, 1] <- samplesize
     store_df[i, 2] <- "substitution"
     store_df[i, 3] <- mean(substitution_df$imputed_value)
     store_df[i, 4] <- sd(substitution_df$imputed_value)
@@ -153,20 +153,10 @@ all_function <- function(n, samplesize){
                      conf.int=0.95, dist = "gaussian")
     
     #getting summary stats for mle 
-    store_df[i+n, 1] <- paste("samples=", n, ", size=", samplesize, sep = "")
+    store_df[i+n, 1] <- samplesize
     store_df[i+n, 2] <- "mle"
     store_df[i+n, 3] <- coef(summary(mle_res))["(Intercept)"]
     store_df[i+n, 4] <- sd(mle_res)
-    
-    #approach #3: KM
-    km_res = cenfit(logical_df$value, logical_df$below, 
-                    conf.int=0.95)
-    
-    #getting summary stats for km
-    store_df[i+(2*n), 1] <- paste("samples=", n, ", size=", samplesize, sep = "")
-    store_df[i+(2*n), 2] <- "km"
-    store_df[i+(2*n), 3] <- mean(km_res)[[1]]
-    store_df[i+(2*n), 4] <- sd(km_res)
     
   }
   return(store_df)
@@ -177,6 +167,17 @@ all_function <- function(n, samplesize){
 test_all_df <- all_function(5, 100)
 ```
 
+#broken code below
+
+    #approach #3: KM
+    km_res = cenfit(logical_df$value, logical_df$below, 
+                    conf.int=0.95)
+    
+    #getting summary stats for km
+    store_df[i+(2*n), 1] <- paste("size=", samplesize, sep = "")
+    store_df[i+(2*n), 2] <- "km"
+    store_df[i+(2*n), 3] <- mean(km_res)[[1]]
+    store_df[i+(2*n), 4] <- sd(km_res)
 
 
 
