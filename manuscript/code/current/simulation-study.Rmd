@@ -26,11 +26,11 @@ sampsize_1 <- 50 #A and B
 sampesize_2 <- 500 #C and D
 
 #specify distribution we are pulling random samples from
-mean = 0
+mean = 1
 sd = 1
 
 #set arbitrary threshold (values below this are considered left-censored)
-threshold <- 0
+threshold <- -0.5
 
 #creating df outside of loop to store summary stats of methods
 store_names <- c("num_samples", "method", "x_bar", "s^2")
@@ -177,7 +177,7 @@ mle_func <- function(n, samplesize){
   return(store_df)
 }
 
-km_func <- function(n, samplesize){
+ros_func <- function(n, samplesize){ 
    for(i in 1:n){
     value <- rnorm(n = samplesize, mean = mean, sd = sd)
     id <- seq(1, samplesize, by = 1)
@@ -188,24 +188,23 @@ km_func <- function(n, samplesize){
       #below is T if value below threshold, else F
       mutate(below = case_when(value <= threshold ~ "T", 
                                value > threshold ~ "F")
-      ) %>%
-      #hide values below threshold
-      mutate(value = if_else(
-        below == "F", value, NA_real_)
       )
     
-    #approach #3: KM
+    #approach #3: ROS
     logical_df <- modified_df %>%
       mutate(below = as.logical(below))
 
-    km_res = cenfit(logical_df$value, logical_df$below, 
-                    conf.int=0.95)
+    ros_res = ros(logical_df$value, logical_df$below)
     
     #getting summary stats for km
     store_df[i, 1] <- paste("size=", samplesize, sep = "")
-    store_df[i, 2] <- "km"
-    store_df[i, 3] <- NADA::mean(km_res)[[1]]
-    store_df[i, 4] <- NADA::sd(km_res)
+    store_df[i, 2] <- "ros"
+    store_df[i, 3] <- mean(ros_res)
+    store_df[i, 4] <- sd(ros_res)
+    
+    NADA::mean(km_res)[[1]]
+    NADA::sd(km_res)
+    
   }
   return(store_df)
 }
@@ -216,11 +215,22 @@ mle_imp_func <- function(n, samplesize){
 ```
 
 ```{r}
-testdf1 <- mosaic::do(1) * sub_func(5, 10)
-testdf2 <- mosaic::do(1) * mle_func(5, 10)
-testdf3 <- mosaic::do(1) * km_func(5, 10)
+testdf1 <- mosaic::do(1) * sub_func(5, 1000)
+testdf2 <- mosaic::do(1) * mle_func(5, 1000)
+testdf3 <- mosaic::do(1) * ros_func(5, 1000) #errors may arise due to attempts to take negative logs, 
+                                             #but can't be helped with out parametric setting...
 testdf4 <- mosaic::do(1) * mle_imp_func()
 ```
+
+instead of trying to run the km function, could we try to have 2 separate helper functions? one to pull out the mean and another to pull out the sd? --> NOT SUCCESSFUL
+
+AHHHHHHHH!
+
+hmm... let's just get rid of the KM method fully, i found a new method robust ROS (regression on order statistics) -- which could potentially serve as another method we could use...
+
+https://acwi.gov/monitoring/conference/2008/presentations/sessionE/E6C_Helsel.pdf
+https://www.itrcweb.org/gsmc-1/Content/GW%20Stats/5%20Methods%20in%20indiv%20Topics/5%207%20Nondetects.htm
+
 
 
 
