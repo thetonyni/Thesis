@@ -79,10 +79,10 @@ all_function <- function(n, samplesize){
                      conf.int=0.95, dist = "gaussian")
     
     #getting summary stats for mle 
-    store_df[i, 1] <- samplesize
-    store_df[i, 2] <- "mle"
-    store_df[i, 3] <- coef(summary(mle_res))["(Intercept)"]
-    store_df[i, 4] <- sd(mle_res)
+    store_df[i+n, 1] <- samplesize
+    store_df[i+n, 2] <- "mle"
+    store_df[i+n, 3] <- coef(summary(mle_res))["(Intercept)"]
+    store_df[i+n, 4] <- sd(mle_res)
     
   }
   return(store_df)

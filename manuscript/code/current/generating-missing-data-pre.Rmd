@@ -159,10 +159,8 @@ This method doesn't have any distributional assumptions, which is an advantage i
 km_res = cenfit(my_df$value, my_df5$below_detection, conf.int=0.95)
 plot(km_res) #plots cdf of value
 
-mean(km_res)
-sd(km_res)
-
-predict(km_res)
+what <- as.numeric(mean(km_res)[[1]])
+huh <- as.numeric(sd(km_res))
 ```
 
 We obtain a mean of 0.97 and sd of 0.89. This method is comparable to the MLE method!
@@ -192,10 +190,11 @@ coef(obj)
 
 We obtain a meanlog of -0.43 and sdlog of 0.93 (which compared to the original meanlog of -0.43 and sdlog of 0.937) is VERY close!
 
-
-### Imputation Method with KM
+# Robust ROS
 
 ```{r}
-
+ros_res = ros(my_df5$value, my_df5$below_detection, forwardT="log", reverseT="exp")
+mean(ros_res)
+sd(ros_res)
 ```
 
