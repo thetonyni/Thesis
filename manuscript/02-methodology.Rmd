@@ -13,13 +13,21 @@ library(knitr)
 
 ## Overview {#overview}
 
-* What is  the of detection (LOD)? LOD is often thought of as being closely related to analytical chemistry, but it actually lies close to the realm of statistics as well. By definition, a limit of detection is the lowest value reported which is different than the blank (generally zero) with some confidence level.
+* The idea of missingness and incompleteness is commonplace throughout our world, and is even more prevalent within the statistical world. Known more formally as censoring, this condition exists when we have incomplete information regarding the values of a measurement within a dataset.
 
-* What is the problem with LOD? As a concept closely related to missing data, LOD values are often can lead to bad practices (in terms of statistical analysis) leading to analysis and/or conclusions which are heavily flawed if not accounted for and dealt with.
+* A specific instance of censoring which scientists crossing beyond fields exists in the form of left-censored data.
 
-* [FIND SOURCE TALKING ABOUT LEFT CENSORED VS RIGHT CENSORED DATA]
+* To understand this phenomena better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You wake up every morning far before the sun rises, at 3 A.M. and make sure to stay outside to witness the specific time at which you are able to see the sunrise, recording that time. However, on the first day of the study, you oversleep and wake up at 7:00 AM, with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit value. All we know is that by 7:00 AM, the sun had already rose. The time at which the sunrise occurred could be any time before 7:00 AM, we have no knowledge on when that time could be.
 
-* Some individuals have argued for simply just throwing away/discarding values that are below of the LOD, which is of course the easiest way to deal with them -- but that gets rid of tons of useful information [@Berthouex2020] and honestly, is not good statistical practice.
+* As the scenario demonstrates, this form of censoring can often prove to be a thorn in the side, as the lack of certainty that we have in a measurement, often adds a layer of complexity within an analysis.
+
+* Left-censored values are also commonly referred to as limit of detection values, which will be used throughout this discussion.
+
+* What is  the of detection (LOD)? LOD is often thought of as being closely related to analytical chemistry, but it lies close to the realm of statistics as well. By definition, a limit of detection is the lowest value reported which is different than the blank (generally zero) with some confidence level.
+
+* What is the problem with LOD? As a concept closely related to missing data, LOD values are often can lead to bad practices (in terms of statistical analysis) leading to analysis and/or conclusions which are heavily flawed as a result of someone misguided practices being used in the current statistical world in order to account for them.
+
+* An common malpractice used in order to account for left-censored practice is omitting these left-censored values from the analysis, which is of course the easiest way to deal with them -- but this approach discards a myriad of useful information [@Berthouex2020]
 
 * These LOD entries still contain information that a lot of people don't realize -- specifically information that the values is between 0 and the LOD, which is actually very useful information. [@Chen2011]
 
@@ -33,31 +41,44 @@ library(knitr)
 
 ## Reporting
 
-* The way that chemists/researchers indicate whether or not if a value is a LOD value or not varies across labs and as such isn't standardized... Some may use `ND`, `< value`, `0`, `some value between 0 and LOD`, etc. [@Berthouex2020]
-
-* The general form of the equation used to determine LOD is of the form:
-  $$LOD = k * s_{zero}$$
-  where "k is the constant for defining LOD" and $s_{zero}$ is the standard deviation of the zero/blank" [@Akard2002]
-  
-* 2 or 3 SDs is often what is used, refer to picture (I think it's neat) [@Akard2002]
-
-* [INCLUDE SOME MORE MATH ABOUT THIS WHEN WRITING THIS UP, refer to these papers]
+* The way that chemists/researchers indicate whether or not if a value is a LOD value or not varies across labs and as such isn't standardized... Some may explicitly record `ND`, `< value` to indicate that an observation's value is left-censored. Others may simply record the value between 0 and LOD and not mark it as being left-censored at all [@Berthouex2020]
 
 ## Approaches {#Approaches}
 
-* Substitution is the worst way, nonparametric ways do better, maximum likelihood methods are the best [@Lafleur2011]
+* As discussed in the previous overview section [put link here to refer back to section], there are a variety of "statistical treatments," which have been popularized in the statistical community to treat censored data.
+
+* Substitution is commonly cited as the worst way, nonparametric ways do better, maximum likelihood methods are the best [@Lafleur2011]
 
 ### Substitution Approach {#Substitution} 
 
-* Substitution methods are biased but easy to implement which is why they are often used (common values: LOD/2, LOD/sqrt(2), LOD) but are discouraged b/c results in estimates of parameters being biased [@Chen2011]
+* Substitution methods are biased but easy to implement which is why they are often used (common values: LOD/2, LOD/sqrt(2), LOD) but are discouraged because it often results in biased estimates of parameters [@Chen2011]
 
-* In a study performed by [Glass] to investigate the effectiveness of LOD approaches, they used a variety of substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods. [@Glass2001]
-
-*NAIVE SUBSTITUTION
+* In a study performed by [Glass] to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods. [@Glass2001]
 
 ### Kaplan-Meier Estimate Approach {#Kaplan-Meier}
 
-* Kaplan-Meier Estimation is a common technique used to deal with right-censored data, but can also be used for left-censored values as well -- in the form of the Reverse Kaplan-Meier Estimation.
+* Kaplan-Meier Estimation is a common nonparametric technique used to deal with right-censored data, but it can also be used for left-censored values as well -- in the form of the reverse Kaplan-Meier estimator.
+
+* What is the Kaplan-Meier estimator? In survival analysis studies when the focus is a type of "time to a certain event occuring," most often things like time to death, or time to failure.
+
+* If we think about it from a mortality perspective, the survival function is a function which gives the probability of survival over time, with the y-axis representing the probability of survival and x-axis being time.
+
+* [INSERT PICTURE OF EXAMPLE SURVIVAL CURVE HERE]
+
+* The Kaplan-Meier estimator is a nonparametric statistic which is used to estimate the survival function from our empirical data while accounting for the possibilities of certain values being censored (participants in a mortality study could drop out, die during the study, become unavailable to contact after a certain time, etc.)
+
+* KM method does this by assuming that censoring is independent from the event of interest (death) and that survival probabilities remain the same in observations found early in the study and those recruited later in the study [CITE PROPERLY WHEN TIME ALLOWS https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_survival/BS704_Survival_print.html]
+
+
+
+
+
+* EXPLAIN MATHEMATICAL FORMULA HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE [CITE PROPERLY WHEN TIME ALLOWS https://www.youtube.com/watch?v=NDgn72ynHcM&t=398s&ab_channel=mathetal]
+
+
+
+
+
 
 * Suggests using the reverse Kaplan-Meier (KM) estimator to estimate the distribution function and population percentiles for data where there is "left-censored data" (data point is below a certain value but known by how much) [@Gillespie2010]
 
