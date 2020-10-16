@@ -57,32 +57,27 @@ library(knitr)
 
 ### Kaplan-Meier Estimate Approach {#Kaplan-Meier}
 
-* Kaplan-Meier Estimation is a common nonparametric technique used to deal with right-censored data, but it can also be used for left-censored values as well -- in the form of the reverse Kaplan-Meier estimator.
+* Kaplan-Meier approach is a common nonparametric technique used to deal with right-censored data, but it can also be used for left-censored values as well -- in the form of the reverse Kaplan-Meier estimator.
 
-* What is the Kaplan-Meier estimator? In survival analysis studies when the focus is a type of "time to a certain event occuring," most often things like time to death, or time to failure.
+* What is the Kaplan-Meier estimator? In survival analysis studies when the focus is a type of "time to a certain event occurring," most often things like time to death, or time to failure.
 
 * If we think about it from a mortality perspective, the survival function is a function which gives the probability of survival over time, with the y-axis representing the probability of survival and x-axis being time.
 
 * [INSERT PICTURE OF EXAMPLE SURVIVAL CURVE HERE]
 
-* The Kaplan-Meier estimator is a nonparametric statistic which is used to estimate the survival function from our empirical data while accounting for the possibilities of certain values being censored (participants in a mortality study could drop out, die during the study, become unavailable to contact after a certain time, etc.)
+* The Kaplan-Meier estimator is a nonparametric statistic which is used to estimate the survival function/survival curve from our empirical data while accounting for the possibilities of certain values being censored (participants in a mortality study could drop out, die during the study, become unavailable to contact after a certain time, etc.)
 
 * KM method does this by assuming that censoring is independent from the event of interest (death) and that survival probabilities remain the same in observations found early in the study and those recruited later in the study [CITE PROPERLY WHEN TIME ALLOWS https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_survival/BS704_Survival_print.html]
 
+* $\hat{S}(t) = \prod_{\ x_j \le \ t }(1-\frac{d_j}{y_j})$
 
+* where $x_j$ is the distinct event/death time, $d_j$ is the number of event/death occurences at time $x_j$, and $y_j$ is the number of followup times ($t_i$) that are $\ge$ $x_j$ (how many observations in sample survived at least/or past the time $t_i$). [CITE PROPERLY WHEN TIME ALLOWS https://www.youtube.com/watch?v=NDgn72ynHcM&t=398s&ab_channel=mathetal]
 
-
-
-* EXPLAIN MATHEMATICAL FORMULA HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE [CITE PROPERLY WHEN TIME ALLOWS https://www.youtube.com/watch?v=NDgn72ynHcM&t=398s&ab_channel=mathetal]
-
-
-
-
-
+* This will give an estimator of the survival curve
 
 * Suggests using the reverse Kaplan-Meier (KM) estimator to estimate the distribution function and population percentiles for data where there is "left-censored data" (data point is below a certain value but known by how much) [@Gillespie2010]
 
-* After their study, they found that even though THEORETICALLY the reverse KM is for left-censored data (just like KM is for right-censored data), it is still limited in its usage since all it does it estimate a distribution function (it's really just an exploratory thing, they said) [@Gillespie2010]
+* Reverse Kaplan-Meier approach follows exactly the same logic as the Kaplan-Meier estimate of the survival curve, except we reverse the censored indicator and event of interest indicator. In reverse Kaplan-Meier, our censor is now the event and the event is now censored [CITE WHEN TIME ALLOWS https://www.pharmasug.org/proceedings/2019/ST/PharmaSUG-2019-ST-081.pdf]
 
 ### Distribution-Based Multiple Imputation Approach {#DBML}
 
