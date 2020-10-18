@@ -55,6 +55,22 @@ library(knitr)
 
 * In a study performed by [Glass] to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods. [@Glass2001]
 
+* Widely discouraged to be used as it often introduces large errors and bias, especially when significant portions of the data set is already censored [@Canales2018]
+
+### Maximum Likelihood Estimation {#MLE}
+
+* Maximum likelihood is a technique which allows us to estimate the parameter values of a distribution/model. 
+
+* Given a few data points which we know have been generated from a Gaussian(0, 1) distribution, this technique seeks to calculate the maximum likelihood estimates of the paramter values for the Gaussian distribution, $\mu$ and $\sigma$.
+
+* We need to calculate the total probability of observing all the data (the joint probability distribution of all data points). This is the product of the marginal densities assuming i.i.d. 
+
+This gives us a likelihood of $$lik(\theta) = \prod_{i=1}^n f(X_i|\theta)$$ which we can maximize in order to obtain our MLE estimate for the parameter of interest. [CITE RICE TEXTBOOK]
+
+* Maximum likelihood estimation is widely thought to be optimal, but only if one knows the proposed model and underlying distribution of the dataset in advance [@Canales2018]
+
+* The MLE method we will be utilizing is actually performed by obtaining regression estimates of slope(s) and intercepts through maximum likelihood with censored data. The `cenmle` function in the `NADA` package accomplishes this and allows us to calculate descriptive statistics for the entire dataset.
+
 ### Kaplan-Meier Estimate Approach {#Kaplan-Meier}
 
 * Kaplan-Meier approach is a common nonparametric technique used to deal with right-censored data, but it can also be used for left-censored values as well -- in the form of the reverse Kaplan-Meier estimator.
@@ -77,13 +93,25 @@ library(knitr)
 
 * Suggests using the reverse Kaplan-Meier (KM) estimator to estimate the distribution function and population percentiles for data where there is "left-censored data" (data point is below a certain value but known by how much) [@Gillespie2010]
 
-* Reverse Kaplan-Meier approach follows exactly the same logic as the Kaplan-Meier estimate of the survival curve, except we reverse the censored indicator and event of interest indicator. In reverse Kaplan-Meier, our censor is now the event and the event is now censored [CITE WHEN TIME ALLOWS https://www.pharmasug.org/proceedings/2019/ST/PharmaSUG-2019-ST-081.pdf]
+* Reverse Kaplan-Meier approach follows exactly the same logic as the Kaplan-Meier estimate of the survival curve, except we reverse the censored indicator and event of interest indicator. In reverse Kaplan-Meier, our censor is now the event and the event is now censored [CITE PROPERLY WHEN TIME ALLOWS https://www.pharmasug.org/proceedings/2019/ST/PharmaSUG-2019-ST-081.pdf]
+
+* The advantages of the KM method lie in its robustness(as a nonparametric method), it performs well with a wide range of distributions. It is also good to use when there are cases of extreme/severe censoring in the dataset due to its nonparametric nature [Canales2018]
+
+* We will be using the `cenfit` function from the `NADA` package in R to estimate the empirical cumulative distribution function (survival curve) for our left-censored data using the reverse Kaplan-Meier method. The KM method is not an imputation method, so we are not replacing censored values with an imputed value, but rather estimating descriptive statistics for the entire dataset -- including the censored concentrations [@Canales2018]
+
+### Regression on Order Statistics {#ROS}
+
+* ROS is a semi-parametric method, it assumes that the censored measurements in the data comes from a normal or lognormal distribution. 
+
+* In order for ROS to be utilized, at minimum, there needs to be at least 3 known values and more than half the values within the data set must be known.
+
+* Values are plotted on a on a probability plot and a linear regression line is calculated, in order to estimate the parameters of the distribution from which the values came from. Then, values are pulled from the assumed distribution in order to impute in value for the censored measurements. These imputed values and combined with the known values in order to obtain descriptive statistics of interest for the data [CITE PROPERLY WHEN TIME ALLOWS https://www.itrcweb.org/gsmc-1/Content/GW%20Stats/5%20Methods%20in%20indiv%20Topics/5%207%20Nondetects.htm#:~:text=Robust%20ROS%20is%20semi%2Dparametric,are%20made%20for%20the%20nondetects.&text=ROS%20assumes%20that%20all%20data,non%2Dnegative)%20statistical%20population. ]
 
 ### Distribution-Based Multiple Imputation Approach {#DBML}
 
 * Study exploring different options to handle LOD laboratory data -- specifically with regards to multiple imputation methods for left-censored data. They concluded that "the distribution-based MI method" worked well for bivariate data where the values were < LOD. [@Chen2011]
 
-* They also ivnestigated distribution-based multiple imputation methods -- they used MLEs to estimate distribution parameters based on all datas (< LOD and those not). They repeatedly imput the values to create multiple complete sets of data, and then analyzed each one individually [@Chen2011]
+* They also investigated distribution-based multiple imputation methods -- they used MLEs to estimate distribution parameters based on all datas (< LOD and those not). They repeatedly imput the values to create multiple complete sets of data, and then analyzed each one individually [@Chen2011]
 
 * Mathematically, they created a log-likelihood function with all the data, then derived MLEs of each parameters on multiple bootstrapped datasets. Each bootstrap data gives different estimates for the mean, sd, etc. (refer to article for math) [@Chen2011]
 
