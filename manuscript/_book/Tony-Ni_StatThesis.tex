@@ -371,9 +371,9 @@ Within the report, the EIP mentions certain restrictions within the data that ha
 \subsection{Maximum Likelihood Estimation}\label{MLE}}
 \begin{itemize}
 \item
-  Maximum likelihood is a technique which allows us to estimate the parameter values of a distribution/model.
+  Maximum likelihood is a parametric technique which allows us to estimate the parameter values of a distribution/model.
 \item
-  Given a few data points which we know have been generated from a Gaussian(0, 1) distribution, this technique seeks to calculate the maximum likelihood estimates of the paramter values for the Gaussian distribution, \(\mu\) and \(\sigma\).
+  As an example, given a few data points which we know have been generated from a Gaussian(0, 1) distribution, this technique seeks to calculate the maximum likelihood estimates of the paramter values for the Gaussian distribution, \(\mu\) and \(\sigma\).
 \item
   We need to calculate the total probability of observing all the data (the joint probability distribution of all data points). This is the product of the marginal densities assuming i.i.d.
 \end{itemize}
@@ -383,6 +383,8 @@ This gives us a likelihood of \[lik(\theta) = \prod_{i=1}^n f(X_i|\theta)\] whic
   Maximum likelihood estimation is widely thought to be optimal, but only if one knows the proposed model and underlying distribution of the dataset in advance (Canales, 2018)
 \item
   The MLE method we will be utilizing is actually performed by obtaining regression estimates of slope(s) and intercepts through maximum likelihood with censored data. The \texttt{cenmle} function in the \texttt{NADA} package accomplishes this and allows us to calculate descriptive statistics for the entire dataset.
+\item
+  Useful slides to refer to here {[}\url{https://www.eurachem.org/images/stories/workshops/2017_10_PT/pdf/contrib/O05-Mancin.pdf}{]}
 \end{itemize}
 \hypertarget{Kaplan-Meier}{%
 \subsection{Kaplan-Meier Estimate Approach}\label{Kaplan-Meier}}
@@ -418,11 +420,15 @@ This gives us a likelihood of \[lik(\theta) = \prod_{i=1}^n f(X_i|\theta)\] whic
 \subsection{Regression on Order Statistics}\label{ROS}}
 \begin{itemize}
 \item
-  ROS is a semi-parametric method, it assumes that the censored measurements in the data comes from a normal or lognormal distribution.
+  ROS is a semi-parametric method, it assumes that the censored measurements (emphasis on ONLY the censored, this what makes it semi-parametric) in the data comes from a normal or lognormal distribution.
 \item
   In order for ROS to be utilized, at minimum, there needs to be at least 3 known values and more than half the values within the data set must be known.
 \item
-  Values are plotted on a on a probability plot and a linear regression line is calculated, in order to estimate the parameters of the distribution from which the values came from. Then, values are pulled from the assumed distribution in order to impute in value for the censored measurements. These imputed values and combined with the known values in order to obtain descriptive statistics of interest for the data {[}CITE PROPERLY WHEN TIME ALLOWS \url{https://www.itrcweb.org/gsmc-1/Content/GW\%20Stats/5\%20Methods\%20in\%20indiv\%20Topics/5\%207\%20Nondetects.htm\#}:\textasciitilde:text=Robust\%20ROS\%20is\%20semi\%2Dparametric,are\%20made\%20for\%20the\%20nondetects.\&text=ROS\%20assumes\%20that\%20all\%20data,non\%2Dnegative)\%20statistical\%20population. {]}
+  ROS method is based on simple linear regression, detected values are ordered from smallest to largest, and then quantiles are used to estimate the concentration of censored values
+\item
+  In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles {[}CITE \url{https://www.eurachem.org/images/stories/workshops/2017_10_PT/pdf/contrib/O05-Mancin.pdf}{]}
+\item
+  Values are plotted on a on a probability plot and a linear regression line is calculated, in order to estimate the parameters of the distribution from which the values came from. Then, values are pulled from the assumed distribution in order to impute in value for the censored measurements. These imputed values and combined with the known values in order to obtain descriptive statistics of interest for the data {[}CITE PROPERLY WHEN TIME ALLOWS \url{https://www.itrcweb.org/gsmc-1/Content/GW\%20Stats/5\%20Methods\%20in\%20indiv\%20Topics/5\%207\%20Nondetects.htm\#}:\textasciitilde:text=Robust\%20ROS\%20is\%20semi\%2Dparametric,are\%20made\%20for\%20the\%20nondetects.\&text=ROS\%20assumes\%20that\%20all\%20data,non\%2Dnegative)\%20statistical\%20population.{]}
 \end{itemize}
 \hypertarget{DBML}{%
 \subsection{Distribution-Based Multiple Imputation Approach}\label{DBML}}
