@@ -51,7 +51,7 @@ library(knitr)
 
 ### Substitution Approach {#Substitution} 
 
-* Substitution methods are biased but easy to implement which is why they are often used (common values: LOD/2, LOD/sqrt(2), LOD) but are discouraged because it often results in biased estimates of parameters [@Chen2011]
+* Substitution methods are statistically *unsound* methods but are easy to implement which is why they are often used (common imputed values often include: LOD/2, LOD/sqrt(2), LOD) [@Chen2011]
 
 * In a study performed by [Glass] to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods. [@Glass2001]
 
