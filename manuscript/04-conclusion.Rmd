@@ -1,0 +1,9 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Conclusion {#conclusion}
+
+[write a few paragraphss to wrap up entire thesis]

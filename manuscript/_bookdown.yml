@@ -7,6 +7,8 @@ book_filename: "Tony-Ni_StatThesis"
 rmd_files: ["index.Rmd",
             "01-introduction.Rmd",
             "02-methodology.Rmd",
+            "03-simulations.Rmd",
+            "04-conclusion.Rmd",
             "98-corrections.Rmd",
             "99-references.Rmd"]
 # Do not edit any of the following lines

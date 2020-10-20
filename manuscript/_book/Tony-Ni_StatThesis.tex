@@ -361,7 +361,7 @@ Within the report, the EIP mentions certain restrictions within the data that ha
 \subsection{Substitution Approach}\label{Substitution}}
 \begin{itemize}
 \item
-  Substitution methods are biased but easy to implement which is why they are often used (common values: LOD/2, LOD/sqrt(2), LOD) but are discouraged because it often results in biased estimates of parameters (Chen et al., 2011)
+  Substitution methods are statistically \emph{unsound} methods but are easy to implement which is why they are often used (common imputed values often include: LOD/2, LOD/sqrt(2), LOD) (Chen et al., 2011)
 \item
   In a study performed by {[}Glass{]} to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods. (Glass \& Gray, 2001)
 \item
@@ -468,6 +468,56 @@ This gives us a likelihood of \[lik(\theta) = \prod_{i=1}^n f(X_i|\theta)\] whic
 \item
   ``The imputations methods used mostly followed the general ideas: we have to assume the entire data set follows a particular distribution. Then we use this distribution to impute in values for the censored data. The MLE imputation method uses MLE methods to estimate the parameters of a distribution to fit the dataset, then values lower than the LOD are imputed FROM this dataset for all censored values (they used the function \texttt{fitdistcens} from the R package \texttt{fitdistRplus}). The second uniform imputation method assumes a uniform distribution with minimum 0, maximum LOD -- for all values less than the LOD, then the left-censored values are replaced with a number randomly selected from this uniform distribution.'' (Canales, 2018)
 \end{itemize}
+\hypertarget{simulations}{%
+\chapter{Simulations}\label{simulations}}
+
+{[}short passage describing what we hope to gain from performing a simulation study{]}
+
+\hypertarget{ademps}{%
+\section{ADEMPS}\label{ademps}}
+
+{[}discuss ademps approach to designing a simulation study{]} (Morris, White, \& Crowther, 2019)
+
+\hypertarget{aims}{%
+\subsection{Aims}\label{aims}}
+
+\hypertarget{data_generating_mechanisms}{%
+\subsection{Data-Generating Mechanisms}\label{data_generating_mechanisms}}
+
+\hypertarget{estimands}{%
+\subsection{Estimands}\label{estimands}}
+
+\hypertarget{methods}{%
+\subsection{Methods}\label{methods}}
+
+\hypertarget{performance_measures}{%
+\subsection{Performance Measures}\label{performance_measures}}
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+{[}place figures/tables from results of simulation study here, along with explanation{]}
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+{[}discuss findings from the simulation study. are the results expected from knowledge gained from literature search? are they different?
+
+\hypertarget{limitations}{%
+\subsection{Limitations}\label{limitations}}
+
+{[}discuss some limitations of the simulation study -- ideas include things such as how simulated data =/= real life data, discuss some limitations, future plans?{]}
+
+\hypertarget{real_data}{%
+\section{Study on Real Data}\label{real_data}}
+
+{[}connect back to chapter 1{]}
+
+\hypertarget{conclusion}{%
+\chapter{Conclusion}\label{conclusion}}
+
+{[}write a few paragraphss to wrap up entire thesis{]}
+
 \hypertarget{corrections}{%
 \chapter*{Corrections}\label{corrections}}
 \addcontentsline{toc}{chapter}{Corrections}
@@ -522,6 +572,9 @@ Kelderman, K., Kunstman, B., Roy, H., Sivakumar, N., Mccormick, S., \& Bernhardt
 
 \leavevmode\hypertarget{ref-Lafleur2011}{}%
 Lafleur, B., Lee, W., Billhiemer, D., Lockhart, C., Liu, J., \& Merchant, N. (2011). Statistical methods for assays with limits of detection: Serum bile acid as a differentiator between patients with normal colons, adenomas, and colorectal cancer. \emph{Journal of Carcinogenesis}, \emph{10}, 1--8. \url{http://doi.org/10.4103/1477-3163.79681}
+
+\leavevmode\hypertarget{ref-Morris2019}{}%
+Morris, T. P., White, I. R., \& Crowther, M. J. (2019). Using simulation studies to evaluate statistical methods. \emph{Statistics in Medicine}, \emph{38}(11), 2074--2102. \url{http://doi.org/10.1002/sim.8086}
 \end{cslreferences}
 % Index?
 

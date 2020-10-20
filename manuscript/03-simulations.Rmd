@@ -1,0 +1,39 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Simulations {#simulations}
+
+[short passage describing what we hope to gain from performing a simulation study]
+
+## ADEMPS {#ademps}
+
+[discuss ademps approach to designing a simulation study] [@Morris2019]
+
+### Aims {#aims}
+
+### Data-Generating Mechanisms {#data_generating_mechanisms}
+
+### Estimands {#estimands}
+
+### Methods {#methods}
+
+### Performance Measures {#performance_measures}
+
+## Results {#results}
+
+[place figures/tables from results of simulation study here, along with explanation]
+
+## Discussion {#discussion}
+
+[discuss findings from the simulation study. are the results expected from knowledge gained from literature search? are they different? 
+
+### Limitations {#limitations}
+
+[discuss some limitations of the simulation study -- ideas include things such as how simulated data =/= real life data, discuss some limitations, future plans?]
+
+## Study on Real Data {#real_data}
+
+[connect back to chapter 1]
