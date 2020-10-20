@@ -10,6 +10,7 @@ library(tidyverse)
 library(missMethods) #package for generating missing data
 library(NADA) #package for mle for left censored data
 library(fitdistrplus) #package for mle imputation method
+library(lodi) #package for censored likelihood MI
 ```
 
 # Preliminary
@@ -30,12 +31,13 @@ sd = 1
 threshold <- 9
 
 #creating df outside of loop to store summary stats of methods
-store_names <- c("iteration", "num_samples", "method", "x_bar", "s^2") #standard variable names -> change s^2 to s.2??
-store_df <- as.data.frame(matrix(ncol = 5, nrow = 0))
+#xbar is sample mean, sem is standard error of the mean, s is sample standard deviation
+store_names <- c("iteration", "num_samples", "method", "xbar", "se", "samp_sd")
+store_df <- as.data.frame(matrix(ncol = 6, nrow = 0))
 names(store_df) <- store_names
 ```
 
-maybe get standard errors in the future (sqrt of those) in the future
+#maybe get standard errors in the future (sqrt of those) in the future
 
 # ALL METHODS COMBINED 
 
@@ -44,7 +46,7 @@ maybe get standard errors in the future (sqrt of those) in the future
 all_function <- function(n.iter, samplesize){
   for(i in 1:n.iter){
     iteration <- i
-    true.value <- rnorm(n = samplesize, mean = mean, sd = sd) #change to true.value
+    true.value <- rnorm(n = samplesize, mean = mean, sd = sd)
     sim_df <- as.data.frame(cbind(iteration, true.value)) %>%
         #below is T if value below threshold, else F
         mutate(below = as.logical(case_when(true.value <= threshold ~ TRUE, 
@@ -61,20 +63,22 @@ all_function <- function(n.iter, samplesize){
     #getting summary stats for substitution
     store_df[i, 1] <- iteration
     store_df[i, 2] <- samplesize
-    store_df[i, 3] <- "substitution"
+    store_df[i, 3] <- "LOD/2"
     store_df[i, 4] <- mean(sim_df$imp_substitution)
-    store_df[i, 5] <- sd(sim_df$imp_substitution)
+    store_df[i, 5] <- sd(sim_df$imp_substitution)/sqrt(n.iter)
+    store_df[i, 6] <- sd(sim_df$imp_substitution)
     
     #approach #2: mle
     mle_res = cenmle(sim_df$true.value, sim_df$below, 
                      conf.int=0.95, dist = "gaussian")
     
-    #getting summary stats for mle 
+    #getting summary stats for MLE
     store_df[i+n.iter, 1] <- iteration
     store_df[i+n.iter, 2] <- samplesize
-    store_df[i+n.iter, 3] <- "mle"
+    store_df[i+n.iter, 3] <- "MLE"
     store_df[i+n.iter, 4] <- coef(summary(mle_res))["(Intercept)"]
-    store_df[i+n.iter, 5] <- sd(mle_res)
+    store_df[i+n.iter, 5] <- sd(mle_res)/sqrt(n.iter)
+    store_df[i+n.iter, 6] <- sd(mle_res)
     
     #approach #3: KM
     km_res = cenfit(sim_df$true.value, sim_df$below, 
@@ -83,9 +87,10 @@ all_function <- function(n.iter, samplesize){
     #getting summary stats for KM
     store_df[i+(2*n.iter), 1] <- iteration
     store_df[i+(2*n.iter), 2] <- samplesize
-    store_df[i+(2*n.iter), 3] <- "km"
+    store_df[i+(2*n.iter), 3] <- "KM"
     store_df[i+(2*n.iter), 4] <- mean(km_res)[[1]]
-    store_df[i+(2*n.iter), 5] <- sd(km_res)
+    store_df[i+(2*n.iter), 5] <- sd(km_res)/sqrt(n.iter)
+    store_df[i+(2*n.iter), 6] <- sd(km_res)
     
     #approach #4 ROS
     ros_res = ros(sim_df$true.value, sim_df$below, 
@@ -96,7 +101,8 @@ all_function <- function(n.iter, samplesize){
     store_df[i+(3*n.iter), 2] <- samplesize
     store_df[i+(3*n.iter), 3] <- "ROS"
     store_df[i+(3*n.iter), 4] <- mean(ros_res)
-    store_df[i+(3*n.iter), 5] <- sd(ros_res)
+    store_df[i+(3*n.iter), 5] <- sd(ros_res)/sqrt(n.iter)
+    store_df[i+(3*n.iter), 6] <- sd(ros_res)
     
   }
   return(store_df)
