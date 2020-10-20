@@ -258,27 +258,3 @@ testdf3 <- mosaic::do(1) * ros_func(5, 1000) #errors may arise due to attempts t
                                              #but can't be helped with out parametric setting...
 testdf4 <- mosaic::do(1) * km_func(5, 1000)
 ```
-
-instead of trying to run the km function, could we try to have 2 separate helper functions? one to pull out the mean and another to pull out the sd? --> NOT SUCCESSFUL
-
-AHHHHHHHH!
-
-hmm... let's just get rid of the KM method fully, i found a new method robust ROS (regression on order statistics) -- which could potentially serve as another method we could use...
-
-https://acwi.gov/monitoring/conference/2008/presentations/sessionE/E6C_Helsel.pdf
-https://www.itrcweb.org/gsmc-1/Content/GW%20Stats/5%20Methods%20in%20indiv%20Topics/5%207%20Nondetects.htm
-
-
-
----
-
-clean up code to work with only 1 data frame for comprehension
-combining mutates
-
-FOCUS ON WRITING, WRITE ABOUT DIFFERENT METHODS AND UNDERSTANDING THEM BY MONDAY
-
-
-
-
-
-
