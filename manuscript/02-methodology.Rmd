@@ -11,13 +11,19 @@ library(knitr)
 
 # Methodology {#methodology}
 
+The idea of missingness and incompleteness is commonplace throughout our world, and is even more prevalent within the statistical world. Known more formally as censoring, this condition exists when we have incomplete information regarding the values of a measurement within a dataset. Before we delve into an assessment of the methods commonly utilized to account for this, we will develop a general idea of what censoring and the problems it can cause.
+
 ## Overview {#overview}
 
-* The idea of missingness and incompleteness is commonplace throughout our world, and is even more prevalent within the statistical world. Known more formally as censoring, this condition exists when we have incomplete information regarding the values of a measurement within a dataset.
+Censored data is any data in which the value of a measurement is only known to a certain extent. As a phenomenon, censoring is most often discussed in the branch of statistics known as survival analysis, which concerns itself with techniques to analyze a time to an event variable. As their name suggests, these variables measure the time which passes until some sort of event occurs. The type of event being observed need not be related to issues related to mortality, but it is certainly is most commonly employed in the health-care field. These types of events can be as innocuous as the time at which an device breaks, time at which birds migrate away from their homes, or even things like time at which an ice cream scoop falls onto the pavement. Regardless of which, all of these scenarios share a common flaw in terms of 
+
+This sort of variable encompasses a wide-ranging scope of fields in which survival analysis can be applied. 
+
+questions such as, "What proportion of individuals will survive past time $t$?" and "What 
 
 * A specific instance of censoring which scientists crossing beyond fields exists in the form of left-censored data.
 
-* To understand this phenomena better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You wake up every morning far before the sun rises, at 3 A.M. and make sure to stay outside to witness the specific time at which you are able to see the sunrise, recording that time. However, on the first day of the study, you oversleep and wake up at 7:00 AM, with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit value. All we know is that by 7:00 AM, the sun had already rose. The time at which the sunrise occurred could be any time before 7:00 AM, we have no knowledge on when that time could be.
+* To understand this phenomena better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You wake up every morning far before the sun rises, at 3 A.M. and make sure to stay outside to witness the specific time at which the sunrise is able to be seen, recording that time. However, on the first day of the study, you oversleep and wake up at 7:00 AM, with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit value. All we know is that by 7:00 AM, the sun had already risen. The time at which the sunrise occurred could be any time before 7:00 AM, we have no knowledge on when that time could be.
 
 * As the scenario demonstrates, this form of censoring can often prove to be a thorn in the side, as the lack of certainty that we have in a measurement, often adds a layer of complexity within an analysis.
 
@@ -29,7 +35,7 @@ library(knitr)
 
 * An common malpractice used in order to account for left-censored practice is omitting these left-censored values from the analysis, which is of course the easiest way to deal with them -- but this approach discards a myriad of useful information [@Berthouex2020]
 
-* These LOD entries still contain information that a lot of people don't realize -- specifically information that the values is between 0 and the LOD, which is actually very useful information. [@Chen2011]
+* These LOD entries still contain information that a lot of people don't realize -- specifically information that the values is between the lower bound value (if it exists) and the LOD, which is actually very useful information. [@Chen2011]
 
 * On the same vein, reporting limits can often be used be misleading as non-statisticians (practices in environmental law) may often interpret ND (non-detect) as nullity, when in fact it only means that the measurement falls below a certain limit [@Elias1999]
 
@@ -51,15 +57,19 @@ library(knitr)
 
 ### Substitution Approach {#Substitution} 
 
+*[start off explaining what substitution method is]
+
 * Substitution methods are statistically *unsound* methods but are easy to implement which is why they are often used (common imputed values often include: LOD/2, LOD/sqrt(2), LOD) [@Chen2011]
 
-* In a study performed by [Glass] to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods. [@Glass2001]
+* In a study performed by [Glass] to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods, as they both introduce large errors and biases [@Glass2001]
 
-* Widely discouraged to be used as it often introduces large errors and bias, especially when significant portions of the data set is already censored [@Canales2018]
+* Widely discouraged as a method to be used [@Canales2018]
 
 ### Maximum Likelihood Estimation {#MLE}
 
 * Maximum likelihood is a parametric technique which allows us to estimate the parameter values of a distribution/model. 
+
+* [needs more theoretical exposition, walk through general theory, if we have observed $x_i, ..., x_n$ from $X \sim f(x|\theta)$ and we want to estimate $\theta$]
 
 * As an example, given a few data points which we know have been generated from a Gaussian(0, 1) distribution, this technique seeks to calculate the maximum likelihood estimates of the paramter values for the Gaussian distribution, $\mu$ and $\sigma$.
 
@@ -79,7 +89,7 @@ This gives us a likelihood of $$lik(\theta) = \prod_{i=1}^n f(X_i|\theta)$$ whic
 
 * What is the Kaplan-Meier estimator? In survival analysis studies when the focus is a type of "time to a certain event occurring," most often things like time to death, or time to failure.
 
-* If we think about it from a mortality perspective, the survival function is a function which gives the probability of survival over time, with the y-axis representing the probability of survival and x-axis being time.
+* If we think about it from a mortality perspective, the survival function is a function which gives the probability of survival over time
 
 * [INSERT PICTURE OF EXAMPLE SURVIVAL CURVE HERE]
 
