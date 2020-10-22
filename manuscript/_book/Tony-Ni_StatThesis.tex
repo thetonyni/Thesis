@@ -312,27 +312,22 @@ Within the report, the EIP mentions certain restrictions within the data that ha
 \hypertarget{methodology}{%
 \chapter{Methodology}\label{methodology}}
 
+The idea of missingness and incompleteness is commonplace throughout our world, and is even more prevalent within the statistical world. Known more formally as censoring, this condition exists when we have incomplete information regarding the values of a measurement within a dataset. Before we delve into an assessment of the methods commonly utilized to account for this, we will develop a general idea of what censoring and the problems it can cause.
+
 \hypertarget{overview}{%
 \section{Overview}\label{overview}}
+
+Censored data is any data in which the value of a measurement is only known to a certain extent. As a phenomenon, censoring is most often discussed in the branch of statistics known as survival analysis, which concerns itself with techniques to analyze a time to an event variable. As their name suggests, these variables measure the time which passes until some sort of event occurs. The type of event being observed need not be related to issues related to mortality, but it is certainly is most commonly employed in the health-care field. These types of events can be as innocuous as the time at which an device breaks, time at which birds migrate away from their homes, or even things like time at which an ice cream scoop falls onto the pavement. Regardless of which, all of these scenarios share a common flaw in terms of the possibility of the data being ``censored.''
+
+There are a myriad of types of censoring which can be discussed, however the focus of my thesis deals specifically with left-censoring. This specific instance of censoring occurs when we do not know the the true value of a data point, but only know that it falls below a certain threshold which we call the ``limit of detection.'' To understand this concept better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You wake up every morning far before the sun rises, at 3 A.M. and make sure to stay outside to witness the specific time at which the sunrise is able to be seen, recording that time. However, on the first day of the study, you oversleep and wake up at 7:00 AM, with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit value. All we know is that by 7:00 AM, the sun had already risen. The time at which the sunrise occurred could be any time before 7:00 AM, we have no knowledge on when that time could be. This form of censoring can often prove to be a thorn in one's side, as the lack of certainty that one have in the measurement adds a layer of complexity which must be accounted for within an analysis.
+
+Expanding on the discussion on the limit of detection, which will be used interchangeably with the abbreviation \emph{LOD} in the future, the LOD is a concept closely linked to the field missing data. LOD values are often overlooked as a result of misguided practices (in terms of statistical analysis) by some non-statisticians, which can bring about faulty analysis and/or conclusions which are heavily flawed.
+
+\hypertarget{common-misguided-notions-regarding-the-lod}{%
+\subsection{Common misguided notions regarding the LOD}\label{common-misguided-notions-regarding-the-lod}}
+
+One of the most common malpractices used in order to account for left-censored data is by omitting censored values from the analysis, which is of course the easiest way to deal with them -- but this approach discards a myriad of useful information. In a study conducted by (Berthouex, 2020), the researchers specifically gave instructions to participating laboratories to report a numeric value for each sample regardless of whether or not the value is below the detection limit which was followed by all but one laboratory. Not reporting the numeric values of those below the detection limit seems to be a common practice in the fields outside of statistics due to misinformation which is a practice which needs to be discontinued. The values below the LOD still contain information, specifically that the values is between the lower bound value (if it exists) and the LOD (Chen et al., 2011).
 \begin{itemize}
-\item
-  The idea of missingness and incompleteness is commonplace throughout our world, and is even more prevalent within the statistical world. Known more formally as censoring, this condition exists when we have incomplete information regarding the values of a measurement within a dataset.
-\item
-  A specific instance of censoring which scientists crossing beyond fields exists in the form of left-censored data.
-\item
-  To understand this phenomena better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You wake up every morning far before the sun rises, at 3 A.M. and make sure to stay outside to witness the specific time at which you are able to see the sunrise, recording that time. However, on the first day of the study, you oversleep and wake up at 7:00 AM, with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit value. All we know is that by 7:00 AM, the sun had already rose. The time at which the sunrise occurred could be any time before 7:00 AM, we have no knowledge on when that time could be.
-\item
-  As the scenario demonstrates, this form of censoring can often prove to be a thorn in the side, as the lack of certainty that we have in a measurement, often adds a layer of complexity within an analysis.
-\item
-  Left-censored values are also commonly referred to as limit of detection values, which will be used throughout this discussion.
-\item
-  What is the of detection (LOD)? LOD is often thought of as being closely related to analytical chemistry, but it lies close to the realm of statistics as well. By definition, a limit of detection is the lowest value reported which is different than the blank (generally zero) with some confidence level.
-\item
-  What is the problem with LOD? As a concept closely related to missing data, LOD values are often can lead to bad practices (in terms of statistical analysis) leading to analysis and/or conclusions which are heavily flawed as a result of someone misguided practices being used in the current statistical world in order to account for them.
-\item
-  An common malpractice used in order to account for left-censored practice is omitting these left-censored values from the analysis, which is of course the easiest way to deal with them -- but this approach discards a myriad of useful information (Berthouex, 2020)
-\item
-  These LOD entries still contain information that a lot of people don't realize -- specifically information that the values is between 0 and the LOD, which is actually very useful information. (Chen et al., 2011)
 \item
   On the same vein, reporting limits can often be used be misleading as non-statisticians (practices in environmental law) may often interpret ND (non-detect) as nullity, when in fact it only means that the measurement falls below a certain limit (Elias \& Goodman, 1999)
 \item
@@ -359,19 +354,23 @@ Within the report, the EIP mentions certain restrictions within the data that ha
 \end{itemize}
 \hypertarget{Substitution}{%
 \subsection{Substitution Approach}\label{Substitution}}
+
+*{[}start off explaining what substitution method is{]}
 \begin{itemize}
 \item
   Substitution methods are statistically \emph{unsound} methods but are easy to implement which is why they are often used (common imputed values often include: LOD/2, LOD/sqrt(2), LOD) (Chen et al., 2011)
 \item
-  In a study performed by {[}Glass{]} to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods. (Glass \& Gray, 2001)
+  In a study performed by {[}Glass{]} to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods, as they both introduce large errors and biases (Glass \& Gray, 2001)
 \item
-  Widely discouraged to be used as it often introduces large errors and bias, especially when significant portions of the data set is already censored (Canales, 2018)
+  Widely discouraged as a method to be used (Canales, 2018)
 \end{itemize}
 \hypertarget{MLE}{%
 \subsection{Maximum Likelihood Estimation}\label{MLE}}
 \begin{itemize}
 \item
   Maximum likelihood is a parametric technique which allows us to estimate the parameter values of a distribution/model.
+\item
+  {[}needs more theoretical exposition, walk through general theory, if we have observed \(x_i, ..., x_n\) from \(X \sim f(x|\theta)\) and we want to estimate \(\theta\){]}
 \item
   As an example, given a few data points which we know have been generated from a Gaussian(0, 1) distribution, this technique seeks to calculate the maximum likelihood estimates of the paramter values for the Gaussian distribution, \(\mu\) and \(\sigma\).
 \item
@@ -394,7 +393,7 @@ This gives us a likelihood of \[lik(\theta) = \prod_{i=1}^n f(X_i|\theta)\] whic
 \item
   What is the Kaplan-Meier estimator? In survival analysis studies when the focus is a type of ``time to a certain event occurring,'' most often things like time to death, or time to failure.
 \item
-  If we think about it from a mortality perspective, the survival function is a function which gives the probability of survival over time, with the y-axis representing the probability of survival and x-axis being time.
+  If we think about it from a mortality perspective, the survival function is a function which gives the probability of survival over time
 \item
   {[}INSERT PICTURE OF EXAMPLE SURVIVAL CURVE HERE{]}
 \item
