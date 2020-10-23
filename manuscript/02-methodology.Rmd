@@ -37,18 +37,18 @@ Apart from complete-case analysis, which is of course the most natural idea whic
 
 ### Substitution Approach {#Substitution} 
 
-Often condemned in papers, and rightly so, as a statistically unsound method to handle censored data, substitution methods are unfortunately ubiquitous in many fields outside of statistics as a way to handle censored data sets, often being cited in environmental science papers as a method to work with left-censored chemical concentration data. 
+Often condemned in papers, and rightly so, as a statistically unsound method to handle censored data, substitution methods are unfortunately ubiquitous in many fields outside of statistics as a way to handle censored data sets, often being cited in environmental science papers as a method to work with left-censored chemical concentration data [@Canales2018].
 
 In analytical chemistry, a limit of detection is defined as:
 
 $$LOD = \mu_{blank} + K\sigma_{blank}$$
 where the distribution of the blank is assumed to be Gaussian, with mean $\mu_{blank}$, standard deviation $\sigma_{blank}$, and K representing a "definition-specific constant," which is usually between the range 2.0 to 3.0. Ideally the blank will contain as little of the analyte of interest as possible, as it serves as the control and the basis as to which samples are being compared to. With a K = 3, it is to be expected that around 99.7% of the observations from a blank sample will be below the limit of detection as per the empirical rule for a Gaussian distribution [@May2012].
 
-Once the LOD is determined for the study, the substitution method simply involves imputing in a replacement value in lieu of the censored data point. This replacement value used may differ between studies but common values include: $\frac{LOD}{2}, \frac{LOD}{\sqrt2}$, or $LOD$. Of course there may be more out there, but it must be recognized that the substitution method is a statistically *unsound* technique which are used often in non-rigorous statistical settings due to them being quite easy to implement [@Chen2011].
+Once the LOD is determined for the study, the substitution method simply involves imputing in a replacement value in lieu of the censored data point. 
 
-* In a study performed by [Glass] to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods, as they both introduce large errors and biases [@Glass2001]
+This replacement value used may differ between studies but common values include: $\frac{LOD}{2}, \frac{LOD}{\sqrt2}$, or $LOD$. Of course there may be more out there, but it must be recognized that the substitution method is a statistically *unsound* technique which are used often in non-rigorous statistical settings due to them being quite easy to implement [@Chen2011].
 
-* Widely discouraged as a method to be used [@Canales2018]
+In a study performed by Glass to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods from the values listed previously. The investigated substitution enthusiasts' claims of certain replacement values being more apt for certain types of data sets. These proponents of the method claim that the replacement value $\frac{LOD}{2}$ is useful for data sets in which lots of data are below the LOD or when the data is highly skewed with a geometric standard deviation (a measure of spread commonly used in tandem with log-normal distributions) of 3 or more. On the same note, they claim that the $\frac{LOD}{\sqrt2}$ is helpful for cases when there are only a few data points below the LOD or when the data is not highly skewed. From Glass' results, it was found that both of these methods are equally unsound in their reasoning and logic as they both introduce large errors and biases regardless of the data set being used [@Glass2001].
 
 ### Maximum Likelihood Estimation {#MLE}
 
