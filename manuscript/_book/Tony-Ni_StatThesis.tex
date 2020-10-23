@@ -321,34 +321,22 @@ Censored data is any data in which the value of a measurement is only known to a
 
 There are a myriad of types of censoring which can be discussed, however the focus of my thesis deals specifically with left-censoring. This specific instance of censoring occurs when we do not know the the true value of a data point, but only know that it falls below a certain threshold which we call the ``limit of detection.'' To understand this concept better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You wake up every morning far before the sun rises, at 3 A.M. and make sure to stay outside to witness the specific time at which the sunrise is able to be seen, recording that time. However, on the first day of the study, you oversleep and wake up at 7:00 AM, with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit value. All we know is that by 7:00 AM, the sun had already risen. The time at which the sunrise occurred could be any time before 7:00 AM, we have no knowledge on when that time could be. This form of censoring can often prove to be a thorn in one's side, as the lack of certainty that one have in the measurement adds a layer of complexity which must be accounted for within an analysis.
 
-\hypertarget{common-malpractices-from-non-statisticians}{%
-\subsection{Common malpractices from non-statisticians}\label{common-malpractices-from-non-statisticians}}
+\hypertarget{malpractices}{%
+\subsection{Common malpractices from non-statisticians}\label{malpractices}}
 
 Expanding on the discussion on the limit of detection, which will be used interchangeably with the abbreviation \emph{LOD} in the future, the LOD is a concept closely linked to the field missing data. LOD values are often overlooked as a result of misguided practices (in terms of statistical analysis) by some non-statisticians, which can bring about faulty analysis and/or conclusions which are heavily flawed.
 
 One of the most common malpractices used in order to account for left-censored data is by omitting censored values from the analysis, which is of course the easiest way to deal with them -- but this approach discards a myriad of useful information. In a study conducted by (Berthouex, 2020), the researchers specifically gave instructions to participating laboratories to report a numeric value for each sample regardless of whether or not the value is below the detection limit which was followed by all but one laboratory. Not reporting the numeric values of those below the detection limit seems to be a common practice in the fields outside of statistics due to misinformation which is a practice which needs to be discontinued. The values below the LOD still contain information, specifically that the values is between the lower bound value (if it exists) and the LOD (Chen et al., 2011).
 
-Another issue lies within the art of reporting values which fall below the LOD. Amongst chemists, indicating whether or not if a value is below the LOD varies widely across labs and as reporting practices are not standardized. Some laboratories may explicitly record \texttt{ND}, others may put down \texttt{\textless{}} followed by the smallest recorded value to indicate that an observation's value is left-censored, others may simply omit the value completely (Berthouex, 2020). The lack of a universal reporting practice for values below the LOD is something which fosters a breeding ground for bad reporting habits amongst researchers.
+Another issue lies within the art of reporting values which fall below the LOD. Amongst chemists, indicating whether or not if a value is below the LOD varies widely across labs and as reporting practices are not standardized. Some laboratories may explicitly record \texttt{ND}, others may put down \texttt{\textless{}} followed by the smallest recorded value to indicate that an observation's value is left-censored, others may simply omit the value completely (Berthouex, 2020). The lack of a universal reporting practice for values below the LOD is something which fosters a breeding ground for bad reporting habits among researchers.
 
 On the same vein, reporting limits can often be misunderstood by non-statisticians. In an article published by the American Bar Association, a scenario is played out in which which a company seeking to purchase a gasoline service station obtains a laboratory report of the chemical concentrations of copper in that area, which was found to be \texttt{ND}, also known as non-detect. The company and its lawyers mistakenly interpret this \texttt{ND} as nullity, when in fact it only means that the measurement is not detected by the devices used by the laboratories to measure the chemical concentrations (Elias \& Goodman, 1999).
-\begin{itemize}
-\item
-  Of course, these methods aren't the only way to deal with it, but it is what we have come up with for now. Detection limits are constantly changing as time passes and because of that -- techniques and ways to combat it will gradually evolve and change (for the better) to deal with it
-\item
-  Detection limits are constantly changing: as technology improves, so too does our ability to accurately measure substances (Elias \& Goodman, 1999)
-\end{itemize}
-\hypertarget{reporting}{%
-\section{Reporting}\label{reporting}}
-\begin{itemize}
-\tightlist
-\item
-  The way that chemists/researchers indicate whether or not if a value is a LOD value or not varies across labs and as such isn't standardized\ldots{} Some may explicitly record \texttt{ND}, \texttt{\textless{}\ value} to indicate that an observation's value is left-censored. Others may simply record the value between 0 and LOD and not mark it as being left-censored at all (Berthouex, 2020)
-\end{itemize}
+
 \hypertarget{Approaches}{%
 \section{Approaches}\label{Approaches}}
+
+As discussed in the previous overview section \ref{malpractices}, there are a variety of unsound statistical treatments for censored data which have been popularized in the statistical community to treat censored data.
 \begin{itemize}
-\item
-  As discussed in the previous overview section {[}put link here to refer back to section{]}, there are a variety of ``statistical treatments,'' which have been popularized in the statistical community to treat censored data.
 \item
   Statisticians over past century have come up with methods to deal with this issue (some good\ldots{} and some\ldots{} kind of absolutely terrible). There are many different ways that researchers are dealing with detection limits, which are ubiquitous in the scientific realm. Some of the most common methods involve substitution, nonparametric, and maximum likelihood methods. (Lafleur et al., 2011)
 \item
@@ -458,6 +446,13 @@ This gives us a likelihood of \[lik(\theta) = \prod_{i=1}^n f(X_i|\theta)\] whic
   KM method is better than MLE for data where there are TONS of missing data or if data is highly skewed (distribution not assumed in KM method) (Canales, 2018)
 \item
   Uses RMSE (root mean squared error) to see how close the estimated values are to the true values (lower RMSE means closer estimation to known values) (Canales, 2018)
+\end{itemize}
+\hypertarget{closing-remarks}{%
+\section{Closing Remarks}\label{closing-remarks}}
+\begin{itemize}
+\tightlist
+\item
+  Of course, these methods aren't the only way to deal with it, but it is what we have come up with for now. Detection limits are constantly changing as time passes and because of that -- techniques and ways to combat it will gradually evolve and change (for the better) to deal with it. Detection limits are constantly changing: as technology improves, so too does our ability to accurately measure substances (Elias \& Goodman, 1999)
 \end{itemize}
 \hypertarget{packages}{%
 \subsection{Packages}\label{packages}}
