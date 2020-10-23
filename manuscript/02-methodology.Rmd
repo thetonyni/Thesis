@@ -53,7 +53,6 @@ In a study performed by Glass to investigate the effectiveness of LOD approaches
 ### Maximum Likelihood Estimation {#MLE}
 
 * Maximum likelihood is a parametric technique which allows us to estimate the parameter values of a distribution/model. 
-
 * [needs more theoretical exposition, walk through general theory, if we have observed $x_i, ..., x_n$ from $X \sim f(x|\theta)$ and we want to estimate $\theta$]
 
 * As an example, given a few data points which we know have been generated from a Gaussian(0, 1) distribution, this technique seeks to calculate the maximum likelihood estimates of the paramter values for the Gaussian distribution, $\mu$ and $\sigma$.

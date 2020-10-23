@@ -335,25 +335,26 @@ On the same vein, reporting limits can often be misunderstood by non-statisticia
 \hypertarget{Approaches}{%
 \section{Approaches}\label{Approaches}}
 
-As discussed in the previous overview section \ref{malpractices}, there are a variety of unsound statistical treatments for censored data which have been popularized in the statistical community to treat censored data.
-\begin{itemize}
-\item
-  Statisticians over past century have come up with methods to deal with this issue (some good\ldots{} and some\ldots{} kind of absolutely terrible). There are many different ways that researchers are dealing with detection limits, which are ubiquitous in the scientific realm. Some of the most common methods involve substitution, nonparametric, and maximum likelihood methods. (Lafleur et al., 2011)
-\item
-  Substitution is commonly cited as the worst way, nonparametric ways do better, maximum likelihood methods are the best (Lafleur et al., 2011)
-\end{itemize}
+As discussed in section \ref{malpractices}, there are a variety of sound and unsound statistical treatments for censored data which have been popularized in the statistical community to treat censored data. Discussed briefly previously, omission involves the deletion of data points which are deemed to be invalid, as a result of left-censoring or any other deficiencies in the data. This is also more commonly known as \emph{complete-case analysis}, in which statistical analysis is conducted while only considering the observations which have no missing data on the variables of interest, and excluding the observations with missing values (May, 2012). May argues against this approach and claims that the loss of information from discarding data and the inflation of standard errors of estimates (when discussing missingness in a regression context) will invariably be inflated as a result of the decreased sample size.
+
+Apart from complete-case analysis, which is of course the most natural idea which pops up in our minds when discussing topics involving missingness and censoring. Over the past century, a myriad of methods to deal with censoring have been developed to counter this issue -- some more statistically sound than others. Some of the most common methods to estimate descriptive statistics involving censored data include but are not limited to: substitution, maximum likelihood estimation, Kaplan-Meier, regression on order statistics, and of course distributional based multiple imputation methods (Lafleur et al., 2011).
+
 \hypertarget{Substitution}{%
 \subsection{Substitution Approach}\label{Substitution}}
 
-*{[}start off explaining what substitution method is{]}
-\begin{itemize}
-\item
-  Substitution methods are statistically \emph{unsound} methods but are easy to implement which is why they are often used (common imputed values often include: LOD/2, LOD/sqrt(2), LOD) (Chen et al., 2011)
-\item
-  In a study performed by {[}Glass{]} to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods. The first method they implemented was replacing all values with LOD/2, they claim these method was recommended for datasets where lots of data is below LOD or when data is highly skewed with a geometric sd of 3 or more. Some people also use LOD/sqrt(2) and which recommended to be used when few data us below LOD or when data is not highly skewed. However, through their study, they found that there really isn't a difference between these two methods, as they both introduce large errors and biases (Glass \& Gray, 2001)
-\item
-  Widely discouraged as a method to be used (Canales, 2018)
-\end{itemize}
+Often condemned in papers, and rightly so, as a statistically unsound method to handle censored data, substitution methods are unfortunately ubiquitous in many fields outside of statistics as a way to handle censored data sets, often being cited in environmental science papers as a method to work with left-censored chemical concentration data (Canales, 2018).
+
+In analytical chemistry, a limit of detection is defined as:
+
+\[LOD = \mu_{blank} + K\sigma_{blank}\]
+where the distribution of the blank is assumed to be Gaussian, with mean \(\mu_{blank}\), standard deviation \(\sigma_{blank}\), and K representing a ``definition-specific constant,'' which is usually between the range 2.0 to 3.0. Ideally the blank will contain as little of the analyte of interest as possible, as it serves as the control and the basis as to which samples are being compared to. With a K = 3, it is to be expected that around 99.7\% of the observations from a blank sample will be below the limit of detection as per the empirical rule for a Gaussian distribution (May, 2012).
+
+Once the LOD is determined for the study, the substitution method simply involves imputing in a replacement value in lieu of the censored data point.
+
+This replacement value used may differ between studies but common values include: \(\frac{LOD}{2}, \frac{LOD}{\sqrt2}\), or \(LOD\). Of course there may be more out there, but it must be recognized that the substitution method is a statistically \emph{unsound} technique which are used often in non-rigorous statistical settings due to them being quite easy to implement (Chen et al., 2011).
+
+In a study performed by Glass to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods from the values listed previously. The investigated substitution enthusiasts' claims of certain replacement values being more apt for certain types of data sets. These proponents of the method claim that the replacement value \(\frac{LOD}{2}\) is useful for data sets in which lots of data are below the LOD or when the data is highly skewed with a geometric standard deviation (a measure of spread commonly used in tandem with log-normal distributions) of 3 or more. On the same note, they claim that the \(\frac{LOD}{\sqrt2}\) is helpful for cases when there are only a few data points below the LOD or when the data is not highly skewed. From Glass' results, it was found that both of these methods are equally unsound in their reasoning and logic as they both introduce large errors and biases regardless of the data set being used (Glass \& Gray, 2001).
+
 \hypertarget{MLE}{%
 \subsection{Maximum Likelihood Estimation}\label{MLE}}
 \begin{itemize}
@@ -450,7 +451,8 @@ This gives us a likelihood of \[lik(\theta) = \prod_{i=1}^n f(X_i|\theta)\] whic
 \hypertarget{closing-remarks}{%
 \section{Closing Remarks}\label{closing-remarks}}
 \begin{itemize}
-\tightlist
+\item
+  Substitution is commonly cited as the worst way, nonparametric ways do better, maximum likelihood methods are the best (Lafleur et al., 2011)
 \item
   Of course, these methods aren't the only way to deal with it, but it is what we have come up with for now. Detection limits are constantly changing as time passes and because of that -- techniques and ways to combat it will gradually evolve and change (for the better) to deal with it. Detection limits are constantly changing: as technology improves, so too does our ability to accurately measure substances (Elias \& Goodman, 1999)
 \end{itemize}
@@ -568,6 +570,9 @@ Kelderman, K., Kunstman, B., Roy, H., Sivakumar, N., Mccormick, S., \& Bernhardt
 
 \leavevmode\hypertarget{ref-Lafleur2011}{}%
 Lafleur, B., Lee, W., Billhiemer, D., Lockhart, C., Liu, J., \& Merchant, N. (2011). Statistical methods for assays with limits of detection: Serum bile acid as a differentiator between patients with normal colons, adenomas, and colorectal cancer. \emph{Journal of Carcinogenesis}, \emph{10}, 1--8. \url{http://doi.org/10.4103/1477-3163.79681}
+
+\leavevmode\hypertarget{ref-May2012}{}%
+May, R. C. (2012). Estimation Methods for Data Subject to Detection Limits, 82.
 
 \leavevmode\hypertarget{ref-Morris2019}{}%
 Morris, T. P., White, I. R., \& Crowther, M. J. (2019). Using simulation studies to evaluate statistical methods. \emph{Statistics in Medicine}, \emph{38}(11), 2074--2102. \url{http://doi.org/10.1002/sim.8086}
