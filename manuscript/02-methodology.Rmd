@@ -52,24 +52,32 @@ In a study performed by Glass to investigate the effectiveness of LOD approaches
 
 ### Maximum Likelihood Estimation {#MLE}
 
-* Maximum likelihood is a parametric technique which allows us to estimate the parameter values of a distribution/model. 
-* [needs more theoretical exposition, walk through general theory, if we have observed $x_i, ..., x_n$ from $X \sim f(x|\theta)$ and we want to estimate $\theta$]
+Maximum likelihood is a parametric technique which allows us to estimate the parameter values of a distribution/model and one which is useful when encountering censored data.
 
-* As an example, given a few data points which we know have been generated from a Gaussian(0, 1) distribution, this technique seeks to calculate the maximum likelihood estimates of the paramter values for the Gaussian distribution, $\mu$ and $\sigma$.
+To give a brief introduction as to the the mechanisms of MLE and how it functions, given a random *i.i.d.* set of random variables $X_1, X_2,...,X_n$ from distribution $f(x|\theta)$.
 
-* We need to calculate the total probability of observing all the data (the joint probability distribution of all data points). This is the product of the marginal densities assuming i.i.d. 
+For every observed random sample $x_1,...,x_n$, we can define the joint density function to be:
 
-This gives us a likelihood of $$lik(\theta) = \prod_{i=1}^n f(X_i|\theta)$$ which we can maximize in order to obtain our MLE estimate for the parameter of interest. [CITE RICE TEXTBOOK]
+$$f(x_1,...,x_n|\theta) = f(x_1|\theta)...f(x_n|\theta) = \prod_{i=1}^{n}f(x_i|\theta)$$
+Upon observing the given data, $f(x_1,...,x_n|\theta)$ becomes a function of $\theta$ alone, so we obtain a likelihood of:
 
-* Maximum likelihood estimation is widely thought to be optimal, but only if one knows the proposed model and underlying distribution of the dataset in advance [@Canales2018]
+$$lik(\theta) = f(x_1,...,x_n|\theta)$$
+Our goal is to obtain the maximum likelihood estimate (mle) of $\theta$ which maximizes $lik(\theta)$, in other words, to obtain a $\theta$ which makes our observed data the most probable/likely.
 
-* The MLE method we will be utilizing is actually performed by obtaining regression estimates of slope(s) and intercepts through maximum likelihood with censored data. The `cenmle` function in the `NADA` package accomplishes this and allows us to calculate descriptive statistics for the entire dataset.
+As we previously declared our random variables $X_1, X_2,...,X_n$ to be i.i.d, we can rewrite the likelihood to be a product of the marginal densities:
+
+$$lik(\theta) = \prod_{i=1}^{n} f(x_i|\theta)$$
+in which we can then maximimze the likelihood to find the best mle of $\theta$ to best capture our observed data.
+
+Maximum likelihood estimation is widely thought to be optimal, but only if one knows the proposed model and underlying distribution of the dataset in advance, hence its classification as a parametric technique. In a study comparing methods to handling missing data, Canales found that the MLE method underperformed when the data in question was highly skewed, in which overinflated mean squared errors were often obtained [@Canales2018].
+
+The MLE method we will be utilizing is actually performed by obtaining regression estimates of slope(s) and intercepts through maximum likelihood with censored data. The `cenmle` function in the `NADA` package accomplishes this and allows us to calculate descriptive statistics for the entire dataset.
 
 * Useful slides to refer to here [https://www.eurachem.org/images/stories/workshops/2017_10_PT/pdf/contrib/O05-Mancin.pdf]
 
 ### Kaplan-Meier Estimate Approach {#Kaplan-Meier}
 
-* Kaplan-Meier approach is a common nonparametric technique used to deal with right-censored data, but it can also be used for left-censored values as well -- in the form of the reverse Kaplan-Meier estimator.
+The Kaplan-Meier method is a common nonparametric technique used to deal with censored data. Originally developed to handle right-censored survival analysis data, an offshoot method in the form of the Reverse Kaplan-Meier Estimator have sprung up as a way to handle left censored data as well [@Gillespie2010].
 
 * What is the Kaplan-Meier estimator? In survival analysis studies when the focus is a type of "time to a certain event occurring," most often things like time to death, or time to failure.
 
