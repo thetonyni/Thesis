@@ -342,7 +342,7 @@ Apart from complete-case analysis, which is of course the most natural idea whic
 \hypertarget{Substitution}{%
 \subsection{Substitution Approach}\label{Substitution}}
 
-Often condemned in papers, and rightly so, as a statistically unsound method to handle censored data, substitution methods are unfortunately ubiquitous in many fields outside of statistics as a way to handle censored data sets, often being cited in environmental science papers as a method to work with left-censored chemical concentration data (Canales, 2018).
+Often condemned in papers, and rightly so, as a statistically unsound method to handle censored data, substitution methods are unfortunately ubiquitous in many fields outside of statistics as a way to handle censored data sets, often being cited in environmental science papers as an appropriate (and even recommended) method to work with left-censored chemical concentration data (Canales, 2018).
 
 In analytical chemistry, a limit of detection is defined as:
 
@@ -351,7 +351,7 @@ where the distribution of the blank is assumed to be Gaussian, with mean \(\mu_{
 
 Once the LOD is determined for the study, the substitution method simply involves imputing in a replacement value in lieu of the censored data point.
 
-This replacement value used may differ between studies but common values include: \(\frac{LOD}{2}, \frac{LOD}{\sqrt2}\), or \(LOD\). Of course there may be more out there, but it must be recognized that the substitution method is a statistically \emph{unsound} technique which are used often in non-rigorous statistical settings due to them being quite easy to implement (Chen et al., 2011).
+This replacement value used may differ between studies but common values include: \(\frac{LOD}{2}, \frac{LOD}{\sqrt2}\), or \(LOD\). Different disciplines have their own suggested ``best,'' replacement value to use (Lee \& Helsel, 2005). Of course there may be more out there, but it must be recognized that the substitution method is a statistically \emph{unsound} technique which are used often in non-rigorous statistical settings due to them being quite easy to implement (Chen et al., 2011).
 
 In a study performed by Glass to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods from the values listed previously. The investigated substitution enthusiasts' claims of certain replacement values being more apt for certain types of data sets. These proponents of the method claim that the replacement value \(\frac{LOD}{2}\) is useful for data sets in which lots of data are below the LOD or when the data is highly skewed with a geometric standard deviation (a measure of spread commonly used in tandem with log-normal distributions) of 3 or more. On the same note, they claim that the \(\frac{LOD}{\sqrt2}\) is helpful for cases when there are only a few data points below the LOD or when the data is not highly skewed. From Glass' results, it was found that both of these methods are equally unsound in their reasoning and logic as they both introduce large errors and biases regardless of the data set being used (Glass \& Gray, 2001).
 
@@ -407,18 +407,17 @@ For our analysis, we will be using the \texttt{cenfit} function from the \texttt
 
 \hypertarget{ROS}{%
 \subsection{Regression on Order Statistics}\label{ROS}}
-\begin{itemize}
-\item
-  ROS is a semi-parametric method, it assumes that the censored measurements (emphasis on ONLY the censored, this what makes it semi-parametric) in the data comes from a normal or lognormal distribution.
-\item
-  In order for ROS to be utilized, at minimum, there needs to be at least 3 known values and more than half the values within the data set must be known.
-\item
-  ROS method is based on simple linear regression, detected values are ordered from smallest to largest, and then quantiles are used to estimate the concentration of censored values
-\item
-  In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles {[}CITE \url{https://www.eurachem.org/images/stories/workshops/2017_10_PT/pdf/contrib/O05-Mancin.pdf}{]}
-\item
-  Values are plotted on a on a probability plot and a linear regression line is calculated, in order to estimate the parameters of the distribution from which the values came from. Then, values are pulled from the assumed distribution in order to impute in value for the censored measurements. These imputed values and combined with the known values in order to obtain descriptive statistics of interest for the data {[}CITE PROPERLY WHEN TIME ALLOWS \url{https://www.itrcweb.org/gsmc-1/Content/GW\%20Stats/5\%20Methods\%20in\%20indiv\%20Topics/5\%207\%20Nondetects.htm\#}:\textasciitilde:text=Robust\%20ROS\%20is\%20semi\%2Dparametric,are\%20made\%20for\%20the\%20nondetects.\&text=ROS\%20assumes\%20that\%20all\%20data,non\%2Dnegative)\%20statistical\%20population.{]}
-\end{itemize}
+
+In between both the parametric nature of the MLE approach and nonparametric of the Kaplan-Meier estimator is the regression on order statistics (also known as ROS) method. As its name suggests, ROS is a semi-parametric method. It assumes that the censored measurements (emphasis on ONLY the censored, this what makes it semi-parametric) in the data comes from a normal or lognormal distribution.
+
+In the ROS method, in order to model the distribution of the censored values, a linear regression model is created by plotting the uncensored observed values (ordered from smallest to largest) vs.~the quantiles (also known as ``order statistics''), which is then used estimate and impute the values of the censored data (Lee \& Helsel, 2005). These imputed values for the censored portions of the data are then combined with the known values of the uncensored bits, which allows for the computation of the descriptive statistics of interest.
+
+In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles.
+
+There are of course, some requirements which must hold in order for ROS to be utilized, at minimum, there needs to be at least 3 known values and more than half the values within the data set must be known. As regression is utilized in this method, {[}STOPPED HERE, CONTINUE HERE{]}
+
+Its potential comes out when around 50 to 80\% of the data is below the limit of detection or when estimates of the mean and/or standard deviation are necessary (Lee \& Helsel, 2005).
+
 \hypertarget{DBML}{%
 \subsection{Distribution-Based Multiple Imputation Approach}\label{DBML}}
 \begin{itemize}
@@ -569,6 +568,9 @@ Kelderman, K., Kunstman, B., Roy, H., Sivakumar, N., Mccormick, S., \& Bernhardt
 
 \leavevmode\hypertarget{ref-Lafleur2011}{}%
 Lafleur, B., Lee, W., Billhiemer, D., Lockhart, C., Liu, J., \& Merchant, N. (2011). Statistical methods for assays with limits of detection: Serum bile acid as a differentiator between patients with normal colons, adenomas, and colorectal cancer. \emph{Journal of Carcinogenesis}, \emph{10}, 1--8. \url{http://doi.org/10.4103/1477-3163.79681}
+
+\leavevmode\hypertarget{ref-Lee2005}{}%
+Lee, L., \& Helsel, D. (2005). Statistical analysis of water-quality data containing multiple detection limits : S-language software for regression on order statistics \$, \emph{31}, 1241--1248. \url{http://doi.org/10.1016/j.cageo.2005.03.012}
 
 \leavevmode\hypertarget{ref-May2012}{}%
 May, R. C. (2012). Estimation Methods for Data Subject to Detection Limits, 82.
