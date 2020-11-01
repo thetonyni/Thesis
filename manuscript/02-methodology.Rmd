@@ -98,28 +98,11 @@ For our analysis, we will be using the `cenfit` function from the `NADA` package
 
 In between both the parametric nature of the MLE approach and nonparametric of the Kaplan-Meier estimator is the regression on order statistics (also known as ROS) method. As its name suggests, ROS is a semi-parametric method. It assumes that the censored measurements (emphasis on ONLY the censored, this what makes it semi-parametric) in the data comes from a normal or lognormal distribution. 
 
-In the ROS method, in order to model the distribution of the censored values, a linear regression model is created by plotting the uncensored observed values (ordered from smallest to largest) vs. the quantiles (also known as "order statistics"), which is then used estimate and impute the values of the censored data [@Lee2005]. These imputed values for the censored portions of the data are then combined with the known values of the uncensored bits, which allows for the computation of the descriptive statistics of interest.
+In the ROS method, in order to model the distribution of the censored values, a linear regression model is created by plotting the uncensored observed values (ordered from smallest to largest) vs. the quantiles (also known as "order statistics"), which is then used estimate and impute the values of the censored data [@Lee2005]. These imputed values for the censored portions of the data are then combined with the known values of the uncensored bits, which allows for the computation of the descriptive statistics of interest. In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles.
 
-In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles.
+There are of course, some requirements which must hold in order for ROS to be utilized: at minimum, there needs to be at least 3 known values and more than half the values within the data set must be known. As regression is utilized in this method, additional assumptions in the ROS method are shared with those necessary for linear regression to be performed as well. The response variable must be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance [@Lee2005].
 
-There are of course, some requirements which must hold in order for ROS to be utilized, at minimum, there needs to be at least 3 known values and more than half the values within the data set must be known. As regression is utilized in this method, [STOPPED HERE, CONTINUE HERE]
-
-Its potential comes out when around 50 to 80% of the data is below the limit of detection or when estimates of the mean and/or standard deviation are necessary [@Lee2005].
-
-
-### Distribution-Based Multiple Imputation Approach {#DBML}
-
-* Study exploring different options to handle LOD laboratory data -- specifically with regards to multiple imputation methods for left-censored data. They concluded that "the distribution-based MI method" worked well for bivariate data where the values were < LOD. [@Chen2011]
-
-* They also investigated distribution-based multiple imputation methods -- they used MLEs to estimate distribution parameters based on all datas (< LOD and those not). They repeatedly imput the values to create multiple complete sets of data, and then analyzed each one individually [@Chen2011]
-
-* Mathematically, they created a log-likelihood function with all the data, then derived MLEs of each parameters on multiple bootstrapped datasets. Each bootstrap data gives different estimates for the mean, sd, etc. (refer to article for math) [@Chen2011]
-
-### Write about other approaches here
-
-* Another method is "Cohen's Method" where one extrapolates the left hand side of distribution based on the distribution of the uncensored data and then calculate the MLE estimate of the arithmetic mean -- found to be unreliable with data with outliers, this method can ONLY be used with data where there is a single LOD. From their study they found that this method gave high, unlikely results of the mean [@Glass2001]
-
-* Imputing from a uniform is useful when you don't know the distribution of the data [@Canales2018]
+The `NADA` package contains the function `ros` which provides an implementation of regression on order statistics which allows us to calculate descriptive statistics for left censored values.
 
 ### Comparison between different methods
 
