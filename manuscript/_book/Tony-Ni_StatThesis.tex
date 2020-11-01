@@ -377,7 +377,7 @@ in which we can then maximize the likelihood to find the best mle of \(\theta\) 
 
 Maximum likelihood estimation is widely thought to be optimal, but only if one knows the proposed model and underlying distribution of the dataset in advance, hence its classification as a parametric technique. In a study comparing methods to handling missing data, Canales found that the MLE method underperformed when the data in question was highly skewed, in which overinflated mean squared errors were often obtained (Canales, 2018).
 
-The MLE method we will be utilizing is actually performed by obtaining regression estimates of slope(s) and intercepts through maximum likelihood with censored data. The \texttt{cenmle} function in the \texttt{NADA} package accomplishes this and allows us to calculate descriptive statistics for the entire dataset.
+The MLE method we will be utilizing is actually performed by obtaining regression estimates of slope(s) and intercepts through maximum likelihood with censored data. The \texttt{cenmle} function in the \texttt{NADA} package allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values.
 \begin{itemize}
 \tightlist
 \item
@@ -403,67 +403,19 @@ where \(x_j\) is the distinct event/death time, \(d_j\) is the number of event/d
 
 Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method yields the reverse Kaplan-Meier approach, which allows for the estimation of the survival curve with left-censored values. This approach follows exactly the same logic as the Kaplan-Meier estimate of the survival curve, except we reverse the censored indicator and event of interest indicator. In other words, our censor is now the event and the event is now censored. This allows us to estimate the distribution function and population percentiles for data containing left-censored values (Gillespie et al., 2010).
 
-For our analysis, we will be using the \texttt{cenfit} function from the \texttt{NADA} package in R to estimate the empirical cumulative distribution function (survival curve) for our left-censored data using the reverse Kaplan-Meier method. The KM method is not an imputation method, so we are not replacing censored values with an imputed value, but rather estimating descriptive statistics for the entire dataset -- including the censored concentrations (Canales, 2018).
+For our analysis, we will be using the \texttt{cenfit} function from the \texttt{NADA} package in R to estimate the empirical cumulative distribution function (survival curve) for our left-censored data using the reverse Kaplan-Meier method. Similarly to the MLE method, the KM method is not an imputation method, so we are not replacing censored values with an imputed value, but rather estimating descriptive statistics for the entire dataset -- including the censored concentrations (Canales, 2018).
 
 \hypertarget{ROS}{%
 \subsection{Regression on Order Statistics}\label{ROS}}
 
 In between both the parametric nature of the MLE approach and nonparametric of the Kaplan-Meier estimator is the regression on order statistics (also known as ROS) method. As its name suggests, ROS is a semi-parametric method. It assumes that the censored measurements (emphasis on ONLY the censored, this what makes it semi-parametric) in the data comes from a normal or lognormal distribution.
 
-In the ROS method, in order to model the distribution of the censored values, a linear regression model is created by plotting the uncensored observed values (ordered from smallest to largest) vs.~the quantiles (also known as ``order statistics''), which is then used estimate and impute the values of the censored data (Lee \& Helsel, 2005). These imputed values for the censored portions of the data are then combined with the known values of the uncensored bits, which allows for the computation of the descriptive statistics of interest.
+In the ROS method, in order to model the distribution of the censored values, a linear regression model is created by plotting the uncensored observed values (ordered from smallest to largest) vs.~the quantiles (also known as ``order statistics''), which is then used estimate and impute the values of the censored data (Lee \& Helsel, 2005). These imputed values for the censored portions of the data are then combined with the known values of the uncensored bits, which allows for the computation of the descriptive statistics of interest. In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles.
 
-In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles.
+There are of course, some requirements which must hold in order for ROS to be utilized: at minimum, there needs to be at least 3 known values and more than half the values within the data set must be known. As regression is utilized in this method, additional assumptions in the ROS method are shared with those necessary for linear regression to be performed as well. The response variable must be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance (Lee \& Helsel, 2005).
 
-There are of course, some requirements which must hold in order for ROS to be utilized, at minimum, there needs to be at least 3 known values and more than half the values within the data set must be known. As regression is utilized in this method, {[}STOPPED HERE, CONTINUE HERE{]}
+The \texttt{NADA} package contains the function \texttt{ros} which provides an implementation of regression on order statistics which allows us to calculate descriptive statistics for left censored values.
 
-Its potential comes out when around 50 to 80\% of the data is below the limit of detection or when estimates of the mean and/or standard deviation are necessary (Lee \& Helsel, 2005).
-
-\hypertarget{DBML}{%
-\subsection{Distribution-Based Multiple Imputation Approach}\label{DBML}}
-\begin{itemize}
-\item
-  Study exploring different options to handle LOD laboratory data -- specifically with regards to multiple imputation methods for left-censored data. They concluded that ``the distribution-based MI method'' worked well for bivariate data where the values were \textless{} LOD. (Chen et al., 2011)
-\item
-  They also investigated distribution-based multiple imputation methods -- they used MLEs to estimate distribution parameters based on all datas (\textless{} LOD and those not). They repeatedly imput the values to create multiple complete sets of data, and then analyzed each one individually (Chen et al., 2011)
-\item
-  Mathematically, they created a log-likelihood function with all the data, then derived MLEs of each parameters on multiple bootstrapped datasets. Each bootstrap data gives different estimates for the mean, sd, etc. (refer to article for math) (Chen et al., 2011)
-\end{itemize}
-\hypertarget{write-about-other-approaches-here}{%
-\subsection{Write about other approaches here}\label{write-about-other-approaches-here}}
-\begin{itemize}
-\item
-  Another method is ``Cohen's Method'' where one extrapolates the left hand side of distribution based on the distribution of the uncensored data and then calculate the MLE estimate of the arithmetic mean -- found to be unreliable with data with outliers, this method can ONLY be used with data where there is a single LOD. From their study they found that this method gave high, unlikely results of the mean (Glass \& Gray, 2001)
-\item
-  Imputing from a uniform is useful when you don't know the distribution of the data (Canales, 2018)
-\end{itemize}
-\hypertarget{comparison-between-different-methods}{%
-\subsection{Comparison between different methods}\label{comparison-between-different-methods}}
-\begin{itemize}
-\item
-  Compared 5 methods: found that in terms of performance: imputation method using MLE to estimate distribution parameters and then imputing censored data points with values from this distribution below the LOD \textgreater{} imputation from a uniform distribution \textgreater{} other 3 methods (substitution, log-normal MLE to estimate mean and SD, and kaplan-meier estimate) (Canales, 2018)
-\item
-  KM method is better than MLE for data where there are TONS of missing data or if data is highly skewed (distribution not assumed in KM method) (Canales, 2018)
-\item
-  Uses RMSE (root mean squared error) to see how close the estimated values are to the true values (lower RMSE means closer estimation to known values) (Canales, 2018)
-\end{itemize}
-\hypertarget{closing-remarks}{%
-\section{Closing Remarks}\label{closing-remarks}}
-\begin{itemize}
-\item
-  Substitution is commonly cited as the worst way, nonparametric ways do better, maximum likelihood methods are the best (Lafleur et al., 2011)
-\item
-  Of course, these methods aren't the only way to deal with it, but it is what we have come up with for now. Detection limits are constantly changing as time passes and because of that -- techniques and ways to combat it will gradually evolve and change (for the better) to deal with it. Detection limits are constantly changing: as technology improves, so too does our ability to accurately measure substances (Elias \& Goodman, 1999)
-\end{itemize}
-\hypertarget{packages}{%
-\subsection{Packages}\label{packages}}
-\begin{itemize}
-\item
-  Probably will not be included, just here for my own reference!
-\item
-  ``MLE and KM methods were implemented using the NADA package (\url{https://cran.r-project.org/web/packages/NADA/NADA.pdf}) in R (\texttt{cenmle} and \texttt{cenfit} functions) where data is labeled as censored or uncensored, for censored values, LOD is used as a placeholder, since these methods aren't imputation methods -- these censored values weren't replaced. Instead, summary statistics were generated with the entire data set (including the censored data)'' (Canales, 2018)
-\item
-  ``The imputations methods used mostly followed the general ideas: we have to assume the entire data set follows a particular distribution. Then we use this distribution to impute in values for the censored data. The MLE imputation method uses MLE methods to estimate the parameters of a distribution to fit the dataset, then values lower than the LOD are imputed FROM this dataset for all censored values (they used the function \texttt{fitdistcens} from the R package \texttt{fitdistRplus}). The second uniform imputation method assumes a uniform distribution with minimum 0, maximum LOD -- for all values less than the LOD, then the left-censored values are replaced with a number randomly selected from this uniform distribution.'' (Canales, 2018)
-\end{itemize}
 \hypertarget{simulations}{%
 \chapter{Simulations}\label{simulations}}
 
