@@ -1,0 +1,44 @@
+---
+title: "supplemental data exploration"
+author: "Tony Ni"
+date: "11/9/2020"
+output: pdf_document
+---
+
+```{r}
+library(tidyverse)
+library(readr)
+
+fluoride <- read_csv("C:/Users/theto/Desktop/Datasets/WA_FLUORIDE/wa_doh_dw_fluoride.csv")
+osteosarcoma_cases_in_WA_2000_2016 <- read_csv("C:/Users/theto/Desktop/Datasets/WA_FLUORIDE/osteosarcoma cases in WA - 2000-2016.csv")
+
+osteosarcoma_cases_in_WA_2000_2016 %>%
+  count(County)
+
+osteosarcoma_updated <- osteosarcoma_cases_in_WA_2000_2016 %>%
+  mutate(County = case_when(
+    County ==  9 ~ "CLALLAM",
+    County == 27 ~ "GRAYS HARBOR",
+    County == 29 ~ "ISLAND",
+    County == 31 ~ "JEFFERSON",
+    County == 33 ~ "KING",
+    County == 35 ~ "KITSAP",
+    County == 45 ~ "MASON",
+    County == 53 ~ "PIERCE",
+    County == 57 ~ "SKAGIT",
+    County == 61 ~ "SNOHOMISH",
+    County == 67 ~ "THURSTON",
+    County == 73 ~ "WHATCOM"))
+
+#collection of fluoride data only if it is shared w/ osteosarcoma data
+osteosarcoma_unique <- unique(osteosarcoma_updated$County)
+
+fluoride_shared <- fluoride %>%
+  filter(County %in% osteosarcoma_unique)
+
+#percentage of the data from original
+nrow(fluoride_shared)/nrow(fluoride)
+
+
+```
+
