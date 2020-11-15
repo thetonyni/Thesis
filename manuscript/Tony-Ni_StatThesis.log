@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  15 NOV 2020 13:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  15 NOV 2020 15:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -702,7 +702,7 @@ l.251
        [1
 
 ]
-<figures/upgradientdowngradient.jpg, id=251, 1042.31662pt x 581.21367pt>
+<figures/upgradientdowngradient.jpg, id=255, 1042.31662pt x 581.21367pt>
 File: figures/upgradientdowngradient.jpg Graphic file (type jpg)
 <use figures/upgradientdowngradient.jpg>
 Package pdftex.def Info: figures/upgradientdowngradient.jpg  used on input line
@@ -728,57 +728,66 @@ Underfull \vbox (badness 1194) has occurred while \output is active []
 [7
 
 ]
-<figures/right_censoring_example.png, id=284, 1078.32564pt x 605.3507pt>
+<figures/right_censoring_example.png, id=288, 1078.32564pt x 605.3507pt>
 File: figures/right_censoring_example.png Graphic file (type png)
 <use figures/right_censoring_example.png>
 Package pdftex.def Info: figures/right_censoring_example.png  used on input lin
 e 330.
 (pdftex.def)             Requested size: 433.62pt x 243.4199pt.
 [8 <./figures/right_censoring_example.png>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+<figures/left_censoring_example_fix.png, id=296, 740.58861pt x 314.8396pt>
+File: figures/left_censoring_example_fix.png Graphic file (type png)
+<use figures/left_censoring_example_fix.png>
+Package pdftex.def Info: figures/left_censoring_example_fix.png  used on input 
+line 348.
+(pdftex.def)             Requested size: 433.62pt x 184.34616pt.
+[9 <./figures/left_censoring_example_fix.png>]
+<figures/interval_censoring_example_fix.png, id=304, 684.77614pt x 220.38773pt>
 
-[9]
+File: figures/interval_censoring_example_fix.png Graphic file (type png)
+<use figures/interval_censoring_example_fix.png>
+Package pdftex.def Info: figures/interval_censoring_example_fix.png  used on in
+put line 364.
+(pdftex.def)             Requested size: 433.62pt x 139.55792pt.
+[10 <./figures/interval_censoring_example_fix.png>]
+Underfull \vbox (badness 3657) has occurred while \output is active []
+
+[11]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
-61.
+85.
 (c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[10]
-
-LaTeX Warning: Reference `malpractices' on page 11 undefined on input line 368.
+LaTeX Warning: Reference `malpractices' on page 12 undefined on input line 392.
 
 
 
 Underfull \vbox (badness 3657) has occurred while \output is active []
 
-[11]
-Underfull \vbox (badness 3907) has occurred while \output is active []
-
 [12]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 3907) has occurred while \output is active []
 
 [13]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[14] [15]
-Underfull \vbox (badness 1648) has occurred while \output is active []
+[14]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[16] [17] [18]
-Chapter 3.
-[19
-
-] [20]
-Chapter 4.
-[21
-
-] [22
-
-] [23] [24
+[15] [16] [17] [18] [19] [20
 
 ]
-Underfull \hbox (badness 1406) in paragraph at lines 538--540
+Chapter 3.
+[21] [22]
+Chapter 4.
+[23
+
+] [24
+
+] [25] [26
+
+]
+Underfull \hbox (badness 1406) in paragraph at lines 562--564
  [][]\T1/lmr/m/n/12 (+20) Environmental In-tegrity Project. (2020). Coal Ash Gr
 ound-wa-ter Con-
  []
@@ -786,11 +795,11 @@ ound-wa-ter Con-
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[25
+[27
 
-] [26] (./Tony-Ni_StatThesis.aux)
+] [28] (./Tony-Ni_StatThesis.aux)
 Package rerunfilecheck Info: File `Tony-Ni_StatThesis.out' has not changed.
-(rerunfilecheck)             Checksum: A452198B0C2D59E40C725007895545E1;2258.
+(rerunfilecheck)             Checksum: 10EAD9112F8526D0BD3D731AC60AE570;2260.
 
 LaTeX Warning: There were undefined references.
 
@@ -800,19 +809,19 @@ LaTeX Warning: There were undefined references.
 ### semi simple group (level 1) entered at line 207 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 11204 strings out of 481466
- 179359 string characters out of 5920170
- 511345 words of memory out of 5000000
- 27452 multiletter control sequences out of 15000+600000
- 582688 words of font info for 115 fonts, out of 8000000 for 9000
+ 11228 strings out of 481466
+ 180139 string characters out of 5920170
+ 511464 words of memory out of 5000000
+ 27468 multiletter control sequences out of 15000+600000
+ 582775 words of font info for 116 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  66i,12n,72p,1749b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dv
 ips/lm/lm-mathit.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/e
 nc/dvips/lm/lm-mathex.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fo
 nts/enc/dvips/lm/lm-mathsy.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-di
-st/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-d
-ist/fonts/enc/dvips/lm/lm-ec.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-
+st/fonts/enc/dvips/lm/lm-ec.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-d
+ist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-
 dist/fonts/enc/dvips/lm/lm-ts1.enc}<c:/Users/theto/AppData/Roaming/TinyTeX/texm
 f-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/theto/AppData/Roaming/TinyTeX
 /texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/theto/AppData/Roaming/T
@@ -828,10 +837,10 @@ Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb
 0.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/
 lmsy8.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public
 /lm/lmtt12.pfb>
-Output written on Tony-Ni_StatThesis.pdf (38 pages, 318737 bytes).
+Output written on Tony-Ni_StatThesis.pdf (40 pages, 329185 bytes).
 PDF statistics:
- 514 PDF objects out of 1000 (max. 8388607)
- 454 compressed objects within 5 object streams
- 123 named destinations out of 1000 (max. 500000)
- 10539 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 529 PDF objects out of 1000 (max. 8388607)
+ 465 compressed objects within 5 object streams
+ 127 named destinations out of 1000 (max. 500000)
+ 10549 words of extra memory for PDF output out of 12000 (max. 10000000)
 

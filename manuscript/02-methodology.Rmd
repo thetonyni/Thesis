@@ -33,15 +33,33 @@ If an individual passes away at some point, $t_i$ during the study, then $T = t_
 
 Suppose an individual stopped submitting a form during the third year of the study. As we have no information about whether or not if they died or simply did not submit their form, all we know is that the individual died/will die at some point after year three of the study. In this instance, $T > 3$.
 
-Right censoring is 
-
-### Interval Censoring {#interval}
+Right censoring is the most common type of censoring and can often be found in clinical trial studies, mortality studies, and other forms of surival analyses.
 
 ### Left Censoring {#left}
 
-Left censoring is a specific instance of censoring in which we only know that the true value of a data point falls below a certain threshold which we call the _limit of detection_ (LOD). To understand this concept better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You plan to wake up every morning far before the sun rises, but on the first day of the study, you oversleep and wake up at 7:00 A.M. with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit (7:00 A.M.). This form of censoring can often introduce problems within an analysis, as the lack of certainty that one has in the measurement adds a layer of complexity which must be accounted for within an analysis. 
+```{r, echo = FALSE, leftcensoringexample, fig.cap="Left Censoring Example", out.width = '100%'}
+knitr::include_graphics(path = "figures/left_censoring_example_fix.png")
+```
 
-There are a myriad of types of censoring which can be discussed, however the focus of my thesis deals specifically with left-censoring. 
+In contrast with right censoring, left censoring is a specific instance of censoring in which we only know that the true value of a data point falls below a certain threshold which we call the _limit of detection_ (LOD). 
+
+To understand this concept better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You plan to wake up every morning far before the sun rises, but on the first day of the study, you oversleep and wake up at 7:00 A.M. with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit (7:00 A.M.). 
+
+Left censoring is commonly found in environmental, water quality, and chemical-related research, where the focus is on the concentration of an analyte. Due to limitations on measuring instruments, left censored data are commonly found in these types of studies.
+
+### Interval Censoring {#interval}
+
+```{r, echo = FALSE, intervalcensoringexample, fig.cap="Interval Censoring Example", out.width = '100%'}
+knitr::include_graphics(path = "figures/interval_censoring_example_fix.png")
+```
+
+Interval censoring is another form of censoring in which the random variable of interest is known to be between an interval of two values. Considering a random variable $T$, which denotes the survival time of interest, if interval censoring is at hand, we can denote the interval containing $T$ to be $I = [L, R]$, with $L$ being the beginning of the interval and $R$ being the end of the interval.
+
+Left and right censoring are special cases of interval censoring. In the case of left censoring, $L = 0$; and conversely in the case of right censoring, $R = \infty$.
+
+To conceptualize interval censoring, we can consider a example study on virus testing, in which participants get their blood drawn in order to detect whether or not if they test positive for the virus or not. The random variable in question is $T$, which represents the exact timepoint at which the subject contracted the virus. If an individual was first tested at time $t_1$ and tested negative, but was tested again at a later time $t_2$ and tested positive, the specific time $t$ at which the subject contracted the virus is unknown. All we know is that it lies somewhere between the interval is $I = [t_1, t_2]$, but not the exact time at which they contracted it.
+
+There are a myriad of types of censoring which can be discussed, however the focus of my thesis deals specifically with the challenges of reporting these values alongside methods of handling left-censored data.
 
 ## Challenges of Reporting Censored Data {#challenges}
 
