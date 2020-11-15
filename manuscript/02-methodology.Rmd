@@ -11,15 +11,39 @@ library(knitr)
 
 # Methodology {#methodology}
 
-The idea of missingness and incompleteness is commonplace throughout our world, and is even more prevalent within the statistical world. Known more formally as censoring, this condition exists when we have incomplete information regarding the values of a measurement within a dataset. Before we delve into an assessment of the methods commonly utilized to account for this, we will develop a general idea of what censoring and the problems it can cause.
+The concept of missing data is ubiquitous within academic disciplines and which frequently complicates any types of real-world studies. Missing data will be defined within this thesis as _occurences within a dataset where there is no value stored for a variable in the observation of interest_. As most studies often utilize data collected through mediums such as surveys, questionnaires, or field research, missing data is an unavoidable problem.  Missing data hinders one's ability to work with and analyze the phenomena at hand, as data is often the basis of all studies.  One of the most glaring issues with missingness is how it can introduce bias within an analysis, which can more often than not, invalidate a study if not accounted for and handled properly. 
 
-## Overview {#overview}
+This thesis will go into a more specific instance of missing data known as censoring, which is _the condition when one has only partial information regarding the values of a measurement within a dataset_. We will introduce and define the three types of censored data, challenges with the reporting of censored data, alongside a discussion on common statistical approaches to handling censored data. 
 
-Censored data is any data in which the value of a measurement is only known to a certain extent. As a phenomenon, censoring is most often discussed in the branch of statistics known as survival analysis, which concerns itself with techniques to analyze a time to an event variable. As their name suggests, these variables measure the time which passes until some sort of event occurs. The type of event being observed need not be related to issues related to mortality, but it is certainly is most commonly employed in the health-care field. These types of events can be as innocuous as the time at which an device breaks, time at which birds migrate away from their homes, or even things like time at which an ice cream scoop falls onto the pavement. Regardless of which, all of these scenarios share a common flaw in terms of the possibility of the data being "censored."
+## Censored Data {#censored_data}
 
-There are a myriad of types of censoring which can be discussed, however the focus of my thesis deals specifically with left-censoring. This specific instance of censoring occurs when we do not know the the true value of a data point, but only know that it falls below a certain threshold which we call the "limit of detection." To understand this concept better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You wake up every morning far before the sun rises, at 3 A.M. and make sure to stay outside to witness the specific time at which the sunrise is able to be seen, recording that time. However, on the first day of the study, you oversleep and wake up at 7:00 AM, with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit value. All we know is that by 7:00 AM, the sun had already risen. The time at which the sunrise occurred could be any time before 7:00 AM, we have no knowledge on when that time could be. This form of censoring can often prove to be a thorn in one's side, as the lack of certainty that one have in the measurement adds a layer of complexity which must be accounted for within an analysis. 
+As discussed previously, censored data is a specific type of missingness where one has only partial information regarding the values of a measurement in a dataset. There are many types of censoring which can occur, but three main ones which are the most common: right censoring, interval censoring, and left censoring.
 
-### Common malpractices from non-statisticians {#malpractices}
+### Right Censoring {#right}
+
+Right censoring is a specific instance in which we only know that the true value of a data point lies above a certain threshold, but it is unknown by how much. Suppose a study on income and mortality is conducted with the variable of interest, $T$, being the time measured from the start of the study to the death of the participant. The study has a duration of 5 years, in which participants are expected to submit a form regarding their annual income. The value for the participant would be considered to be right-censored if at any point during the study, they failed to follow-up, or if the participant was still alive at the conclusion of the 10 year study. In this design study, several possibilities can occur, illustrated in figure blah.
+
+```{r, echo = FALSE, rightcensoringexample, fig.cap="Right Censoring Example", out.width = '100%'}
+knitr::include_graphics(path = "figures/right_censoring_example.png")
+```
+
+If the individual passes to the termination of the study, the only information we have is $T > 5$. 
+
+If an individual passes away at some point, $t_i$ during the study, then $T = t_i$.
+
+Suppose an individual stopped submitting a form during the third year of the study. As we have no information about whether or not if they died or simply did not submit their form, all we know is that the individual died/will die at some point after year three of the study. In this instance, $T > 3$.
+
+Right censoring is 
+
+### Interval Censoring {#interval}
+
+### Left Censoring {#left}
+
+Left censoring is a specific instance of censoring in which we only know that the true value of a data point falls below a certain threshold which we call the _limit of detection_ (LOD). To understand this concept better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You plan to wake up every morning far before the sun rises, but on the first day of the study, you oversleep and wake up at 7:00 A.M. with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit (7:00 A.M.). This form of censoring can often introduce problems within an analysis, as the lack of certainty that one has in the measurement adds a layer of complexity which must be accounted for within an analysis. 
+
+There are a myriad of types of censoring which can be discussed, however the focus of my thesis deals specifically with left-censoring. 
+
+## Challenges of Reporting Censored Data {#challenges}
 
 Expanding on the discussion on the limit of detection, which will be used interchangeably with the abbreviation *LOD* in the future, the LOD is a concept closely linked to the field missing data. LOD values are often overlooked as a result of misguided practices (in terms of statistical analysis) by some non-statisticians, which can bring about faulty analysis and/or conclusions which are heavily flawed.
 
@@ -76,6 +100,8 @@ The MLE method we will be utilizing is actually performed by obtaining regressio
 * Useful slides to refer to here [https://www.eurachem.org/images/stories/workshops/2017_10_PT/pdf/contrib/O05-Mancin.pdf]
 
 ### Kaplan-Meier Estimate Approach {#Kaplan-Meier}
+
+[As a phenomenon, censoring is most often discussed in the branch of statistics known as survival analysis, which concerns itself with techniques to analyze a time to an event variable. As their name suggests, these variables measure the time which passes until some sort of event occurs. The type of event being observed need not be related to issues related to mortality, but it is certainly is most commonly employed in the health-care field. These types of events can be as innocuous as the time until device breaks, time until birds migrate away from their homes, or even things like time until an ice cream scoop falls onto the pavement. Regardless of which, all of these scenarios share a common flaw in terms of the possibility of the data being "censored."] [need to fix bracketed into existing paragraph]
 
 The Kaplan-Meier method is a common nonparametric technique used to deal with censored data. Originally developed to handle right-censored survival analysis data, an offshoot method in the form of the Reverse Kaplan-Meier Estimator have sprung up as a way to handle left censored data as well [@Gillespie2010]. The advantages of the KM method lie in its robustness as a nonparametric method; it performs well with a wide range of distributions. Many recommend its usage for when there are cases of extreme/severe censoring as a result of this [Canales2018].
 
