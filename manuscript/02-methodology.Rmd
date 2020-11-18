@@ -65,23 +65,34 @@ There are a myriad of types of censoring which can be discussed, however the foc
 
 [CURRENTLY WORKING ON REORGANIZING HERE]
 
-There is no universal reporting practice for values below the LOD which can lead to confusion amongst researchers. LOD values are often overlooked which can bring about faulty analysis and/or conclusions which are heavily flawed.
+There is no universal reporting practice for values below the LOD which can lead to confusion amongst researchers. The lack of standardization makes it difficult to distinguish LOD values with uncensored values. This can lead to LOD values unintentionally being overlooked, causing faulty analysis or conclusions which are heavily flawed.
 
-One of the most common approaches used to account for left-censored data is omitting censored values from the analysis, due to its ease of implementation, but this approach discards a myriad of useful information. 
+In a study involving the precision of lead measurements near concentrations of the limit of detection, Berthouex (1993), discusses this disparity in practice within chemists and their labs and describe in the following list as:
 
-[WHAT SORT OF USEFUL INFORMATION IS DISCARDED, INCLUDE HERE, omitting is a valid method which is used by default in a lot of statistical software, when should care be used?]
+\begin{enumerate}
+  \item Reporting the trace, a chemical whose average concentration is less than 100 $\mu g$
+  \item Reporting  the letters ND, which stand for "not detected"
+  \item Reporting the numerical LOD value itself
+  \item Reporting the "less than" value, which is the numerical LOD preceded by a "<"
+  \item Reporting some value between 0 and the LOD, such as one-half the LOD value
+  \item Reporting the actual measured concentration, even if it falls below the LOD
+  \item Reporting the actual measured concentration, followed by (LOD)
+  \item Reporting the actual measured concentration with a precision ($\pm$) statement
+\end{enumerate}
+
+The latter three methods are the best [FIND PAPER BY Gilbert, 1987; Hunt and Wilson, 1986; and Rhodes, 1981 -- backtrace through berthouex when time allows?].
+
+<!-- In an article published by the American Bar Association, a company seeking to purchase land for residential use, hires several laboratories to conduct analyses of the chemical concentrations at that site. However, miscommunication occurs between the two parties, in which the laboratory mistakenly is given information that the site is used for industrial purposes. As it turns out, detection limits for residential areas differs from industrial ones, and as a result, the analytic results turned out useless for the company. This situation is a clear example of how [@Elias1999]. -->
 
 Berthouex discusses the prevalence in regards to the practice of censoring data by reporting only values which are above the detection limit and discarding those which fail to yield quantifiable results. He discourages this practice and instead suggests the reporting the numeric values of measurements, even when those values are below the limit of detection. [@Berthouex1993]
 
-Another issue lies within the art of reporting values which fall below the LOD. Amongst chemists, indicating whether or not if a value is below the LOD varies widely across labs and as reporting practices are not standardized. Some laboratories may explicitly record `ND`, others may put down `<` followed by the smallest recorded value to indicate that an observation's value is left-censored, others may simply omit the value completely [@Berthouex2020].
-
-On the same vein, reporting limits can often be misunderstood by non-statisticians. In an article published by the American Bar Association, a scenario is played out in which which a company seeking to purchase a gasoline service station obtains a laboratory report of the chemical concentrations of copper in that area, which was found to be `ND`, also known as non-detect. The company and its lawyers mistakenly interpret this `ND` as nullity, when in fact it only means that the measurement is not detected by the devices used by the laboratories to measure the chemical concentrations [@Elias1999]. 
-
 ## Approaches {#Approaches}
+
+[START HERE]
 
 It is important to note that the values below the LOD still contain information, specifically that the values is between the lower bound value (if it exists) and the LOD [@Chen2011]. As such, there are a variety of statistical treatments to handle censored data which have been popularized in the statistical literature which will be discussed within this section.
 
-Omission involves the deletion of data points which are deemed to be invalid, as a result of left-censoring or any other deficiencies in the data. This is also more commonly known as *complete-case analysis*, in which statistical analysis is conducted while only considering the observations which have no missing data on the variables of interest, and excluding the observations with missing values [@May2012]. May argues against this approach and claims that the loss of information from discarding data and the inflation of standard errors of estimates (when discussing missingness in a regression context) will invariably be inflated as a result of the decreased sample size. 
+Omission involves the deletion of data points which are deemed to be invalid, as a result of left-censoring or any other deficiencies in the data. This is also more commonly known as *complete-case analysis*, in which statistical analysis is conducted while only considering the observations which have no missing data on the variables of interest, and excluding the observations with missing values [@May2012]. May argues against this approach and claims that the loss of information from discarding data and the inflation of standard errors of estimates (when discussing missingness in a regression context) will invariably be inflated as a result of the decreased sample size. The advantages of omission lies in its ease of implementation. [WHAT SORT OF USEFUL INFORMATION IS DISCARDED, INCLUDE HERE, omitting is a valid method which is used by default in a lot of statistical software, when should care be used?]
 
 Apart from complete-case analysis, which is of course the most natural idea which pops up in our minds when discussing topics involving missingness and censoring. Over the past century, a myriad of methods to deal with censoring have been developed to counter this issue -- some more statistically sound than others. Some of the most common methods to estimate descriptive statistics involving censored data include but are not limited to: substitution, maximum likelihood estimation, Kaplan-Meier, regression on order statistics, and of course distributional based multiple imputation methods [@Lafleur2011].
 
