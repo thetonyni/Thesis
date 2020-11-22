@@ -393,51 +393,44 @@ In a study involving the precision of lead measurements near concentrations of t
   \item Reporting the actual measured concentration, followed by (LOD)
   \item Reporting the actual measured concentration with a precision ($\pm$) statement
 \end{enumerate}
-The latter three methods are the best {[}FIND PAPER BY Gilbert, 1987; Hunt and Wilson, 1986; and Rhodes, 1981 -- backtrace through berthouex when time allows?{]}.
+The latter three methods are the best {[}FIND PAPER BY Gilbert, 1987; Hunt and Wilson, 1986; and Rhodes, 1981 -- backtrace through berthouex when time allows? by what metrics?{]}.
 
 Berthouex discusses the prevalence in regards to the practice of censoring data by reporting only values which are above the detection limit and discarding those which fail to yield quantifiable results. He discourages this practice and instead suggests the reporting the numeric values of measurements, even when those values are below the limit of detection. (Berthouex, 1993)
 
 \hypertarget{Approaches}{%
 \section{Approaches}\label{Approaches}}
 
-{[}START HERE{]}
-
 It is important to note that the values below the LOD still contain information, specifically that the values is between the lower bound value (if it exists) and the LOD (Chen et al., 2011). As such, there are a variety of statistical treatments to handle censored data which have been popularized in the statistical literature which will be discussed within this section.
 
-Omission involves the deletion of data points which are deemed to be invalid, as a result of left-censoring or any other deficiencies in the data. This is also more commonly known as \emph{complete-case analysis}, in which statistical analysis is conducted while only considering the observations which have no missing data on the variables of interest, and excluding the observations with missing values (May, 2012). May argues against this approach and claims that the loss of information from discarding data and the inflation of standard errors of estimates (when discussing missingness in a regression context) will invariably be inflated as a result of the decreased sample size. The advantages of omission lies in its ease of implementation. {[}WHAT SORT OF USEFUL INFORMATION IS DISCARDED, INCLUDE HERE, omitting is a valid method which is used by default in a lot of statistical software, when should care be used?{]}
+Omission involves the deletion of data points which are deemed to be invalid, as a result of left-censoring or any other deficiencies in the data. This is also more commonly known as \emph{available-case analysis}, in which statistical analysis is conducted while only considering the observations which have no missing data on the variables of interest, and excluding the observations with missing values (May, 2012). May argues against this approach and claims that the loss of information from discarding data and the inflation of standard errors of estimates (when discussing missingness in a regression context) will invariably be inflated as a result of the decreased sample size. The advantages of omission lies in its ease of implementation. {[}WHAT SORT OF USEFUL INFORMATION IS DISCARDED, INCLUDE HERE, omitting is a valid method which is used by default in a lot of statistical software, when should care be used?{]}
 
-Apart from complete-case analysis, which is of course the most natural idea which pops up in our minds when discussing topics involving missingness and censoring. Over the past century, a myriad of methods to deal with censoring have been developed to counter this issue -- some more statistically sound than others. Some of the most common methods to estimate descriptive statistics involving censored data include but are not limited to: substitution, maximum likelihood estimation, Kaplan-Meier, regression on order statistics, and of course distributional based multiple imputation methods (Lafleur et al., 2011).
+Apart from available-case analysis, over the past century, a myriad of methods to deal with censoring have been developed to counter this issue -- some more statistically sound than others. We will review some of the most common methods to estimate descriptive statistics involving censored data, which include: substitution, maximum likelihood estimation, Kaplan-Meier, and regression on order statistics (Lafleur et al., 2011).
 
 \hypertarget{Substitution}{%
 \subsection{Substitution Approach}\label{Substitution}}
 
-Often condemned in papers, and rightly so, as a statistically unsound method to handle censored data, substitution methods are unfortunately ubiquitous in many fields outside of statistics as a way to handle censored data sets, often being cited in environmental science papers as an appropriate (and even recommended) method to work with left-censored chemical concentration data (Canales, 2018).
+Often condemned in papers, as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences as an appropriate and recommended method to work with left-censored chemical concentration data (Canales, 2018).
 
-In analytical chemistry, a limit of detection is defined as:
+The substitution method simply involves imputing in a replacement value in lieu of the censored data point. The lack of a global, standardized replacement value to substitute is one of the most pronounced downside of this method. These replacement value used may differ between studies but common values include: \(\frac{LOD}{2}, \frac{LOD}{\sqrt2}\), or \(LOD\) (Lee \& Helsel, 2005). Different disciplines have their own suggested ``best'' replacement value to use, an example being \(\frac{3}{4}\) times the LOD being a common replacement value in geochemistry (Crovelli, 1993). However, it must be recognized that the substitution method is a statistically \emph{unsound} technique which are used often in non-rigorous statistical settings due to them being quite easy to implement (Chen et al., 2011). As such, there have seen several studies in order to investigate the effectiveness of the method.
 
-\[LOD = \mu_{blank} + K\sigma_{blank}\]
-where the distribution of the blank is assumed to be Gaussian, with mean \(\mu_{blank}\), standard deviation \(\sigma_{blank}\), and K representing a ``definition-specific constant,'' which is usually between the range 2.0 to 3.0. Ideally the blank will contain as little of the analyte of interest as possible, as it serves as the control and the basis as to which samples are being compared to. With a K = 3, it is to be expected that around 99.7\% of the observations from a blank sample will be below the limit of detection as per the empirical rule for a Gaussian distribution (May, 2012).
+One particular investigation was conducted by Glass and Gray (2001) to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods from the values listed previously, with \(\frac{LOD}{2}\) and \(\frac{LOD}{\sqrt2}\). Proponents of the substitution method claim that the replacement value \(\frac{LOD}{2}\) is useful for data sets in which the majority of the data are below the LOD or when the distribution of the data is highly skewed; the definition of ``highly skewed'' being any distribution with a geometric standard deviation (a measure of spread commonly used in tandem with log-normal distributions) of 3 or more (Hornung \& Reed, 1989). They also suggest using \(\frac{LOD}{\sqrt2}\) when there are only a few data points below the LOD or when the data is not highly skewed.
 
-Once the LOD is determined for the study, the substitution method simply involves imputing in a replacement value in lieu of the censored data point.
-
-This replacement value used may differ between studies but common values include: \(\frac{LOD}{2}, \frac{LOD}{\sqrt2}\), or \(LOD\). Different disciplines have their own suggested ``best,'' replacement value to use (Lee \& Helsel, 2005). Of course there may be more out there, but it must be recognized that the substitution method is a statistically \emph{unsound} technique which are used often in non-rigorous statistical settings due to them being quite easy to implement (Chen et al., 2011).
-
-In a study performed by Glass to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods from the values listed previously. The investigated substitution enthusiasts' claims of certain replacement values being more apt for certain types of data sets. These proponents of the method claim that the replacement value \(\frac{LOD}{2}\) is useful for data sets in which lots of data are below the LOD or when the data is highly skewed with a geometric standard deviation (a measure of spread commonly used in tandem with log-normal distributions) of 3 or more. On the same note, they claim that the \(\frac{LOD}{\sqrt2}\) is helpful for cases when there are only a few data points below the LOD or when the data is not highly skewed. From Glass' results, it was found that both of these methods are equally unsound in their reasoning and logic as they both introduce large errors and biases regardless of the data set being used (Glass \& Gray, 2001).
+Substitution methods are flawed as they can often introduce a ``signal'' which was not originally present within the data, or even obstruct an actual signal which was present in the original data (Lee \& Helsel, 2005). Numerous authors have advised against the usage of substitution methods, for being statistically inappropriate to use. Glass and Gray (2001) found that both introduce large errors and biases in descriptive statistics of interest. Thompson and Nelson (2001) conducted a study in which they found similar results, in that it often led to biased parameter estimates and ``artificially small standard error estimates.'' Hewett and Ganser (2007) also found in their simulation study that the substitution method yielded the lowest average bias and root mean squared error values (comparison metrics to measure accuracy) in their estimation of the mean. Overall, the overall consensus seems to advise against the usage of these substitution techniques.
 
 \hypertarget{MLE}{%
 \subsection{Maximum Likelihood Estimation}\label{MLE}}
 
-Maximum likelihood is a parametric technique which allows us to estimate the parameter values of a distribution/model and one which is useful when encountering censored data.
+Maximum likelihood estimation (MLE) is a parametric technique which allows us to estimate the parameters of a distribution or model when the data is from a multivariate normal distribution.
 
-To give a brief introduction as to the the mechanisms of MLE and how it functions, given a random \emph{i.i.d.} set of random variables \(X_1, X_2,...,X_n\) from distribution \(f(x|\theta)\).
+To give a brief introduction to the mechanisms of MLE and how it functions, given a random, independently and identically distributed (\emph{i.i.d.}) set of random variables \(X_1, X_2,...,X_n\) from distribution \(f(x|\theta)\).
 
 For every observed random sample \(x_1,...,x_n\), we can define the joint density function to be:
 
 \[f(x_1,...,x_n|\theta) = f(x_1|\theta)...f(x_n|\theta) = \prod_{i=1}^{n}f(x_i|\theta)\]
-Upon observing the given data, \(f(x_1,...,x_n|\theta)\) becomes a function of \(\theta\) alone, so we obtain a likelihood of:
+Upon observing the given data, \(f(x_1,...,x_n|\Theta)\) becomes a function of \(\theta\) alone, so we obtain a likelihood of:
 
 \[lik(\theta) = f(x_1,...,x_n|\theta)\]
-Our goal is to obtain the maximum likelihood estimate (mle) of \(\theta\) which maximizes \(lik(\theta)\), in other words, to obtain a \(\theta\) which makes our observed data the most probable/likely.
+Our goal is to obtain the maximum likelihood estimate of \(\Theta\) which maximizes \(lik(\theta)\), in other words, to obtain a \(\theta\) which makes our observed data the most probable/likely.
 
 As we previously declared our random variables \(X_1, X_2,...,X_n\) to be i.i.d, we can rewrite the likelihood to be a product of the marginal densities:
 
@@ -571,6 +564,9 @@ Canales, R. (2018). Methods for Handling Left-Censored Data in Quantitative Micr
 \leavevmode\hypertarget{ref-Chen2011}{}%
 Chen, H., Quandt, S. A., Grzywacz, J. G., Arcury, T. A., Environmental, S., Perspectives, H., \ldots{} Arcury, T. A. (2011). A Distribution-Based Multiple Imputation Method for Handling Bivariate Pesticide Data with Values below the Limit of Detection, \emph{119}(3), 351--356. \url{http://doi.org/10.1289/ehp.l002124}
 
+\leavevmode\hypertarget{ref-Crovelli1993}{}%
+Crovelli, R. A. (1993). An Objective Replacement Method for Censored Geochemical Data, \emph{25}(1), 59--80.
+
 \leavevmode\hypertarget{ref-EIP2020}{}%
 Environmental Integrity Project. (2020). Coal Ash Groundwater Contamination: Documenting Coal Ash Pollution. Retrieved from \url{https://environmentalintegrity.org/coal-ash-groundwater-contamination/}
 
@@ -580,8 +576,8 @@ Environmental Protection Agency. (2020). Disposal of Coal Combustion Residuals f
 \leavevmode\hypertarget{ref-Gillespie2010}{}%
 Gillespie, B. W., Chen, Q., Reichert, H., Franzblau, A., Lepkowski, J., Adriaens, P., \ldots{} Garabrant, D. H. (2010). Estimating Population Distributions When Some Data Are Below a Limit of Detection by Using a Reverse Kaplan-Meier Estimator. \emph{Epidemiology}, \emph{21}. \url{http://doi.org/10.1097/EDE.0b013e3181ce9fD8}
 
-\leavevmode\hypertarget{ref-Glass2001}{}%
-Glass, D. C., \& Gray, C. N. (2001). Estimating mean exposures from censored data: Exposure to benzene in the Australian petroleum industry. \emph{Annals of Occupational Hygiene}, \emph{45}(4), 275--282. \url{http://doi.org/10.1016/S0003-4878(01)00022-9}
+\leavevmode\hypertarget{ref-Hornung1989}{}%
+Hornung, R., \& Reed, L. (1989). Estimation of Average Concentration in the Presence of Nondetectable Values. \emph{Applied Occupational and Environmental Hygiene}, \emph{5}(1), 46--51.
 
 \leavevmode\hypertarget{ref-Kelderman2019}{}%
 Kelderman, K., Kunstman, B., Roy, H., Sivakumar, N., Mccormick, S., \& Bernhardt, C. (2019). Coal's Poisonous Legacy: Groundwater Contaminated by Coal Ash Across the U.S.
