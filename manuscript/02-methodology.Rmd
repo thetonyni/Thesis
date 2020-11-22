@@ -98,27 +98,25 @@ Apart from available-case analysis, over the past century, a myriad of methods t
 
 Often condemned in papers, as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences as an appropriate and recommended method to work with left-censored chemical concentration data [@Canales2018].
 
-The substitution method simply involves imputing in a replacement value in lieu of the censored data point. The lack of a global, standardized replacement value to substitute is one of the most pronounced downside of this method. These replacement value used may differ between studies but common values include: $\frac{LOD}{2}, \frac{LOD}{\sqrt2}$, or $LOD$ [@Lee2005]. Different disciplines have their own suggested "best" replacement value to use, an example being the geochemical discipline where $\frac{3}{4}$ times the LOD is often used as the replacement value [@Crovelli1993]. However, it must be recognized that the substitution method is a statistically *unsound* technique which are used often in non-rigorous statistical settings due to them being quite easy to implement [@Chen2011]. As such, there have seen several studies in order to investigate the effectiveness of the method. 
+The substitution method simply involves imputing in a replacement value in lieu of the censored data point. The lack of a global, standardized replacement value to substitute is one of the most pronounced downside of this method. These replacement value used may differ between studies but common values include: $\frac{LOD}{2}, \frac{LOD}{\sqrt2}$, or $LOD$ [@Lee2005]. Different disciplines have their own suggested "best" replacement value to use, an example being $\frac{3}{4}$ times the LOD being a common replacement value in geochemistry [@Crovelli1993]. However, it must be recognized that the substitution method is a statistically *unsound* technique which are used often in non-rigorous statistical settings due to them being quite easy to implement [@Chen2011]. As such, there have seen several studies in order to investigate the effectiveness of the method. 
 
-One particular investigation was conducted by Glass (2001) to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods from the values listed previously, with LOD/2 and LOD/√2. Proponents of the substitution method claim that the replacement value $\frac{LOD}{2}$ is useful for data sets in which the majority of the data are below the LOD or when the distribution of the data is highly skewed; the definition of "highly skewed" being any distribution with a geometric standard deviation (a measure of spread commonly used in tandem with log-normal distributions) of 3 or more [@Hornung1989].
+One particular investigation was conducted by Glass and Gray (2001) to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods from the values listed previously, with LOD/2 and LOD/√2. Proponents of the substitution method claim that the replacement value $\frac{LOD}{2}$ is useful for data sets in which the majority of the data are below the LOD or when the distribution of the data is highly skewed; the definition of "highly skewed" being any distribution with a geometric standard deviation (a measure of spread commonly used in tandem with log-normal distributions) of 3 or more [@Hornung1989]. They also suggest using $\frac{LOD}{\sqrt2}$ when there are only a few data points below the LOD or when the data is not highly skewed. 
 
-[START HERE]
-
-On the same note, they claim that the $\frac{LOD}{\sqrt2}$ is helpful for cases when there are only a few data points below the LOD or when the data is not highly skewed. From Glass' results, it was found that both of these methods are equally unsound in their reasoning and logic as they both introduce large errors and biases regardless of the data set being used [@Glass2001]. Substitution methods are flawed as they can often introduce a "signal" which was not originally present within the data, or even obstruct an actual signal which was present in the original data [@Lee2005].
+Substitution methods are flawed as they can often introduce a "signal" which was not originally present within the data, or even obstruct an actual signal which was present in the original data [@Lee2005]. Numerous authors have advised against the usage of substitution methods, for being statistically inappropriate to use. Glass and Gray (2001) found that both introduce large errors and biases in descriptive statistics of interest. Thompson and Nelson (2001) conducted a study in which they found similar results, in that it often led to biased parameter estimates and "artificially small standard error estimates." Hewett and Ganser (2007) also found in their simulation study that the substitution method yielded the lowest average bias and root mean squared error values (comparison metrics to measure accuracy) in their estimation of the mean. Overall, the overall consensus seems to advise against the usage of these substitution techniques.
 
 ### Maximum Likelihood Estimation {#MLE}
 
-Maximum likelihood is a parametric technique which allows us to estimate the parameter values of a distribution/model and one which is useful when encountering censored data.
+Maximum likelihood estimation (MLE) is a parametric technique which allows us to estimate the parameters of a distribution or model when the data is from a multivariate normal distribution.
 
-To give a brief introduction as to the the mechanisms of MLE and how it functions, given a random *i.i.d.* set of random variables $X_1, X_2,...,X_n$ from distribution $f(x|\theta)$.
+To give a brief introduction to the mechanisms of MLE and how it functions, given a random, independently and identically distributed (*i.i.d.*) set of random variables $X_1, X_2,...,X_n$ from distribution $f(x|\theta)$.
 
 For every observed random sample $x_1,...,x_n$, we can define the joint density function to be:
 
 $$f(x_1,...,x_n|\theta) = f(x_1|\theta)...f(x_n|\theta) = \prod_{i=1}^{n}f(x_i|\theta)$$
-Upon observing the given data, $f(x_1,...,x_n|\theta)$ becomes a function of $\theta$ alone, so we obtain a likelihood of:
+Upon observing the given data, $f(x_1,...,x_n|\Theta)$ becomes a function of $\theta$ alone, so we obtain a likelihood of:
 
 $$lik(\theta) = f(x_1,...,x_n|\theta)$$
-Our goal is to obtain the maximum likelihood estimate (mle) of $\theta$ which maximizes $lik(\theta)$, in other words, to obtain a $\theta$ which makes our observed data the most probable/likely.
+Our goal is to obtain the maximum likelihood estimate of $\Theta$ which maximizes $lik(\theta)$, in other words, to obtain a $\theta$ which makes our observed data the most probable/likely.
 
 As we previously declared our random variables $X_1, X_2,...,X_n$ to be i.i.d, we can rewrite the likelihood to be a product of the marginal densities:
 
