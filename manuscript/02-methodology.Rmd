@@ -109,22 +109,30 @@ Substitution methods are flawed as they can often introduce a "signal" which was
 
 ### Maximum Likelihood Estimation {#MLE}
 
-Maximum likelihood estimation (MLE) is a parametric technique which allows us to estimate the parameters of a distribution or model when the data is from a multivariate normal distribution.
+Maximum likelihood (ML) estimation is a parametric technique which allows us to estimate the parameters of a distribution or model when the data is from a multivariate normal distribution.
 
-To give a brief introduction to the mechanisms of MLE and how it functions, given a random, independently and identically distributed (*i.i.d.*) set of random variables $X_1, X_2,...,X_n$ from distribution $f(x|\theta)$.
+To give a brief introduction to the mechanisms of ML estimation, let $f(x|\theta)$ denote the probability density function (PDF) which specifies the probability of observing the random variable $x$ given the parameter $\theta$. 
 
-For every observed random sample $x_1,...,x_n$, we can define the joint density function to be:
+Given a random, independently and identically distributed (*i.i.d.*) set of random variables $X_1, X_2,...,X_n$ from $f(x|\theta)$, we know that each individual observation $x_i$'s are statistically independent from one another, which allows us to express the PDF as the product of all individual densities. For every observed random sample $x_1,...,x_n$, we can define the joint density function to be:
 
 $$f(x_1,...,x_n|\theta) = f(x_1|\theta)...f(x_n|\theta) = \prod_{i=1}^{n}f(x_i|\theta)$$
-Upon observing the given data, $f(x_1,...,x_n|\Theta)$ becomes a function of $\theta$ alone, so we obtain a likelihood of:
+In most real-life scenarios, the actual (observed) data is already given, and our goal is to find the PDF which is most likely to generate our observed values. In order to solve this inverse problem, we introduce the likelihood function, which is defined as the joint density of the observed data as a function of the parameter (with the data held as a fixed constant). 
+
+In mathematical notation, upon observing the given data, $f(x_1,...,x_n|\Theta)$ becomes a function of $\theta$ alone, so we obtain a likelihood of:
 
 $$lik(\theta) = f(x_1,...,x_n|\theta)$$
-Our goal is to obtain the maximum likelihood estimate of $\Theta$ which maximizes $lik(\theta)$, in other words, to obtain a $\theta$ which makes our observed data the most probable/likely.
+It is important to recognize the difference which separates the likelihood function and the PDF. The PDF is a function of the observed data given a parameter(s). It gives information regarding the probability of a particular data value for a fixed parameter.
+
+On the other hand, the likelihood function is a function of the parameter, given a set of observed data. It tells us likelihood of observing a particular parameter value for a fixed set of data.
+
+Our goal is to obtain the ML estimate of our parameter which maximizes the likelihood function, $lik(\theta)$, in other words, to obtain a $\theta$ which makes our observed data the most probable/likely.
 
 As we previously declared our random variables $X_1, X_2,...,X_n$ to be i.i.d, we can rewrite the likelihood to be a product of the marginal densities:
 
 $$lik(\theta) = \prod_{i=1}^{n} f(x_i|\theta)$$
 in which we can then maximize the likelihood to find the best mle of $\theta$ to best capture our observed data.
+
+[CONTINUE]
 
 Maximum likelihood estimation is widely thought to be optimal, but only if one knows the proposed model and underlying distribution of the dataset in advance, hence its classification as a parametric technique. In a study comparing methods to handling missing data, Canales found that the MLE method underperformed when the data in question was highly skewed, in which overinflated mean squared errors were often obtained [@Canales2018].
 
