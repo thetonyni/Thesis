@@ -63,8 +63,6 @@ There are a myriad of types of censoring which can be discussed, however the foc
 
 ## Challenges of Reporting Censored Data {#challenges}
 
-[CURRENTLY WORKING ON REORGANIZING HERE]
-
 There is no universal reporting practice for values below the LOD which can lead to confusion amongst researchers. The lack of standardization makes it difficult to distinguish LOD values with uncensored values. This can lead to LOD values unintentionally being overlooked, causing faulty analysis or conclusions which are heavily flawed.
 
 In a study involving the precision of lead measurements near concentrations of the limit of detection, Berthouex (1993), discusses this disparity in practice within chemists and their labs and describe in the following list as:
@@ -80,17 +78,22 @@ In a study involving the precision of lead measurements near concentrations of t
   \item Reporting the actual measured concentration with a precision ($\pm$) statement
 \end{enumerate}
 
-The latter three methods are the best [FIND PAPER BY Gilbert, 1987; Hunt and Wilson, 1986; and Rhodes, 1981 -- backtrace through berthouex when time allows? by what metrics?].
-
-<!-- In an article published by the American Bar Association, a company seeking to purchase land for residential use, hires several laboratories to conduct analyses of the chemical concentrations at that site. However, miscommunication occurs between the two parties, in which the laboratory mistakenly is given information that the site is used for industrial purposes. As it turns out, detection limits for residential areas differs from industrial ones, and as a result, the analytic results turned out useless for the company. This situation is a clear example of how [@Elias1999]. -->
+The latter three methods are the best procedures to follow, especially from a practical and statistical point of view according to Gilbert (1987). He argues that assuming the small concentration values are not from some sort of measurement error during data collection, then the value intrinsically holds value. As such, recording a measurement as "below LOD," without any sort of accompanying value would be discarding information which could have been used in practice [Gilbert1987].
 
 Berthouex discusses the prevalence in regards to the practice of censoring data by reporting only values which are above the detection limit and discarding those which fail to yield quantifiable results. He discourages this practice and instead suggests the reporting the numeric values of measurements, even when those values are below the limit of detection. [@Berthouex1993]
+
+Monte-Carlo experiements conducted by Gillom (1984) show that linear trends in water-quality data were far more easily able to be detected with uncensored data as compared to censored data, in essence, supporting the stance of keeping all concentrations rather than only those above the detection limit. 
+
+<!-- In an article published by the American Bar Association, a company seeking to purchase land for residential use, hires several laboratories to conduct analyses of the chemical concentrations at that site. However, miscommunication occurs between the two parties, in which the laboratory mistakenly is given information that the site is used for industrial purposes. As it turns out, detection limits for residential areas differs from industrial ones, and as a result, the analytic results turned out useless for the company. This situation is a clear example of how [@Elias1999]. -->
 
 ## Approaches {#Approaches}
 
 It is important to note that the values below the LOD still contain information, specifically that the values is between the lower bound value (if it exists) and the LOD [@Chen2011]. As such, there are a variety of statistical treatments to handle censored data which have been popularized in the statistical literature which will be discussed within this section.
 
-Omission involves the deletion of data points which are deemed to be invalid, as a result of left-censoring or any other deficiencies in the data. This is also more commonly known as *available-case analysis*, in which statistical analysis is conducted while only considering the observations which have no missing data on the variables of interest, and excluding the observations with missing values [@May2012]. May argues against this approach and claims that the loss of information from discarding data and the inflation of standard errors of estimates (when discussing missingness in a regression context) will invariably be inflated as a result of the decreased sample size. The advantages of omission lies in its ease of implementation. [WHAT SORT OF USEFUL INFORMATION IS DISCARDED, INCLUDE HERE, omitting is a valid method which is used by default in a lot of statistical software, when should care be used?]
+Omission involves the deletion of data points which are deemed to be invalid, as a result of left-censoring or any other deficiencies in the data. This is also more commonly known as *available-case analysis*, in which statistical analysis is conducted while only considering the observations which have no missing data on the variables of interest, and excluding the observations with missing values [@May2012]. May argues against this approach and claims that the loss of information from discarding data and the inflation of standard errors of estimates (when discussing missingness in a regression context) will invariably be inflated as a result of the decreased sample size. The advantages of omission lies in its ease of implementation. 
+
+<!--[WHAT SORT OF USEFUL INFORMATION IS DISCARDED, INCLUDE HERE, omitting is a valid method which is used by default in a lot of statistical software, when should care be used?]
+-->
 
 Apart from available-case analysis, over the past century, a myriad of methods to deal with censoring have been developed to counter this issue -- some more statistically sound than others. We will review some of the most common methods to estimate descriptive statistics involving censored data, which include: substitution, maximum likelihood estimation, Kaplan-Meier, and regression on order statistics [@Lafleur2011].
 
@@ -127,7 +130,7 @@ Maximum likelihood estimation is widely thought to be optimal, but only if one k
 
 The MLE method we will be utilizing is actually performed by obtaining regression estimates of slope(s) and intercepts through maximum likelihood with censored data. The `cenmle` function in the `NADA` package allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values.
 
-* Useful slides to refer to here [https://www.eurachem.org/images/stories/workshops/2017_10_PT/pdf/contrib/O05-Mancin.pdf]
+<!-- * Useful slides to refer to here [https://www.eurachem.org/images/stories/workshops/2017_10_PT/pdf/contrib/O05-Mancin.pdf] -->
 
 ### Kaplan-Meier Estimate Approach {#Kaplan-Meier}
 
@@ -137,9 +140,19 @@ The Kaplan-Meier method is a common nonparametric technique used to deal with ce
 
 To introduce the concept of the KM-estimator, it is helpful to take a look into its usages in survival analysis studies where the focus is often on a type of "time to a certain event occurring", often being cases such time to death, or time to failure.
 
+<!--
+
 * [INSERT PICTURE OF EXAMPLE SURVIVAL CURVE HERE]
 
-The KM-estimator is a nonparametric statistic used to estimate the survival curve from the empirical data while accounting for the possibilities of certain values being censored (participants in a mortality study could drop out, die during the study, become unavailable to contact after a certain time, etc.). It does this by assuming that censoring is independent from the event of interest (death) and that survival probabilities remain the same in observations found early in the study and those recruited later in the study [CITE PROPERLY https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_survival/BS704_Survival_print.html]
+-->
+
+The KM-estimator is a nonparametric statistic used to estimate the survival curve from the empirical data while accounting for the possibilities of certain values being censored (participants in a mortality study could drop out, die during the study, become unavailable to contact after a certain time, etc.). It does this by assuming that censoring is independent from the event of interest (death) and that survival probabilities remain the same in observations found early in the study and those recruited later in the study 
+
+<!--
+
+[CITE PROPERLY https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_survival/BS704_Survival_print.html]
+
+-->
 
 The KM-estimator when performing an empirical estimation of the survival curve at time $t$ can be represented by the following equation:
 

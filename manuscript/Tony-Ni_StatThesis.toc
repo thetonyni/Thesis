@@ -17,7 +17,7 @@
 \contentsline {section}{\numberline {2.2}Challenges of Reporting Censored Data}{11}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Approaches}{12}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Substitution Approach}{13}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Maximum Likelihood Estimation}{15}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.2}Maximum Likelihood Estimation}{14}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}Kaplan-Meier Estimate Approach}{16}{subsection.2.3.3}%
 \contentsline {subsection}{\numberline {2.3.4}Regression on Order Statistics}{18}{subsection.2.3.4}%
 \contentsline {chapter}{Chapter 3: Simulations}{21}{chapter.3}%
