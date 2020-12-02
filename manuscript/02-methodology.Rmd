@@ -132,7 +132,7 @@ As we previously declared our random variables $X_1, X_2,...,X_n$ to be i.i.d, w
 $$lik(\theta) = \prod_{i=1}^{n} f(x_i|\theta)$$
 in which we can then maximize the likelihood to find the best mle of $\theta$ to best capture our observed data.
 
-[CONTINUE]
+[CONTINUE HERE]
 
 Maximum likelihood estimation is widely thought to be optimal, but only if one knows the proposed model and underlying distribution of the dataset in advance, hence its classification as a parametric technique. In a study comparing methods to handling missing data, Canales found that the MLE method underperformed when the data in question was highly skewed, in which overinflated mean squared errors were often obtained [@Canales2018].
 
