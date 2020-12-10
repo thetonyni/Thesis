@@ -312,7 +312,7 @@ Within the report, the EIP mentions certain restrictions within the data that ha
 \hypertarget{methodology}{%
 \chapter{Methodology}\label{methodology}}
 
-The concept of missing data is ubiquitous within academic disciplines and which frequently complicates any types of real-world studies. Missing data will be defined within this thesis as \emph{occurences within a dataset where there is no value stored for a variable in the observation of interest}. As most studies often utilize data collected through mediums such as surveys, questionnaires, or field research, missing data is an unavoidable problem. Missing data hinders one's ability to work with and analyze the phenomena at hand, as data is often the basis of all studies. One of the most glaring issues with missingness is how it can introduce bias within an analysis, which can more often than not, invalidate a study if not accounted for and handled properly.
+The concept of missing data is ubiquitous within academic disciplines and often complicates innumerable types of real-world studies. Missing data will be defined within this thesis as \emph{occurences within a dataset where there is no value stored for a variable in the observation of interest}. As most studies often utilize data collected through mediums such as surveys, questionnaires, or field research, missing data is an unavoidable problem. Missing data hinders one's ability to work with and analyze the phenomena at hand, as data is often the basis of all studies. One of the most glaring issues with missingness is how it can introduce bias within an analysis, which can more often than not, invalidate a study if not accounted for and handled properly.
 
 This thesis will go into a more specific instance of missing data known as censoring, which is \emph{the condition when one has only partial information regarding the values of a measurement within a dataset}. We will introduce and define the three types of censored data, challenges with the reporting of censored data, alongside a discussion on common statistical approaches to handling censored data.
 
@@ -324,7 +324,7 @@ As discussed previously, censored data is a specific type of missingness where o
 \hypertarget{right}{%
 \subsection{Right Censoring}\label{right}}
 
-Right censoring is a specific instance in which we only know that the true value of a data point lies above a certain threshold, but it is unknown by how much. Suppose a study on income and mortality is conducted with the variable of interest, \(T\), being the time measured from the start of the study to the death of the participant. The study has a duration of 5 years, in which participants are expected to submit a form regarding their annual income. The value for the participant would be considered to be right-censored if at any point during the study, they failed to follow-up, or if the participant was still alive at the conclusion of the 10 year study. In this design study, several possibilities can occur, illustrated in figure blah.
+Right censoring is a specific instance in which we only know that the true value of a data point lies above a certain threshold, but it is unknown by how much. Suppose a study on income and mortality is conducted with the variable of interest, \(T\), being the time measured from the start of the study to the death of the participant. The study has a duration of 5 years, in which participants are expected to submit a form regarding their annual income. The value for the participant would be considered to be right-censored if at any point during the study, they failed to follow-up, or if the participant was still alive at the conclusion of the 5 year study. In this design study, several possibilities can occur, illustrated in figure \ref{fig:rightcensoringexample}.
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figures/right_censoring_example} 
@@ -333,7 +333,7 @@ Right censoring is a specific instance in which we only know that the true value
 
 \caption{Right Censoring Example}\label{fig:rightcensoringexample}
 \end{figure}
-If the individual passes to the termination of the study, the only information we have is \(T > 5\).
+If the individual lives on until the termination of the study, the only information we have is \(T > 5\). We don't know at what point they passed away since
 
 If an individual passes away at some point, \(t_i\) during the study, then \(T = t_i\).
 
