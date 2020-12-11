@@ -324,7 +324,7 @@ As discussed previously, censored data is a specific type of missingness where o
 \hypertarget{right}{%
 \subsection{Right Censoring}\label{right}}
 
-Right censoring is a specific instance in which we only know that the true value of a data point lies above a certain threshold, but it is unknown by how much. Suppose a study on income and mortality is conducted with the variable of interest, \(T\), being the time measured from the start of the study to the death of the participant. The study has a duration of 5 years, in which participants are expected to submit a form regarding their annual income. The value for the participant would be considered to be right-censored if at any point during the study, they failed to follow-up, or if the participant was still alive at the conclusion of the 5 year study. In this design study, several possibilities can occur, illustrated in figure \ref{fig:rightcensoringexample}.
+Right censoring is a specific instance in which we only know that the true value of a data point lies above a certain threshold, but it is unknown by how much. Suppose a study on income and mortality is conducted with the variable of interest, \(T\), being the time measured from the start of the study to the death of the participant. The study has a duration of 5 years, in which participants are expected to submit a form regarding their annual income. The value for the participant would be considered to be right-censored if at any point during the study, they failed to follow-up, or if the participant was still alive at the conclusion of the 5 year study. In this design study, several possibilities can occur, illustrated in Figure \ref{fig:rightcensoringexample}.
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figures/right_censoring_example} 
@@ -333,11 +333,11 @@ Right censoring is a specific instance in which we only know that the true value
 
 \caption{Right Censoring Example}\label{fig:rightcensoringexample}
 \end{figure}
-If the individual lives on until the termination of the study, the only information we have is \(T > 5\). We don't know at what point they passed away since
+As illustrated by individual A in Figure \ref{fig:rightcensoringexample}, this individual lives on until the termination of the study. We don't know at what point they passed away exactly, since they didn't pass away during the time constraints of the study. As such, the only information we have is \(T > 5\).
 
-If an individual passes away at some point, \(t_i\) during the study, then \(T = t_i\).
+If an individual does pass away at some point, \(t_i\), \emph{during} the study, then \(T = t_i\). This can be illustrated within Figure \ref{fig:rightcensoringexample} by individuals B, C, and D for which \(T = 3\), \(T = 4\), and \(T = 1\).
 
-Suppose an individual stopped submitting a form during the third year of the study. As we have no information about whether or not if they died or simply did not submit their form, all we know is that the individual died/will die at some point after year three of the study. In this instance, \(T > 3\).
+There is a final possibility for individuals who choose to censor themselves. Illustrated in Figure \ref{fig:rightcensoringexample} by individuals E and F, we can see that they are marked as censored at \(T = 3\) and \(T = 1\), respectively. These individuals may have chosen to stop submitting information to the study or drop out of the study entirely without warning. As we have no information about whether or not if they died or simply did not submit their form, all we know is that the individual died/will die at some point after the point at which they were censored.
 
 Right censoring is the most common type of censoring and can often be found in clinical trial studies, mortality studies, and other forms of surival analyses.
 
@@ -355,7 +355,7 @@ In contrast with right censoring, left censoring is a specific instance of censo
 
 To understand this concept better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You plan to wake up every morning far before the sun rises, but on the first day of the study, you oversleep and wake up at 7:00 A.M. with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit (7:00 A.M.).
 
-Left censoring is commonly found in environmental, water quality, and chemical-related research, where the focus is on the concentration of an analyte. Due to limitations on measuring instruments, left censored data are commonly found in these types of studies.
+Left censoring is commonly found in environmental, water quality, and chemical-related research where the focus is on the concentration of an analyte. Due to limitations on measuring instruments, left censored data are commonly found in these types of studies.
 
 \hypertarget{interval}{%
 \subsection{Interval Censoring}\label{interval}}
@@ -367,11 +367,11 @@ Left censoring is commonly found in environmental, water quality, and chemical-r
 
 \caption{Interval Censoring Example}\label{fig:intervalcensoringexample}
 \end{figure}
-Interval censoring is another form of censoring in which the random variable of interest is known to be between an interval of two values. Considering a random variable \(T\), which denotes the survival time of interest, if interval censoring is at hand, we can denote the interval containing \(T\) to be \(I = [L, R]\), with \(L\) being the beginning of the interval and \(R\) being the end of the interval.
+Interval censoring is another form of censoring in which the random variable of interest is known to be between an interval of two values. Considering a random variable \(T\), which denotes the survival time of interest, if interval censoring is at hand, we can denote the interval containing \(T\) to be \(I = [t_1, t_2]\), with \(t_1\) being the beginning of the interval and \(t_2\) being the end of the interval.
 
-Left and right censoring are special cases of interval censoring. In the case of left censoring, \(L = 0\); and conversely in the case of right censoring, \(R = \infty\).
+Left and right censoring are special cases of interval censoring. In the case of left censoring, \(t_1 = 0\); and conversely in the case of right censoring, \(t_2 = \infty\).
 
-To conceptualize interval censoring, we can consider a example study on virus testing, in which participants get their blood drawn in order to detect whether or not if they test positive for the virus or not. The random variable in question is \(T\), which represents the exact timepoint at which the subject contracted the virus. If an individual was first tested at time \(t_1\) and tested negative, but was tested again at a later time \(t_2\) and tested positive, the specific time \(t\) at which the subject contracted the virus is unknown. All we know is that it lies somewhere between the interval is \(I = [t_1, t_2]\), but not the exact time at which they contracted it.
+To conceptualize interval censoring, we can consider a example study on virus testing in which participants get their blood drawn in order to detect whether or not they test positive for a virus or not. The random variable in question is \(T\), which represents the exact timepoint at which the subject contracted the virus. If an individual was first tested at time \(t_1\) and tested negative, but was tested again at a later time \(t_2\) and tested positive, the specific time \(t\) at which the subject contracted the virus is unknown. All we know is that it lies somewhere between the interval, \(I = [t_1, t_2]\), but not the exact time at which they contracted it.
 
 There are a myriad of types of censoring which can be discussed, however the focus of my thesis deals specifically with the challenges of reporting these values alongside methods of handling left-censored data.
 
@@ -380,29 +380,29 @@ There are a myriad of types of censoring which can be discussed, however the foc
 
 There is no universal reporting practice for values below the LOD which can lead to confusion amongst researchers. The lack of standardization makes it difficult to distinguish LOD values with uncensored values. This can lead to LOD values unintentionally being overlooked, causing faulty analysis or conclusions which are heavily flawed.
 
-In a study involving the precision of lead measurements near concentrations of the limit of detection, Berthouex (1993), discusses this disparity in practice within chemists and their labs and describe in the following list as:
+In a study involving the precision of lead measurements near concentrations of the limit of detection, Berthouex (1993) discusses the disparity in practices within chemists on ways to record LOD values. He enumerates in a following list, common reporting practices in this field:
 \begin{enumerate}
   \item Reporting the trace, a chemical whose average concentration is less than 100 $\mu g$
   \item Reporting  the letters ND, which stand for "not detected"
   \item Reporting the numerical LOD value itself
-  \item Reporting the "less than" value, which is the numerical LOD preceded by a "<"
-  \item Reporting some value between 0 and the LOD, such as one-half the LOD value
+  \item Reporting "<", followed by the numerical LOD value
+  \item Reporting some value between 0 and the LOD value, such as one-half the LOD value
   \item Reporting the actual measured concentration, even if it falls below the LOD
-  \item Reporting the actual measured concentration, followed by (LOD)
+  \item Reporting the actual measured concentration, followed by "(LOD)"
   \item Reporting the actual measured concentration with a precision ($\pm$) statement
 \end{enumerate}
-The latter three methods are the best procedures to follow, especially from a practical and statistical point of view according to Gilbert (1987). He argues that assuming the small concentration values are not from some sort of measurement error during data collection, then the value intrinsically holds value. As such, recording a measurement as ``below LOD,'' without any sort of accompanying value would be discarding information which could have been used in practice {[}Gilbert1987{]}.
+The latter three methods are the best procedures to follow, especially from a practical and statistical point of view according to Gilbert (1987). He argues that assuming the small concentration values are not from some sort of measurement error during data collection, then the value holds value. As such, recording a measurement as ``below LOD,'' without any sort of accompanying value would be discarding useful information which could have been used in practice and analysis.
 
-Berthouex discusses the prevalence in regards to the practice of censoring data by reporting only values which are above the detection limit and discarding those which fail to yield quantifiable results. He discourages this practice and instead suggests the reporting the numeric values of measurements, even when those values are below the limit of detection. (Berthouex \& Gan, 1993)
+Berthouex (1993) discusses the prevalence in regards to the practice of censoring data by reporting only values which are above the detection limit and discarding those which fail to yield quantifiable results. He discourages this practice and instead suggests the reporting of measurements, even when those values are below the limit of detection.
 
-Monte-Carlo experiements conducted by Gillom (1984) show that linear trends in water-quality data were far more easily able to be detected with uncensored data as compared to censored data, in essence, supporting the stance of keeping all concentrations rather than only those above the detection limit.
+Further supporting the stance of keeping all concentration values rather than only those above the detection limit, Monte-Carlo experiements conducted by Gillom (1984) show that linear trends in water-quality data were far more easily able to be detected with uncensored data as compared to censored data. The methods they used to handle censored water quality data were found to produce wild and erratic estimates for the mean and standard deviation of datasets with higher censoring levels than those without. They found a general trend of decreasing classification success with increased censoring levels, attributing it to the limited availability of information in censored data.
 
 \hypertarget{Approaches}{%
 \section{Approaches}\label{Approaches}}
 
 It is important to note that the values below the LOD still contain information, specifically that the values is between the lower bound value (if it exists) and the LOD (Chen et al., 2011). As such, there are a variety of statistical treatments to handle censored data which have been popularized in the statistical literature which will be discussed within this section.
 
-Omission involves the deletion of data points which are deemed to be invalid, as a result of left-censoring or any other deficiencies in the data. This is also more commonly known as \emph{available-case analysis}, in which statistical analysis is conducted while only considering the observations which have no missing data on the variables of interest, and excluding the observations with missing values (May, 2012). May argues against this approach and claims that the loss of information from discarding data and the inflation of standard errors of estimates (when discussing missingness in a regression context) will invariably be inflated as a result of the decreased sample size. The advantages of omission lies in its ease of implementation.
+Omission involves the deletion of data points which are deemed to be invalid as a result of left-censoring or any other deficiencies in the data. This is also more commonly known as \emph{available-case analysis}, in which statistical analysis is conducted while only considering the observations which have no missing data on the variables of interest, and excluding the observations with missing values (May, 2012). May argues against this approach and claims that the loss of information from discarding data and the inflation of standard errors of estimates (when discussing missingness in a regression context) will invariably be inflated as a result of the decreased sample size. The advantages of omission lies in its ease of implementation.
 
 Apart from available-case analysis, over the past century, a myriad of methods to deal with censoring have been developed to counter this issue -- some more statistically sound than others. We will review some of the most common methods to estimate descriptive statistics involving censored data, which include: substitution, maximum likelihood estimation, Kaplan-Meier, and regression on order statistics (Lafleur et al., 2011).
 
@@ -411,11 +411,11 @@ Apart from available-case analysis, over the past century, a myriad of methods t
 
 Often condemned in papers, as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences as an appropriate and recommended method to work with left-censored chemical concentration data (Canales, 2018).
 
-The substitution method simply involves imputing in a replacement value in lieu of the censored data point. The lack of a global, standardized replacement value to substitute is one of the most pronounced downside of this method. These replacement value used may differ between studies but common values include: \(\frac{LOD}{2}, \frac{LOD}{\sqrt2}\), or \(LOD\) (Lee \& Helsel, 2005). Different disciplines have their own suggested ``best'' replacement value to use, an example being \(\frac{3}{4}\) times the LOD being a common replacement value in geochemistry (Crovelli, 1993). However, it must be recognized that the substitution method is a statistically \emph{unsound} technique which are used often in non-rigorous statistical settings due to them being quite easy to implement (Chen et al., 2011). As such, there have seen several studies in order to investigate the effectiveness of the method.
+The substitution method simply involves imputing in a replacement value in lieu of the censored data point. The lack of a global, standardized replacement value to substitute is one of the most pronounced downside of this method. The replacement value used may differ between studies but common values include: \(\frac{LOD}{2}, \frac{LOD}{\sqrt2}\), or \(LOD\) (Lee \& Helsel, 2005). Different disciplines have their own suggested ``best'' replacement value to use, an example being \(\frac{3}{4}\) times the LOD being a common replacement value in geochemistry (Crovelli, 1993). However, it must be recognized that the substitution method is a statistically unsound technique which is often used in non-rigorous statistical settings due to them being quite easy to implement (Chen et al., 2011). As such, there have been several studies in order to investigate the effectiveness of the method.
 
-One particular investigation was conducted by Glass and Gray (2001) to investigate the effectiveness of LOD approaches, they used a variety of naive substitution methods from the values listed previously, with \(\frac{LOD}{2}\) and \(\frac{LOD}{\sqrt2}\). Proponents of the substitution method claim that the replacement value \(\frac{LOD}{2}\) is useful for data sets in which the majority of the data are below the LOD or when the distribution of the data is highly skewed; the definition of ``highly skewed'' being any distribution with a geometric standard deviation (a measure of spread commonly used in tandem with log-normal distributions) of 3 or more (Hornung \& Reed, 1989). They also suggest using \(\frac{LOD}{\sqrt2}\) when there are only a few data points below the LOD or when the data is not highly skewed.
+Proponents of the substitution method claim that the replacement value \(\frac{LOD}{2}\) is useful for data sets in which the majority of the data are below the LOD or when the distribution of the data is highly skewed; the definition of ``highly skewed'' being any distribution with a geometric standard deviation (a measure of spread commonly used in tandem with log-normal distributions) of 3 or more (Hornung \& Reed, 1989). They also suggest using \(\frac{LOD}{\sqrt2}\) when there are only a few data points below the LOD or when the data is not highly skewed.
 
-Substitution methods are flawed as they can often introduce a ``signal'' which was not originally present within the data, or even obstruct an actual signal which was present in the original data (Lee \& Helsel, 2005). Numerous authors have advised against the usage of substitution methods, for being statistically inappropriate to use. Glass and Gray (2001) found that both introduce large errors and biases in descriptive statistics of interest. Thompson and Nelson (2001) conducted a study in which they found similar results, in that it often led to biased parameter estimates and ``artificially small standard error estimates.'' Hewett and Ganser (2007) also found in their simulation study that the substitution method yielded the lowest average bias and root mean squared error values (comparison metrics to measure accuracy) in their estimation of the mean. Overall, the overall consensus seems to advise against the usage of these substitution techniques.
+Substitution methods are flawed as they can often introduce a ``signal'' which was not originally present within the data, or even obstruct an actual signal which was present in the original data (Lee \& Helsel, 2005). Numerous authors have advised against the usage of substitution methods for being statistically inappropriate to use. Glass and Gray (2001) found that both introduce large errors and biases in descriptive statistics of interest. Thompson and Nelson (2001) conducted a study in which they found similar results, in that it often led to biased parameter estimates and ``artificially small standard error estimates.'' Hewett and Ganser (2007) also found in their simulation study that the substitution method yielded the lowest average bias and root mean squared error values (comparison metrics to measure accuracy) in their estimation of the mean. Overall, the overall consensus seems to advise against the practice of these substitution techniques.
 
 \hypertarget{MLE}{%
 \subsection{Maximum Likelihood Estimation}\label{MLE}}
@@ -434,36 +434,36 @@ In mathematical notation, upon observing the given data, \(f(x_1,...,x_n|\Theta)
 \[lik(\theta) = f(x_1,...,x_n|\theta)\]
 It is important to recognize the difference which separates the likelihood function and the PDF. The PDF is a function of the observed data given a parameter(s). It gives information regarding the probability of a particular data value for a fixed parameter.
 
-On the other hand, the likelihood function is a function of the parameter, given a set of observed data. It tells us likelihood of observing a particular parameter value for a fixed set of data.
+On the other hand, the likelihood function is a function of the parameter, given a set of observed data. It tells us the likelihood of observing a particular parameter value for a fixed set of data.
 
-Our goal is to obtain the ML estimate of our parameter which maximizes the likelihood function, \(lik(\theta)\), in other words, to obtain a \(\theta\) which makes our observed data the most probable/likely.
+Our goal is to obtain the ML estimate of our parameter which maximizes the likelihood function, \(lik(\theta)\), in other words, to obtain a \(\theta\) which makes our observed data the most probable.
 
 As we previously declared our random variables \(X_1, X_2,...,X_n\) to be i.i.d, we can rewrite the likelihood to be a product of the marginal densities:
 
 \[lik(\theta) = \prod_{i=1}^{n} f(x_i|\theta)\]
 in which we can then maximize the likelihood to find the best mle of \(\theta\) to best capture our observed data.
 
-{[}CONTINUE HERE{]}
-
-Maximum likelihood estimation is widely thought to be optimal, but only if one knows the proposed model and underlying distribution of the dataset in advance, hence its classification as a parametric technique. In a study comparing methods to handling missing data, Canales found that the MLE method underperformed when the data in question was highly skewed, in which overinflated mean squared errors were often obtained (Canales, 2018).
+As a technique which heavily relies upon knowing a distribution which best models the data, MLE is one of the most well-known parametric approaches to handling LOD values. Many studies use the MLE as a sort of baseline method of handling censored values, to which they compare their new techniques upon (Ganser \& Hewett, 2010). However, it must be known that regardless of the prevalence of the MLE method, it is not free from its own downfalls. Canales (2018) found that the MLE method seems to underperform when the data in question was highly skewed, in which overinflated mean squared errors were often obtained. Being a technique which is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results (Bolks, DeWire, \& Harcum, 2014).
 
 The MLE method we will be utilizing is actually performed by obtaining regression estimates of slope(s) and intercepts through maximum likelihood with censored data. The \texttt{cenmle} function in the \texttt{NADA} package allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values.
 
-\hypertarget{Kaplan-Meier}{%
-\subsection{Kaplan-Meier Estimate Approach}\label{Kaplan-Meier}}
+\hypertarget{rkm}{%
+\subsection{Reverse KM}\label{rkm}}
 
-{[}As a phenomenon, censoring is most often discussed in the branch of statistics known as survival analysis, which concerns itself with techniques to analyze a time to an event variable. As their name suggests, these variables measure the time which passes until some sort of event occurs. The type of event being observed need not be related to issues related to mortality, but it is certainly is most commonly employed in the health-care field. These types of events can be as innocuous as the time until device breaks, time until birds migrate away from their homes, or even things like time until an ice cream scoop falls onto the pavement. Regardless of which, all of these scenarios share a common flaw in terms of the possibility of the data being ``censored.''{]} {[}need to fix bracketed into existing paragraph{]}
+As a phenomenon, censoring is most often discussed in survival analysis, which concerns itself with techniques to analyze a time to an \emph{event variable}. As its name suggests, these variables measure the time which passes until some sort of event occurs. This can be as innocuous as the time until device breaks, time until birds migrate away from their homes, time until a person passes away, etc. Regardless of which, all these scenarios share a common problem in terms of the possibility of the data being ``censored.''
 
-The Kaplan-Meier method is a common nonparametric technique used to deal with censored data. Originally developed to handle right-censored survival analysis data, an offshoot method in the form of the Reverse Kaplan-Meier Estimator have sprung up as a way to handle left censored data as well (Gillespie et al., 2010). The advantages of the KM method lie in its robustness as a nonparametric method; it performs well with a wide range of distributions. Many recommend its usage for when there are cases of extreme/severe censoring as a result of this {[}Canales2018{]}.
+The Kaplan-Meier (KM) method is a common nonparametric technique used to deal with censored data. Originally developed to handle right-censored survival analysis data, an offshoot method in the form of the Reverse Kaplan-Meier Estimator, have sprung up as a way to handle left censored data as well (Gillespie et al., 2010). The advantages of the KM method lie in its robustness as a nonparametric method; it performs well with a wide range of distributions. Many recommend its usage for when there are cases of severe censoring, instances where \textgreater{} 90\% of the data is censored (Canales, 2018).
 
 To introduce the concept of the KM-estimator, it is helpful to take a look into its usages in survival analysis studies where the focus is often on a type of ``time to a certain event occurring'', often being cases such time to death, or time to failure.
 
-The KM-estimator is a nonparametric statistic used to estimate the survival curve from the empirical data while accounting for the possibilities of certain values being censored (participants in a mortality study could drop out, die during the study, become unavailable to contact after a certain time, etc.). It does this by assuming that censoring is independent from the event of interest (death) and that survival probabilities remain the same in observations found early in the study and those recruited later in the study
+The KM-estimator is a nonparametric statistic used to estimate the survival curve from the empirical data while accounting for the possibilities of certain values being censored. It does this by assuming that censoring is independent from the event of interest and that survival probabilities remain the same in observations found early in the study and those recruited later in the study.
 
 The KM-estimator when performing an empirical estimation of the survival curve at time \(t\) can be represented by the following equation:
 
-\[\hat{S}(t) = \prod_{\ x_j \le \ t }(1-\frac{d_j}{y_j})\]
-where \(x_j\) is the distinct event/death time, \(d_j\) is the number of event/death occurrences at time \(x_j\), and \(y_j\) is the number of followup times (\(t_i\)) that are \(\ge\) \(x_j\) (how many observations in sample survived at least/or past the time \(t_i\)). {[}CITE PROPERLY WHEN TIME ALLOWS \url{https://www.youtube.com/watch?v=NDgn72ynHcM\&t=398s\&ab_channel=mathetal}{]}
+\[\hat{S}(t) = \prod_{\ x_j \le \ t }\left(1-\frac{d_j}{y_j}\right)\]
+where \(x_j\) is the distinct event time, \(d_j\) is the number of event occurences at time \(x_j\), and \(y_j\) is the number of followup times (\(t_i\)) that are \(\ge\) \(x_j\) (how many observations in sample survived at least/or past the time \(t_i\)) (Klein \& Moeschberge, 2003).
+
+{[}CONTINUE HERE{]}
 
 Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method yields the reverse Kaplan-Meier approach, which allows for the estimation of the survival curve with left-censored values. This approach follows exactly the same logic as the Kaplan-Meier estimate of the survival curve, except we reverse the censored indicator and event of interest indicator. In other words, our censor is now the event and the event is now censored. This allows us to estimate the distribution function and population percentiles for data containing left-censored values (Gillespie et al., 2010).
 
@@ -474,11 +474,13 @@ For our analysis, we will be using the \texttt{cenfit} function from the \texttt
 
 In between both the parametric nature of the MLE approach and nonparametric of the Kaplan-Meier estimator is the regression on order statistics (also known as ROS) method. As its name suggests, ROS is a semi-parametric method. It assumes that the censored measurements (emphasis on ONLY the censored, this what makes it semi-parametric) in the data comes from a normal or lognormal distribution.
 
-In the ROS method, in order to model the distribution of the censored values, a linear regression model is created by plotting the uncensored observed values (ordered from smallest to largest) vs.~the quantiles (also known as ``order statistics''), which is then used estimate and impute the values of the censored data (Lee \& Helsel, 2005). These imputed values for the censored portions of the data are then combined with the known values of the uncensored bits, which allows for the computation of the descriptive statistics of interest. In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles.
+In the ROS method, in order to model the distribution of the censored values, a linear regression model is created by plotting the uncensored observed values (ordered from smallest to largest) vs.~the quantiles (also known as ``order statistics''), which is then used to estimate and impute the values of the censored data (Lee \& Helsel, 2005). These imputed values for the censored portions of the data are then combined with the known values of the uncensored bits, which allows for the computation of the descriptive statistics of interest. In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles.
 
 There are of course, some requirements which must hold in order for ROS to be utilized: at minimum, there needs to be at least 3 known values and more than half the values within the data set must be known. As regression is utilized in this method, additional assumptions in the ROS method are shared with those necessary for linear regression to be performed as well. The response variable must be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance (Lee \& Helsel, 2005).
 
 The \texttt{NADA} package contains the function \texttt{ros} which provides an implementation of regression on order statistics which allows us to calculate descriptive statistics for left censored values.
+
+{[}INSERT PARAGRAPH TO TRANSITION TO CHAPTER 3 (?){]}
 
 \hypertarget{simulations}{%
 \chapter{Simulations}\label{simulations}}
@@ -552,8 +554,8 @@ Corrections may be made to the body of the thesis, but every such correction wil
 
 \hypertarget{refs}{}
 \begin{cslreferences}
-\leavevmode\hypertarget{ref-Berthouex1993}{}%
-Berthouex, P. M., \& Gan, D. R. (1993). A Model of Measurement Precision at Low Concentrations. \emph{Water Environment Research}, \emph{65}(6), 759--763. \url{http://doi.org/10.2175/wer.65.6.8}
+\leavevmode\hypertarget{ref-Bolks2014}{}%
+Bolks, A., DeWire, A., \& Harcum, J. B. (2014). Baseline Assessment of Left-Censored Environmental Data Using R. \emph{Technotes}, \emph{9}(2), 153--172. Retrieved from \url{https://www.epa.gov/sites/production/files/2016-05/documents/tech\%7B/_\%7Dnotes\%7B/_\%7D10\%7B/_\%7Djun2014\%7B/_\%7Dr.pdf}
 
 \leavevmode\hypertarget{ref-Byer2019}{}%
 Byer, D., \& Carlson, K. H. (2019). Real-time detection of intentional chemical contamination in the distributional system, \emph{97}(7), 130--133.
@@ -573,6 +575,9 @@ Environmental Integrity Project. (2020). Coal Ash Groundwater Contamination: Doc
 \leavevmode\hypertarget{ref-Car2020}{}%
 Environmental Protection Agency. (2020). Disposal of Coal Combustion Residuals from Electric Utilities Rulemakings. Retrieved from \url{https://www.epa.gov/coalash/coal-ash-rule}
 
+\leavevmode\hypertarget{ref-Ganser2010}{}%
+Ganser, G. H., \& Hewett, P. (2010). An Accurate Substitution Method for Analyzing Censored Data, (April), 233--244. \url{http://doi.org/10.1080/15459621003609713}
+
 \leavevmode\hypertarget{ref-Gillespie2010}{}%
 Gillespie, B. W., Chen, Q., Reichert, H., Franzblau, A., Lepkowski, J., Adriaens, P., \ldots{} Garabrant, D. H. (2010). Estimating Population Distributions When Some Data Are Below a Limit of Detection by Using a Reverse Kaplan-Meier Estimator. \emph{Epidemiology}, \emph{21}. \url{http://doi.org/10.1097/EDE.0b013e3181ce9fD8}
 
@@ -581,6 +586,9 @@ Hornung, R., \& Reed, L. (1989). Estimation of Average Concentration in the Pres
 
 \leavevmode\hypertarget{ref-Kelderman2019}{}%
 Kelderman, K., Kunstman, B., Roy, H., Sivakumar, N., Mccormick, S., \& Bernhardt, C. (2019). Coal's Poisonous Legacy: Groundwater Contaminated by Coal Ash Across the U.S.
+
+\leavevmode\hypertarget{ref-Klein2003}{}%
+Klein, J. P., \& Moeschberge, M. L. (2003). \emph{SURVIVAL ANALYSIS: Techniques for Censored and Truncated Data} (2nd ed., pp. 92--104). New York: Springer-Verlag.
 
 \leavevmode\hypertarget{ref-Lafleur2011}{}%
 Lafleur, B., Lee, W., Billhiemer, D., Lockhart, C., Liu, J., \& Merchant, N. (2011). Statistical methods for assays with limits of detection: Serum bile acid as a differentiator between patients with normal colons, adenomas, and colorectal cancer. \emph{Journal of Carcinogenesis}, \emph{10}, 1--8. \url{http://doi.org/10.4103/1477-3163.79681}

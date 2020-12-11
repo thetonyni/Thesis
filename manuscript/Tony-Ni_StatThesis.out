@@ -18,7 +18,7 @@
 \BOOKMARK [1][-]{section.2.3}{Approaches}{chapter.2}% 18
 \BOOKMARK [2][-]{subsection.2.3.1}{Substitution Approach}{section.2.3}% 19
 \BOOKMARK [2][-]{subsection.2.3.2}{Maximum Likelihood Estimation}{section.2.3}% 20
-\BOOKMARK [2][-]{subsection.2.3.3}{Kaplan-Meier Estimate Approach}{section.2.3}% 21
+\BOOKMARK [2][-]{subsection.2.3.3}{Reverse KM}{section.2.3}% 21
 \BOOKMARK [2][-]{subsection.2.3.4}{Regression on Order Statistics}{section.2.3}% 22
 \BOOKMARK [0][-]{chapter.3}{Chapter 3: Simulations}{}% 23
 \BOOKMARK [1][-]{section.3.1}{ADEMPS}{chapter.3}% 24

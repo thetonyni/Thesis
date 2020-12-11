@@ -140,30 +140,26 @@ The MLE method we will be utilizing is actually performed by obtaining regressio
 
 ### Reverse KM {#rkm}
 
-[As a phenomenon, censoring is most often discussed in the branch of statistics known as survival analysis, which concerns itself with techniques to analyze a time to an event variable. As their name suggests, these variables measure the time which passes until some sort of event occurs. The type of event being observed need not be related to issues related to mortality, but it is certainly is most commonly employed in the health-care field. These types of events can be as innocuous as the time until device breaks, time until birds migrate away from their homes, or even things like time until an ice cream scoop falls onto the pavement. Regardless of which, all of these scenarios share a common flaw in terms of the possibility of the data being "censored."] [need to fix bracketed into existing paragraph]
+As a phenomenon, censoring is most often discussed in survival analysis, which concerns itself with techniques to analyze a time to an _event variable_. As its name suggests, these variables measure the time which passes until some sort of event occurs. This can be as innocuous as the time until device breaks, time until birds migrate away from their homes, time until a person passes away, etc. Regardless of which, all these scenarios share a common problem in terms of the possibility of the data being "censored."
 
-The Kaplan-Meier method is a common nonparametric technique used to deal with censored data. Originally developed to handle right-censored survival analysis data, an offshoot method in the form of the Reverse Kaplan-Meier Estimator have sprung up as a way to handle left censored data as well [@Gillespie2010]. The advantages of the KM method lie in its robustness as a nonparametric method; it performs well with a wide range of distributions. Many recommend its usage for when there are cases of extreme/severe censoring as a result of this [Canales2018].
+The Kaplan-Meier (KM) method is a common nonparametric technique used to deal with censored data. Originally developed to handle right-censored survival analysis data, an offshoot method in the form of the Reverse Kaplan-Meier Estimator, have sprung up as a way to handle left censored data as well [@Gillespie2010]. The advantages of the KM method lie in its robustness as a nonparametric method; it performs well with a wide range of distributions. Many recommend its usage for when there are cases of severe censoring, instances where > 90% of the data is censored [@Canales2018].
 
 To introduce the concept of the KM-estimator, it is helpful to take a look into its usages in survival analysis studies where the focus is often on a type of "time to a certain event occurring", often being cases such time to death, or time to failure.
 
 <!--
 
-* [INSERT PICTURE OF EXAMPLE SURVIVAL CURVE HERE]
+* [INSERT PICTURE OF EXAMPLE SURVIVAL CURVE HERE, MAKE WHEN TIME ALLOWS]
 
 -->
 
-The KM-estimator is a nonparametric statistic used to estimate the survival curve from the empirical data while accounting for the possibilities of certain values being censored (participants in a mortality study could drop out, die during the study, become unavailable to contact after a certain time, etc.). It does this by assuming that censoring is independent from the event of interest (death) and that survival probabilities remain the same in observations found early in the study and those recruited later in the study 
-
-<!--
-
-[CITE PROPERLY https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_survival/BS704_Survival_print.html]
-
--->
+The KM-estimator is a nonparametric statistic used to estimate the survival curve from the empirical data while accounting for the possibilities of certain values being censored. It does this by assuming that censoring is independent from the event of interest and that survival probabilities remain the same in observations found early in the study and those recruited later in the study.
 
 The KM-estimator when performing an empirical estimation of the survival curve at time $t$ can be represented by the following equation:
 
-$$\hat{S}(t) = \prod_{\ x_j \le \ t }(1-\frac{d_j}{y_j})$$
-where $x_j$ is the distinct event/death time, $d_j$ is the number of event/death occurrences at time $x_j$, and $y_j$ is the number of followup times ($t_i$) that are $\ge$ $x_j$ (how many observations in sample survived at least/or past the time $t_i$). [CITE PROPERLY WHEN TIME ALLOWS https://www.youtube.com/watch?v=NDgn72ynHcM&t=398s&ab_channel=mathetal]
+$$\hat{S}(t) = \prod_{\ x_j \le \ t }\left(1-\frac{d_j}{y_j}\right)$$
+where $x_j$ is the distinct event time, $d_j$ is the number of event occurences at time $x_j$, and $y_j$ is the number of followup times ($t_i$) that are $\ge$ $x_j$ (how many observations in sample survived at least/or past the time $t_i$) [@Klein2003].
+
+[CONTINUE HERE]
 
 Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method yields the reverse Kaplan-Meier approach, which allows for the estimation of the survival curve with left-censored values. This approach follows exactly the same logic as the Kaplan-Meier estimate of the survival curve, except we reverse the censored indicator and event of interest indicator. In other words, our censor is now the event and the event is now censored. This allows us to estimate the distribution function and population percentiles for data containing left-censored values [@Gillespie2010].
 
