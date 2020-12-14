@@ -312,7 +312,7 @@ Within the report, the EIP mentions certain restrictions within the data that ha
 \hypertarget{methodology}{%
 \chapter{Methodology}\label{methodology}}
 
-The concept of missing data is ubiquitous within academic disciplines and often complicates innumerable types of real-world studies. Missing data will be defined within this thesis as \emph{occurences within a dataset where there is no value stored for a variable in the observation of interest}. As most studies often utilize data collected through mediums such as surveys, questionnaires, or field research, missing data is an unavoidable problem. Missing data hinders one's ability to work with and analyze the phenomena at hand, as data is often the basis of all studies. One of the most glaring issues with missingness is how it can introduce bias within an analysis, which can more often than not, invalidate a study if not accounted for and handled properly.
+The concept of missing data is ubiquitous within academic disciplines and often complicates innumerable types of real-world studies. Missing data will be defined within this thesis as \emph{occurences within a dataset where there is no value stored for a variable in the observation of interest}. As most studies often utilize data collected through mediums such as surveys, questionnaires, or field research, missing data is an unavoidable problem. Missing data hinders one's ability to work with and analyze the phenomena at hand, as data is often the basis of all studies. One of the most glaring issues with missingness is how it can introduce bias within an analysis, which can more often than not, invalidate a study if not accounted for and handled properly. Missingness can often be detrimental to data quality which can result in increased uncertainty with any types of performed analysis (Hall, Perry, \& Anderson, 2020).
 
 This thesis will go into a more specific instance of missing data known as censoring, which is \emph{the condition when one has only partial information regarding the values of a measurement within a dataset}. We will introduce and define the three types of censored data, challenges with the reporting of censored data, alongside a discussion on common statistical approaches to handling censored data.
 
@@ -355,7 +355,7 @@ In contrast with right censoring, left censoring is a specific instance of censo
 
 To understand this concept better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You plan to wake up every morning far before the sun rises, but on the first day of the study, you oversleep and wake up at 7:00 A.M. with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit (7:00 A.M.).
 
-Left censoring is commonly found in environmental, water quality, and chemical-related research where the focus is on the concentration of an analyte. Due to limitations on measuring instruments, left censored data are commonly found in these types of studies.
+Left censoring is commonly found in environmental, water quality, and chemical-related research where the focus is on the concentration of an analyte. Due to limitations on measuring instruments, left censored data are commonly found in these types of studies. The most pressing issue of left-censored data mostly lie in the difficulty of distinguishing between extremely low values and statistical noise (Hall et al., 2020).
 
 \hypertarget{interval}{%
 \subsection{Interval Censoring}\label{interval}}
@@ -409,7 +409,7 @@ Apart from available-case analysis, over the past century, a myriad of methods t
 \hypertarget{Substitution}{%
 \subsection{Substitution Approach}\label{Substitution}}
 
-Often condemned in papers, as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences as an appropriate and recommended method to work with left-censored chemical concentration data (Canales, 2018).
+Often condemned in papers as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences as an appropriate and recommended method to work with left-censored chemical concentration data (Canales, 2018).
 
 The substitution method simply involves imputing in a replacement value in lieu of the censored data point. The lack of a global, standardized replacement value to substitute is one of the most pronounced downside of this method. The replacement value used may differ between studies but common values include: \(\frac{LOD}{2}, \frac{LOD}{\sqrt2}\), or \(LOD\) (Lee \& Helsel, 2005). Different disciplines have their own suggested ``best'' replacement value to use, an example being \(\frac{3}{4}\) times the LOD being a common replacement value in geochemistry (Crovelli, 1993). However, it must be recognized that the substitution method is a statistically unsound technique which is often used in non-rigorous statistical settings due to them being quite easy to implement (Chen et al., 2011). As such, there have been several studies in order to investigate the effectiveness of the method.
 
@@ -463,20 +463,20 @@ The KM-estimator when performing an empirical estimation of the survival curve a
 \[\hat{S}(t) = \prod_{\ x_j \le \ t }\left(1-\frac{d_j}{y_j}\right)\]
 where \(x_j\) is the distinct event time, \(d_j\) is the number of event occurences at time \(x_j\), and \(y_j\) is the number of followup times (\(t_i\)) that are \(\ge\) \(x_j\) (how many observations in sample survived at least/or past the time \(t_i\)) (Klein \& Moeschberge, 2003).
 
-{[}CONTINUE HERE{]}
-
 Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method yields the reverse Kaplan-Meier approach, which allows for the estimation of the survival curve with left-censored values. This approach follows exactly the same logic as the Kaplan-Meier estimate of the survival curve, except we reverse the censored indicator and event of interest indicator. In other words, our censor is now the event and the event is now censored. This allows us to estimate the distribution function and population percentiles for data containing left-censored values (Gillespie et al., 2010).
 
 For our analysis, we will be using the \texttt{cenfit} function from the \texttt{NADA} package in R to estimate the empirical cumulative distribution function (survival curve) for our left-censored data using the reverse Kaplan-Meier method. Similarly to the MLE method, the KM method is not an imputation method, so we are not replacing censored values with an imputed value, but rather estimating descriptive statistics for the entire dataset -- including the censored concentrations (Canales, 2018).
 
+{[}START HERE{]}
+
 \hypertarget{ROS}{%
 \subsection{Regression on Order Statistics}\label{ROS}}
 
-In between both the parametric nature of the MLE approach and nonparametric of the Kaplan-Meier estimator is the regression on order statistics (also known as ROS) method. As its name suggests, ROS is a semi-parametric method. It assumes that the censored measurements (emphasis on ONLY the censored, this what makes it semi-parametric) in the data comes from a normal or lognormal distribution.
+In between both the parametric nature of the MLE approach and nonparametric of the Kaplan-Meier estimator is the regression on order statistics (ROS) method. ROS is a semi-parametric method because it assumes an underlying normal or lognormal distribution for the censored measurements in the data, but make no assumption towards the distribution of uncensored measurements.
 
-In the ROS method, in order to model the distribution of the censored values, a linear regression model is created by plotting the uncensored observed values (ordered from smallest to largest) vs.~the quantiles (also known as ``order statistics''), which is then used to estimate and impute the values of the censored data (Lee \& Helsel, 2005). These imputed values for the censored portions of the data are then combined with the known values of the uncensored bits, which allows for the computation of the descriptive statistics of interest. In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles.
+The ROS method is roughly based on the simple linear regression model. It works by first plotting the uncensored observed values (ordered from smallest to largest) vs.~the quantiles, which is then used to estimate and impute the values of the censored data (Lee \& Helsel, 2005). In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles.
 
-There are of course, some requirements which must hold in order for ROS to be utilized: at minimum, there needs to be at least 3 known values and more than half the values within the data set must be known. As regression is utilized in this method, additional assumptions in the ROS method are shared with those necessary for linear regression to be performed as well. The response variable must be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance (Lee \& Helsel, 2005).
+In order for ROS to be utilized, there needs to be at least 5 known values and more than half the values within the censored variables must be known. As regression is utilized in this method, the response variable must also be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance (Lee \& Helsel, 2005).
 
 The \texttt{NADA} package contains the function \texttt{ros} which provides an implementation of regression on order statistics which allows us to calculate descriptive statistics for left censored values.
 
@@ -580,6 +580,9 @@ Ganser, G. H., \& Hewett, P. (2010). An Accurate Substitution Method for Analyzi
 
 \leavevmode\hypertarget{ref-Gillespie2010}{}%
 Gillespie, B. W., Chen, Q., Reichert, H., Franzblau, A., Lepkowski, J., Adriaens, P., \ldots{} Garabrant, D. H. (2010). Estimating Population Distributions When Some Data Are Below a Limit of Detection by Using a Reverse Kaplan-Meier Estimator. \emph{Epidemiology}, \emph{21}. \url{http://doi.org/10.1097/EDE.0b013e3181ce9fD8}
+
+\leavevmode\hypertarget{ref-Hall2020}{}%
+Hall, L. W., Perry, E., \& Anderson, R. D. (2020). A Comparison of Different Statistical Methods for Addressing Censored Left Data in Temporal Trends Analysis of Pyrethroids in a California Stream. \emph{Archives of Environmental Contamination and Toxicology}, \emph{79}(4), 508--523. \url{http://doi.org/10.1007/s00244-020-00769-0}
 
 \leavevmode\hypertarget{ref-Hornung1989}{}%
 Hornung, R., \& Reed, L. (1989). Estimation of Average Concentration in the Presence of Nondetectable Values. \emph{Applied Occupational and Environmental Hygiene}, \emph{5}(1), 46--51.
