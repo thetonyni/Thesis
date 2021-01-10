@@ -131,9 +131,27 @@ As we previously declared our random variables $X_1, X_2,...,X_n$ to be i.i.d, w
 $$lik(\theta) = \prod_{i=1}^{n} f(x_i|\theta)$$
 in which we can then maximize the likelihood to find the best mle of $\theta$ to best capture our observed data.
 
-As a technique which heavily relies upon knowing a distribution which best models the data, MLE is one of the most well-known parametric approaches to handling LOD values. Many studies use the MLE as a sort of baseline method of handling censored values, to which they compare their new techniques upon [@Ganser2010]. However, it must be known that regardless of the prevalence of the MLE method, it is not free from its own downfalls. Canales (2018) found that the MLE method seems to underperform when the data in question was highly skewed, in which overinflated mean squared errors were often obtained. Being a technique which is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results [@Bolks2014].
+Yavuz et. al (2017) discuss the usage of MLE method, when missing data is present, and note that it is only appropriate to use for non-negative probability distributions such as: exponential, log-normal, normal, and Weibull. 
+
+When left censoring is present, the likelihood function changes in order to account for both the censored observations and the uncensored observations and becomes:
+
+$$lik(\theta) = \prod_{i=1}^n f(x_i)^{\delta_i} \ \times F(x_i)^{1-{\delta_i}}$$
+
+in which $\delta_i$ is an indicator, representing whether or not if the $i$th observation is censored or not:
+
+$$
+\delta_i =
+
+\begin{cases}
+  0, & \text{if censored} \\
+  1, & \text{if uncensored}
+\end{cases}
+$$
+From this updated definition of the likelihood function which must be used in the presence of left censored data, it is then possible to follow typical procedures to find the estimator, $\theta$, which maximizes the likelihood, also known as the _maximum likelihood estimator_. With this knowledge, the evaluation statistics of interest (mean, variance, etc.) relating to the specified distribution are known.
 
 The MLE method we will be utilizing is actually performed by obtaining regression estimates of slope(s) and intercepts through maximum likelihood with censored data. The `cenmle` function in the `NADA` package allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values.
+
+As a technique which heavily relies upon knowing a distribution which best models the data, MLE is one of the most well-known parametric approaches to handling LOD values. Many studies use the MLE as a sort of baseline method of handling censored values, to which they compare their new techniques upon [@Ganser2010]. However, it must be known that regardless of the prevalence of the MLE method, it is not free from its own downfalls. Canales (2018) found that the MLE method seems to underperform when the data in question was highly skewed, in which overinflated mean squared errors were often obtained. Being a technique which is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results [@Bolks2014].
 
 <!-- * Useful slides to refer to here [https://www.eurachem.org/images/stories/workshops/2017_10_PT/pdf/contrib/O05-Mancin.pdf] -->
 
