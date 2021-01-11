@@ -26,6 +26,8 @@ Missing data is a major problem due to the following reasons: 1) It can introduc
 
 - talk about left-censored missingness what sort of fields it can be an issue in
 
+
+
 - talk about issue of not many standardized ways to deal with problems
 
 A major issue regarding the methods which have been developed to handle left-censored data is the effectiveness of the methods themselves. Certain methods such as substitution have been in use for years, and continue to be used, in spite of the myriad of literature which argue against its usage due to the significant flaws and limitations it has. 

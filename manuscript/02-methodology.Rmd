@@ -96,7 +96,7 @@ Omission involves the deletion of data points which are deemed to be invalid as 
 
 Apart from available-case analysis, over the past century, a myriad of methods to deal with censoring have been developed to counter this issue -- some more statistically sound than others. We will review some of the most common methods to estimate descriptive statistics involving censored data, which include: substitution, maximum likelihood estimation, Kaplan-Meier, and regression on order statistics [@Lafleur2011].
 
-### Substitution Approach {#Substitution} 
+### Substitution Method {#Substitution} 
 
 Often condemned in papers as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences as an appropriate and recommended method to work with left-censored chemical concentration data [@Canales2018].
 
@@ -106,7 +106,7 @@ Proponents of the substitution method claim that the replacement value $\frac{LO
 
 Substitution methods are flawed as they can often introduce a "signal" which was not originally present within the data, or even obstruct an actual signal which was present in the original data [@Lee2005]. Numerous authors have advised against the usage of substitution methods for being statistically inappropriate to use. Glass and Gray (2001) found that both introduce large errors and biases in descriptive statistics of interest. Thompson and Nelson (2001) conducted a study in which they found similar results, in that it often led to biased parameter estimates and "artificially small standard error estimates." Hewett and Ganser (2007) also found in their simulation study that the substitution method yielded the lowest average bias and root mean squared error values (comparison metrics to measure accuracy) in their estimation of the mean. Overall, the overall consensus seems to advise against the practice of these substitution techniques.
 
-### Maximum Likelihood Estimation {#MLE}
+### Maximum Likelihood Estimation Method {#MLE}
 
 Maximum likelihood (ML) estimation is a parametric technique which allows us to estimate the parameters of a distribution or model when the data is from a multivariate normal distribution.
 
@@ -155,11 +155,11 @@ As a technique which heavily relies upon knowing a distribution which best model
 
 <!-- * Useful slides to refer to here [https://www.eurachem.org/images/stories/workshops/2017_10_PT/pdf/contrib/O05-Mancin.pdf] -->
 
-### Reverse KM {#rkm}
+### Kaplan-Meier Method {#rkm}
 
 As a phenomenon, censoring is most often discussed in survival analysis, which concerns itself with techniques to analyze a time to an _event variable_. As its name suggests, these variables measure the time which passes until some sort of event occurs. This can be as innocuous as the time until device breaks, time until birds migrate away from their homes, time until a person passes away, etc. Regardless of which, all these scenarios share a common problem in terms of the possibility of the data being "censored."
 
-The Kaplan-Meier (KM) method is a common nonparametric technique used to deal with censored data. Originally developed to handle right-censored survival analysis data, an offshoot method in the form of the Reverse Kaplan-Meier Estimator, have sprung up as a way to handle left censored data as well [@Gillespie2010]. The advantages of the KM method lie in its robustness as a nonparametric method; it performs well with a wide range of distributions. Many recommend its usage for when there are cases of severe censoring, instances where > 90% of the data is censored [@Canales2018].
+The Kaplan-Meier (KM) method is a common nonparametric technique used to deal with censored data. Nonparametric methods do not utilize any information regarding the parameters for a specified distribution, like the mean and standard deviation for the normal distribution. The KM method was originally developed to handle right-censored survival analysis data. The advantages of the KM method lie in its robustness as a nonparametric method, it performs well without having to depend upon distributional assumptions. Many recommend its usage for when there are cases of severe censoring, instances where > 90% of the data is censored [@Canales2018].
 
 To introduce the concept of the KM-estimator, it is helpful to take a look into its usages in survival analysis studies where the focus is often on a type of "time to a certain event occurring", often being cases such time to death, or time to failure.
 
@@ -174,13 +174,17 @@ The KM-estimator is a nonparametric statistic used to estimate the survival curv
 The KM-estimator when performing an empirical estimation of the survival curve at time $t$ can be represented by the following equation:
 
 $$\hat{S}(t) = \prod_{\ x_j \le \ t }\left(1-\frac{d_j}{y_j}\right)$$
-where $x_j$ is the distinct event time, $d_j$ is the number of event occurences at time $x_j$, and $y_j$ is the number of followup times ($t_i$) that are $\ge$ $x_j$ (how many observations in sample survived at least/or past the time $t_i$) [@Klein2003].
+where $x_j$ is the distinct event time, $d_j$ is the number of event occurrences at time $x_j$, and $y_j$ is the number of followup times ($t_i$) that are $\ge$ $x_j$ (how many observations in sample survived at least/or past the time $t_i$) [@Klein2003].
 
-Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method yields the reverse Kaplan-Meier approach, which allows for the estimation of the survival curve with left-censored values. This approach follows exactly the same logic as the Kaplan-Meier estimate of the survival curve, except we reverse the censored indicator and event of interest indicator. In other words, our censor is now the event and the event is now censored. This allows us to estimate the distribution function and population percentiles for data containing left-censored values [@Gillespie2010].
+Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method, allows for the estimation of the survival curve with left-censored values. 
+
+Helsel (2005, as cited in Yavuz et. al, 2017) provides a detailed explanation on how to apply the KM method when left censoring is present. Firstly, it is essential to reverse the left-censored data through a conversion before using the KM method to change them into right-censored data.
+
+[continue working here, on Yavuz paper trying to explain methodology]
+
+(median, mean (AUC), sd, greenwood)
 
 For our analysis, we will be using the `cenfit` function from the `NADA` package in R to estimate the empirical cumulative distribution function (survival curve) for our left-censored data using the reverse Kaplan-Meier method. Similarly to the MLE method, the KM method is not an imputation method, so we are not replacing censored values with an imputed value, but rather estimating descriptive statistics for the entire dataset -- including the censored concentrations [@Canales2018].
-
-[START HERE]
 
 ### Regression on Order Statistics {#ROS}
 
