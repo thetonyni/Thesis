@@ -135,21 +135,20 @@ Yavuz et. al (2017) discuss the usage of MLE method, when missing data is presen
 
 When left censoring is present, the likelihood function changes in order to account for both the censored observations and the uncensored observations and becomes:
 
-$$lik(\theta) = \prod_{i=1}^n f(x_i)^{\delta_i} \ \times F(x_i)^{1-{\delta_i}}$$
+$$lik(\theta) = \prod_{i=1}^n f(x_i|\theta)^{\delta_{i}} \ \times F(x_i|\theta)^{1-{\delta_{i}}}$$
 
-in which $\delta_i$ is an indicator, representing whether or not if the $i$th observation is censored or not:
+in which $\delta_{i}$ is an indicator, representing whether or not if the $i$th observation is censored or not:
 
-$$
-\delta_i =
-
+$$\delta_i =
 \begin{cases}
   0, & \text{if censored} \\
   1, & \text{if uncensored}
-\end{cases}
-$$
+\end{cases}$$
 From this updated definition of the likelihood function which must be used in the presence of left censored data, it is then possible to follow typical procedures to find the estimator, $\theta$, which maximizes the likelihood, also known as the _maximum likelihood estimator_. With this knowledge, the evaluation statistics of interest (mean, variance, etc.) relating to the specified distribution are known.
 
 The MLE method we will be utilizing is actually performed by obtaining regression estimates of slope(s) and intercepts through maximum likelihood with censored data. The `cenmle` function in the `NADA` package allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values.
+
+Can also impute values from this distribution (Canales 2018)... [expand furhter]
 
 As a technique which heavily relies upon knowing a distribution which best models the data, MLE is one of the most well-known parametric approaches to handling LOD values. Many studies use the MLE as a sort of baseline method of handling censored values, to which they compare their new techniques upon [@Ganser2010]. However, it must be known that regardless of the prevalence of the MLE method, it is not free from its own downfalls. Canales (2018) found that the MLE method seems to underperform when the data in question was highly skewed, in which overinflated mean squared errors were often obtained. Being a technique which is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results [@Bolks2014].
 
@@ -173,8 +172,8 @@ The KM-estimator is a nonparametric statistic used to estimate the survival curv
 
 The KM-estimator when performing an empirical estimation of the survival curve at time $t$ can be represented by the following equation:
 
-$$\hat{S}(t) = \prod_{\ x_j \le \ t }\left(1-\frac{d_j}{y_j}\right)$$
-where $x_j$ is the distinct event time, $d_j$ is the number of event occurrences at time $x_j$, and $y_j$ is the number of followup times ($t_i$) that are $\ge$ $x_j$ (how many observations in sample survived at least/or past the time $t_i$) [@Klein2003].
+$$\hat{S}(t) = \prod_{\ t_i \le \ t }\left(1-\frac{d_i}{n_i}\right)$$
+where $t_i$ is the distinct event time, $d_i$ is the number of event occurrences at time $t_i$, and $n_i$ is the number of followup times ($t_i$) that are $\ge$ $t_i$ (how many observations in sample survived at least/or past the time $t_i$) [@Klein2003].
 
 Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method, allows for the estimation of the survival curve with left-censored values. 
 
@@ -183,6 +182,10 @@ Helsel (2005, as cited in Yavuz et. al, 2017) provides a detailed explanation on
 [continue working here, on Yavuz paper trying to explain methodology]
 
 (median, mean (AUC), sd, greenwood)
+
+mean: $\hat{\mu} = \int_{0}^{\infty} \hat{S}(t) \ dt$
+median: $\hat{M} = \hat{S}^{-1} \left (\frac{1}{2} \right)$
+var: $Var(\hat{\mu}) = \sum_{i=1}^{r} \left( \int_{t_i}^{\infty}\hat{S}(t) \ dt \right)^2 \frac{d_i}{n_i(n_i - d_i)}$
 
 For our analysis, we will be using the `cenfit` function from the `NADA` package in R to estimate the empirical cumulative distribution function (survival curve) for our left-censored data using the reverse Kaplan-Meier method. Similarly to the MLE method, the KM method is not an imputation method, so we are not replacing censored values with an imputed value, but rather estimating descriptive statistics for the entire dataset -- including the censored concentrations [@Canales2018].
 

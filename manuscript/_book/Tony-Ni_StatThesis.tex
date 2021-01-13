@@ -235,79 +235,28 @@ Use this space to thank those who have helped you in the thesis process (profess
 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
-
-\hypertarget{background}{%
-\section{Background}\label{background}}
-
-Coal is one of the most dangerous combustible fuels which is being burned in all across the world as one of the largest methods of obtaining energy. Yet, although it is a fossil fuel which is naturally abundant and easy to utilize, it is comprised of a long list of dangerous chemicals including -- but not limited to: arsenic, radium, boron, and a large list of other chemicals which prove to be dangerous to humans and animals alike. (Kelderman et al., 2019)
-
-Power plants produce electricity by burning this coal, and as a result of how prevalent it is within the US - over 100 million tons of coal ash are produced every year. This side-product as a result of the coal combustion is often disposed by directly being dumped into landfills and waste ponds. (Kelderman et al., 2019)
-
-Only recently have these complaints and lawsuits regarding the disposing practices made by non-profit environmental organizations been heard. Due to the onslaught of pressure put on the Environmental Protection Agency -- the Coal Ash Rule was bor in 2015. (Kelderman et al., 2019)
-
-This rule has forced over 265 coal power plants -- about 3/4 of all coal power plants in the US - to make data regarding chemical concentrations publicly available to the general population. (Kelderman et al., 2019)
-
-In their analysis using this data, the Environmental Integrity Project -- a non-profit organization dedicated to issues involving environmental justice have concluded that essentially all groundwater under coal plants are contaminated. (Kelderman et al., 2019)
-
-However, is this really the case? There are many naturally occurring chemicals existing in groundwater as as such, perhaps their claims are overstated.
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{figures/upgradientdowngradient} 
-
-}
-
-\caption{Difference Between Upgradient and Downgradient Wells}\label{fig:upgradientdowngradient}
-\end{figure}
-Typically in a coal ash plant, there exists two types of wells: upgradient wells and downgradient wells. These wells are essential to measure the amount of contamination being caused by coal ash. Upgradient wells, also known as background wells, measures the concentrations of chemicals in groundwater before it passes through an coal ash dump. Conversely, downgradient wells measure the concentrations of chemicals in groundwater after it passes through a coal ash dump.
+\begin{itemize}
+\item
+  what is missing data?
+\item
+  types of missing data (brief, don't go in-depth)
+\item
+  why is it a problem (brief)
+\end{itemize}
+Missing data is a major problem due to the following reasons: 1) It can introduce bias into a statistical analysis which can lead to misleading results, 2) (FIND AND READ BARNARD MENG 1999)
+\begin{itemize}
+\item
+  talk about left-censored missingness what sort of fields it can be an issue in
+\item
+  talk about issue of not many standardized ways to deal with problems
+\end{itemize}
+A major issue regarding the methods which have been developed to handle left-censored data is the effectiveness of the methods themselves. Certain methods such as substitution have been in use for years, and continue to be used, in spite of the myriad of literature which argue against its usage due to the significant flaws and limitations it has.
 \begin{itemize}
 \tightlist
 \item
-  ``80\% of the US population is served by 14\% of the utilities,'' so if something were to get into the water distribution system, it can easily spread amongst the US population which is why contamination in water services is so important. (Byer \& Carlson, 2019)
+  talk about the goal of this thesis
 \end{itemize}
-With this information, typically -- one estimates the amount of chemical contamination caused by a coal as dump by subtracting the upgradient concentration from the downgradient concentration of a chemical (downgradient concentration - upgradient concentration).
-
-However, due to the lack of proper reporting guidelines prior to the enactment of the Coal Ash Rule, we believe that there may be retired or even unregulated upgradient wells which can cause the concentrations of chemicals being recorded from these upgradient wells to be inaccurate or even completely wrong.
-
-Our end goal remains the same as the EIP: to identify contaminated groundwater in coal plants -- but to attempt to find a way to effectively correct the improper/inaccurate values resulting from LOD errors and other factors which the EIP may not have considered.
-
-The limit of detection problem stems from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount, thus affecting the measurements recorded.
-
-Our plan is to utilize bootstrapping and imputation techniques to correct for these measurements by accounting for the innate contamination which may be caused by factors such as retired and unregulated wells that were mentioned before.
-
-\hypertarget{data}{%
-\section{Data}\label{data}}
-
-\hypertarget{coalashrule}{%
-\subsection{Coal Ash Rule}\label{coalashrule}}
-
-A large coal ash spill at the Tennessee Valley Authority (TVA) which occured on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US. (Environmental Protection Agency, 2020)
-
-This was known as the Coal Ash Rule, passed on December 19, 2014. (Environmental Protection Agency, 2020)
-
-Changes were made to the Coal Ash Rule over the years in the form of `amendments,' one of which made required facility information and data to be made publicaly available to the public (April 15, 2015 rule change) (Environmental Protection Agency, 2020)
-
-\hypertarget{source-of-data}{%
-\subsection{Source of Data}\label{source-of-data}}
-
-The data used in the study are from the results published in ``Annual Groundwater Monitoring and Corrective Action Reports'' which were made available to the public in March 2018 as a result of the Coal Ash Rule. (Environmental Integrity Project, 2020)
-
-These reports are in PDF format and are thousands of pages long, which makes it difficult for individuals to look through the data in a meaningful way. (Environmental Integrity Project, 2020)
-
-The EIP obtained the data from an online, publicly available database containing groundwater monitoring results from the first ``Annual Groundwater Monitoring and Corrective Action Reports'' in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule (Environmental Integrity Project, 2020)
-
-They wrangled the data into a more accessible machine-readable format which contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants, which is downloadable from the EIP's website. (Environmental Integrity Project, 2020)
-
-\newpage
-
-\hypertarget{variables}{%
-\subsection{Variables}\label{variables}}
-
-The dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells which represent an observation in the dataset. There are two types of wells -- upgradient and downgradient wells. The variables consist of information regarding the specific chemical concentrations of each well. From the 19 different contaminants (antimony, arsenic, boron, etc.) a major problem is that some wells only have measurements for certain chemicals and don't have them for others.
-
-\hypertarget{plan-of-action}{%
-\subsection{Plan of Action}\label{plan-of-action}}
-
-Within the report, the EIP mentions certain restrictions within the data that have caused their data to potentially be inaccurate (specifically, with limit of detection problems, and a large amount of missing chemical data). The limit of detection problem comes when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to have duplicate, wrong values -- which can cause for misguided analysis.The other issue is less guided/formed, but for brevity, we think that a lot of the issues in the data comes from the potential possibility of contamination during data collection from investigators from non coal-ash sources. This may include things like: retired/unregulated wells which are old and have chemicals leaking into the groundwater, mismanagement in measuring, etc.My project hopes to work with methods on handling this missing data -- alongside investing potential uses of bootstrapping and other resampling methods (potentially?) in order to try to come up with a more statistically accurate and sound result by looking to assuage the problems that the EIP faced in their analysis. Specifically, to find a way to split up the data into ''uncontaminated'' and ''contaminated'' wells in order to find the natural distribution of chemicals in each -- and doing to so in the face of data corrupted by LOD problems and inaccuracies. I'm hoping to apply and compare different ways of altering the data to account for these myriad of issues in order to look for more salient findings that the EIP might have missed or if not, to see if improvements can be made regarding the way that contaminated coal ash wells are being identified.
+The aim of this thesis is to provide readers with a contextualized understanding of the variety of types of missingness which can be present within data: Chapter 2 introduces the readers to these concepts of missingness and delves into the various types of methods which can be utilized to handle left-censoring specifically. Chapter 3 focuses on the design of a simulation study to compare the effectiveness of the aforementioned methods to handle left-censored data. Lastly, Chapter 4 contains an application of our findings with real-world data involving \emph{INSERT DESCRIPTION OF REAL WORL DATASET AND PROBLEM HERE}.
 
 \hypertarget{methodology}{%
 \chapter{Methodology}\label{methodology}}
@@ -407,7 +356,7 @@ Omission involves the deletion of data points which are deemed to be invalid as 
 Apart from available-case analysis, over the past century, a myriad of methods to deal with censoring have been developed to counter this issue -- some more statistically sound than others. We will review some of the most common methods to estimate descriptive statistics involving censored data, which include: substitution, maximum likelihood estimation, Kaplan-Meier, and regression on order statistics (Lafleur et al., 2011).
 
 \hypertarget{Substitution}{%
-\subsection{Substitution Approach}\label{Substitution}}
+\subsection{Substitution Method}\label{Substitution}}
 
 Often condemned in papers as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences as an appropriate and recommended method to work with left-censored chemical concentration data (Canales, 2018).
 
@@ -418,7 +367,7 @@ Proponents of the substitution method claim that the replacement value \(\frac{L
 Substitution methods are flawed as they can often introduce a ``signal'' which was not originally present within the data, or even obstruct an actual signal which was present in the original data (Lee \& Helsel, 2005). Numerous authors have advised against the usage of substitution methods for being statistically inappropriate to use. Glass and Gray (2001) found that both introduce large errors and biases in descriptive statistics of interest. Thompson and Nelson (2001) conducted a study in which they found similar results, in that it often led to biased parameter estimates and ``artificially small standard error estimates.'' Hewett and Ganser (2007) also found in their simulation study that the substitution method yielded the lowest average bias and root mean squared error values (comparison metrics to measure accuracy) in their estimation of the mean. Overall, the overall consensus seems to advise against the practice of these substitution techniques.
 
 \hypertarget{MLE}{%
-\subsection{Maximum Likelihood Estimation}\label{MLE}}
+\subsection{Maximum Likelihood Estimation Method}\label{MLE}}
 
 Maximum likelihood (ML) estimation is a parametric technique which allows us to estimate the parameters of a distribution or model when the data is from a multivariate normal distribution.
 
@@ -443,16 +392,33 @@ As we previously declared our random variables \(X_1, X_2,...,X_n\) to be i.i.d,
 \[lik(\theta) = \prod_{i=1}^{n} f(x_i|\theta)\]
 in which we can then maximize the likelihood to find the best mle of \(\theta\) to best capture our observed data.
 
-As a technique which heavily relies upon knowing a distribution which best models the data, MLE is one of the most well-known parametric approaches to handling LOD values. Many studies use the MLE as a sort of baseline method of handling censored values, to which they compare their new techniques upon (Ganser \& Hewett, 2010). However, it must be known that regardless of the prevalence of the MLE method, it is not free from its own downfalls. Canales (2018) found that the MLE method seems to underperform when the data in question was highly skewed, in which overinflated mean squared errors were often obtained. Being a technique which is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results (Bolks, DeWire, \& Harcum, 2014).
+Yavuz et. al (2017) discuss the usage of MLE method, when missing data is present, and note that it is only appropriate to use for non-negative probability distributions such as: exponential, log-normal, normal, and Weibull.
+
+When left censoring is present, the likelihood function changes in order to account for both the censored observations and the uncensored observations and becomes:
+
+\[lik(\theta) = \prod_{i=1}^n f(x_i|\theta)^{\delta_{i}} \ \times F(x_i|\theta)^{1-{\delta_{i}}}\]
+
+in which \(\delta_{i}\) is an indicator, representing whether or not if the \(i\)th observation is censored or not:
+
+\[\delta_i =
+\begin{cases}
+  0, & \text{if censored} \\
+  1, & \text{if uncensored}
+\end{cases}\]
+From this updated definition of the likelihood function which must be used in the presence of left censored data, it is then possible to follow typical procedures to find the estimator, \(\theta\), which maximizes the likelihood, also known as the \emph{maximum likelihood estimator}. With this knowledge, the evaluation statistics of interest (mean, variance, etc.) relating to the specified distribution are known.
 
 The MLE method we will be utilizing is actually performed by obtaining regression estimates of slope(s) and intercepts through maximum likelihood with censored data. The \texttt{cenmle} function in the \texttt{NADA} package allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values.
 
+Can also impute values from this distribution (Canales 2018)\ldots{} {[}expand furhter{]}
+
+As a technique which heavily relies upon knowing a distribution which best models the data, MLE is one of the most well-known parametric approaches to handling LOD values. Many studies use the MLE as a sort of baseline method of handling censored values, to which they compare their new techniques upon (Ganser \& Hewett, 2010). However, it must be known that regardless of the prevalence of the MLE method, it is not free from its own downfalls. Canales (2018) found that the MLE method seems to underperform when the data in question was highly skewed, in which overinflated mean squared errors were often obtained. Being a technique which is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results (Bolks, DeWire, \& Harcum, 2014).
+
 \hypertarget{rkm}{%
-\subsection{Reverse KM}\label{rkm}}
+\subsection{Kaplan-Meier Method}\label{rkm}}
 
 As a phenomenon, censoring is most often discussed in survival analysis, which concerns itself with techniques to analyze a time to an \emph{event variable}. As its name suggests, these variables measure the time which passes until some sort of event occurs. This can be as innocuous as the time until device breaks, time until birds migrate away from their homes, time until a person passes away, etc. Regardless of which, all these scenarios share a common problem in terms of the possibility of the data being ``censored.''
 
-The Kaplan-Meier (KM) method is a common nonparametric technique used to deal with censored data. Originally developed to handle right-censored survival analysis data, an offshoot method in the form of the Reverse Kaplan-Meier Estimator, have sprung up as a way to handle left censored data as well (Gillespie et al., 2010). The advantages of the KM method lie in its robustness as a nonparametric method; it performs well with a wide range of distributions. Many recommend its usage for when there are cases of severe censoring, instances where \textgreater{} 90\% of the data is censored (Canales, 2018).
+The Kaplan-Meier (KM) method is a common nonparametric technique used to deal with censored data. Nonparametric methods do not utilize any information regarding the parameters for a specified distribution, like the mean and standard deviation for the normal distribution. The KM method was originally developed to handle right-censored survival analysis data. The advantages of the KM method lie in its robustness as a nonparametric method, it performs well without having to depend upon distributional assumptions. Many recommend its usage for when there are cases of severe censoring, instances where \textgreater{} 90\% of the data is censored (Canales, 2018).
 
 To introduce the concept of the KM-estimator, it is helpful to take a look into its usages in survival analysis studies where the focus is often on a type of ``time to a certain event occurring'', often being cases such time to death, or time to failure.
 
@@ -460,14 +426,22 @@ The KM-estimator is a nonparametric statistic used to estimate the survival curv
 
 The KM-estimator when performing an empirical estimation of the survival curve at time \(t\) can be represented by the following equation:
 
-\[\hat{S}(t) = \prod_{\ x_j \le \ t }\left(1-\frac{d_j}{y_j}\right)\]
-where \(x_j\) is the distinct event time, \(d_j\) is the number of event occurences at time \(x_j\), and \(y_j\) is the number of followup times (\(t_i\)) that are \(\ge\) \(x_j\) (how many observations in sample survived at least/or past the time \(t_i\)) (Klein \& Moeschberge, 2003).
+\[\hat{S}(t) = \prod_{\ t_i \le \ t }\left(1-\frac{d_i}{n_i}\right)\]
+where \(t_i\) is the distinct event time, \(d_i\) is the number of event occurrences at time \(t_i\), and \(n_i\) is the number of followup times (\(t_i\)) that are \(\ge\) \(t_i\) (how many observations in sample survived at least/or past the time \(t_i\)) (Klein \& Moeschberge, 2003).
 
-Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method yields the reverse Kaplan-Meier approach, which allows for the estimation of the survival curve with left-censored values. This approach follows exactly the same logic as the Kaplan-Meier estimate of the survival curve, except we reverse the censored indicator and event of interest indicator. In other words, our censor is now the event and the event is now censored. This allows us to estimate the distribution function and population percentiles for data containing left-censored values (Gillespie et al., 2010).
+Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method, allows for the estimation of the survival curve with left-censored values.
+
+Helsel (2005, as cited in Yavuz et. al, 2017) provides a detailed explanation on how to apply the KM method when left censoring is present. Firstly, it is essential to reverse the left-censored data through a conversion before using the KM method to change them into right-censored data.
+
+{[}continue working here, on Yavuz paper trying to explain methodology{]}
+
+(median, mean (AUC), sd, greenwood)
+
+mean: \(\hat{\mu} = \int_{0}^{\infty} \hat{S}(t) \ dt\)
+median: \(\hat{M} = \hat{S}^{-1} \left (\frac{1}{2} \right)\)
+var: \(Var(\hat{\mu}) = \sum_{i=1}^{r} \left( \int_{t_i}^{\infty}\hat{S}(t) \ dt \right)^2 \frac{d_i}{n_i(n_i - d_i)}\)
 
 For our analysis, we will be using the \texttt{cenfit} function from the \texttt{NADA} package in R to estimate the empirical cumulative distribution function (survival curve) for our left-censored data using the reverse Kaplan-Meier method. Similarly to the MLE method, the KM method is not an imputation method, so we are not replacing censored values with an imputed value, but rather estimating descriptive statistics for the entire dataset -- including the censored concentrations (Canales, 2018).
-
-{[}START HERE{]}
 
 \hypertarget{ROS}{%
 \subsection{Regression on Order Statistics}\label{ROS}}
@@ -557,9 +531,6 @@ Corrections may be made to the body of the thesis, but every such correction wil
 \leavevmode\hypertarget{ref-Bolks2014}{}%
 Bolks, A., DeWire, A., \& Harcum, J. B. (2014). Baseline Assessment of Left-Censored Environmental Data Using R. \emph{Technotes}, \emph{9}(2), 153--172. Retrieved from \url{https://www.epa.gov/sites/production/files/2016-05/documents/tech\%7B/_\%7Dnotes\%7B/_\%7D10\%7B/_\%7Djun2014\%7B/_\%7Dr.pdf}
 
-\leavevmode\hypertarget{ref-Byer2019}{}%
-Byer, D., \& Carlson, K. H. (2019). Real-time detection of intentional chemical contamination in the distributional system, \emph{97}(7), 130--133.
-
 \leavevmode\hypertarget{ref-Canales2018}{}%
 Canales, R. (2018). Methods for Handling Left-Censored Data in Quantitative Microbial Risk Assessment, \emph{84}(20), 1--10.
 
@@ -569,26 +540,14 @@ Chen, H., Quandt, S. A., Grzywacz, J. G., Arcury, T. A., Environmental, S., Pers
 \leavevmode\hypertarget{ref-Crovelli1993}{}%
 Crovelli, R. A. (1993). An Objective Replacement Method for Censored Geochemical Data, \emph{25}(1), 59--80.
 
-\leavevmode\hypertarget{ref-EIP2020}{}%
-Environmental Integrity Project. (2020). Coal Ash Groundwater Contamination: Documenting Coal Ash Pollution. Retrieved from \url{https://environmentalintegrity.org/coal-ash-groundwater-contamination/}
-
-\leavevmode\hypertarget{ref-Car2020}{}%
-Environmental Protection Agency. (2020). Disposal of Coal Combustion Residuals from Electric Utilities Rulemakings. Retrieved from \url{https://www.epa.gov/coalash/coal-ash-rule}
-
 \leavevmode\hypertarget{ref-Ganser2010}{}%
 Ganser, G. H., \& Hewett, P. (2010). An Accurate Substitution Method for Analyzing Censored Data, (April), 233--244. \url{http://doi.org/10.1080/15459621003609713}
-
-\leavevmode\hypertarget{ref-Gillespie2010}{}%
-Gillespie, B. W., Chen, Q., Reichert, H., Franzblau, A., Lepkowski, J., Adriaens, P., \ldots{} Garabrant, D. H. (2010). Estimating Population Distributions When Some Data Are Below a Limit of Detection by Using a Reverse Kaplan-Meier Estimator. \emph{Epidemiology}, \emph{21}. \url{http://doi.org/10.1097/EDE.0b013e3181ce9fD8}
 
 \leavevmode\hypertarget{ref-Hall2020}{}%
 Hall, L. W., Perry, E., \& Anderson, R. D. (2020). A Comparison of Different Statistical Methods for Addressing Censored Left Data in Temporal Trends Analysis of Pyrethroids in a California Stream. \emph{Archives of Environmental Contamination and Toxicology}, \emph{79}(4), 508--523. \url{http://doi.org/10.1007/s00244-020-00769-0}
 
 \leavevmode\hypertarget{ref-Hornung1989}{}%
 Hornung, R., \& Reed, L. (1989). Estimation of Average Concentration in the Presence of Nondetectable Values. \emph{Applied Occupational and Environmental Hygiene}, \emph{5}(1), 46--51.
-
-\leavevmode\hypertarget{ref-Kelderman2019}{}%
-Kelderman, K., Kunstman, B., Roy, H., Sivakumar, N., Mccormick, S., \& Bernhardt, C. (2019). Coal's Poisonous Legacy: Groundwater Contaminated by Coal Ash Across the U.S.
 
 \leavevmode\hypertarget{ref-Klein2003}{}%
 Klein, J. P., \& Moeschberge, M. L. (2003). \emph{SURVIVAL ANALYSIS: Techniques for Censored and Truncated Data} (2nd ed., pp. 92--104). New York: Springer-Verlag.
