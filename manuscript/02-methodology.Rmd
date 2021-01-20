@@ -185,23 +185,25 @@ where $t_i$ is the distinct event time, $d_i$ is the number of event occurrences
 
 Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method, allows for the estimation of the survival curve with left-censored values. 
 
-Helsel (2005, as cited in Yavuz et. al, 2017) provides a detailed explanation on how to apply the KM method when left censoring is present. Firstly, it is essential to reverse the left-censored data through a conversion algorithm before using the KM method to change them into right-censored data.
+Helsel (2005, as cited in Yavuz et. al, 2017) provides a detailed explanation on how to apply the KM method when left censoring is present. Firstly, it is essential to reverse the left-censored data through a transformation algorithm before using the KM method to change them into right-censored data. 
 
-[continue working here, on Yavuz paper trying to explain methodology]
+Let $x_i$ $\ldots$ $x_n$ be the values for the observations $i = 1, 2, ..., n$. Arrange all the left-censored values in descending order and then subtract them by $M$, a constant bigger than the biggest value of the dataset, in order to get the transformed, right-censored value, $M-x_i$. All values are then arranged in ascending order to be used to estimate the survival function through the Kaplan-Meier estimator.
 
-(median, mean (AUC), sd, greenwood)
+It must be known that the KM-method is not an imputation procedure, but instead an estimation technique that allows for the calculation of descriptive statistics for left-censored datasets. Nian (1997 gives the expressions to calculate the estimated mean, median, and variance below:
 
-mean: $\hat{\mu} = \int_{0}^{\infty} \hat{S}(t) \ dt$
-median: $\hat{M} = \hat{S}^{-1} \left (\frac{1}{2} \right)$
-var: $Var(\hat{\mu}) = \sum_{i=1}^{r} \left( \int_{t_i}^{\infty}\hat{S}(t) \ dt \right)^2 \frac{d_i}{n_i(n_i - d_i)}$
-
-For our analysis, we will be using the `cenfit` function from the `NADA` package in R to estimate the empirical cumulative distribution function (survival curve) for our left-censored data using the reverse Kaplan-Meier method. Similarly to the MLE method, the KM method is not an imputation method, so we are not replacing censored values with an imputed value, but rather estimating descriptive statistics for the entire dataset -- including the censored concentrations [@Canales2018].
+$\hat{\mu} = \int_{0}^{\infty} \hat{S}(t) \ dt$
+$\hat{M} = \hat{S}^{-1} \left (\frac{1}{2} \right)$
+$Var(\hat{\mu}) = \sum_{i=1}^{r} \left( \int_{t_i}^{\infty}\hat{S}(t) \ dt \right)^2 \frac{d_i}{n_i(n_i - d_i)}$
 
 ### Regression on Order Statistics {#ROS}
 
-In between both the parametric nature of the MLE approach and nonparametric of the Kaplan-Meier estimator is the regression on order statistics (ROS) method. ROS is a semi-parametric method because it assumes an underlying normal or lognormal distribution for the censored measurements in the data, but make no assumption towards the distribution of uncensored measurements.
+Lastly, regression on order statistics (ROS) combines both the parametric nature of the MLE approach and nonparametric nature of the KM method. ROS is a semi-parametric method which assumes an underlying normal or lognormal distribution for the censored measurements but makes no assumption towards the distribution of uncensored measurements.
 
-The ROS method is roughly based on the simple linear regression model. It works by first plotting the uncensored observed values (ordered from smallest to largest) vs. the quantiles, which is then used to estimate and impute the values of the censored data [@Lee2005]. In summary, ROS imputes the censored data using the estimated parameters from the linear regression model of the uncensored observed values versus their quantiles.
+[@EPA2009] provides a a more detailed explanation to the methodology of ROS, but the basic procedures will be outlined in this thesis. 
+
+ROS begins with the estimation of the cumulative probability associated with each distinct LOD. This cumulative probability is distributed equally between the censored values with a common LOD (see [@EPA2009], for more details). A regression model is fit between the uncensored values and the distributional quantiles. The slope and intercept of the regression line from this model is then used to estimate the mean and standard deviation of the distributional model which are then used to generate imputed values for the censored observations.
+
+<!-- how do we use the slope and intercept to FIND the mean  and sd of the model? check book from library once it gets in? -->
 
 In order for ROS to be utilized, there needs to be at least 5 known values and more than half the values within the censored variables must be known. As regression is utilized in this method, the response variable must also be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance [@Lee2005].
 

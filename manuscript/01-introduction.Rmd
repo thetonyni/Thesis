@@ -18,11 +18,13 @@ The introduction should provide an overview of the work you set out to do and pr
 
 - what is missing data?
 
-- types of missing data (brief, don't go in-depth)
+Missing data is commonplace in statistics. From nonresponse in survey studies to issues with data collection in field studies, it is unavoidable to encounter missing data in practice. Missing data is defined as _occurences in data where there is no value stored for a variable within an observation_. 
 
 - why is it a problem (brief)
 
 Missing data is a major problem due to the following reasons: 1) It can introduce bias into a statistical analysis which can lead to misleading results, 2) (FIND AND READ BARNARD MENG 1999)
+
+- types of missing data (brief, don't go in-depth)
 
 - talk about left-censored missingness what sort of fields it can be an issue in
 
