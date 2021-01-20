@@ -58,9 +58,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * Q: what are the aims of the study?
 
-* A: (1) investigate effectiveness (accuracy?) of methods designed to estimate summary statistics (mean and sd) of left-censored data
-
-* come up with reasonable distribution, by comparing methods, we're trying to see which one better captures that distribution
+(Hewett and Ganser, 2007) conducted a simulation study and discuss that it is very unlikely for one method to outperform another method. As such, the aims of our simulation study are not to find the "best," (in terms of whatever performance metric we are interested in). Instead, my goal is to assess the performance of each method in cases of different percentages of censoring and different sample sizes -- and seeing which methods perform better or worse than the others for their specific censoring percentage and sample size. 
 
 #### Data-Generating Mechanisms
 
@@ -69,35 +67,34 @@ knitr::opts_chunk$set(echo = TRUE)
 * Q: should it be based on real data?
 * Q: which factors to vary? which levels of factors to use?
 
-* A: resampling from a simple lognormal distribution (not based on real data, for ease of calculations/comprehension)
+* A: GENERAL, EXPAND LATER) Bolks (2014) discuss how different methods have different performances with varying sample sizes and censoring rates.  As such, we resampling from a simple lognormal distribution of sample sizes of 10, 100, and 1000 AND different censoring rates of 10%, 30%, and 50%.
 
-* A: data generated from $n_{obs} = 1000$ wells that represent a possible collection of chemical concentration measurements (unrealistic, but simple -- i personally think drawing it from the actual data itself might be not as useful? we could also vary the sample size to see how the methods perform when different % of the data is censored (refer to Bolks2014 -- "different methods work better depending on small/large values of n and small/large percent of data censored)) (MIGHT PUSH UP VALUE UP A BIT)
+* A: I will be generating data from a log-normal distribution with the parameters of mean, $\mu$ = 1 and standard deviation, $\sigma$ = 0.5.
 
-* A: values talked about in paper are $n < 50$ compared to $n \ge 50$ and $<50 \%$ data censored compared to $50 - 80 \%$ censored ($>80\%$ is too high to compute summary statistics)
+```{r}
+#playing around with log-normal dist.
+m <- 1
+s<- 0.5
 
-* A: let $X_i$ be the concentration of an arbitrary chemical at a well with $X_i \in \text{Lognormal}(\mu, \sigma^2)$
-
-* A: factors we might consider varying is the sample size $n$ and the percent of data censored (this may be too crazy, may have to prune down, ALSO CONSIDER UNDERLYING DISTRIBUTION)
-
-* A: $\mu = 1$ and $\sigma^2 = 1$
+vector <- rlnorm(10000, log(m^2 / sqrt(s^2 + m^2)), 
+                   sdlog=sqrt(log(1 + (s^2 / m^2))))
+mean(vector)
+sd(vector)
+```
 
 #### Estimand
 
 * Q: define estimands of the simulation study
 
-* A: the estimands (variable which is to be estimated in a statistical analysis) of our study are the mean, and variance from which we generated our lognormal distribution form
-
-* A: we want to observe the mean estimator $\bar{X}$, which is the estimator of $\mu$ 
-
-* A: we want to observe the variance estimator $s^2$, which is the estimator of $\sigma^2$
-
-* A:our final estimand is probably an indicator (is it over the threshold)
+* A: the estimands (variable which is to be estimated in a statistical analysis) in our study are going to be the parameters of the log-normal distribution, $\mu$ and $\sigma$. 
 
 #### Methods
 
 * Q: identify methods to be evaluated; are they appropriate?
 
-* A: each simulated dataset(s) (with left censored data) is to be used in the following 5 methods (substitution, MLE, kaplan-meier. imputation with MLE, imputation with kaplan-meier) in order to compute the estimators $s^2$ and $\bar{X}$
+* A: we will run our simulation a set number of times (10000?) for each simulated dataset(s) (with varying sample sizes and percentages of censoring for left censored data). 
+
+within each run, we will use following 4 methods (substitution, MLE, kaplan-meier, and ROS) to obtained censored values in order to compute the sample mean $\bar{X}$ and sample sd $s$ for each respective sample.
 
 #### Performance Measures
 
@@ -107,6 +104,4 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * A: we will assess the following two performance measures for each method...
 
-* A: root mean square error (RMSE): measures the difference in sample and population values predicted by an estiamtor/model, $\text{RMSE} = \sqrt{\sum_{i=1}^{n}\frac{(y_i-\hat{y_i})^2}{n}}$ where $\hat{y_i}$
-
-* A: bias which is defined as: $\text{Bias} = E[\hat{\theta}] - \theta$ where $\theta$ is the estimator and $\hat{\theta}$ is the estimated value
+* A: we will calculate the mean squared error (MSE) in order to assess the quality of each of our estimators ($\bar{X}$ and $s$). the MSE measures the average squared differences btwn our estimators and their respective parameters, which essentially means it measures how far off our estimators are from the parameters.
