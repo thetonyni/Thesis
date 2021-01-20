@@ -1,0 +1,40 @@
+---
+title: "ROS"
+author: "Tony Ni"
+date: "1/18/2021"
+output: pdf_document
+---
+
+```{r}
+df <- as.data.frame(c(0.5, 0.5, 0.5, 0.6, 0.7, 0.7, 0.9, 1.5, 1.7, 2.8, 3.2))
+colnames(df)[1] <- "uncensored"
+
+#plot uncensored values vs. (normal) quantiles
+qqnorm(df$uncensored)
+
+#obtain normal quantile values
+i <- 1:length(df$uncensored)
+fi <- (i - 0.5)/length(df$uncensored) #sample quantile
+
+quant <- qnorm(fi)
+quant
+```
+
+```{r}
+df <- df %>%
+  mutate(z = (prob - mean(prob))/sd(prob),
+         prob = prob,
+         quant = quant)
+```
+
+```{r}
+ggplot(df, aes(x = quant, y = uncensored)) + geom_point() +
+  geom_smooth(method = 'lm', se = FALSE)
+
+#fit regression model
+fit <- lm(df$uncensored ~ df$quant)
+summary(fit)
+
+```
+
+
