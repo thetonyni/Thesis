@@ -1,0 +1,260 @@
+---
+title: "simulation-study"
+author: "Tony Ni"
+date: "10/8/2020"
+output: pdf_document
+---
+
+```{r}
+library(tidyverse)
+library(missMethods) #package for generating missing data
+library(NADA) #package for mle for left censored data
+library(fitdistrplus) #package for mle imputation method
+library(lodi) #package for censored likelihood MI
+```
+
+# Preliminary
+
+```{r}
+#set seed
+set.seed(7271999)
+
+#size of a sample
+n.iter <- 100 #number of iterations
+
+#GENERATE POSITIVE VALUES ONLY (MAKE SURE ITS REALISTIC)
+
+mean = 10
+sd = 1
+
+#set arbitrary threshold (values below this are considered left-censored)
+threshold <- 9
+
+#creating df outside of loop to store summary stats of methods
+#xbar is sample mean, sem is standard error of the mean, s is sample standard deviation
+store_names <- c("iteration", "num_samples", "method", "xbar", "se", "samp_sd")
+store_df <- as.data.frame(matrix(ncol = 6, nrow = 0))
+names(store_df) <- store_names
+```
+
+#maybe get standard errors in the future (sqrt of those) in the future
+
+# ALL METHODS COMBINED 
+
+```{r}
+#writing function to run all methods combined
+all_function <- function(n.iter, samplesize){
+  for(i in 1:n.iter){
+    iteration <- i
+    true.value <- rnorm(n = samplesize, mean = mean, sd = sd)
+    sim_df <- as.data.frame(cbind(iteration, true.value)) %>%
+        #below is T if value below threshold, else F
+        mutate(below = as.logical(case_when(true.value <= threshold ~ TRUE, 
+                                            true.value > threshold ~ FALSE)),
+               #hide values below threshold
+               censored.value = if_else(below == FALSE, 
+                                        true.value, NA_real_),
+               
+               #approach #1: substitution
+               imp_substitution = if_else(below == TRUE, 
+                                          threshold/2, true.value)
+        )
+
+    #getting summary stats for substitution
+    store_df[i, 1] <- iteration
+    store_df[i, 2] <- samplesize
+    store_df[i, 3] <- "LOD/2"
+    store_df[i, 4] <- mean(sim_df$imp_substitution)
+    store_df[i, 5] <- sd(sim_df$imp_substitution)/sqrt(n.iter)
+    store_df[i, 6] <- sd(sim_df$imp_substitution)
+    
+    #approach #2: mle
+    mle_res = cenmle(sim_df$true.value, sim_df$below, 
+                     conf.int=0.95, dist = "gaussian")
+    
+    #getting summary stats for MLE
+    store_df[i+n.iter, 1] <- iteration
+    store_df[i+n.iter, 2] <- samplesize
+    store_df[i+n.iter, 3] <- "MLE"
+    store_df[i+n.iter, 4] <- coef(summary(mle_res))["(Intercept)"]
+    store_df[i+n.iter, 5] <- sd(mle_res)/sqrt(n.iter)
+    store_df[i+n.iter, 6] <- sd(mle_res)
+    
+    #approach #3: KM
+    km_res = cenfit(sim_df$true.value, sim_df$below, 
+                    conf.int=0.95)
+    
+    #getting summary stats for KM
+    store_df[i+(2*n.iter), 1] <- iteration
+    store_df[i+(2*n.iter), 2] <- samplesize
+    store_df[i+(2*n.iter), 3] <- "KM"
+    store_df[i+(2*n.iter), 4] <- mean(km_res)[[1]]
+    store_df[i+(2*n.iter), 5] <- sd(km_res)/sqrt(n.iter)
+    store_df[i+(2*n.iter), 6] <- sd(km_res)
+    
+    #approach #4 ROS
+    ros_res = ros(sim_df$true.value, sim_df$below, 
+                  forwardT="log", reverseT="exp")
+    
+    #getting summary stats for ROS
+    store_df[i+(3*n.iter), 1] <- iteration
+    store_df[i+(3*n.iter), 2] <- samplesize
+    store_df[i+(3*n.iter), 3] <- "ROS"
+    store_df[i+(3*n.iter), 4] <- mean(ros_res)
+    store_df[i+(3*n.iter), 5] <- sd(ros_res)/sqrt(n.iter)
+    store_df[i+(3*n.iter), 6] <- sd(ros_res)
+    
+  }
+  return(store_df)
+}
+```
+
+```{r}
+test_all_df <- all_function(10, 100)
+```
+
+# new approach (maybe write a function for each method, then run 
+# each method with mosaic:do(# here))?
+
+```{r}
+sub_func <- function(n, samplesize){
+   for(i in 1:n){
+    value <- rnorm(n = samplesize, mean = mean, sd = sd)
+    id <- seq(1, samplesize, by = 1)
+    current_df <- as.data.frame(cbind(id, value))
+    
+    #creating modified df to have censored info
+    modified_df <- current_df %>%
+      #below is T if value below threshold, else F
+      mutate(below = case_when(value <= threshold ~ "T", 
+                               value > threshold ~ "F")
+      ) %>%
+      #hide values below threshold
+      mutate(value = if_else(
+        below == "F", value, NA_real_)
+      )
+    
+    #approach #1: substitution
+    substitution_df <- modified_df %>%
+      mutate(imputed_value = if_else(
+        below == "T", 9/2, value)
+      )
+    
+    #getting summary stats for substitution df
+    store_df[i, 1] <- paste("samples=", n, ", size=", samplesize, sep = "")
+    store_df[i, 2] <- "substitution"
+    store_df[i, 3] <- mean(substitution_df$imputed_value)
+    store_df[i, 4] <- sd(substitution_df$imputed_value)
+  }
+  return(store_df)
+}
+
+mle_func <- function(n, samplesize){
+   for(i in 1:n){
+    value <- rnorm(n = samplesize, mean = mean, sd = sd)
+    id <- seq(1, samplesize, by = 1)
+    current_df <- as.data.frame(cbind(id, value))
+    
+    #creating modified df to have censored info
+    modified_df <- current_df %>%
+      #below is T if value below threshold, else F
+      mutate(below = case_when(value <= threshold ~ "T", 
+                               value > threshold ~ "F")
+      ) %>%
+      #hide values below threshold
+      mutate(value = if_else(
+        below == "F", value, NA_real_)
+      )
+    
+    #approach #2: mle
+    logical_df <- modified_df %>%
+      mutate(below = as.logical(below))
+
+    mle_res = cenmle(logical_df$value, logical_df$below, 
+                     conf.int=0.95, dist = "gaussian")
+    
+    #getting summary stats for mle 
+    store_df[i, 1] <- samplesize
+    store_df[i, 2] <- "mle"
+    store_df[i, 3] <- coef(summary(mle_res))["(Intercept)"]
+    store_df[i, 4] <- sd(mle_res)
+  }
+  return(store_df)
+}
+
+ros_func <- function(n, samplesize){ 
+   for(i in 1:n){
+    value <- rnorm(n = samplesize, mean = mean, sd = sd)
+    id <- seq(1, samplesize, by = 1)
+    current_df <- as.data.frame(cbind(id, value))
+    
+    #creating modified df to have censored info
+    modified_df <- current_df %>%
+      #below is T if value below threshold, else F
+      mutate(below = case_when(value <= threshold ~ "T", 
+                               value > threshold ~ "F")
+      )
+    
+    #approach #3: ROS
+    logical_df <- modified_df %>%
+      mutate(below = as.logical(below))
+
+    ros_res = ros(logical_df$value, logical_df$below)
+    
+    #getting summary stats for km
+    store_df[i, 1] <- paste("size=", samplesize, sep = "")
+    store_df[i, 2] <- "ros"
+    store_df[i, 3] <- mean(ros_res)
+    store_df[i, 4] <- sd(ros_res)
+    
+    NADA::mean(km_res)[[1]]
+    NADA::sd(km_res)
+    
+  }
+  return(store_df)
+}
+
+km_func <- function(n, samplesize){
+  for(i in 1:n){
+    value <- rnorm(n = samplesize, mean = mean, sd = sd)
+    id <- seq(1, samplesize, by = 1)
+    current_df <- as.data.frame(cbind(id, value))
+    
+    #creating modified df to have censored info
+    modified_df <- current_df %>%
+      #below is T if value below threshold, else F
+      mutate(below = case_when(value <= threshold ~ "T", 
+                               value > threshold ~ "F")
+      ) %>%
+      #hide values below threshold
+      mutate(value = if_else(
+        below == "F", value, NA_real_)
+      )
+    
+    logical_df <- modified_df %>%
+      mutate(below = as.logical(below))
+    
+    #approach #3: KM
+    km_res = cenfit(logical_df$value, logical_df$below, 
+                    conf.int=0.95)
+    
+    #getting summary stats for km
+    store_df[i, 1] <- paste("size=", samplesize, sep = "")
+    store_df[i, 2] <- "km"
+    store_df[i, 3] <- mean(km_res)[[1]]
+    store_df[i, 4] <- sd(km_res)
+  }
+}
+
+mle_imp_func <- function(n, samplesize){
+  
+}
+```
+
+```{r}
+testdf1 <- mosaic::do(1) * sub_func(5, 1000)
+testdf2 <- mosaic::do(1) * mle_func(5, 1000)
+testdf3 <- mosaic::do(1) * ros_func(5, 1000) #errors may arise due to attempts to take negative logs, 
+                                              #but can't be helped with out parametric setting...
+testdf4 <- mosaic::do(1) * km_func(5, 1000)
+```
