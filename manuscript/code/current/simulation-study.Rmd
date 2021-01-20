@@ -5,17 +5,55 @@ date: "1/20/2021"
 output: pdf_document
 ---
 
-First, a function to help us generate our desired datasets.
+```{r}
+library(tidyverse)
+```
+
+
+First, a function to help us generate our desired datasets:
 
 ```{r}
 #function will generate a vector of numbers from the lognormal distribution
 #function will take in arguments for 1) samplesize, 2) logmean, 3)logsd
-#what column names do we need to run all our methods? --> true.value (numeric), below (boolean),
-
+#what column names do we need to run all our methods? --> true.value (numeric), below (boolean)
 
 generateData <- function(sampsize, m, s){
-  vector <- rlnorm(10000, 
-                   meanlog=log(m^2 / sqrt(s^2 + m^2)),
-                   sdlog=sqrt(log(1 + (s^2 / m^2))))
+  true.value <- rlnorm(sampsize, 
+               meanlog=log(m^2 / sqrt(s^2 + m^2)),
+               sdlog=sqrt(log(1 + (s^2 / m^2))))
+  df <- as.data.frame(true.value) %>%
+    arrange(true.value)
+  return(df)
 }
 ```
+
+Another function to help with censoring:
+
+```{r}
+#function will censor at given rate
+
+censorData <- function(uncensored_df, censrate){
+  
+  censored_df <- uncensored_df %>% #take the head(%) of data to be censored
+    slice_head(n=nrow(uncensored_df)*censrate) %>%
+    mutate(censored = TRUE)
+  
+  #full join original df and sliced df
+  return_df <- full_join(uncensored_df, censored_df, by = "true.value")
+
+  #replace NAs with FALSE
+  return_df$censored <- replace_na(return_df$censored, replace = FALSE)
+  
+  return(return_df)
+}
+```
+
+```{r}
+data <- generateData(100, 1, 0.5)
+censdata <- censorData(data, 0.15)
+
+test <- data %>%
+  slice_head(n=50)
+```
+
+
