@@ -7,32 +7,24 @@ output: pdf_document
 
 ```{r}
 library(tidyverse)
+library(Metrics) #package to help calculate mse
 ```
 
 
 First, a function to help us generate our desired datasets:
 
 ```{r}
-#function will generate a vector of numbers from the lognormal distribution
+#function will generate a vector of numbers from the lognormal distribution and censor them at the given rate
 #function will take in arguments for 1) samplesize, 2) logmean, 3)logsd
 #what column names do we need to run all our methods? --> true.value (numeric), below (boolean)
 
-generateData <- function(sampsize, m, s){
+generateData <- function(sampsize, m, s, censrate){
   true.value <- rlnorm(sampsize, 
                meanlog=log(m^2 / sqrt(s^2 + m^2)),
                sdlog=sqrt(log(1 + (s^2 / m^2))))
-  df <- as.data.frame(true.value) %>%
+  
+  uncensored_df <- as.data.frame(true.value) %>%
     arrange(true.value)
-  return(df)
-}
-```
-
-Another function to help with censoring:
-
-```{r}
-#function will censor at given rate
-
-censorData <- function(uncensored_df, censrate){
   
   censored_df <- uncensored_df %>% #take the head(%) of data to be censored
     slice_head(n=nrow(uncensored_df)*censrate) %>%
@@ -48,12 +40,62 @@ censorData <- function(uncensored_df, censrate){
 }
 ```
 
-```{r}
-data <- generateData(100, 1, 0.5)
-censdata <- censorData(data, 0.15)
 
-test <- data %>%
-  slice_head(n=50)
+```{r}
+#testing environment
+data <- generateData(100, 1, 0.5, 0.15)
 ```
+
+what do we want our code to do? (censoring rates: 10, 30, 50, sample sizes: 10, 100, 1000)
+
+for each censoring/size pair, we create and run substitution method on 500 samples, for each sample, obtain the true mean, estimated mean, and mse of each dataset
+
+the average mse is ultimately what we are interested in
+
+```{r}
+set.seed(7271999)
+
+numreps <- 100 #number of repetitions
+censvalues <- c(0.10, 0.30, 0.50)
+sampsizes <- c(10, 100, 1000)
+
+list.MSE <- c() #empty list to store MSE(s)
+list.true.mean <- c()
+list.est.mean <- c()
+
+for(i in censvalues){
+  for(j in sampsizes){
+    for(k in 1:numreps){
+      df <- generateData(sampsize = j, m = 1, s = 0.5, censrate = i)
+      LOD <- min(df$true.value[df$censored == FALSE]) #define LOD to be smallest, uncensored value
+      df <- df %>%
+        mutate(impSubValue = if_else(censored == TRUE, LOD/2, true.value))
+
+      list.true.mean[k] <- mean(df$true.value)
+      list.est.mean[k] <- mean(df$impSubValue)
+    }
+    #end of 10000 repetitions
+    list.MSE <- append(list.MSE, (mse(list.true.mean, list.est.mean))) #need to store this somewhere, a vector?
+  }
+}
+
+#GOAL FOR SUNDAY, FIND OUT A NAMING SCHEME??? how do we get cens value and samp size into columns with mse values?
+
+# SPACE TO TEST BELOW
+
+df <- generateData(sampsize = 100, m = 1, s = 0.5, censrate = 0.10)
+
+LOD <- min(df$true.value[df$censored == FALSE]) #define LOD to be smallest, uncensored value
+
+df <- df %>%
+  mutate(impSubValue = if_else(censored == TRUE, LOD/2, true.value))
+
+true.mean <- mean(df$true.value)
+est.mean <- mean(df$impSubValue)
+
+
+```
+
+
 
 
