@@ -1,0 +1,130 @@
+---
+title: "Coal Ash Data"
+author: ""
+date: ""
+output: 
+  pdf_document:
+    fig_width: 3.5
+    
+---
+
+```{r, setup, include=FALSE}
+# load packages
+require(tidyverse)
+require(mosaic) 
+require(kableExtra)
+require(forcats)
+require(GGally)
+require(plotly)
+knitr::opts_chunk$set(
+  tidy=FALSE,     # display code as typed
+  size="small",
+  warning = FALSE,
+  message = FALSE,
+  echo = FALSE, 
+  cache = TRUE)   # slightly smaller font for code
+theme_set(theme_classic()) # set ggplot theme
+figdir <- "figures/"
+```
+
+
+# Read in results and identify exclusion criteria
+FIELD	DESCRIPTION
+
+* `state`	The state where the site is located.
+* `site`	The name of the site as it is presented in its groundwater monitoring report.
+* `disposal.area`	The name of the disposal area(s) as they are presented in the groundwater monitoring report. Note: some wells (`well.id`) monitor groundwater from more than one disposal unit.
+* `type`	The type of disposal unit. SI = surface impoundment, L= landfill, M = mixed multi-unit (landfill and surface impoundment), and U = unknown.
+* `well.id`	The identifier given to each monitoring well in the groundwater monitoring report.
+* `gradient`	The location of the groundwater monitoring well relative to the regulated ash disposal unit it monitors. (may be up/downgradient from multiple disposal areas.)
+* `sample.date`	The date the well was sampled.
+* `contaminant`	The contaminant name. These have been standardized to allow for analyses across plants.
+* `measurement.unit`	The concentration units. These include mg/l, ug/l, pCi/l, and standard units (SU) for pH.
+* `below.detection`	"<" Indicates that a contaminant was not detected. In this case, the value in the "concentration" column will be the method detection limit (if known) or the reporting limit. 
+* `concentration`	The monitoring result (or, for nondetects, the method detection limit or reporting limit).
+qualifier	Lab qualifiers assigned to the result. See each monitoring report for detailed explanations.
+link	The link to the groundwater monitoring report.
+
+\footnotesize
+```{r readdata}
+# takes about 10 minutes to run
+# resulting dataframes (fulldata, fences) are stored in fulldata.RData
+coal <- read_csv("../../21_tony-ni_harvard-summer-biostats/data/chemical_data.csv") %>%
+  # ph was listed as mg/l for several cases
+  mutate(measurement.unit = if_else(contaminant %in% c("pH", "pH, field"), 
+                                    "su", 
+                                    measurement.unit))
+#,
+ #        stdconc.mgl = case_when(measurement.unit == "pCi/l" ~ measurement.unit*0.0015))
+```
+
+
+
+\newpage
+# Detection limits
+```{r}
+group_by(coal, contaminant, measurement.unit, below.detection) %>%
+  summarize(n = n(), 
+            lod = mean(concentration), 
+            minlod = min(concentration), 
+            maxlod = max(concentration), 
+            varlod = var(concentration)) %>%
+  kable(booktabs = TRUE, digits = 1, 
+        longtable = TRUE,
+        linesep = c('', '', '', '\\addlinespace')
+        )
+
+group_by(coal, measurement.unit, contaminant, below.detection) %>%
+  summarize(n = n(), 
+            lod = mean(concentration), 
+            minlod = min(concentration), 
+            maxlod = max(concentration), 
+            varlod = var(concentration)) %>%
+  kable(booktabs = TRUE, digits = 1, 
+        longtable = TRUE,
+        linesep = c('', '', '', '\\addlinespace')
+        )
+```
+
+## Count
+```{r below.detection}
+pp <- group_by(coal, contaminant, measurement.unit) %>%
+  summarize(n = n(), below.detection = sum(!is.na(below.detection))/n) %>%
+  arrange(desc(below.detection)) 
+kable(pp,booktabs = TRUE, digits = 2, longtable = TRUE)
+```
+
+## Proportion below detection
+```{r below.detection.prop}
+pp %>% arrange(desc(n)) %>%
+ kable(booktabs = TRUE, digits = 2, longtable = TRUE)
+```
+
+\newpage
+# Data structure
+```{r, structure}
+group_by(coal, state) %>% 
+  summarize(n = n()) %>% 
+  arrange(desc(n))
+
+group_by(coal, state, site) %>% 
+  summarize(n = n()) %>% 
+  arrange(state, desc(n))
+
+group_by(coal, state, site, disposal.area) %>% 
+  summarize(n = n()) %>% 
+  arrange(state, site, desc(n))
+```
+
+# BPA data
+
+```{r}
+bpa <- read_delim("bpa_tds2.csv", delim = ";")
+bparaw <- read_csv("donnees-bpa-eat2-lhn.csv")
+names(bparaw) <- c('foodgroup', 'label', 'type', 
+                   'date', 'region', 'vague', 
+                   'bpa', 'lod', 'units')
+group_by(bparaw, foodgroup, label) %>% 
+  summarize(n = n()) %>% 
+  arrange(desc(n))
+```
