@@ -69,61 +69,103 @@ set.seed(7271999)
 iterations <- 5 #number of iterations
 censvalues <- c(0.10, 0.30, 0.50)
 sampsizes <- c(10, 100, 1000)
-combinations <- paste(rep(censvalues, each = length(sampsizes)), sampsizes, sep = ", ") #list of all combinations of censvalues and sampsizes
 
-df.final <- as.data.frame(combinations) #df to store all final results
-
-sub.list.MSE <- c() #empty list to store MSE(s)
-mle.list.MSE <- c()
-km.list.MSE <- c()
-ros.list.MSE <- c()
-
-list.true.mean <- c()
-list.sub.mean <- c()
-list.mle.mean <- c()
-list.km.mean <- c()
-list.ros.mean <- c()
+df.tall <- data.frame(prop_cens = numeric(),
+                      samplesize = numeric(),
+                      iteration = numeric(),
+                      method = character(),
+                      true_mean = numeric(),
+                      mean_complete = numeric(),
+                      mean_method = numeric(),
+                      true_sd = numeric(),
+                      SE_complete = numeric(),
+                      SE_method = numeric())
 
 for(i in censvalues){
   for(j in sampsizes){
     for(k in 1:iterations){
       df <- generateData(sampsize = j, m = 1, s = 0.5, censrate = i)
+      m <- 1
+      s <- 0.5
       
       #substitution
       LOD <- min(df$true.value[df$censored == FALSE]) #define LOD to be smallest, uncensored value
       df <- df %>%
         mutate(impSubValue = if_else(censored == TRUE, LOD/2, true.value))
-      list.true.mean[k] <- mean(df$true.value) #calculate true mean
-      list.sub.mean[k] <- mean(df$impSubValue) #calculate est. mean (with substitution)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "substitution",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(df$impSubValue),
+                true_sd = s,
+                SE_complete = sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = sd(df$impSubValue)/sqrt((length(df$impSubValue))))
       
       #mle
       mle_res = cenmle(df$true.value, df$censored)
-      list.mle.mean[k] <- mean(mle_res)[1]
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "mle",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(mle_res)[1],
+                true_sd = s,
+                SE_complete = sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = mean(mle_res)[2])
       
       #km
       km_res = cenfit(df$true.value, df$censored)
-      list.km.mean[k] <- mean(km_res)[[1]]
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "km",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(km_res)[[1]],
+                true_sd = s,
+                SE_complete = sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = mean(km_res)[[2]])
       
       #ros
       ros_res = ros(df$true.value, df$censored)
-      list.ros.mean[k] <- mean(ros_res)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "ros",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(ros_res),
+                true_sd = s,
+                SE_complete = sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = sd(ros_res)/sqrt((length(df$true.value))))
     }
     #end of # iterations
-    sub.list.MSE <- append(sub.list.MSE, (mse(list.true.mean, list.sub.mean))) 
-    mle.list.MSE <- append(mle.list.MSE, (mse(list.true.mean, list.mle.mean)))
-    km.list.MSE <- append(km.list.MSE, (mse(list.true.mean, list.km.mean)))
-    ros.list.MSE <- append(ros.list.MSE, (mse(list.true.mean, list.ros.mean)))
   }
 }
-df.final <- round_df(df.final, 7)
-df.final <- as.data.frame(cbind(combinations, 
-                                substitution = sub.list.MSE, 
-                                mle = mle.list.MSE,
-                                km = km.list.MSE,
-                                ros = ros.list.MSE))
 
-df.final <- df.final %>%
-  mutate_at(c(2:5), as.numeric)
+#aggregating performance criterias
+
+test <- df.tall %>%
+  group_by(prop_cens, samplesize, method) %>%
+  summarize(Avg_Mean = mean(mean_method),
+            Bias = (mean(mean_method) - true_mean),
+            Variance = var(mean_method),
+            MSE = mse(true_mean, mean_method) 
+            )
+
+testt <- distinct(test)
+  
 ```
 
 \newpage
@@ -152,9 +194,14 @@ combinations <- cbind(combinations, substitution = sub.list.MSE)
 
 test <- df.final %>%
   mutate_at(c(2:3), as.numeric)
+  
+-->
 ```
 
--->
+#mean by group or disposal area and obtain the mean or something
+#graph density distributions from coal and see how theyre distributed (in EVERYTHING facet by state??? site??? something???)
 
-
-
+#incude true.value, estimated.value, bias, variance, mse, etc.
+#also obtain sd alongside the mean
+#also write up draft of simulation chapter draft in addition to updating simulation
+#update methods if time allows
