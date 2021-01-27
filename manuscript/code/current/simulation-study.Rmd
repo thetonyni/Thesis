@@ -66,7 +66,7 @@ options(scipen=999) #prevent scientific notation
 
 set.seed(7271999)
 
-iterations <- 5 #number of iterations
+iterations <- 1000 #number of iterations
 censvalues <- c(0.10, 0.30, 0.50)
 sampsizes <- c(10, 100, 1000)
 
@@ -159,7 +159,7 @@ for(i in censvalues){
 test <- df.tall %>%
   group_by(prop_cens, samplesize, method) %>%
   summarize(Avg_Mean = mean(mean_method),
-            Bias = (mean(mean_method) - true_mean),
+            Bias = (mean(mean_method) - true_mean), #
             Variance = var(mean_method),
             MSE = mse(true_mean, mean_method) 
             )

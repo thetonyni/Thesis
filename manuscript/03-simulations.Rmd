@@ -4,23 +4,33 @@ output:
   html_document: default
 ---
 
+*note that all writing in this section is throwing ideas from head to paper w/ no concern for grammar, spelling, cohesiveness, etc. very, VERY, rough draft -- 100% just to get writing down 
+
 # Simulations {#simulations}
 
-[short passage describing what we hope to gain from performing a simulation study]
+Having discussed the various methods to handle left-censored data in the previous chapter, we now turn to a simulation study. As encounters with missingness in data can be quite varied, our goal is to evaluate and confirm the strengths and weaknesses of each of the methods when working with datasets of varying censoring rates and sample size. We will also discuss the implementation of the methods, data generating mechanisms, and evaluation metrics to be used to assess the performance of each method.
 
-## ADEMPS {#ademps}
+## Aims {#aims}
 
-[discuss ademps approach to designing a simulation study] [@Morris2019]
+The aim of our study follows a proof-of-concept idea. We are hoping to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. Literature [INCLUDE LITERATURE HERE] have frequently discussed things such as {method] being unviable in cases when censoring is greater than __%, or [another example]. Our goal is to evaluate the validity of those claims by conducting a simulation study of our own which will put those claims into practice. We must note that we don't expect one method to be significantly above the others in terms of performance for all settings, but we do hope to see which method might be best for certain settings. This approach and aim of our simulation study will then largely depend on how we will generate the data to be used in order to achieve our goal (of checking which methods work well with that settings)
 
-### Aims {#aims}
+## Data-Generating Mechanisms {#data_generating_mechanisms}
 
-### Data-Generating Mechanisms {#data_generating_mechanisms}
+The data generated for use in our study will be obtained by producing parameteric draws from a author-specified distribution. Our DGM will alter things(?) such as the our sample size, $n_{obs}$, censoring rate $R$, and distributional parameters, such as the mean and standard deviation for the normal distribution.
 
-### Estimands {#estimands}
+Censored values are generated and determined by first arranging the uncensored observatiosn in ascending order, and then from the censoring rate (ex: 0.15), we will make the lowest 0.15 of the observations censored, while leaving the remaining, uncensored. 
 
-### Methods {#methods}
+The methods developed to handle left censoerd data can only be used with non-negative distributions (cite here), and as such the distributions we are used will only be the distributions such as the lognormal distribution, weibull distribution, exponential distribution, etc. 
 
-### Performance Measures {#performance_measures}
+## Estimands {#estimands}
+
+each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data [FIND SOURCE]. in our simulation study, we want to evaluate just how well these methods are able to estimate a population quantity. Our estimand in this case will be the population mean, $\mu$.
+
+## Methods {#methods}
+
+
+
+## Performance Measures {#performance_measures}
 
 ## Results {#results}
 
