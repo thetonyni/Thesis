@@ -138,7 +138,7 @@ As we previously declared our random variables $X_1, X_2,...,X_n$ to be i.i.d, w
 $$lik(\theta) = \prod_{i=1}^{n} f(x_i|\theta)$$
 in which we can then maximize the likelihood to find the best mle of $\theta$ to best capture our observed data.
 
-Yavuz et. al (2017) discuss the usage of MLE method, when missing data is present, and note that it is only appropriate to use for non-negative probability distributions such as: exponential, log-normal, normal, and Weibull. 
+Yavuz et al. (2017) discuss the usage of MLE method, when missing data is present, and note that it is only appropriate to use for non-negative probability distributions such as: exponential, log-normal, normal, and Weibull. 
 
 When left censoring is present, the likelihood function changes in order to account for both the censored observations and the uncensored observations and becomes:
 
@@ -185,7 +185,7 @@ where $t_i$ is the distinct event time, $d_i$ is the number of event occurrences
 
 Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method, allows for the estimation of the survival curve with left-censored values. 
 
-Helsel (2005, as cited in Yavuz et. al, 2017) provides a detailed explanation on how to apply the KM method when left censoring is present. Firstly, it is essential to reverse the left-censored data through a transformation algorithm before using the KM method to change them into right-censored data. 
+Helsel (2005, as cited in Yavuz et al., 2017) provides a detailed explanation on how to apply the KM method when left censoring is present. Firstly, it is essential to reverse the left-censored data through a transformation algorithm before using the KM method to change them into right-censored data. 
 
 Let $x_i$ $\ldots$ $x_n$ be the values for the observations $i = 1, 2, ..., n$. Arrange all the left-censored values in descending order and then subtract them by $M$, a constant bigger than the biggest value of the dataset, in order to get the transformed, right-censored value, $M-x_i$. All values are then arranged in ascending order to be used to estimate the survival function through the Kaplan-Meier estimator.
 
