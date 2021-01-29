@@ -61,13 +61,13 @@ For each censoring/sample size pair, we create a simulated dataset with those sp
 
 the average mse is ultimately what we are interested in
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, cache = TRUE}
 options(scipen=999) #prevent scientific notation
 
 set.seed(7271999)
 
 iterations <- 1000 #number of iterations
-censvalues <- c(0.10, 0.30, 0.50)
+censvalues <- c(0.10, 0.20, 0.30, 0.40, 0.50)
 sampsizes <- c(10, 100, 1000)
 
 df.tall <- data.frame(prop_cens = numeric(),
@@ -200,8 +200,4 @@ test <- df.final %>%
 
 #mean by group or disposal area and obtain the mean or something
 #graph density distributions from coal and see how theyre distributed (in EVERYTHING facet by state??? site??? something???)
-
-#incude true.value, estimated.value, bias, variance, mse, etc.
-#also obtain sd alongside the mean
-#also write up draft of simulation chapter draft in addition to updating simulation
 #update methods if time allows
