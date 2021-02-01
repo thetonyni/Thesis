@@ -12,7 +12,7 @@ Having discussed the various methods to handle left-censored data in the previou
 
 [Sentence about how lots of papers have sought to try to compare and decide which method was the best to use for left censored data, but there is a general lack of consensus on the ideal method to use (apart from a common discourse discouraging the use of substitution...)]
 
-The aim of our study follows a proof-of-concept idea. We are hoping to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. 
+Through our simulation study, we wish to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. 
 
 Several investigators in this field have found issues with certain methods underperforming under certain conditions, and brings up the possibility of particular methods being more equipped than others to deal with different rates of censoring. Specifically, a study on methodologies to handling left-censored microbial risk assessment conducted by [@Canales2018] found that the substitution method seemed to work much better than expected while other methods, such as the MLE method, seemed to have trouble when applied to highly skewed data. Results from other works [@Antweiler2015] suggest that regardless of the method being utilized, obtaining reliable estimates from datasets where censoring was greater than 40% was unfeasible. This particular study also suggests that the size of the data had no influence on the result of the estimate in question. 
 
@@ -20,15 +20,13 @@ Claims regarding the effectiveness of methods with regards to censoring rates, d
 
 ## Data-Generating Mechanisms {#data_generating_mechanisms}
 
-The data generated for use in our study will be obtained by using parametric draws from author-specified distributions (log-normal, exponential, and Weibull). Our data-generating mechanism alters criterions such as the our sample size, $n_{obs} = \{10, 100, 1000\}$ and censoring rate $R = \{0.10, 0.20, 0.30, 0.40, 0.50\}$.
+The data generated for use in our study will be obtained by using parametric draws from author-specified distributions (log-normal, exponential, and Weibull), the methods utilized can only be used with non-negative distributions [@Yavuz2017]. Our data-generating mechanism alters criterions such as the our sample size, $n_{obs} = \{10, 100, 1000\}$ and censoring rate $R = \{0.10, 0.20, 0.30, 0.40, 0.50\}$.
 
 Censored values are generated and determined by first arranging the uncensored observations in ascending order, and then from the censoring rate. For instance, if our censoring rate were $R = 0.15$, the lowest 0.15 of the observations will be marked as censored while the rest remain uncensored.
 
-The methods developed to handle left censored data can only be used with non-negative distributions, and as such the distributions we are used will only be the distributions such as the lognormal distribution, weibull distribution, exponential distribution, and the such (Yavuz et al., 2017). 
-
 ## Estimands {#estimands}
 
-each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data [FIND SOURCE]. in our simulation study, we want to evaluate just how well these methods are able to estimate a population quantity. Our estimand in this case will be the population mean, $\mu$.
+Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data [@Shoari2018]. in our simulation study, we want to evaluate just how well these methods are able to estimate a population quantity. We will be using the sample mean as an estimator for our estimand, the population mean, $\mu$.
 
 ## Performance Measures {#performance_measures}
 
@@ -73,11 +71,25 @@ Since we know bias to be $Bias = E(\hat{\mu}) - \mu$, it follows that $Bias^2 = 
 
 $Bias^2 + Var = [E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta] + [E(\hat{\mu}^2) - E^2(\hat{\mu})]$ the $E^2(\hat{\mu})$ terms cancel out, and we are left with: $E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta = E[(\hat{\mu} -\mu)^2] = Bias$.
 
-As the MSE is always positive, MSE values closer to zero are more desirable. 
+As the MSE is always positive, MSE values closer to zero are more desirable -- as it is an indicator that the estimator is accurate.
 
 ## Results {#results}
 
 [place figures/tables from results of simulation study here, along with explanation]
+
+From the results of our simulation study, we can see that with the data from the log-normal distribution... 
+
+* the methods which obtained the largest underestimates of the average sample means was with mle and substitution when censoring rates were > 50% (regardless of sample size)
+
+* km method for all censoring rates and all sample sizes gave large overestimates, had very large, positive bias values compared to all other methods
+
+* variance is largely dependent only on sample size (to be expected)
+
+* in the case of high censoring (0.50) and small sample size (10), km did not work as well as other methods
+
+* in the case of medium censoring (0.30) with medium sample size (100) and high sample size (1000), ros performed the best, with mle following closely as compared to the other two methods. ros and mle had bias and mse values which were lower than the other two.
+
+* in the case of high censoring (0.50) and large sample size (1000), ros performed SIGNIFICANTLY better than all other methods (low bias, low mse)
 
 ## Discussion {#discussion}
 
