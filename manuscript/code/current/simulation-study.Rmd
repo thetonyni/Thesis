@@ -9,17 +9,19 @@ output: pdf_document
 library(tidyverse)
 library(Metrics) #package to help calculate mse
 library(NADA) #package with implementation of many methods
+library(survival)
 ```
 
 
 First, a function to help us generate our desired dataset, where users can specify the mean, sd, sample size (of each run), and censoring rate:
 
 ```{r, echo = FALSE}
-#function will generate a vector of numbers from the lognormal distribution and censor them at the given rate
+#function will generate a vector of numbers from the lognormal 
+#distribution and censor them at the given rate
 #function will take in arguments for 1) samplesize, 2) logmean, 3)logsd
-#what column names do we need to run all our methods? --> true.value (numeric), below (boolean)
+#4) censoring rate
 
-generateData <- function(sampsize, m, s, censrate){
+generateLN <- function(sampsize, m, s, censrate){
   true.value <- rlnorm(sampsize, 
                meanlog=log(m^2 / sqrt(s^2 + m^2)),
                sdlog=sqrt(log(1 + (s^2 / m^2))))
@@ -41,17 +43,57 @@ generateData <- function(sampsize, m, s, censrate){
 }
 ```
 
-```{r, echo = FALSE}
-#helper function to round numbers in df
+```{r}
+#function will generate a vector of numbers from the exponential 
+#distribution and censor them at the given rate
+#function will take in arguments for 1) samplesize, 2) rate,
+#3) censoring rate
 
-round_df <- function(df, digits){
-  num_columns <- sapply(df, mode) == "numeric"
-  df[num_columns] <- round(df[num_columns], digits)
-  return(df)
+generateEXP <- function(sampsize, r, censrate){
+  true.value <- rexp(sampsize, rate = r)
+  
+  uncensored_df <- as.data.frame(true.value) %>%
+    arrange(true.value)
+  
+  censored_df <- uncensored_df %>% #take the head(%) of data to be censored
+    slice_head(n=nrow(uncensored_df)*censrate) %>%
+    mutate(censored = TRUE)
+  
+  #full join original df and sliced df
+  return_df <- full_join(uncensored_df, censored_df, by = "true.value")
+
+  #replace NAs with FALSE
+  return_df$censored <- replace_na(return_df$censored, replace = FALSE)
+  
+  return(return_df)
 }
-
 ```
 
+```{r}
+#function will generate a vector of numbers from the Weibull
+#distribution and censor them at the given rate
+#function will take in arguments for 1) samplesize, 2) rate,
+#3) censoring rate
+
+generateW <- function(sampsize, sh, sc, censrate){
+  true.value <- rweibull(sampsize, shape = sh, scale = sc)
+  
+  uncensored_df <- as.data.frame(true.value) %>%
+    arrange(true.value)
+  
+  censored_df <- uncensored_df %>% #take the head(%) of data to be censored
+    slice_head(n=nrow(uncensored_df)*censrate) %>%
+    mutate(censored = TRUE)
+  
+  #full join original df and sliced df
+  return_df <- full_join(uncensored_df, censored_df, by = "true.value")
+
+  #replace NAs with FALSE
+  return_df$censored <- replace_na(return_df$censored, replace = FALSE)
+  
+  return(return_df)
+}
+```
 
 What do we want our code to do? 
 
@@ -61,13 +103,9 @@ For each censoring/sample size pair, we create a simulated dataset with those sp
 
 the average mse is ultimately what we are interested in
 
-```{r, echo = FALSE, cache = TRUE}
-options(scipen=999) #prevent scientific notation
-
-set.seed(7271999)
-
+```{r}
 iterations <- 1000 #number of iterations
-censvalues <- c(0.10, 0.20, 0.30, 0.40, 0.50)
+censvalues <- c(0.10, 0.30, 0.50)
 sampsizes <- c(10, 100, 1000)
 
 df.tall <- data.frame(prop_cens = numeric(),
@@ -80,16 +118,24 @@ df.tall <- data.frame(prop_cens = numeric(),
                       true_sd = numeric(),
                       SE_complete = numeric(),
                       SE_method = numeric())
+```
+
+#Log-normal
+
+```{r, echo = FALSE, cache = TRUE}
+options(scipen=999) #prevent scientific notation
+set.seed(7271999)
 
 for(i in censvalues){
   for(j in sampsizes){
     for(k in 1:iterations){
-      df <- generateData(sampsize = j, m = 1, s = 0.5, censrate = i)
       m <- 1
       s <- 0.5
+      df <- generateLN(sampsize = j, m = 1, s = 0.5, censrate = i)
       
       #substitution
-      LOD <- min(df$true.value[df$censored == FALSE]) #define LOD to be smallest, uncensored value
+      #define LOD to be smallest, uncensored value
+      LOD <- min(df$true.value[df$censored == FALSE]) 
       df <- df %>%
         mutate(impSubValue = if_else(censored == TRUE, LOD/2, true.value))
       
@@ -102,8 +148,10 @@ for(i in censvalues){
                 mean_complete = mean(df$true.value),
                 mean_method = mean(df$impSubValue),
                 true_sd = s,
-                SE_complete = sd(df$true.value)/sqrt((length(df$true.value))),
-                SE_method = sd(df$impSubValue)/sqrt((length(df$impSubValue))))
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(df$impSubValue)/sqrt((length(df$impSubValue))))
       
       #mle
       mle_res = cenmle(df$true.value, df$censored)
@@ -117,7 +165,8 @@ for(i in censvalues){
                 mean_complete = mean(df$true.value),
                 mean_method = mean(mle_res)[1],
                 true_sd = s,
-                SE_complete = sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
                 SE_method = mean(mle_res)[2])
       
       #km
@@ -132,7 +181,8 @@ for(i in censvalues){
                 mean_complete = mean(df$true.value),
                 mean_method = mean(km_res)[[1]],
                 true_sd = s,
-                SE_complete = sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
                 SE_method = mean(km_res)[[2]])
       
       #ros
@@ -147,57 +197,137 @@ for(i in censvalues){
                 mean_complete = mean(df$true.value),
                 mean_method = mean(ros_res),
                 true_sd = s,
-                SE_complete = sd(df$true.value)/sqrt((length(df$true.value))),
-                SE_method = sd(ros_res)/sqrt((length(df$true.value))))
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(ros_res)/sqrt((length(df$true.value))))
     }
     #end of # iterations
   }
 }
 
-#aggregating performance criterias
+#aggregating performance criteria
 
-test <- df.tall %>%
+df.ln <- df.tall %>%
   group_by(prop_cens, samplesize, method) %>%
   summarize(Avg_Mean = mean(mean_method),
-            Bias = (mean(mean_method) - true_mean), #
+            Bias = (mean(mean_method) - true_mean),
             Variance = var(mean_method),
             MSE = mse(true_mean, mean_method) 
-            )
+            ) %>%
+  distinct()
+```
 
-testt <- distinct(test)
-  
+
+#Exponential
+#not working atm -- having isses with cenmle and specifying exponential distribution...
+```{r, echo = FALSE, cache = TRUE, eval = FALSE}
+options(scipen=999) #prevent scientific notation
+set.seed(7271999)
+
+for(i in censvalues){
+  for(j in sampsizes){
+    for(k in 1:iterations){
+      r = 1
+      df <- generateEXP(sampsize = j, r = r, censrate = i)
+
+      #substitution
+      #define LOD to be smallest, uncensored value
+      LOD <- min(df$true.value[df$censored == FALSE]) 
+      df <- df %>%
+        mutate(impSubValue = if_else(censored == TRUE, LOD/2, true.value))
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "substitution",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(df$impSubValue),
+                true_sd = s,
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(df$impSubValue)/sqrt((length(df$impSubValue))))
+      
+      #mle
+      mle_res = cenmle(df$true.value, df$censored, dist = "exp")
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "mle",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(mle_res)[1],
+                true_sd = s,
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = mean(mle_res)[2])
+      
+      #km
+      km_res = cenfit(df$true.value, df$censored)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "km",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(km_res)[[1]],
+                true_sd = s,
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = mean(km_res)[[2]])
+      
+      #ros
+      ros_res = ros(df$true.value, df$censored)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "ros",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(ros_res),
+                true_sd = s,
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(ros_res)/sqrt((length(df$true.value))))
+    }
+    #end of # iterations
+  }
+}
+
+#aggregating performance criteria
+
+df.exp <- df.tall %>%
+  group_by(prop_cens, samplesize, method) %>%
+  summarize(Avg_Mean = mean(mean_method),
+            Bias = (mean(mean_method) - true_mean),
+            Variance = var(mean_method),
+            MSE = mse(true_mean, mean_method) 
+            ) %>%
+  distinct()
+```
+
+```{r}
+test <- cenmle(df$true.value, df$censored, dist = "exponential")
 ```
 
 \newpage
 
 ```{r}
-knitr::kable(df.final)
+knitr::kable(df.ln)
 ```
 
 <!--
-
-```{r, echo = FALSE}
-# SPACE TO TEST BELOW
-
-df <- generateData(sampsize = 100, m = 1, s = 0.5, censrate = 0.10)
-
-LOD <- min(df$true.value[df$censored == FALSE]) #define LOD to be smallest, uncensored value
-
-df <- df %>%
-  mutate(impSubValue = if_else(censored == TRUE, LOD/2, true.value))
-
-true.mean <- mean(df$true.value)
-est.mean <- mean(df$impSubValue)
-
-#playing around with putting data into a df
-combinations <- cbind(combinations, substitution = sub.list.MSE)
-
-test <- df.final %>%
-  mutate_at(c(2:3), as.numeric)
-  
--->
-```
-
 #mean by group or disposal area and obtain the mean or something
 #graph density distributions from coal and see how theyre distributed (in EVERYTHING facet by state??? site??? something???)
 #update methods if time allows
+-->
