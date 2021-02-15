@@ -38,3 +38,4 @@ A major issue regarding the methods which have been developed to handle left-cen
 
 The aim of this thesis is to provide readers with a contextualized understanding of the variety of types of missingness which can be present within data: Chapter 2 introduces the readers to these concepts of missingness and delves into the various types of methods which can be utilized to handle left-censoring specifically. Chapter 3 focuses on the design of a simulation study to compare the effectiveness of the aforementioned methods to handle left-censored data. Lastly, Chapter 4 contains an application of our findings with real-world data involving _INSERT DESCRIPTION OF REAL WORL DATASET AND PROBLEM HERE_.
 
+<!--WHAT STATISTICS ARE OF INTEREST WITH CENSORED ENVIRONMENTAL DATA-->

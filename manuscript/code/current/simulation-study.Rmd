@@ -242,10 +242,10 @@ for(i in censvalues){
                 samplesize = j,
                 iteration = k,
                 method = "substitution",
-                true_mean = m,
+                true_mean = 1/r,
                 mean_complete = mean(df$true.value),
                 mean_method = mean(df$impSubValue),
-                true_sd = s,
+                true_sd = 1/r,
                 SE_complete = 
                   sd(df$true.value)/sqrt((length(df$true.value))),
                 SE_method = 
@@ -317,7 +317,9 @@ df.exp <- df.tall %>%
 ```
 
 ```{r}
-test <- cenmle(df$true.value, df$censored, dist = "exponential")
+test <- cenmle(df$true.value, df$censored, dist = 'exponential')
+survreg()
+survfit(Surv(df$true.value, df$censored))
 ```
 
 \newpage

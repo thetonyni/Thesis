@@ -6,11 +6,15 @@ output:
 
 # Simulations {#simulations}
 
-Having discussed the various methods to handle left-censored data in the previous chapter, we now turn to a simulation study. As encounters with missingness in data can be quite varied, our goal is to evaluate and confirm the strengths and weaknesses of each of the methods when working with datasets of varying censoring rates and sample size. We will also discuss the implementation of the methods, data generating mechanisms, and evaluation metrics to be used to assess the performance of each method.
+Having discussed the various methods to handle left-censored data in the previous chapter, we now turn to a simulation study in order to evaluate the strengths and weaknesses of each method in cases of differing censoring rate, sample size, and distribution. We will also discuss the implementation of the methods, data generating mechanisms, and specific evaluation metrics to assess the performance of each method.
 
 ## Aims {#aims}
 
-[Sentence about how lots of papers have sought to try to compare and decide which method was the best to use for left censored data, but there is a general lack of consensus on the ideal method to use (apart from a common discourse discouraging the use of substitution...)]
+The question of which method is the best to use is frequently discussed topic within the field. Many studies have been conducted over the years to evaluate the performance of these methods to handle left-censored data, with the results being widely varied and largely inconclusive. First and foremost, a large issue comes in that every conducted study widely differs in the methods being investigated and the scope of the study. As an example of the broad differences between studies which can make comparisons difficult, [@Antweiler2015] evaluates the effectiveness of 11 different methods with several censoring rates and distributional assumptions, using the median absolute deviation (MAD) as their performance metric of choice. Meanwhile, [@Hall2020] focuses instead on the applications of such methods from a water-quality focused context and investigates the performance of the four methods used in this thesis -- except with water stream concentration data, and no focus on distributional assumptions nor censoring rates. As each of these studies are concerned with their own goals -- the reasoning and conclusion that they reach will inevitably be different. Studies that are more focused on a general, broad audience, with no assumptions as to what sort of data the individual is working with -- may find more use with the conclusion and results that investigators like Antweiler come up with. There may also be individuals who are more focused on the performance of such methods in a specific context, as in the study conducted by Hall. 
+
+There is no common ground between statisticians on the optimality of methods, prompting our own foray into this topic. I wish to incorporate both the detailed specifications of a simulation study, similar to Hall, while keeping it applicable towards the coal contamination water quality data that I am hoping to apply the methods to.
+
+*investigating the robustness of methods when blahblahblah
 
 Through our simulation study, we wish to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. 
 
@@ -20,7 +24,7 @@ Claims regarding the effectiveness of methods with regards to censoring rates, d
 
 ## Data-Generating Mechanisms {#data_generating_mechanisms}
 
-The data generated for use in our study will be obtained by using parametric draws from author-specified distributions (log-normal, exponential, and Weibull), the methods utilized can only be used with non-negative distributions [@Yavuz2017]. Our data-generating mechanism alters criterions such as the our sample size, $n_{obs} = \{10, 100, 1000\}$ and censoring rate $R = \{0.10, 0.20, 0.30, 0.40, 0.50\}$.
+The data generated for use in our study will be obtained by using parametric draws from author-specified distributions (log-normal, exponential, and Weibull), the methods utilized can only be used with non-negative distributions [@Yavuz2017]. Our data-generating mechanism alters criterion such as the sample size, $n_{obs} = \{10, 100, 1000\}$, censoring rate $R = \{0.10, 0.20, 0.30, 0.40, 0.50\}$, and distribution from which our data comes from.
 
 Censored values are generated and determined by first arranging the uncensored observations in ascending order, and then from the censoring rate. For instance, if our censoring rate were $R = 0.15$, the lowest 0.15 of the observations will be marked as censored while the rest remain uncensored.
 
