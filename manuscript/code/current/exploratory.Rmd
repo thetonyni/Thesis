@@ -19,7 +19,6 @@ library(tidyverse)
 #importing in full dataset
 import_df <- read_csv("code/current/data/chemical_data.csv")
 
-
 #breaking apart into different datasets for each region
 northeast <- import_df %>%
   filter(state %in% c("ME", "NH", "VT", "NY", "PA", "NJ", "MD", "MA", "DE", "RI", "CT")) %>%

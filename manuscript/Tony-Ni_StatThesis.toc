@@ -18,7 +18,7 @@
 \contentsline {section}{\numberline {3.4}Performance Measures}{20}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Variance}{20}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Bias}{21}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Mean Squared Error (MSE)}{22}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.3}Mean Squared Error (MSE)}{21}{subsection.3.4.3}%
 \contentsline {section}{\numberline {3.5}Results}{22}{section.3.5}%
 \contentsline {section}{\numberline {3.6}Discussion}{23}{section.3.6}%
 \contentsline {subsection}{\numberline {3.6.1}Limitations}{23}{subsection.3.6.1}%

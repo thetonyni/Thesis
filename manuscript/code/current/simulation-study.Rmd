@@ -252,17 +252,17 @@ for(i in censvalues){
                   sd(df$impSubValue)/sqrt((length(df$impSubValue))))
       
       #mle
-      mle_res = cenmle(df$true.value, df$censored, dist = "exp")
+      mle_res = cenmle(df$true.value, df$censored)
       
       df.tall <- df.tall %>%
         add_row(prop_cens = i,
                 samplesize = j,
                 iteration = k,
                 method = "mle",
-                true_mean = m,
+                true_mean = 1/r,
                 mean_complete = mean(df$true.value),
                 mean_method = mean(mle_res)[1],
-                true_sd = s,
+                true_sd = 1/r,
                 SE_complete = 
                   sd(df$true.value)/sqrt((length(df$true.value))),
                 SE_method = mean(mle_res)[2])
@@ -275,10 +275,10 @@ for(i in censvalues){
                 samplesize = j,
                 iteration = k,
                 method = "km",
-                true_mean = m,
+                true_mean = 1/r,
                 mean_complete = mean(df$true.value),
                 mean_method = mean(km_res)[[1]],
-                true_sd = s,
+                true_sd = 1/r,
                 SE_complete = 
                   sd(df$true.value)/sqrt((length(df$true.value))),
                 SE_method = mean(km_res)[[2]])
@@ -291,10 +291,10 @@ for(i in censvalues){
                 samplesize = j,
                 iteration = k,
                 method = "ros",
-                true_mean = m,
+                true_mean = 1/r,
                 mean_complete = mean(df$true.value),
                 mean_method = mean(ros_res),
-                true_sd = s,
+                true_sd = 1/r,
                 SE_complete = 
                   sd(df$true.value)/sqrt((length(df$true.value))),
                 SE_method = 
