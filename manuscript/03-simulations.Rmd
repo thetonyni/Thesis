@@ -97,12 +97,16 @@ To sum it all up...
 
 ## Discussion {#discussion}
 
-[discuss findings from the simulation study. are the results expected from knowledge gained from literature search? are they different? 
+[discuss findings from the simulation study. are the results expected from knowledge gained from literature search? are they different? compare/contrast with literature. what things seem to be shared between our findings and that in literature?
 
 ### Limitations {#limitations}
 
 [discuss some limitations of the simulation study -- ideas include things such as how simulated data =/= real life data, discuss some limitations, future plans?]
 
+Shortcomings in the results presented in this study very well may come from the fact that we generated data with known distributional parameters. It could be the case that the effectiveness of our methods were only due to having such artificial data. Alterations in our study to instead generate data from methods such as randomized pulls from an a real-world dataset of interest via. methods such as bootstrapping could provide different insights.
+
 ## Study on Real Data {#real_data}
 
 [connect back to chapter 1]
+
+[can write this chapter after some preliminary exploration with coal groundwater data]
