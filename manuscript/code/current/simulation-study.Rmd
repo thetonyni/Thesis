@@ -220,8 +220,8 @@ df.ln <- df.tall %>%
 
 
 #Exponential
-#not working atm -- having isses with cenmle and specifying exponential distribution...
-```{r, echo = FALSE, cache = TRUE, eval = FALSE}
+#not working with mle method atm (excluding)
+```{r, echo = FALSE, cache = TRUE}
 options(scipen=999) #prevent scientific notation
 set.seed(7271999)
 
@@ -252,20 +252,32 @@ for(i in censvalues){
                   sd(df$impSubValue)/sqrt((length(df$impSubValue))))
       
       #mle
-      mle_res = cenmle(df$true.value, df$censored)
+      # mle_res = cenmle(df$true.value, df$censored)
+      # 
+      # df.tall <- df.tall %>%
+      #   add_row(prop_cens = i,
+      #           samplesize = j,
+      #           iteration = k,
+      #           method = "mle",
+      #           true_mean = 1/r,
+      #           mean_complete = mean(df$true.value),
+      #           mean_method = mean(mle_res)[1],
+      #           true_sd = 1/r,
+      #           SE_complete = 
+      #             sd(df$true.value)/sqrt((length(df$true.value))),
+      #           SE_method = mean(mle_res)[2])
       
       df.tall <- df.tall %>%
         add_row(prop_cens = i,
                 samplesize = j,
                 iteration = k,
                 method = "mle",
-                true_mean = 1/r,
-                mean_complete = mean(df$true.value),
-                mean_method = mean(mle_res)[1],
-                true_sd = 1/r,
-                SE_complete = 
-                  sd(df$true.value)/sqrt((length(df$true.value))),
-                SE_method = mean(mle_res)[2])
+                true_mean = NA,
+                mean_complete = NA,
+                mean_method = NA,
+                true_sd = NA,
+                SE_complete = NA,
+                SE_method = NA)
       
       #km
       km_res = cenfit(df$true.value, df$censored)
@@ -316,16 +328,136 @@ df.exp <- df.tall %>%
   distinct()
 ```
 
-```{r}
-test <- cenmle(df$true.value, df$censored, dist = 'exponential')
-survreg()
-survfit(Surv(df$true.value, df$censored))
+#Weibull
+#not working with mle method atm (excluding)
+
+```{r, echo = FALSE, cache = TRUE}
+options(scipen=999) #prevent scientific notation
+set.seed(7271999)
+
+for(i in censvalues){
+  for(j in sampsizes){
+    for(k in 1:iterations){
+      sh = 1
+      sc = 1
+      df <- generateW(sampsize = j, sh = sh, sc = sc, censrate = i)
+
+      #substitution
+      #define LOD to be smallest, uncensored value
+      LOD <- min(df$true.value[df$censored == FALSE]) 
+      df <- df %>%
+        mutate(impSubValue = if_else(censored == TRUE, LOD/2, true.value))
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "substitution",
+                true_mean = sc*gamma(1+(1/sh)),
+                mean_complete = mean(df$true.value),
+                mean_method = mean(df$impSubValue),
+                true_sd = sqrt((sc^2)*(gamma(1+(2/sh)) - 
+                                      (gamma(1+(1/sh)))^2)),
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(df$impSubValue)/sqrt((length(df$impSubValue))))
+      
+      #mle
+      # mle_res = cenmle(df$true.value, df$censored)
+      # 
+      # df.tall <- df.tall %>%
+      #   add_row(prop_cens = i,
+      #           samplesize = j,
+      #           iteration = k,
+      #           method = "mle",
+      #           true_mean = 1/r,
+      #           mean_complete = mean(df$true.value),
+      #           mean_method = mean(mle_res)[1],
+      #           true_sd = 1/r,
+      #           SE_complete = 
+      #             sd(df$true.value)/sqrt((length(df$true.value))),
+      #           SE_method = mean(mle_res)[2])
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "mle",
+                true_mean = NA,
+                mean_complete = NA,
+                mean_method = NA,
+                true_sd = NA,
+                SE_complete = NA,
+                SE_method = NA)
+      
+      #km
+      km_res = cenfit(df$true.value, df$censored)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "km",
+                true_mean = sc*gamma(1+(1/sh)),
+                mean_complete = mean(df$true.value),
+                mean_method = mean(km_res)[[1]],
+                true_sd = sqrt((sc^2)*(gamma(1+(2/sh)) - 
+                                      (gamma(1+(1/sh)))^2)),
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = mean(km_res)[[2]])
+      
+      #ros
+      ros_res = ros(df$true.value, df$censored)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "ros",
+                true_mean = sc*gamma(1+(1/sh)),
+                mean_complete = mean(df$true.value),
+                mean_method = mean(ros_res),
+                true_sd = sqrt((sc^2)*(gamma(1+(2/sh)) - 
+                                      (gamma(1+(1/sh)))^2)),
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(ros_res)/sqrt((length(df$true.value))))
+    }
+    #end of # iterations
+  }
+}
+
+#aggregating performance criteria
+
+df.w <- df.tall %>%
+  group_by(prop_cens, samplesize, method) %>%
+  summarize(Avg_Mean = mean(mean_method),
+            Bias = (mean(mean_method) - true_mean),
+            Variance = var(mean_method),
+            MSE = mse(true_mean, mean_method) 
+            ) %>%
+  distinct()
 ```
 
 \newpage
 
 ```{r}
 knitr::kable(df.ln)
+```
+
+\newpage
+
+```{r}
+knitr::kable(df.exp)
+```
+
+\newpage
+
+```{r}
+knitr::kable(df.w)
 ```
 
 <!--
