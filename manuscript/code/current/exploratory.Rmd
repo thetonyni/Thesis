@@ -18,7 +18,7 @@ library(usmap)
 
 ```{r}
 #importing in full dataset
-import_df <- read_csv("data/chemical_data.csv")
+import_df <- read_csv("code/current/data/chemical_data.csv")
 ```
 
 ```{r}
@@ -124,20 +124,20 @@ NC %>%
 Within each well, there are multiple disposal areas also (total count of 22).
 
 ```{r}
-#count of type
+#count of gradient
 NC %>%
-  group_by(type) %>%
+  group_by(gradient) %>%
   summarize(n = n()) %>%
   arrange(desc(n))
 ```
 
-In the case for the NC wells, there are 57,084 SI wells, 26,306 M wells, and 23,741 L wells.
+In the case for the NC wells, there are 92.169 downgradient wells and 14,063 upgradient wells.
 
 # Dangerous Toxins in Coal Ash
 
 Some of the most dangerous contaminants often found in coal ash include: arsenic, lead, mercury, cadmium, chromium, and selenium (https://www.psr.org/wp-content/uploads/2018/05/coal-ash-toxics.pdf)
 
-Could the type of disposal unit affect the concentration (low/medium/high) of these contaminants?
+Are there different rates of censoring for different contaminants?
 
 ```{r}
 NC_subset <- NC %>%
@@ -145,32 +145,31 @@ NC_subset <- NC %>%
                             "Lead, total", "Mercury, total", 
                             "Cadmium, dissolved", "Cadmium, total", 
                             "Chromium, total", "Selenium, Dissolved", 
-                            "Selenium, Total"))
+                            "Selenium, Total")) %>%
+  #exclude crossgradient and unknown
+  filter(gradient %in% c("Upgradient", "Downgradient")) 
+
 NC_subset2 <- NC_subset %>%
-  group_by(contaminant, type, measurement.unit, below.detection) %>%
+  group_by(contaminant, gradient, measurement.unit, below.detection) %>%
   summarize(n = n())
   
 NC_subset3 <- NC_subset2[-c(27), ] #removing strange sole observation
 
 
 NC_subset4 <- NC_subset3 %>%
-  group_by(contaminant, type, measurement.unit) %>%
+  group_by(contaminant, gradient, measurement.unit) %>%
   summarize(prop = n/(sum(n))) %>%
   mutate(below.detection = case_when(
     row_number() %% 2 == 1 ~ "<", #odd
     row_number() %% 2 == 0 ~ "NA")) %>% #even  
   filter(below.detection %in% "<") %>%
-  arrange(desc(prop))
+  arrange(order(contaminant))
 
 knitr::kable(NC_subset4)
 ```
 
-We can see that "M" and "L" wells generally tend to have higher proportion of wells with measurements that are below detection. From (https://www.epa.gov/sites/production/files/2015-07/documents/ldu05.pdf) it is known that landfill and surface impounded wells both serve the same purpose in containing wastes, but the difference being that landfill wells are areas for FINAL waste disposal, while surface impounded wells are temporary waste disposal sites.
+Generally, when considering only the wells that have measurements below detection -- it seems like a higher proportion of the upgradient wells have measurements below detection when compared to their downgradient counterparts.
 
-As such, the fact that wells that are of type "M" and "L" have higher proportions of measurements below the limit of detection is rather concerning. These are sites in which the waste will permanently remain, and as such -- if the true concentration of these contaminants are not known -- it could have rather dire consequences. Ideally, we would like to know 
+Ideally, we would like to know the average level of contamination (for a contaminant) with regards to upgradient and downgradient wells. However, due to the the proportions of measurements which are below the limit of detection being so high -- it may pose challenges in our endeavor. 
 
-Is this an issue specific to just North Carolina wells?
-
-
-
-
+We could try to calculate averages without accounting for censoring to see what happens and then applying our methods and see if there are any differences. We have no way of knowing what the true averages will be due to so many being below the limit of detection -- however, we can definitely look to see if there are differences.

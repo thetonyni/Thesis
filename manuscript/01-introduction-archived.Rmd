@@ -1,0 +1,41 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Introduction {#intro}
+
+<!--
+Each chapter file must start with a chapter header (e.g., # Chapter name). Notice we have also included a label after the chapter name ({# intro}) so we can refer back to this chapter later in the text if want to (e.g., by using \@ref(intro)). This also helps you debut potential issues as you knit.
+
+You can knit chapters all at once using the index file, or individually. When you knit a single chapter, every other chapter will have a one-sentence placeholder to make knitting easier.
+
+You can re-name each chapter file (e.g., change this filename from "01-chap1.Rmd" to "01-introduction.Rmd"), just make sure you also update the filename in the list of rmd files in _bookdown.yml.
+
+The introduction should provide an overview of the work you set out to do and provide structure for the remainder of the document.
+
+-->
+
+- what is missing data?
+
+Missing data is commonplace in statistics. From nonresponse in survey studies to issues with data collection in field studies, it is unavoidable to encounter missing data in practice. Missing data is defined as _occurences in data where there is no value stored for a variable within an observation_. 
+
+- why is it a problem (brief)
+
+Missing data is a major problem due to the following reasons: 1) It can introduce bias into a statistical analysis which can lead to misleading results, 2) (FIND AND READ BARNARD MENG 1999)
+
+- types of missing data (brief, don't go in-depth)
+
+- talk about left-censored missingness what sort of fields it can be an issue in
+
+
+
+- talk about issue of not many standardized ways to deal with problems
+
+A major issue regarding the methods which have been developed to handle left-censored data is the effectiveness of the methods themselves. Certain methods such as substitution have been in use for years, and continue to be used, in spite of the myriad of literature which argue against its usage due to the significant flaws and limitations it has. 
+
+- talk about the goal of this thesis
+
+The aim of this thesis is to provide readers with a contextualized understanding of the variety of types of missingness which can be present within data: Chapter 2 introduces the readers to these concepts of missingness and delves into the various types of methods which can be utilized to handle left-censoring specifically. Chapter 3 focuses on the design of a simulation study to compare the effectiveness of the aforementioned methods to handle left-censored data. Lastly, Chapter 4 contains an application of our findings with real-world data involving _INSERT DESCRIPTION OF REAL WORL DATASET AND PROBLEM HERE_.
+
+<!--WHAT STATISTICS ARE OF INTEREST WITH CENSORED ENVIRONMENTAL DATA-->

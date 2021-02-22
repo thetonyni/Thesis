@@ -234,33 +234,81 @@ Use this space to thank those who have helped you in the thesis process (profess
 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
+
+\hypertarget{background}{%
+\section{Background}\label{background}}
+
+Coal is one of the most dangerous combustible fuels which is being burned in all across the world as one of the largest methods of obtaining energy. Yet, although it is a fossil fuel which is naturally abundant and easy to utilize, it is comprised of a long list of dangerous chemicals including -- but not limited to: arsenic, radium, boron, and a large list of other chemicals which prove to be dangerous to humans and animals alike. (Kelderman et al., 2019)
+
+Power plants produce electricity by burning this coal, and as a result of how prevalent it is within the US - over 100 million tons of coal ash are produced every year. This side-product as a result of the coal combustion is often disposed by directly being dumped into landfills and waste ponds. (Kelderman et al., 2019)
+
+Only recently have these complaints and lawsuits regarding the disposing practices made by non-profit environmental organizations been heard. Due to the onslaught of pressure put on the Environmental Protection Agency -- the Coal Ash Rule was bor in 2015. (Kelderman et al., 2019)
+
+This rule has forced over 265 coal power plants -- about 3/4 of all coal power plants in the US - to make data regarding chemical concentrations publicly available to the general population. (Kelderman et al., 2019)
+
+In their analysis using this data, the Environmental Integrity Project -- a non-profit organization dedicated to issues involving environmental justice have concluded that essentially all groundwater under coal plants are contaminated. (Kelderman et al., 2019)
+
+However, is this really the case? There are many naturally occurring chemicals existing in groundwater as as such, perhaps their claims are overstated.
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figures/upgradientdowngradient} 
+
+}
+
+\caption{Difference Between Upgradient and Downgradient Wells}\label{fig:upgradientdowngradient}
+\end{figure}
+Typically in a coal ash plant, there exists two types of wells: upgradient wells and downgradient wells. These wells are essential to measure the amount of contamination being caused by coal ash. Upgradient wells, also known as background wells, measures the concentrations of chemicals in groundwater before it passes through an coal ash dump. Conversely, downgradient wells measure the concentrations of chemicals in groundwater after it passes through a coal ash dump.
 \begin{itemize}
 \tightlist
 \item
-  what is missing data?
+  ``80\% of the US population is served by 14\% of the utilities,'' so if something were to get into the water distribution system, it can easily spread amongst the US population which is why contamination in water services is so important. (Byer \& Carlson, 2019)
 \end{itemize}
-Missing data is commonplace in statistics. From nonresponse in survey studies to issues with data collection in field studies, it is unavoidable to encounter missing data in practice. Missing data is defined as \emph{occurences in data where there is no value stored for a variable within an observation}.
-\begin{itemize}
-\tightlist
-\item
-  why is it a problem (brief)
-\end{itemize}
-Missing data is a major problem due to the following reasons: 1) It can introduce bias into a statistical analysis which can lead to misleading results, 2) (FIND AND READ BARNARD MENG 1999)
-\begin{itemize}
-\item
-  types of missing data (brief, don't go in-depth)
-\item
-  talk about left-censored missingness what sort of fields it can be an issue in
-\item
-  talk about issue of not many standardized ways to deal with problems
-\end{itemize}
-A major issue regarding the methods which have been developed to handle left-censored data is the effectiveness of the methods themselves. Certain methods such as substitution have been in use for years, and continue to be used, in spite of the myriad of literature which argue against its usage due to the significant flaws and limitations it has.
-\begin{itemize}
-\tightlist
-\item
-  talk about the goal of this thesis
-\end{itemize}
-The aim of this thesis is to provide readers with a contextualized understanding of the variety of types of missingness which can be present within data: Chapter 2 introduces the readers to these concepts of missingness and delves into the various types of methods which can be utilized to handle left-censoring specifically. Chapter 3 focuses on the design of a simulation study to compare the effectiveness of the aforementioned methods to handle left-censored data. Lastly, Chapter 4 contains an application of our findings with real-world data involving \emph{INSERT DESCRIPTION OF REAL WORL DATASET AND PROBLEM HERE}.
+With this information, typically -- one estimates the amount of chemical contamination caused by a coal as dump by subtracting the upgradient concentration from the downgradient concentration of a chemical (downgradient concentration - upgradient concentration).
+
+However, due to the lack of proper reporting guidelines prior to the enactment of the Coal Ash Rule, we believe that there may be retired or even unregulated upgradient wells which can cause the concentrations of chemicals being recorded from these upgradient wells to be inaccurate or even completely wrong.
+
+Our end goal remains the same as the EIP: to identify contaminated groundwater in coal plants -- but to attempt to find a way to effectively correct the improper/inaccurate values resulting from LOD errors and other factors which the EIP may not have considered.
+
+The limit of detection problem stems from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount, thus affecting the measurements recorded.
+
+Our plan is to utilize methods designed to calculate descriptive statistics of interest when in the presence of left censored data. Specifically, we would like to calculate average concentrations of certain coal-risk heavy contaminants with regards to downgradient and upgradient wells -- and seeing if our values differ if we had instead simply worked with the dataset without accounting for the left censored values.
+
+\hypertarget{data}{%
+\section{Data}\label{data}}
+
+\hypertarget{coalashrule}{%
+\subsection{Coal Ash Rule}\label{coalashrule}}
+
+A large coal ash spill at the Tennessee Valley Authority (TVA) which occured on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US. (Environmental Protection Agency, 2020)
+
+This was known as the Coal Ash Rule, passed on December 19, 2014. (Environmental Protection Agency, 2020)
+
+Changes were made to the Coal Ash Rule over the years in the form of `amendments,' one of which made required facility information and data to be made publicaly available to the public (April 15, 2015 rule change) (Environmental Protection Agency, 2020)
+
+\hypertarget{source-of-data}{%
+\subsection{Source of Data}\label{source-of-data}}
+
+The data used in the study are from the results published in ``Annual Groundwater Monitoring and Corrective Action Reports'' which were made available to the public in March 2018 as a result of the Coal Ash Rule. (Environmental Integrity Project, 2020)
+
+These reports are in PDF format and are thousands of pages long, which makes it difficult for individuals to look through the data in a meaningful way. (Environmental Integrity Project, 2020)
+
+The EIP obtained the data from an online, publicly available database containing groundwater monitoring results from the first ``Annual Groundwater Monitoring and Corrective Action Reports'' in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule (Environmental Integrity Project, 2020)
+
+They wrangled the data into a more accessible machine-readable format which contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants, which is downloadable from the EIP's website. (Environmental Integrity Project, 2020)
+
+\newpage
+
+\hypertarget{variables}{%
+\subsection{Variables}\label{variables}}
+
+The dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells which represent an observation in the dataset. There are two types of wells -- upgradient and downgradient wells. The variables consist of information regarding the specific chemical concentrations of each well.
+
+\hypertarget{plan-of-action}{%
+\subsection{Plan of Action}\label{plan-of-action}}
+
+Within the report, the EIP mentions certain restrictions within the data that have caused their data to potentially be inaccurate (specifically, with limit of detection problems, and a large amount of missing chemical data). The limit of detection problem comes when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to have duplicate, wrong values -- which can cause for misguided analysis.The other issue is less guided/formed, but for brevity, we think that a lot of the issues in the data comes from the potential possibility of contamination during data collection from investigators from non coal-ash sources. This may include things like: retired/unregulated wells which are old and have chemicals leaking into the groundwater, mismanagement in measuring, etc.
+
+My project hopes to work with methods on handling this missing data -- alongside investing potential uses of bootstrapping and other resampling methods (potentially?) in order to try to come up with a more statistically accurate and sound result by looking to assuage the problems that the EIP faced in their analysis. Specifically, to find a way to split up the data into ''uncontaminated'' and ''contaminated'' wells in order to find the natural distribution of chemicals in each -- and doing to so in the face of data corrupted by LOD problems and inaccuracies. I'm hoping to apply and compare different ways of altering the data to account for these myriad of issues in order to look for more salient findings that the EIP might have missed or if not, to see if improvements can be made regarding the way that contaminated coal ash wells are being identified.
 
 \hypertarget{methodology}{%
 \chapter{Methodology}\label{methodology}}
@@ -528,17 +576,21 @@ To sum it all up\ldots{}
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
-{[}discuss findings from the simulation study. are the results expected from knowledge gained from literature search? are they different?
+{[}discuss findings from the simulation study. are the results expected from knowledge gained from literature search? are they different? compare/contrast with literature. what things seem to be shared between our findings and that in literature?
 
 \hypertarget{limitations}{%
 \subsection{Limitations}\label{limitations}}
 
 {[}discuss some limitations of the simulation study -- ideas include things such as how simulated data =/= real life data, discuss some limitations, future plans?{]}
 
+Shortcomings in the results presented in this study very well may come from the fact that we generated data with known distributional parameters. It could be the case that the effectiveness of our methods were only due to having such artificial data. Alterations in our study to instead generate data from methods such as randomized pulls from an a real-world dataset of interest via. methods such as bootstrapping could provide different insights.
+
 \hypertarget{real_data}{%
 \section{Study on Real Data}\label{real_data}}
 
 {[}connect back to chapter 1{]}
+
+{[}can write this chapter after some preliminary exploration with coal groundwater data{]}
 
 \hypertarget{conclusion}{%
 \chapter{Conclusion}\label{conclusion}}
@@ -573,6 +625,9 @@ Antweiler, R. C. (2015). {Evaluation of Statistical Treatments of Left-Censored 
 \leavevmode\hypertarget{ref-Bolks2014}{}%
 Bolks, A., DeWire, A., \& Harcum, J. B. (2014). {Baseline Assessment of Left-Censored Environmental Data Using R}. \emph{Technotes}, \emph{9}(2), 153--172. Retrieved from \url{https://www.epa.gov/sites/production/files/2016-05/documents/tech_notes_10_jun2014_r.pdf}
 
+\leavevmode\hypertarget{ref-Byer2019}{}%
+Byer, D., \& Carlson, K. H. (2019). {Real-time detection of intentional chemical contamination in the distributional system}, \emph{97}(7), 130--133.
+
 \leavevmode\hypertarget{ref-Canales2018}{}%
 Canales, R. (2018). {Methods for Handling Left-Censored Data in Quantitative Microbial Risk Assessment}, \emph{84}(20), 1--10.
 
@@ -582,8 +637,14 @@ Chen, H., Quandt, S. A., Grzywacz, J. G., Arcury, T. A., Environmental, S., Pers
 \leavevmode\hypertarget{ref-Crovelli1993}{}%
 Crovelli, R. A. (1993). {An Objective Replacement Method for Censored Geochemical Data}, \emph{25}(1), 59--80.
 
+\leavevmode\hypertarget{ref-EIP2020}{}%
+Environmental Integrity Project. (2020). {Coal Ash Groundwater Contamination: Documenting Coal Ash Pollution}. Retrieved from \url{https://environmentalintegrity.org/coal-ash-groundwater-contamination/}
+
 \leavevmode\hypertarget{ref-EPA2009}{}%
 Environmental Protection Agency. (2009). \emph{{STATISTICAL ANALYSIS OF GROUNDWATER MONITORING DATA AT RCRA FACILITIES UNIFIED GUIDANCE}}.
+
+\leavevmode\hypertarget{ref-Car2020}{}%
+Environmental Protection Agency. (2020). {Disposal of Coal Combustion Residuals from Electric Utilities Rulemakings}. Retrieved from \url{https://www.epa.gov/coalash/coal-ash-rule}
 
 \leavevmode\hypertarget{ref-Ganser2010}{}%
 Ganser, G. H., \& Hewett, P. (2010). {An Accurate Substitution Method for Analyzing Censored Data}, (April), 233--244. http://doi.org/\href{https://doi.org/10.1080/15459621003609713}{10.1080/15459621003609713}
@@ -593,6 +654,9 @@ Hall, L. W., Perry, E., \& Anderson, R. D. (2020). {A Comparison of Different St
 
 \leavevmode\hypertarget{ref-Hornung1989}{}%
 Hornung, R., \& Reed, L. (1989). {Estimation of Average Concentration in the Presence of Nondetectable Values}. \emph{Applied Occupational and Environmental Hygiene}, \emph{5}(1), 46--51.
+
+\leavevmode\hypertarget{ref-Kelderman2019}{}%
+Kelderman, K., Kunstman, B., Roy, H., Sivakumar, N., Mccormick, S., \& Bernhardt, C. (2019). {Coal's Poisonous Legacy: Groundwater Contaminated by Coal Ash Across the U.S.}
 
 \leavevmode\hypertarget{ref-Klein2003}{}%
 Klein, J. P., \& Moeschberge, M. L. (2003). \emph{{SURVIVAL ANALYSIS: Techniques for Censored and Truncated Data}} (2nd ed., pp. 92--104). New York: Springer-Verlag.
