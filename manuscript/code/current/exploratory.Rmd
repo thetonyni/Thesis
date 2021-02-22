@@ -9,31 +9,38 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 #Libraries
 library(mosaic)
 library(tidyverse)
+library(usmap)
 ```
 
 ```{r}
 #importing in full dataset
-import_df <- read_csv("code/current/data/chemical_data.csv")
+import_df <- read_csv("data/chemical_data.csv")
+```
 
+```{r}
 #breaking apart into different datasets for each region
 northeast <- import_df %>%
-  filter(state %in% c("ME", "NH", "VT", "NY", "PA", "NJ", "MD", "MA", "DE", "RI", "CT")) %>%
+  filter(state %in% c("ME", "NH", "VT", "NY", "PA", "NJ", "MD", 
+                      "MA", "DE", "RI", "CT")) %>%
   mutate(region = "northeast")
 
 midwest <- import_df %>%
-  filter(state %in% c("OH", "IN", "MI", "IL", "WI", "MN", "IA", "MO", "ND", "SD", "NE", "KS"))%>%
+  filter(state %in% c("OH", "IN", "MI", "IL", "WI", "MN", "IA", 
+                      "MO", "ND", "SD", "NE", "KS"))%>%
   mutate(region = "midwest")
 
 west <- import_df %>%
-  filter(state %in% c("WA", "MT", "OR", "ID", "WY", "CA", "NV", "UT", "CO", "AZ", "NM", "AK", "HI")) %>%
+  filter(state %in% c("WA", "MT", "OR", "ID", "WY", "CA", "NV", 
+                      "UT", "CO", "AZ", "NM", "AK", "HI")) %>%
   mutate(region = "west")
 
 south <- import_df %>%
-  filter(state %in% c("WV", "VA", "KY", "TN", "NC", "SC", "GA", "FL", "MS", "AL", "LA", "AR", "OK", "TX", "PR")) %>%
+  filter(state %in% c("WV", "VA", "KY", "TN", "NC", "SC", "GA", 
+                      "FL", "MS", "AL", "LA", "AR", "OK", "TX", "PR")) %>%
   mutate(region = "south")
 
 #rejoin them back together for future ref. if needed
@@ -48,7 +55,122 @@ ggplot(full, aes(x = region)) +
 ```
 
 ```{r}
+midwest_n <- midwest %>%
+  group_by(state) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
 
+northeast_n <- northeast %>%
+  group_by(state) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+
+south_n <- south %>%
+  group_by(state) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+
+west_n <- west %>%
+  group_by(state) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+
+states_n <- rbind(midwest_n, northeast_n, south_n, west_n)
 ```
+
+idea: make colored map based on how many wells are in each state
+
+```{r}
+state_name <- state.name
+state_abb <- state.abb
+states_map <- map_data("state")
+
+plot_usmap(data = states_n, values = "n", regions = "states") +
+  scale_fill_continuous(low = "white", high = "red", 
+                        name = "Well Counts (2018)", 
+                        label = scales::comma) + 
+  theme(legend.position = "right", 
+        panel.background = element_rect(color = "black", 
+                                        fill = "white")) +
+  ggtitle("Count of Groundwater Wells across U.S. States")
+```
+
+North Carolina has a significant number of wells amongst all states (over 100,000) compared to the next highest which is Indiana with around 58,000.
+
+
+Let's focus in on North Carolina only for now!
+
+```{r}
+NC <- south %>%
+  filter(state %in% "NC")
+
+#count of sites
+NC %>%
+  group_by(site) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+```
+
+There are 13 different "sites" in which the wells can belong to.
+
+```{r}
+#count of disposal.area
+NC %>%
+  group_by(disposal.area) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+```
+
+Within each well, there are multiple disposal areas also (total count of 22).
+
+```{r}
+#count of type
+NC %>%
+  group_by(type) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+```
+
+In the case for the NC wells, there are 57,084 SI wells, 26,306 M wells, and 23,741 L wells.
+
+# Dangerous Toxins in Coal Ash
+
+Some of the most dangerous contaminants often found in coal ash include: arsenic, lead, mercury, cadmium, chromium, and selenium (https://www.psr.org/wp-content/uploads/2018/05/coal-ash-toxics.pdf)
+
+Could the type of disposal unit affect the concentration (low/medium/high) of these contaminants?
+
+```{r}
+NC_subset <- NC %>%
+  filter(contaminant %in% c("Arsenic, dissolved", "Arsenic, total", 
+                            "Lead, total", "Mercury, total", 
+                            "Cadmium, dissolved", "Cadmium, total", 
+                            "Chromium, total", "Selenium, Dissolved", 
+                            "Selenium, Total"))
+NC_subset2 <- NC_subset %>%
+  group_by(contaminant, type, measurement.unit, below.detection) %>%
+  summarize(n = n())
+  
+NC_subset3 <- NC_subset2[-c(27), ] #removing strange sole observation
+
+
+NC_subset4 <- NC_subset3 %>%
+  group_by(contaminant, type, measurement.unit) %>%
+  summarize(prop = n/(sum(n))) %>%
+  mutate(below.detection = case_when(
+    row_number() %% 2 == 1 ~ "<", #odd
+    row_number() %% 2 == 0 ~ "NA")) %>% #even  
+  filter(below.detection %in% "<") %>%
+  arrange(desc(prop))
+
+knitr::kable(NC_subset4)
+```
+
+We can see that "M" and "L" wells generally tend to have higher proportion of wells with measurements that are below detection. From (https://www.epa.gov/sites/production/files/2015-07/documents/ldu05.pdf) it is known that landfill and surface impounded wells both serve the same purpose in containing wastes, but the difference being that landfill wells are areas for FINAL waste disposal, while surface impounded wells are temporary waste disposal sites.
+
+As such, the fact that wells that are of type "M" and "L" have higher proportions of measurements below the limit of detection is rather concerning. These are sites in which the waste will permanently remain, and as such -- if the true concentration of these contaminants are not known -- it could have rather dire consequences. Ideally, we would like to know 
+
+Is this an issue specific to just North Carolina wells?
+
+
 
 
