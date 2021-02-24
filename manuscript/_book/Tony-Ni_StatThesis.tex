@@ -139,6 +139,46 @@ Use this space to thank those who have helped you in the thesis process (profess
 
 % Formatting R code display
 % Syntax highlighting #22
+  \usepackage{color}
+  \usepackage{fancyvrb}
+  \newcommand{\VerbBar}{|}
+  \newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+  % Add ',fontsize=\small' for more characters per line
+  \usepackage{framed}
+  \definecolor{shadecolor}{RGB}{248,248,248}
+  \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+  \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+  \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+  \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+  \newcommand{\BuiltInTok}[1]{#1}
+  \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+  \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+  \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+  \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+  \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+  \newcommand{\ExtensionTok}[1]{#1}
+  \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+  \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\ImportTok}[1]{#1}
+  \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+  \newcommand{\NormalTok}[1]{#1}
+  \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+  \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+  \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+  \newcommand{\RegionMarkerTok}[1]{#1}
+  \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 
 % Formatting R code: set baselinestretch = 1.5 for double-spacing
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
@@ -552,6 +592,257 @@ As the MSE is always positive, MSE values closer to zero are more desirable -- a
 
 {[}place figures/tables from results of simulation study here, along with explanation{]}
 
+The results of our simulation study are presented in the following tables below.
+
+\newpage
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-1}Performance metrics of our our 4 methods with data derived from the log-normal distribution with mean = 1 and SD = 0.5.}
+\centering
+\begin{tabular}[t]{r|r|l|r|r|r|r}
+\hline
+prop\_cens & samplesize & method & Avg\_Mean & Bias & Variance & MSE\\
+\hline
+0.1 & 10 & km & 1.009 & 0.009 & 0.023 & 0.023\\
+\hline
+0.1 & 10 & mle & 0.997 & -0.003 & 0.023 & 0.023\\
+\hline
+0.1 & 10 & ros & 0.991 & -0.009 & 0.022 & 0.022\\
+\hline
+0.1 & 10 & substitution & 0.981 & -0.019 & 0.022 & 0.022\\
+\hline
+0.1 & 100 & km & 1.008 & 0.008 & 0.003 & 0.003\\
+\hline
+0.1 & 100 & mle & 0.998 & -0.002 & 0.003 & 0.003\\
+\hline
+0.1 & 100 & ros & 0.999 & -0.001 & 0.003 & 0.003\\
+\hline
+0.1 & 100 & substitution & 0.983 & -0.017 & 0.003 & 0.003\\
+\hline
+0.1 & 1000 & km & 1.009 & 0.009 & 0.000 & 0.000\\
+\hline
+0.1 & 1000 & mle & 1.000 & 0.000 & 0.000 & 0.000\\
+\hline
+0.1 & 1000 & ros & 1.001 & 0.001 & 0.000 & 0.000\\
+\hline
+0.1 & 1000 & substitution & 0.985 & -0.015 & 0.000 & 0.000\\
+\hline
+0.3 & 10 & km & 1.050 & 0.050 & 0.028 & 0.030\\
+\hline
+0.3 & 10 & mle & 0.968 & -0.032 & 0.024 & 0.025\\
+\hline
+0.3 & 10 & ros & 0.976 & -0.024 & 0.024 & 0.024\\
+\hline
+0.3 & 10 & substitution & 0.937 & -0.063 & 0.023 & 0.027\\
+\hline
+0.3 & 100 & km & 1.049 & 0.049 & 0.003 & 0.005\\
+\hline
+0.3 & 100 & mle & 0.974 & -0.026 & 0.003 & 0.003\\
+\hline
+0.3 & 100 & ros & 1.000 & 0.000 & 0.003 & 0.003\\
+\hline
+0.3 & 100 & substitution & 0.944 & -0.056 & 0.002 & 0.006\\
+\hline
+0.3 & 1000 & km & 1.049 & 0.049 & 0.000 & 0.003\\
+\hline
+0.3 & 1000 & mle & 0.974 & -0.026 & 0.000 & 0.001\\
+\hline
+0.3 & 1000 & ros & 1.004 & 0.004 & 0.000 & 0.000\\
+\hline
+0.3 & 1000 & substitution & 0.945 & -0.055 & 0.000 & 0.003\\
+\hline
+0.5 & 10 & km & 1.148 & 0.148 & 0.037 & 0.059\\
+\hline
+0.5 & 10 & mle & 0.908 & -0.092 & 0.022 & 0.031\\
+\hline
+0.5 & 10 & ros & 0.967 & -0.033 & 0.028 & 0.029\\
+\hline
+0.5 & 10 & substitution & 0.908 & -0.092 & 0.024 & 0.032\\
+\hline
+0.5 & 100 & km & 1.129 & 0.129 & 0.004 & 0.020\\
+\hline
+0.5 & 100 & mle & 0.904 & -0.096 & 0.002 & 0.012\\
+\hline
+0.5 & 100 & ros & 0.996 & -0.004 & 0.003 & 0.003\\
+\hline
+0.5 & 100 & substitution & 0.904 & -0.096 & 0.003 & 0.012\\
+\hline
+0.5 & 1000 & km & 1.129 & 0.129 & 0.000 & 0.017\\
+\hline
+0.5 & 1000 & mle & 0.905 & -0.095 & 0.000 & 0.009\\
+\hline
+0.5 & 1000 & ros & 1.005 & 0.005 & 0.000 & 0.000\\
+\hline
+0.5 & 1000 & substitution & 0.905 & -0.095 & 0.000 & 0.009\\
+\hline
+\end{tabular}
+\end{table}
+\newpage
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-2}Performance metrics of our our 3 methods (MLE method absent) with data derived from the exponential distribution with a shape parameter = 1.}
+\centering
+\begin{tabular}[t]{r|r|l|r|r|r|r}
+\hline
+prop\_cens & samplesize & method & Avg\_Mean & Bias & Variance & MSE\\
+\hline
+0.1 & 10 & km & 1.012 & 0.012 & 0.063 & 0.063\\
+\hline
+0.1 & 10 & mle & NA & NA & NA & NA\\
+\hline
+0.1 & 10 & ros & 0.997 & -0.003 & 0.062 & 0.062\\
+\hline
+0.1 & 10 & substitution & 0.992 & -0.008 & 0.062 & 0.062\\
+\hline
+0.1 & 100 & km & 1.010 & 0.010 & 0.006 & 0.007\\
+\hline
+0.1 & 100 & mle & NA & NA & NA & NA\\
+\hline
+0.1 & 100 & ros & 1.005 & 0.005 & 0.006 & 0.006\\
+\hline
+0.1 & 100 & substitution & 0.994 & -0.006 & 0.006 & 0.007\\
+\hline
+0.1 & 1000 & km & 1.007 & 0.007 & 0.001 & 0.001\\
+\hline
+0.1 & 1000 & mle & NA & NA & NA & NA\\
+\hline
+0.1 & 1000 & ros & 1.003 & 0.003 & 0.001 & 0.001\\
+\hline
+0.1 & 1000 & substitution & 0.992 & -0.008 & 0.001 & 0.001\\
+\hline
+0.3 & 10 & km & 1.063 & 0.063 & 0.073 & 0.077\\
+\hline
+0.3 & 10 & mle & NA & NA & NA & NA\\
+\hline
+0.3 & 10 & ros & 0.991 & -0.009 & 0.064 & 0.064\\
+\hline
+0.3 & 10 & substitution & 0.970 & -0.030 & 0.064 & 0.065\\
+\hline
+0.3 & 100 & km & 1.053 & 0.053 & 0.007 & 0.010\\
+\hline
+0.3 & 100 & mle & NA & NA & NA & NA\\
+\hline
+0.3 & 100 & ros & 1.011 & 0.011 & 0.007 & 0.007\\
+\hline
+0.3 & 100 & substitution & 0.972 & -0.028 & 0.007 & 0.008\\
+\hline
+0.3 & 1000 & km & 1.054 & 0.054 & 0.001 & 0.004\\
+\hline
+0.3 & 1000 & mle & NA & NA & NA & NA\\
+\hline
+0.3 & 1000 & ros & 1.017 & 0.017 & 0.001 & 0.001\\
+\hline
+0.3 & 1000 & substitution & 0.974 & -0.026 & 0.002 & 0.002\\
+\hline
+0.5 & 10 & km & 1.193 & 0.193 & 0.109 & 0.146\\
+\hline
+0.5 & 10 & mle & NA & NA & NA & NA\\
+\hline
+0.5 & 10 & ros & 0.992 & -0.008 & 0.076 & 0.076\\
+\hline
+0.5 & 10 & substitution & 0.968 & -0.032 & 0.074 & 0.075\\
+\hline
+0.5 & 100 & km & 1.162 & 0.162 & 0.010 & 0.036\\
+\hline
+0.5 & 100 & mle & NA & NA & NA & NA\\
+\hline
+0.5 & 100 & ros & 1.023 & 0.023 & 0.008 & 0.008\\
+\hline
+0.5 & 100 & substitution & 0.961 & -0.039 & 0.009 & 0.011\\
+\hline
+0.5 & 1000 & km & 1.163 & 0.163 & 0.002 & 0.029\\
+\hline
+0.5 & 1000 & mle & NA & NA & NA & NA\\
+\hline
+0.5 & 1000 & ros & 1.036 & 0.036 & 0.002 & 0.003\\
+\hline
+0.5 & 1000 & substitution & 0.964 & -0.036 & 0.004 & 0.005\\
+\hline
+\end{tabular}
+\end{table}
+\newpage
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-3}Performance metrics of our our 3 methods (MLE method absent) with data derived from the Weibull distribution with a shape parameter = 1 and scale parameter = 1.}
+\centering
+\begin{tabular}[t]{r|r|l|r|r|r|r}
+\hline
+prop\_cens & samplesize & method & Avg\_Mean & Bias & Variance & MSE\\
+\hline
+0.1 & 10 & km & 1.010 & 0.010 & 0.077 & 0.077\\
+\hline
+0.1 & 10 & mle & NA & NA & NA & NA\\
+\hline
+0.1 & 10 & ros & 0.997 & -0.003 & 0.075 & 0.075\\
+\hline
+0.1 & 10 & substitution & 0.993 & -0.007 & 0.075 & 0.075\\
+\hline
+0.1 & 100 & km & 1.010 & 0.010 & 0.008 & 0.008\\
+\hline
+0.1 & 100 & mle & NA & NA & NA & NA\\
+\hline
+0.1 & 100 & ros & 1.006 & 0.006 & 0.008 & 0.008\\
+\hline
+0.1 & 100 & substitution & 0.998 & -0.002 & 0.008 & 0.008\\
+\hline
+0.1 & 1000 & km & 1.006 & 0.006 & 0.001 & 0.001\\
+\hline
+0.1 & 1000 & mle & NA & NA & NA & NA\\
+\hline
+0.1 & 1000 & ros & 1.004 & 0.004 & 0.001 & 0.001\\
+\hline
+0.1 & 1000 & substitution & 0.995 & -0.005 & 0.001 & 0.001\\
+\hline
+0.3 & 10 & km & 1.067 & 0.067 & 0.086 & 0.091\\
+\hline
+0.3 & 10 & mle & NA & NA & NA & NA\\
+\hline
+0.3 & 10 & ros & 0.996 & -0.004 & 0.075 & 0.075\\
+\hline
+0.3 & 10 & substitution & 0.981 & -0.019 & 0.075 & 0.076\\
+\hline
+0.3 & 100 & km & 1.054 & 0.054 & 0.008 & 0.011\\
+\hline
+0.3 & 100 & mle & NA & NA & NA & NA\\
+\hline
+0.3 & 100 & ros & 1.016 & 0.016 & 0.008 & 0.008\\
+\hline
+0.3 & 100 & substitution & 0.982 & -0.018 & 0.008 & 0.009\\
+\hline
+0.3 & 1000 & km & 1.055 & 0.055 & 0.001 & 0.004\\
+\hline
+0.3 & 1000 & mle & NA & NA & NA & NA\\
+\hline
+0.3 & 1000 & ros & 1.021 & 0.021 & 0.001 & 0.001\\
+\hline
+0.3 & 1000 & substitution & 0.984 & -0.016 & 0.002 & 0.002\\
+\hline
+0.5 & 10 & km & 1.221 & 0.221 & 0.128 & 0.177\\
+\hline
+0.5 & 10 & mle & NA & NA & NA & NA\\
+\hline
+0.5 & 10 & ros & 1.009 & 0.009 & 0.089 & 0.089\\
+\hline
+0.5 & 10 & substitution & 0.998 & -0.002 & 0.086 & 0.086\\
+\hline
+0.5 & 100 & km & 1.173 & 0.173 & 0.012 & 0.042\\
+\hline
+0.5 & 100 & mle & NA & NA & NA & NA\\
+\hline
+0.5 & 100 & ros & 1.033 & 0.033 & 0.009 & 0.010\\
+\hline
+0.5 & 100 & substitution & 0.980 & -0.020 & 0.011 & 0.011\\
+\hline
+0.5 & 1000 & km & 1.173 & 0.173 & 0.002 & 0.032\\
+\hline
+0.5 & 1000 & mle & NA & NA & NA & NA\\
+\hline
+0.5 & 1000 & ros & 1.045 & 0.045 & 0.002 & 0.004\\
+\hline
+0.5 & 1000 & substitution & 0.982 & -0.018 & 0.004 & 0.004\\
+\hline
+\end{tabular}
+\end{table}
 From the results of our simulation study, we can see that with the data from the log-normal distribution\ldots{}
 \begin{itemize}
 \item
@@ -561,18 +852,34 @@ From the results of our simulation study, we can see that with the data from the
 \item
   variance is largely dependent only on sample size (to be expected)
 \item
-  in the case of high censoring (0.50) and small sample size (10), km did not work as well as other methods
+  in the case of low censoring (0.1) all methods perform equally well
 \item
-  in the case of medium censoring (0.30) with medium sample size (100) and high sample size (1000), ros performed the best, with mle following closely as compared to the other two methods. ros and mle had bias and mse values which were lower than the other two.
+  in the case of medium (0.3) and high censoring (0.50) km did not work as well as other methods
+\item
+  in the case of medium censoring (0.30) ros performed the best, with mle following closely as compared to the other two methods. ros and mle had bias and mse values which were lower than the other two.
 \item
   in the case of high censoring (0.50) and large sample size (1000), ros performed SIGNIFICANTLY better than all other methods (low bias, low mse)
 \end{itemize}
-We can see with the exponential\ldots{}
-
-We can see with the Weibull\ldots{}
-
+We can see with the exponential and weibull\ldots{}
+\begin{itemize}
+\item
+  all methods perform equally well in the case of low (0.10) censoring with all sample sizes
+\item
+  km does the worst with with medium (0.30) and high (0.50) censoring when compared to the other methods.
+\item
+  in the case of medium (0.3)and high (0.5) censoring, ros performs the best with substitution not far behind
+\end{itemize}
 To sum it all up\ldots{}
-
+\begin{itemize}
+\item
+  regardless of distributional assumptions all of the methods perform well when censoring is low, with very minute differences
+\item
+  ros performed the best in the case of medium and high censoring for all 3 distributions
+\item
+  while mle was only used in the case of the lognormal data, it also performs quite well (though not as good as ros)
+\item
+  km is unreliable with any moderate or high amounts of censoring for all distributions
+\end{itemize}
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
@@ -597,6 +904,460 @@ Shortcomings in the results presented in this study very well may come from the 
 
 {[}write a few paragraphss to wrap up entire thesis{]}
 
+\appendix
+
+\hypertarget{main-appendix}{%
+\chapter{Main Appendix}\label{main-appendix}}
+
+This first appendix includes all of the R chunks of code that were hidden throughout the document (using the \texttt{include\ =\ FALSE} chunk tag) to help with readibility and/or setup.
+
+\hypertarget{in-the-main-file-refref-labels}{%
+\section{In the main file \ref{ref-labels}:}\label{in-the-main-file-refref-labels}}
+
+\hypertarget{in-chapter-refref-labels}{%
+\section{In Chapter \ref{ref-labels}:}\label{in-chapter-refref-labels}}
+
+\hypertarget{simulation-appendix}{%
+\chapter{Simulation Appendix}\label{simulation-appendix}}
+
+The second appendix, Appendix B, contains all necessary code required to run the simulation study.
+
+\hypertarget{libraries}{%
+\section{Libraries}\label{libraries}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(Metrics) }\CommentTok{\#package to help calculate mse}
+\FunctionTok{library}\NormalTok{(NADA) }\CommentTok{\#package with implementation of many methods}
+\FunctionTok{library}\NormalTok{(survival)}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{generating-data}{%
+\section{Generating Data}\label{generating-data}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#function will generate a vector of numbers from the lognormal }
+\CommentTok{\#distribution and censor them at the given rate}
+\CommentTok{\#function will take in arguments for 1) samplesize, 2) logmean, 3)logsd}
+\CommentTok{\#4) censoring rate}
+
+\NormalTok{generateLN }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(sampsize, m, s, censrate)\{}
+\NormalTok{  true.value }\OtherTok{\textless{}{-}} \FunctionTok{rlnorm}\NormalTok{(sampsize, }
+               \AttributeTok{meanlog=}\FunctionTok{log}\NormalTok{(m}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(s}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ m}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)),}
+               \AttributeTok{sdlog=}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{log}\NormalTok{(}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ (s}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/}\NormalTok{ m}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))))}
+  
+\NormalTok{  uncensored\_df }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(true.value) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{arrange}\NormalTok{(true.value)}
+  
+\NormalTok{  censored\_df }\OtherTok{\textless{}{-}}\NormalTok{ uncensored\_df }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#take the head(\%) of data to be censored}
+    \FunctionTok{slice\_head}\NormalTok{(}\AttributeTok{n=}\FunctionTok{nrow}\NormalTok{(uncensored\_df)}\SpecialCharTok{*}\NormalTok{censrate) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{censored =} \ConstantTok{TRUE}\NormalTok{)}
+  
+  \CommentTok{\#full join original df and sliced df}
+\NormalTok{  return\_df }\OtherTok{\textless{}{-}} \FunctionTok{full\_join}\NormalTok{(uncensored\_df, censored\_df, }\AttributeTok{by =} \StringTok{"true.value"}\NormalTok{)}
+
+  \CommentTok{\#replace NAs with FALSE}
+\NormalTok{  return\_df}\SpecialCharTok{$}\NormalTok{censored }\OtherTok{\textless{}{-}} \FunctionTok{replace\_na}\NormalTok{(return\_df}\SpecialCharTok{$}\NormalTok{censored, }\AttributeTok{replace =} \ConstantTok{FALSE}\NormalTok{)}
+  
+  \FunctionTok{return}\NormalTok{(return\_df)}
+\NormalTok{\}}
+\CommentTok{\#function will generate a vector of numbers from the exponential }
+\CommentTok{\#distribution and censor them at the given rate}
+\CommentTok{\#function will take in arguments for 1) samplesize, 2) rate,}
+\CommentTok{\#3) censoring rate}
+
+\NormalTok{generateEXP }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(sampsize, r, censrate)\{}
+\NormalTok{  true.value }\OtherTok{\textless{}{-}} \FunctionTok{rexp}\NormalTok{(sampsize, }\AttributeTok{rate =}\NormalTok{ r)}
+  
+\NormalTok{  uncensored\_df }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(true.value) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{arrange}\NormalTok{(true.value)}
+  
+\NormalTok{  censored\_df }\OtherTok{\textless{}{-}}\NormalTok{ uncensored\_df }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#take the head(\%) of data to be censored}
+    \FunctionTok{slice\_head}\NormalTok{(}\AttributeTok{n=}\FunctionTok{nrow}\NormalTok{(uncensored\_df)}\SpecialCharTok{*}\NormalTok{censrate) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{censored =} \ConstantTok{TRUE}\NormalTok{)}
+  
+  \CommentTok{\#full join original df and sliced df}
+\NormalTok{  return\_df }\OtherTok{\textless{}{-}} \FunctionTok{full\_join}\NormalTok{(uncensored\_df, censored\_df, }\AttributeTok{by =} \StringTok{"true.value"}\NormalTok{)}
+
+  \CommentTok{\#replace NAs with FALSE}
+\NormalTok{  return\_df}\SpecialCharTok{$}\NormalTok{censored }\OtherTok{\textless{}{-}} \FunctionTok{replace\_na}\NormalTok{(return\_df}\SpecialCharTok{$}\NormalTok{censored, }\AttributeTok{replace =} \ConstantTok{FALSE}\NormalTok{)}
+  
+  \FunctionTok{return}\NormalTok{(return\_df)}
+\NormalTok{\}}
+\CommentTok{\#function will generate a vector of numbers from the Weibull}
+\CommentTok{\#distribution and censor them at the given rate}
+\CommentTok{\#function will take in arguments for 1) samplesize, 2) rate,}
+\CommentTok{\#3) censoring rate}
+
+\NormalTok{generateW }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(sampsize, sh, sc, censrate)\{}
+\NormalTok{  true.value }\OtherTok{\textless{}{-}} \FunctionTok{rweibull}\NormalTok{(sampsize, }\AttributeTok{shape =}\NormalTok{ sh, }\AttributeTok{scale =}\NormalTok{ sc)}
+  
+\NormalTok{  uncensored\_df }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(true.value) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{arrange}\NormalTok{(true.value)}
+  
+\NormalTok{  censored\_df }\OtherTok{\textless{}{-}}\NormalTok{ uncensored\_df }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#take the head(\%) of data to be censored}
+    \FunctionTok{slice\_head}\NormalTok{(}\AttributeTok{n=}\FunctionTok{nrow}\NormalTok{(uncensored\_df)}\SpecialCharTok{*}\NormalTok{censrate) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{censored =} \ConstantTok{TRUE}\NormalTok{)}
+  
+  \CommentTok{\#full join original df and sliced df}
+\NormalTok{  return\_df }\OtherTok{\textless{}{-}} \FunctionTok{full\_join}\NormalTok{(uncensored\_df, censored\_df, }\AttributeTok{by =} \StringTok{"true.value"}\NormalTok{)}
+
+  \CommentTok{\#replace NAs with FALSE}
+\NormalTok{  return\_df}\SpecialCharTok{$}\NormalTok{censored }\OtherTok{\textless{}{-}} \FunctionTok{replace\_na}\NormalTok{(return\_df}\SpecialCharTok{$}\NormalTok{censored, }\AttributeTok{replace =} \ConstantTok{FALSE}\NormalTok{)}
+  
+  \FunctionTok{return}\NormalTok{(return\_df)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{setup}{%
+\section{Setup}\label{setup}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iterations }\OtherTok{\textless{}{-}} \DecValTok{1000} \CommentTok{\#number of iterations}
+\NormalTok{censvalues }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.10}\NormalTok{, }\FloatTok{0.30}\NormalTok{, }\FloatTok{0.50}\NormalTok{)}
+\NormalTok{sampsizes }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{1000}\NormalTok{)}
+
+\NormalTok{df.tall }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{prop\_cens =} \FunctionTok{numeric}\NormalTok{(),}
+                      \AttributeTok{samplesize =} \FunctionTok{numeric}\NormalTok{(),}
+                      \AttributeTok{iteration =} \FunctionTok{numeric}\NormalTok{(),}
+                      \AttributeTok{method =} \FunctionTok{character}\NormalTok{(),}
+                      \AttributeTok{true\_mean =} \FunctionTok{numeric}\NormalTok{(),}
+                      \AttributeTok{mean\_complete =} \FunctionTok{numeric}\NormalTok{(),}
+                      \AttributeTok{mean\_method =} \FunctionTok{numeric}\NormalTok{(),}
+                      \AttributeTok{true\_sd =} \FunctionTok{numeric}\NormalTok{(),}
+                      \AttributeTok{SE\_complete =} \FunctionTok{numeric}\NormalTok{(),}
+                      \AttributeTok{SE\_method =} \FunctionTok{numeric}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{lognormal}{%
+\section{Lognormal}\label{lognormal}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#LOGNORMAL}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{scipen=}\DecValTok{999}\NormalTok{) }\CommentTok{\#prevent scientific notation}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{7271999}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ censvalues)\{}
+  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in}\NormalTok{ sampsizes)\{}
+    \ControlFlowTok{for}\NormalTok{(k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{iterations)\{}
+\NormalTok{      m }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{      s }\OtherTok{\textless{}{-}} \FloatTok{0.5}
+\NormalTok{      df }\OtherTok{\textless{}{-}} \FunctionTok{generateLN}\NormalTok{(}\AttributeTok{sampsize =}\NormalTok{ j, }\AttributeTok{m =} \DecValTok{1}\NormalTok{, }\AttributeTok{s =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{censrate =}\NormalTok{ i)}
+      
+      \CommentTok{\#substitution}
+      \CommentTok{\#define LOD to be smallest, uncensored value}
+\NormalTok{      LOD }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value[df}\SpecialCharTok{$}\NormalTok{censored }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{]) }
+\NormalTok{      df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{mutate}\NormalTok{(}\AttributeTok{impSubValue =} \FunctionTok{if\_else}\NormalTok{(censored }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{, LOD}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, true.value))}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"substitution"}\NormalTok{,}
+                \AttributeTok{true\_mean =}\NormalTok{ m,}
+                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
+                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue),}
+                \AttributeTok{true\_sd =}\NormalTok{ s,}
+                \AttributeTok{SE\_complete =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
+                \AttributeTok{SE\_method =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue))))}
+      
+      \CommentTok{\#mle}
+\NormalTok{      mle\_res }\OtherTok{=} \FunctionTok{cenmle}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value, df}\SpecialCharTok{$}\NormalTok{censored)}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"mle"}\NormalTok{,}
+                \AttributeTok{true\_mean =}\NormalTok{ m,}
+                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
+                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(mle\_res)[}\DecValTok{1}\NormalTok{],}
+                \AttributeTok{true\_sd =}\NormalTok{ s,}
+                \AttributeTok{SE\_complete =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
+                \AttributeTok{SE\_method =} \FunctionTok{mean}\NormalTok{(mle\_res)[}\DecValTok{2}\NormalTok{])}
+      
+      \CommentTok{\#km}
+\NormalTok{      km\_res }\OtherTok{=} \FunctionTok{cenfit}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value, df}\SpecialCharTok{$}\NormalTok{censored)}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"km"}\NormalTok{,}
+                \AttributeTok{true\_mean =}\NormalTok{ m,}
+                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
+                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(km\_res)[[}\DecValTok{1}\NormalTok{]],}
+                \AttributeTok{true\_sd =}\NormalTok{ s,}
+                \AttributeTok{SE\_complete =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
+                \AttributeTok{SE\_method =} \FunctionTok{mean}\NormalTok{(km\_res)[[}\DecValTok{2}\NormalTok{]])}
+      
+      \CommentTok{\#ros}
+\NormalTok{      ros\_res }\OtherTok{=} \FunctionTok{ros}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value, df}\SpecialCharTok{$}\NormalTok{censored)}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"ros"}\NormalTok{,}
+                \AttributeTok{true\_mean =}\NormalTok{ m,}
+                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
+                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(ros\_res),}
+                \AttributeTok{true\_sd =}\NormalTok{ s,}
+                \AttributeTok{SE\_complete =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
+                \AttributeTok{SE\_method =} 
+                  \FunctionTok{sd}\NormalTok{(ros\_res)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))))}
+\NormalTok{    \}}
+    \CommentTok{\#end of \# iterations}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\CommentTok{\#aggregating performance criteria}
+
+\NormalTok{df.ln }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(prop\_cens, samplesize, method) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Avg\_Mean =} \FunctionTok{mean}\NormalTok{(mean\_method),}
+            \AttributeTok{Bias =}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(mean\_method) }\SpecialCharTok{{-}}\NormalTok{ true\_mean),}
+            \AttributeTok{Variance =} \FunctionTok{var}\NormalTok{(mean\_method),}
+            \AttributeTok{MSE =} \FunctionTok{mse}\NormalTok{(true\_mean, mean\_method) }
+\NormalTok{            ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{exponential}{%
+\section{Exponential}\label{exponential}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#EXPONENTIAL}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{scipen=}\DecValTok{999}\NormalTok{) }\CommentTok{\#prevent scientific notation}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{7271999}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ censvalues)\{}
+  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in}\NormalTok{ sampsizes)\{}
+    \ControlFlowTok{for}\NormalTok{(k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{iterations)\{}
+\NormalTok{      r }\OtherTok{=} \DecValTok{1}
+\NormalTok{      df }\OtherTok{\textless{}{-}} \FunctionTok{generateEXP}\NormalTok{(}\AttributeTok{sampsize =}\NormalTok{ j, }\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{censrate =}\NormalTok{ i)}
+
+      \CommentTok{\#substitution}
+      \CommentTok{\#define LOD to be smallest, uncensored value}
+\NormalTok{      LOD }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value[df}\SpecialCharTok{$}\NormalTok{censored }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{]) }
+\NormalTok{      df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{mutate}\NormalTok{(}\AttributeTok{impSubValue =} \FunctionTok{if\_else}\NormalTok{(censored }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{, LOD}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, true.value))}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"substitution"}\NormalTok{,}
+                \AttributeTok{true\_mean =} \DecValTok{1}\SpecialCharTok{/}\NormalTok{r,}
+                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
+                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue),}
+                \AttributeTok{true\_sd =} \DecValTok{1}\SpecialCharTok{/}\NormalTok{r,}
+                \AttributeTok{SE\_complete =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
+                \AttributeTok{SE\_method =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue))))}
+      
+      \CommentTok{\#mle}
+      \CommentTok{\# mle\_res = cenmle(df$true.value, df$censored)}
+      \CommentTok{\# }
+      \CommentTok{\# df.tall \textless{}{-} df.tall \%\textgreater{}\%}
+      \CommentTok{\#   add\_row(prop\_cens = i,}
+      \CommentTok{\#           samplesize = j,}
+      \CommentTok{\#           iteration = k,}
+      \CommentTok{\#           method = "mle",}
+      \CommentTok{\#           true\_mean = 1/r,}
+      \CommentTok{\#           mean\_complete = mean(df$true.value),}
+      \CommentTok{\#           mean\_method = mean(mle\_res)[1],}
+      \CommentTok{\#           true\_sd = 1/r,}
+      \CommentTok{\#           SE\_complete = }
+      \CommentTok{\#             sd(df$true.value)/sqrt((length(df$true.value))),}
+      \CommentTok{\#           SE\_method = mean(mle\_res)[2])}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"mle"}\NormalTok{,}
+                \AttributeTok{true\_mean =} \ConstantTok{NA}\NormalTok{,}
+                \AttributeTok{mean\_complete =} \ConstantTok{NA}\NormalTok{,}
+                \AttributeTok{mean\_method =} \ConstantTok{NA}\NormalTok{,}
+                \AttributeTok{true\_sd =} \ConstantTok{NA}\NormalTok{,}
+                \AttributeTok{SE\_complete =} \ConstantTok{NA}\NormalTok{,}
+                \AttributeTok{SE\_method =} \ConstantTok{NA}\NormalTok{)}
+      
+      \CommentTok{\#km}
+\NormalTok{      km\_res }\OtherTok{=} \FunctionTok{cenfit}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value, df}\SpecialCharTok{$}\NormalTok{censored)}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"km"}\NormalTok{,}
+                \AttributeTok{true\_mean =} \DecValTok{1}\SpecialCharTok{/}\NormalTok{r,}
+                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
+                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(km\_res)[[}\DecValTok{1}\NormalTok{]],}
+                \AttributeTok{true\_sd =} \DecValTok{1}\SpecialCharTok{/}\NormalTok{r,}
+                \AttributeTok{SE\_complete =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
+                \AttributeTok{SE\_method =} \FunctionTok{mean}\NormalTok{(km\_res)[[}\DecValTok{2}\NormalTok{]])}
+      
+      \CommentTok{\#ros}
+\NormalTok{      ros\_res }\OtherTok{=} \FunctionTok{ros}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value, df}\SpecialCharTok{$}\NormalTok{censored)}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"ros"}\NormalTok{,}
+                \AttributeTok{true\_mean =} \DecValTok{1}\SpecialCharTok{/}\NormalTok{r,}
+                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
+                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(ros\_res),}
+                \AttributeTok{true\_sd =} \DecValTok{1}\SpecialCharTok{/}\NormalTok{r,}
+                \AttributeTok{SE\_complete =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
+                \AttributeTok{SE\_method =} 
+                  \FunctionTok{sd}\NormalTok{(ros\_res)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))))}
+\NormalTok{    \}}
+    \CommentTok{\#end of \# iterations}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\CommentTok{\#aggregating performance criteria}
+
+\NormalTok{df.exp }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(prop\_cens, samplesize, method) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Avg\_Mean =} \FunctionTok{mean}\NormalTok{(mean\_method),}
+            \AttributeTok{Bias =}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(mean\_method) }\SpecialCharTok{{-}}\NormalTok{ true\_mean),}
+            \AttributeTok{Variance =} \FunctionTok{var}\NormalTok{(mean\_method),}
+            \AttributeTok{MSE =} \FunctionTok{mse}\NormalTok{(true\_mean, mean\_method) }
+\NormalTok{            ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{weibull}{%
+\section{Weibull}\label{weibull}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#WEIBULL}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{scipen=}\DecValTok{999}\NormalTok{) }\CommentTok{\#prevent scientific notation}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{7271999}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ censvalues)\{}
+  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in}\NormalTok{ sampsizes)\{}
+    \ControlFlowTok{for}\NormalTok{(k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{iterations)\{}
+\NormalTok{      sh }\OtherTok{=} \DecValTok{1}
+\NormalTok{      sc }\OtherTok{=} \DecValTok{1}
+\NormalTok{      df }\OtherTok{\textless{}{-}} \FunctionTok{generateW}\NormalTok{(}\AttributeTok{sampsize =}\NormalTok{ j, }\AttributeTok{sh =}\NormalTok{ sh, }\AttributeTok{sc =}\NormalTok{ sc, }\AttributeTok{censrate =}\NormalTok{ i)}
+
+      \CommentTok{\#substitution}
+      \CommentTok{\#define LOD to be smallest, uncensored value}
+\NormalTok{      LOD }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value[df}\SpecialCharTok{$}\NormalTok{censored }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{]) }
+\NormalTok{      df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{mutate}\NormalTok{(}\AttributeTok{impSubValue =} \FunctionTok{if\_else}\NormalTok{(censored }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{, LOD}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, true.value))}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"substitution"}\NormalTok{,}
+                \AttributeTok{true\_mean =}\NormalTok{ sc}\SpecialCharTok{*}\FunctionTok{gamma}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sh)),}
+                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
+                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue),}
+                \AttributeTok{true\_sd =} \FunctionTok{sqrt}\NormalTok{((sc}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{gamma}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\NormalTok{sh)) }\SpecialCharTok{{-}} 
+\NormalTok{                                      (}\FunctionTok{gamma}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sh)))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)),}
+                \AttributeTok{SE\_complete =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
+                \AttributeTok{SE\_method =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue))))}
+      
+      \CommentTok{\#mle}
+      \CommentTok{\# mle\_res = cenmle(df$true.value, df$censored)}
+      \CommentTok{\# }
+      \CommentTok{\# df.tall \textless{}{-} df.tall \%\textgreater{}\%}
+      \CommentTok{\#   add\_row(prop\_cens = i,}
+      \CommentTok{\#           samplesize = j,}
+      \CommentTok{\#           iteration = k,}
+      \CommentTok{\#           method = "mle",}
+      \CommentTok{\#           true\_mean = 1/r,}
+      \CommentTok{\#           mean\_complete = mean(df$true.value),}
+      \CommentTok{\#           mean\_method = mean(mle\_res)[1],}
+      \CommentTok{\#           true\_sd = 1/r,}
+      \CommentTok{\#           SE\_complete = }
+      \CommentTok{\#             sd(df$true.value)/sqrt((length(df$true.value))),}
+      \CommentTok{\#           SE\_method = mean(mle\_res)[2])}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"mle"}\NormalTok{,}
+                \AttributeTok{true\_mean =} \ConstantTok{NA}\NormalTok{,}
+                \AttributeTok{mean\_complete =} \ConstantTok{NA}\NormalTok{,}
+                \AttributeTok{mean\_method =} \ConstantTok{NA}\NormalTok{,}
+                \AttributeTok{true\_sd =} \ConstantTok{NA}\NormalTok{,}
+                \AttributeTok{SE\_complete =} \ConstantTok{NA}\NormalTok{,}
+                \AttributeTok{SE\_method =} \ConstantTok{NA}\NormalTok{)}
+      
+      \CommentTok{\#km}
+\NormalTok{      km\_res }\OtherTok{=} \FunctionTok{cenfit}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value, df}\SpecialCharTok{$}\NormalTok{censored)}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"km"}\NormalTok{,}
+                \AttributeTok{true\_mean =}\NormalTok{ sc}\SpecialCharTok{*}\FunctionTok{gamma}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sh)),}
+                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
+                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(km\_res)[[}\DecValTok{1}\NormalTok{]],}
+                \AttributeTok{true\_sd =} \FunctionTok{sqrt}\NormalTok{((sc}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{gamma}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\NormalTok{sh)) }\SpecialCharTok{{-}} 
+\NormalTok{                                      (}\FunctionTok{gamma}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sh)))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)),}
+                \AttributeTok{SE\_complete =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
+                \AttributeTok{SE\_method =} \FunctionTok{mean}\NormalTok{(km\_res)[[}\DecValTok{2}\NormalTok{]])}
+      
+      \CommentTok{\#ros}
+\NormalTok{      ros\_res }\OtherTok{=} \FunctionTok{ros}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value, df}\SpecialCharTok{$}\NormalTok{censored)}
+      
+\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
+                \AttributeTok{samplesize =}\NormalTok{ j,}
+                \AttributeTok{iteration =}\NormalTok{ k,}
+                \AttributeTok{method =} \StringTok{"ros"}\NormalTok{,}
+                \AttributeTok{true\_mean =}\NormalTok{ sc}\SpecialCharTok{*}\FunctionTok{gamma}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sh)),}
+                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
+                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(ros\_res),}
+                \AttributeTok{true\_sd =} \FunctionTok{sqrt}\NormalTok{((sc}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{gamma}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(}\DecValTok{2}\SpecialCharTok{/}\NormalTok{sh)) }\SpecialCharTok{{-}} 
+\NormalTok{                                      (}\FunctionTok{gamma}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{sh)))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)),}
+                \AttributeTok{SE\_complete =} 
+                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
+                \AttributeTok{SE\_method =} 
+                  \FunctionTok{sd}\NormalTok{(ros\_res)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))))}
+\NormalTok{    \}}
+    \CommentTok{\#end of \# iterations}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\CommentTok{\#aggregating performance criteria}
+
+\NormalTok{df.w }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(prop\_cens, samplesize, method) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Avg\_Mean =} \FunctionTok{mean}\NormalTok{(mean\_method),}
+            \AttributeTok{Bias =}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(mean\_method) }\SpecialCharTok{{-}}\NormalTok{ true\_mean),}
+            \AttributeTok{Variance =} \FunctionTok{var}\NormalTok{(mean\_method),}
+            \AttributeTok{MSE =} \FunctionTok{mse}\NormalTok{(true\_mean, mean\_method) }
+\NormalTok{            ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 \hypertarget{corrections}{%
 \chapter*{Corrections}\label{corrections}}
 \addcontentsline{toc}{chapter}{Corrections}

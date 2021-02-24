@@ -9,6 +9,8 @@ rmd_files: ["index.Rmd",
             "02-methodology.Rmd",
             "03-simulations.Rmd",
             "04-conclusion.Rmd",
+            "06-appendixA.Rmd",
+            "07-appendixB.Rmd",
             "98-corrections.Rmd",
             "99-references.Rmd"]
 # Do not edit any of the following lines

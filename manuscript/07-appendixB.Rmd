@@ -1,3 +1,35 @@
-# The Second Appendix
+# Simulation Appendix
 
-R code
+The second appendix, Appendix B, contains all necessary code required to run the simulation study.
+
+## Libraries
+
+```{r app_libraries, ref.label="libraries", echo=TRUE, eval=FALSE}
+```
+
+## Generating Data
+
+```{r app_gd, ref.label=c("generateLN", "generateEXP", "generateW"), echo=TRUE, eval=FALSE}
+```
+
+## Setup
+
+```{r app_setup, ref.label= "setup", echo=TRUE, eval=FALSE}
+```
+
+## Lognormal
+
+```{r app_ln, ref.label= "lognormal", echo=TRUE, eval=FALSE}
+```
+
+## Exponential
+
+```{r app_ln, ref.label= "exponential", echo=TRUE, eval=FALSE}
+```
+
+## Weibull
+
+```{r app_ln, ref.label= "weibull", echo=TRUE, eval=FALSE}
+```
+
+

@@ -18,7 +18,7 @@ library(usmap)
 
 ```{r}
 #importing in full dataset
-import_df <- read_csv("code/current/data/chemical_data.csv")
+import_df <- read_csv("data/chemical_data.csv")
 ```
 
 ```{r}

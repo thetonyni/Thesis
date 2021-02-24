@@ -5,7 +5,7 @@
 The first appendix must start with the above text. Do not remove!
 -->
 
-# The First Appendix
+# Main Appendix
 
 This first appendix includes all of the R chunks of code that were hidden throughout the document (using the `include = FALSE` chunk tag) to help with readibility and/or setup.
 

@@ -75,6 +75,450 @@ As the MSE is always positive, MSE values closer to zero are more desirable -- a
 
 [place figures/tables from results of simulation study here, along with explanation]
 
+```{r libraries, include = FALSE}
+library(tidyverse)
+library(Metrics) #package to help calculate mse
+library(NADA) #package with implementation of many methods
+library(survival)
+```
+
+```{r generateLN, include = FALSE}
+#function will generate a vector of numbers from the lognormal 
+#distribution and censor them at the given rate
+#function will take in arguments for 1) samplesize, 2) logmean, 3)logsd
+#4) censoring rate
+
+generateLN <- function(sampsize, m, s, censrate){
+  true.value <- rlnorm(sampsize, 
+               meanlog=log(m^2 / sqrt(s^2 + m^2)),
+               sdlog=sqrt(log(1 + (s^2 / m^2))))
+  
+  uncensored_df <- as.data.frame(true.value) %>%
+    arrange(true.value)
+  
+  censored_df <- uncensored_df %>% #take the head(%) of data to be censored
+    slice_head(n=nrow(uncensored_df)*censrate) %>%
+    mutate(censored = TRUE)
+  
+  #full join original df and sliced df
+  return_df <- full_join(uncensored_df, censored_df, by = "true.value")
+
+  #replace NAs with FALSE
+  return_df$censored <- replace_na(return_df$censored, replace = FALSE)
+  
+  return(return_df)
+}
+```
+
+```{r generateEXP, include = FALSE}
+#function will generate a vector of numbers from the exponential 
+#distribution and censor them at the given rate
+#function will take in arguments for 1) samplesize, 2) rate,
+#3) censoring rate
+
+generateEXP <- function(sampsize, r, censrate){
+  true.value <- rexp(sampsize, rate = r)
+  
+  uncensored_df <- as.data.frame(true.value) %>%
+    arrange(true.value)
+  
+  censored_df <- uncensored_df %>% #take the head(%) of data to be censored
+    slice_head(n=nrow(uncensored_df)*censrate) %>%
+    mutate(censored = TRUE)
+  
+  #full join original df and sliced df
+  return_df <- full_join(uncensored_df, censored_df, by = "true.value")
+
+  #replace NAs with FALSE
+  return_df$censored <- replace_na(return_df$censored, replace = FALSE)
+  
+  return(return_df)
+}
+```
+
+```{r generateW, include = FALSE}
+#function will generate a vector of numbers from the Weibull
+#distribution and censor them at the given rate
+#function will take in arguments for 1) samplesize, 2) rate,
+#3) censoring rate
+
+generateW <- function(sampsize, sh, sc, censrate){
+  true.value <- rweibull(sampsize, shape = sh, scale = sc)
+  
+  uncensored_df <- as.data.frame(true.value) %>%
+    arrange(true.value)
+  
+  censored_df <- uncensored_df %>% #take the head(%) of data to be censored
+    slice_head(n=nrow(uncensored_df)*censrate) %>%
+    mutate(censored = TRUE)
+  
+  #full join original df and sliced df
+  return_df <- full_join(uncensored_df, censored_df, by = "true.value")
+
+  #replace NAs with FALSE
+  return_df$censored <- replace_na(return_df$censored, replace = FALSE)
+  
+  return(return_df)
+}
+```
+
+```{r setup, include = FALSE}
+iterations <- 1000 #number of iterations
+censvalues <- c(0.10, 0.30, 0.50)
+sampsizes <- c(10, 100, 1000)
+
+df.tall <- data.frame(prop_cens = numeric(),
+                      samplesize = numeric(),
+                      iteration = numeric(),
+                      method = character(),
+                      true_mean = numeric(),
+                      mean_complete = numeric(),
+                      mean_method = numeric(),
+                      true_sd = numeric(),
+                      SE_complete = numeric(),
+                      SE_method = numeric())
+```
+
+```{r lognormal, echo = FALSE, message = FALSE, cache = TRUE}
+#LOGNORMAL
+options(scipen=999) #prevent scientific notation
+set.seed(7271999)
+
+for(i in censvalues){
+  for(j in sampsizes){
+    for(k in 1:iterations){
+      m <- 1
+      s <- 0.5
+      df <- generateLN(sampsize = j, m = 1, s = 0.5, censrate = i)
+      
+      #substitution
+      #define LOD to be smallest, uncensored value
+      LOD <- min(df$true.value[df$censored == FALSE]) 
+      df <- df %>%
+        mutate(impSubValue = if_else(censored == TRUE, LOD/2, true.value))
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "substitution",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(df$impSubValue),
+                true_sd = s,
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(df$impSubValue)/sqrt((length(df$impSubValue))))
+      
+      #mle
+      mle_res = cenmle(df$true.value, df$censored)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "mle",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(mle_res)[1],
+                true_sd = s,
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = mean(mle_res)[2])
+      
+      #km
+      km_res = cenfit(df$true.value, df$censored)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "km",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(km_res)[[1]],
+                true_sd = s,
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = mean(km_res)[[2]])
+      
+      #ros
+      ros_res = ros(df$true.value, df$censored)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "ros",
+                true_mean = m,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(ros_res),
+                true_sd = s,
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(ros_res)/sqrt((length(df$true.value))))
+    }
+    #end of # iterations
+  }
+}
+
+#aggregating performance criteria
+
+df.ln <- df.tall %>%
+  group_by(prop_cens, samplesize, method) %>%
+  summarize(Avg_Mean = mean(mean_method),
+            Bias = (mean(mean_method) - true_mean),
+            Variance = var(mean_method),
+            MSE = mse(true_mean, mean_method) 
+            ) %>%
+  distinct() %>%
+  ungroup()
+```
+
+```{r exponential, echo = FALSE, message = FALSE, cache = TRUE}
+#EXPONENTIAL
+options(scipen=999) #prevent scientific notation
+set.seed(7271999)
+
+for(i in censvalues){
+  for(j in sampsizes){
+    for(k in 1:iterations){
+      r = 1
+      df <- generateEXP(sampsize = j, r = r, censrate = i)
+
+      #substitution
+      #define LOD to be smallest, uncensored value
+      LOD <- min(df$true.value[df$censored == FALSE]) 
+      df <- df %>%
+        mutate(impSubValue = if_else(censored == TRUE, LOD/2, true.value))
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "substitution",
+                true_mean = 1/r,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(df$impSubValue),
+                true_sd = 1/r,
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(df$impSubValue)/sqrt((length(df$impSubValue))))
+      
+      #mle
+      # mle_res = cenmle(df$true.value, df$censored)
+      # 
+      # df.tall <- df.tall %>%
+      #   add_row(prop_cens = i,
+      #           samplesize = j,
+      #           iteration = k,
+      #           method = "mle",
+      #           true_mean = 1/r,
+      #           mean_complete = mean(df$true.value),
+      #           mean_method = mean(mle_res)[1],
+      #           true_sd = 1/r,
+      #           SE_complete = 
+      #             sd(df$true.value)/sqrt((length(df$true.value))),
+      #           SE_method = mean(mle_res)[2])
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "mle",
+                true_mean = NA,
+                mean_complete = NA,
+                mean_method = NA,
+                true_sd = NA,
+                SE_complete = NA,
+                SE_method = NA)
+      
+      #km
+      km_res = cenfit(df$true.value, df$censored)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "km",
+                true_mean = 1/r,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(km_res)[[1]],
+                true_sd = 1/r,
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = mean(km_res)[[2]])
+      
+      #ros
+      ros_res = ros(df$true.value, df$censored)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "ros",
+                true_mean = 1/r,
+                mean_complete = mean(df$true.value),
+                mean_method = mean(ros_res),
+                true_sd = 1/r,
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(ros_res)/sqrt((length(df$true.value))))
+    }
+    #end of # iterations
+  }
+}
+
+#aggregating performance criteria
+
+df.exp <- df.tall %>%
+  group_by(prop_cens, samplesize, method) %>%
+  summarize(Avg_Mean = mean(mean_method),
+            Bias = (mean(mean_method) - true_mean),
+            Variance = var(mean_method),
+            MSE = mse(true_mean, mean_method) 
+            ) %>%
+  distinct() %>%
+  ungroup()
+```
+
+```{r weibull, echo = FALSE, message = FALSE, cache = TRUE}
+#WEIBULL
+options(scipen=999) #prevent scientific notation
+set.seed(7271999)
+
+for(i in censvalues){
+  for(j in sampsizes){
+    for(k in 1:iterations){
+      sh = 1
+      sc = 1
+      df <- generateW(sampsize = j, sh = sh, sc = sc, censrate = i)
+
+      #substitution
+      #define LOD to be smallest, uncensored value
+      LOD <- min(df$true.value[df$censored == FALSE]) 
+      df <- df %>%
+        mutate(impSubValue = if_else(censored == TRUE, LOD/2, true.value))
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "substitution",
+                true_mean = sc*gamma(1+(1/sh)),
+                mean_complete = mean(df$true.value),
+                mean_method = mean(df$impSubValue),
+                true_sd = sqrt((sc^2)*(gamma(1+(2/sh)) - 
+                                      (gamma(1+(1/sh)))^2)),
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(df$impSubValue)/sqrt((length(df$impSubValue))))
+      
+      #mle
+      # mle_res = cenmle(df$true.value, df$censored)
+      # 
+      # df.tall <- df.tall %>%
+      #   add_row(prop_cens = i,
+      #           samplesize = j,
+      #           iteration = k,
+      #           method = "mle",
+      #           true_mean = 1/r,
+      #           mean_complete = mean(df$true.value),
+      #           mean_method = mean(mle_res)[1],
+      #           true_sd = 1/r,
+      #           SE_complete = 
+      #             sd(df$true.value)/sqrt((length(df$true.value))),
+      #           SE_method = mean(mle_res)[2])
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "mle",
+                true_mean = NA,
+                mean_complete = NA,
+                mean_method = NA,
+                true_sd = NA,
+                SE_complete = NA,
+                SE_method = NA)
+      
+      #km
+      km_res = cenfit(df$true.value, df$censored)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "km",
+                true_mean = sc*gamma(1+(1/sh)),
+                mean_complete = mean(df$true.value),
+                mean_method = mean(km_res)[[1]],
+                true_sd = sqrt((sc^2)*(gamma(1+(2/sh)) - 
+                                      (gamma(1+(1/sh)))^2)),
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = mean(km_res)[[2]])
+      
+      #ros
+      ros_res = ros(df$true.value, df$censored)
+      
+      df.tall <- df.tall %>%
+        add_row(prop_cens = i,
+                samplesize = j,
+                iteration = k,
+                method = "ros",
+                true_mean = sc*gamma(1+(1/sh)),
+                mean_complete = mean(df$true.value),
+                mean_method = mean(ros_res),
+                true_sd = sqrt((sc^2)*(gamma(1+(2/sh)) - 
+                                      (gamma(1+(1/sh)))^2)),
+                SE_complete = 
+                  sd(df$true.value)/sqrt((length(df$true.value))),
+                SE_method = 
+                  sd(ros_res)/sqrt((length(df$true.value))))
+    }
+    #end of # iterations
+  }
+}
+
+#aggregating performance criteria
+
+df.w <- df.tall %>%
+  group_by(prop_cens, samplesize, method) %>%
+  summarize(Avg_Mean = mean(mean_method),
+            Bias = (mean(mean_method) - true_mean),
+            Variance = var(mean_method),
+            MSE = mse(true_mean, mean_method) 
+            ) %>%
+  distinct() %>%
+  ungroup()
+```
+
+The results of our simulation study are presented in the following tables below.
+
+\newpage
+
+```{r, echo = FALSE}
+knitr::kable(df.ln, caption = "Performance metrics of our our 4 methods with data derived from the log-normal distribution with mean = 1 and SD = 0.5.")
+```
+
+\newpage
+
+```{r, echo = FALSE}
+knitr::kable(df.exp, caption = "Performance metrics of our our 3 methods (MLE method absent) with data derived from the exponential distribution with a shape parameter = 1.")
+```
+
+\newpage
+
+```{r, echo = FALSE}
+knitr::kable(df.w, caption = "Performance metrics of our our 3 methods (MLE method absent) with data derived from the Weibull distribution with a shape parameter = 1 and scale parameter = 1.")
+```
+
 From the results of our simulation study, we can see that with the data from the log-normal distribution... 
 
 * the methods which obtained the largest underestimates of the average sample means was with mle and substitution when censoring rates were > 50% (regardless of sample size)
@@ -83,17 +527,31 @@ From the results of our simulation study, we can see that with the data from the
 
 * variance is largely dependent only on sample size (to be expected)
 
-* in the case of high censoring (0.50) and small sample size (10), km did not work as well as other methods
+* in the case of low censoring (0.1) all methods perform equally well
 
-* in the case of medium censoring (0.30) with medium sample size (100) and high sample size (1000), ros performed the best, with mle following closely as compared to the other two methods. ros and mle had bias and mse values which were lower than the other two.
+* in the case of medium (0.3) and high censoring (0.50) km did not work as well as other methods
+
+* in the case of medium censoring (0.30) ros performed the best, with mle following closely as compared to the other two methods. ros and mle had bias and mse values which were lower than the other two.
 
 * in the case of high censoring (0.50) and large sample size (1000), ros performed SIGNIFICANTLY better than all other methods (low bias, low mse)
 
-We can see with the exponential...
+We can see with the exponential and weibull...
 
-We can see with the Weibull...
+* all methods perform equally well in the case of low (0.10) censoring with all sample sizes
+
+* km does the worst with with medium (0.30) and high (0.50) censoring when compared to the other methods. 
+
+* in the case of medium (0.3)and high (0.5) censoring, ros performs the best with substitution not far behind
 
 To sum it all up...
+
+* regardless of distributional assumptions all of the methods perform well when censoring is low, with very minute differences
+
+* ros performed the best in the case of medium and high censoring for all 3 distributions
+
+* while mle was only used in the case of the lognormal data, it also performs quite well (though not as good as ros)
+
+* km is unreliable with any moderate or high amounts of censoring for all distributions
 
 ## Discussion {#discussion}
 

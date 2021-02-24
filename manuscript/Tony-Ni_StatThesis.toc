@@ -26,9 +26,19 @@
 \contentsline {subsection}{\numberline {3.4.2}Bias}{27}{subsection.3.4.2}%
 \contentsline {subsection}{\numberline {3.4.3}Mean Squared Error (MSE)}{27}{subsection.3.4.3}%
 \contentsline {section}{\numberline {3.5}Results}{28}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Discussion}{29}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Limitations}{29}{subsection.3.6.1}%
-\contentsline {section}{\numberline {3.7}Study on Real Data}{30}{section.3.7}%
-\contentsline {chapter}{Chapter 4: Conclusion}{31}{chapter.4}%
-\contentsline {chapter}{Corrections}{33}{chapter*.8}%
-\contentsline {chapter}{References}{35}{chapter*.9}%
+\contentsline {section}{\numberline {3.6}Discussion}{33}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Limitations}{33}{subsection.3.6.1}%
+\contentsline {section}{\numberline {3.7}Study on Real Data}{34}{section.3.7}%
+\contentsline {chapter}{Chapter 4: Conclusion}{35}{chapter.4}%
+\contentsline {chapter}{Appendix A: Main Appendix}{37}{appendix.A}%
+\contentsline {section}{\numberline {A.1}In the main file \ref {ref-labels}:}{37}{section.A.1}%
+\contentsline {section}{\numberline {A.2}In Chapter \ref {ref-labels}:}{37}{section.A.2}%
+\contentsline {chapter}{Appendix B: Simulation Appendix}{39}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Libraries}{39}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Generating Data}{39}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Setup}{41}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Lognormal}{42}{section.B.4}%
+\contentsline {section}{\numberline {B.5}Exponential}{44}{section.B.5}%
+\contentsline {section}{\numberline {B.6}Weibull}{47}{section.B.6}%
+\contentsline {chapter}{Corrections}{51}{appendix*.11}%
+\contentsline {chapter}{References}{53}{appendix*.12}%
