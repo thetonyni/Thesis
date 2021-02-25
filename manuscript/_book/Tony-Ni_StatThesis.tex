@@ -123,6 +123,8 @@
 
 \Abstract{
 The abstract should be a short summary of your thesis work. A paragraph is usually sufficient here.
+
+Missing data is ubiquitious in statistics: from nonresponse in survey studies to issues with data collection in field studies, it is often unavoidable to encounter missing data in practice. Our thesis begins with an overview of missingness, specifically with left-censored data, and introduces four different methods: substitution, maxmimum likelihood, kaplan-meier, and regression on order statistics to combat this. We explore a simulation study to compare and contrast the effectiveness of these methods when considering for the distribution of the data, censoring rates, and the size of the dataset in order to validate several claims made in several papers regarding these methods. Finally, we explore left-censored data in the form of coal ash contamination in groundwater wells, and apply our findings to this case study. Our results from our simulation study show that {[}INSERT SUMMED UP VERSION OF RESULST{]}
 }
 
 \Acknowledgments{
@@ -254,6 +256,8 @@ Use this space to thank those who have helped you in the thesis process (profess
 
   \begin{abstract}
     The abstract should be a short summary of your thesis work. A paragraph is usually sufficient here.
+
+    Missing data is ubiquitious in statistics: from nonresponse in survey studies to issues with data collection in field studies, it is often unavoidable to encounter missing data in practice. Our thesis begins with an overview of missingness, specifically with left-censored data, and introduces four different methods: substitution, maxmimum likelihood, kaplan-meier, and regression on order statistics to combat this. We explore a simulation study to compare and contrast the effectiveness of these methods when considering for the distribution of the data, censoring rates, and the size of the dataset in order to validate several claims made in several papers regarding these methods. Finally, we explore left-censored data in the form of coal ash contamination in groundwater wells, and apply our findings to this case study. Our results from our simulation study show that {[}INSERT SUMMED UP VERSION OF RESULST{]}
   \end{abstract}
   \begin{acknowledgments}
     Use this space to thank those who have helped you in the thesis process (professors, staff, friends, family, etc.). If you had special funding to conduct your thesis work, that should be acknowledged here as well.
@@ -274,84 +278,6 @@ Use this space to thank those who have helped you in the thesis process (profess
 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
-
-\hypertarget{background}{%
-\section{Background}\label{background}}
-
-Coal is one of the most dangerous combustible fuels which is being burned in all across the world as one of the largest methods of obtaining energy. Yet, although it is a fossil fuel which is naturally abundant and easy to utilize, it is comprised of a long list of dangerous chemicals including -- but not limited to: arsenic, radium, boron, and a large list of other chemicals which prove to be dangerous to humans and animals alike. (Kelderman et al., 2019)
-
-Power plants produce electricity by burning this coal, and as a result of how prevalent it is within the US - over 100 million tons of coal ash are produced every year. This side-product as a result of the coal combustion is often disposed by directly being dumped into landfills and waste ponds. (Kelderman et al., 2019)
-
-Only recently have these complaints and lawsuits regarding the disposing practices made by non-profit environmental organizations been heard. Due to the onslaught of pressure put on the Environmental Protection Agency -- the Coal Ash Rule was bor in 2015. (Kelderman et al., 2019)
-
-This rule has forced over 265 coal power plants -- about 3/4 of all coal power plants in the US - to make data regarding chemical concentrations publicly available to the general population. (Kelderman et al., 2019)
-
-In their analysis using this data, the Environmental Integrity Project -- a non-profit organization dedicated to issues involving environmental justice have concluded that essentially all groundwater under coal plants are contaminated. (Kelderman et al., 2019)
-
-However, is this really the case? There are many naturally occurring chemicals existing in groundwater as as such, perhaps their claims are overstated.
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{figures/upgradientdowngradient} 
-
-}
-
-\caption{Difference Between Upgradient and Downgradient Wells}\label{fig:upgradientdowngradient}
-\end{figure}
-Typically in a coal ash plant, there exists two types of wells: upgradient wells and downgradient wells. These wells are essential to measure the amount of contamination being caused by coal ash. Upgradient wells, also known as background wells, measures the concentrations of chemicals in groundwater before it passes through an coal ash dump. Conversely, downgradient wells measure the concentrations of chemicals in groundwater after it passes through a coal ash dump.
-\begin{itemize}
-\tightlist
-\item
-  ``80\% of the US population is served by 14\% of the utilities,'' so if something were to get into the water distribution system, it can easily spread amongst the US population which is why contamination in water services is so important. (Byer \& Carlson, 2019)
-\end{itemize}
-With this information, typically -- one estimates the amount of chemical contamination caused by a coal as dump by subtracting the upgradient concentration from the downgradient concentration of a chemical (downgradient concentration - upgradient concentration).
-
-However, due to the lack of proper reporting guidelines prior to the enactment of the Coal Ash Rule, we believe that there may be retired or even unregulated upgradient wells which can cause the concentrations of chemicals being recorded from these upgradient wells to be inaccurate or even completely wrong.
-
-Our end goal remains the same as the EIP: to identify contaminated groundwater in coal plants -- but to attempt to find a way to effectively correct the improper/inaccurate values resulting from LOD errors and other factors which the EIP may not have considered.
-
-The limit of detection problem stems from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount, thus affecting the measurements recorded.
-
-Our plan is to utilize methods designed to calculate descriptive statistics of interest when in the presence of left censored data. Specifically, we would like to calculate average concentrations of certain coal-risk heavy contaminants with regards to downgradient and upgradient wells -- and seeing if our values differ if we had instead simply worked with the dataset without accounting for the left censored values.
-
-\hypertarget{data}{%
-\section{Data}\label{data}}
-
-\hypertarget{coalashrule}{%
-\subsection{Coal Ash Rule}\label{coalashrule}}
-
-A large coal ash spill at the Tennessee Valley Authority (TVA) which occured on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US. (Environmental Protection Agency, 2020)
-
-This was known as the Coal Ash Rule, passed on December 19, 2014. (Environmental Protection Agency, 2020)
-
-Changes were made to the Coal Ash Rule over the years in the form of `amendments,' one of which made required facility information and data to be made publicaly available to the public (April 15, 2015 rule change) (Environmental Protection Agency, 2020)
-
-\hypertarget{source-of-data}{%
-\subsection{Source of Data}\label{source-of-data}}
-
-The data used in the study are from the results published in ``Annual Groundwater Monitoring and Corrective Action Reports'' which were made available to the public in March 2018 as a result of the Coal Ash Rule. (Environmental Integrity Project, 2020)
-
-These reports are in PDF format and are thousands of pages long, which makes it difficult for individuals to look through the data in a meaningful way. (Environmental Integrity Project, 2020)
-
-The EIP obtained the data from an online, publicly available database containing groundwater monitoring results from the first ``Annual Groundwater Monitoring and Corrective Action Reports'' in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule (Environmental Integrity Project, 2020)
-
-They wrangled the data into a more accessible machine-readable format which contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants, which is downloadable from the EIP's website. (Environmental Integrity Project, 2020)
-
-\newpage
-
-\hypertarget{variables}{%
-\subsection{Variables}\label{variables}}
-
-The dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells which represent an observation in the dataset. There are two types of wells -- upgradient and downgradient wells. The variables consist of information regarding the specific chemical concentrations of each well.
-
-\hypertarget{plan-of-action}{%
-\subsection{Plan of Action}\label{plan-of-action}}
-
-Within the report, the EIP mentions certain restrictions within the data that have caused their data to potentially be inaccurate (specifically, with limit of detection problems, and a large amount of missing chemical data). The limit of detection problem comes when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to have duplicate, wrong values -- which can cause for misguided analysis.The other issue is less guided/formed, but for brevity, we think that a lot of the issues in the data comes from the potential possibility of contamination during data collection from investigators from non coal-ash sources. This may include things like: retired/unregulated wells which are old and have chemicals leaking into the groundwater, mismanagement in measuring, etc.
-
-My project hopes to work with methods on handling this missing data -- alongside investing potential uses of bootstrapping and other resampling methods (potentially?) in order to try to come up with a more statistically accurate and sound result by looking to assuage the problems that the EIP faced in their analysis. Specifically, to find a way to split up the data into ''uncontaminated'' and ''contaminated'' wells in order to find the natural distribution of chemicals in each -- and doing to so in the face of data corrupted by LOD problems and inaccuracies. I'm hoping to apply and compare different ways of altering the data to account for these myriad of issues in order to look for more salient findings that the EIP might have missed or if not, to see if improvements can be made regarding the way that contaminated coal ash wells are being identified.
-
-\hypertarget{methodology}{%
-\chapter{Methodology}\label{methodology}}
 
 The concept of missing data is ubiquitous within academic disciplines and often complicates innumerable types of real-world studies. Missing data will be defined within this thesis as \emph{occurences within a dataset where there is no value stored for a variable in the observation of interest}. As most studies often utilize data collected through mediums such as surveys, questionnaires, or field research, missing data is an unavoidable problem. Missing data hinders one's ability to work with and analyze the phenomena at hand, as data is often the basis of all studies.
 
@@ -603,77 +529,77 @@ The results of our simulation study are presented in the following tables below.
 \hline
 prop\_cens & samplesize & method & Avg\_Mean & Bias & Variance & MSE\\
 \hline
-0.1 & 10 & km & 1.009 & 0.009 & 0.023 & 0.023\\
+0.1 & 10 & km & 1.009 & 0.00924 & 0.02289 & 0.02295\\
 \hline
-0.1 & 10 & mle & 0.997 & -0.003 & 0.023 & 0.023\\
+0.1 & 10 & mle & 0.997 & -0.00262 & 0.02276 & 0.02275\\
 \hline
-0.1 & 10 & ros & 0.991 & -0.009 & 0.022 & 0.022\\
+0.1 & 10 & ros & 0.991 & -0.00923 & 0.02190 & 0.02197\\
 \hline
-0.1 & 10 & substitution & 0.981 & -0.019 & 0.022 & 0.022\\
+0.1 & 10 & substitution & 0.981 & -0.01901 & 0.02201 & 0.02235\\
 \hline
-0.1 & 100 & km & 1.008 & 0.008 & 0.003 & 0.003\\
+0.1 & 100 & km & 1.008 & 0.00766 & 0.00263 & 0.00268\\
 \hline
-0.1 & 100 & mle & 0.998 & -0.002 & 0.003 & 0.003\\
+0.1 & 100 & mle & 0.998 & -0.00178 & 0.00263 & 0.00263\\
 \hline
-0.1 & 100 & ros & 0.999 & -0.001 & 0.003 & 0.003\\
+0.1 & 100 & ros & 0.999 & -0.00142 & 0.00258 & 0.00258\\
 \hline
-0.1 & 100 & substitution & 0.983 & -0.017 & 0.003 & 0.003\\
+0.1 & 100 & substitution & 0.983 & -0.01707 & 0.00255 & 0.00284\\
 \hline
-0.1 & 1000 & km & 1.009 & 0.009 & 0.000 & 0.000\\
+0.1 & 1000 & km & 1.009 & 0.00913 & 0.00024 & 0.00033\\
 \hline
-0.1 & 1000 & mle & 1.000 & 0.000 & 0.000 & 0.000\\
+0.1 & 1000 & mle & 1.000 & -0.00004 & 0.00024 & 0.00024\\
 \hline
-0.1 & 1000 & ros & 1.001 & 0.001 & 0.000 & 0.000\\
+0.1 & 1000 & ros & 1.001 & 0.00127 & 0.00024 & 0.00024\\
 \hline
-0.1 & 1000 & substitution & 0.985 & -0.015 & 0.000 & 0.000\\
+0.1 & 1000 & substitution & 0.985 & -0.01536 & 0.00024 & 0.00047\\
 \hline
-0.3 & 10 & km & 1.050 & 0.050 & 0.028 & 0.030\\
+0.3 & 10 & km & 1.050 & 0.05015 & 0.02754 & 0.03002\\
 \hline
-0.3 & 10 & mle & 0.968 & -0.032 & 0.024 & 0.025\\
+0.3 & 10 & mle & 0.968 & -0.03235 & 0.02431 & 0.02534\\
 \hline
-0.3 & 10 & ros & 0.976 & -0.024 & 0.024 & 0.024\\
+0.3 & 10 & ros & 0.976 & -0.02381 & 0.02374 & 0.02429\\
 \hline
-0.3 & 10 & substitution & 0.937 & -0.063 & 0.023 & 0.027\\
+0.3 & 10 & substitution & 0.937 & -0.06286 & 0.02298 & 0.02691\\
 \hline
-0.3 & 100 & km & 1.049 & 0.049 & 0.003 & 0.005\\
+0.3 & 100 & km & 1.049 & 0.04904 & 0.00288 & 0.00528\\
 \hline
-0.3 & 100 & mle & 0.974 & -0.026 & 0.003 & 0.003\\
+0.3 & 100 & mle & 0.974 & -0.02628 & 0.00252 & 0.00321\\
 \hline
-0.3 & 100 & ros & 1.000 & 0.000 & 0.003 & 0.003\\
+0.3 & 100 & ros & 1.000 & -0.00001 & 0.00259 & 0.00259\\
 \hline
-0.3 & 100 & substitution & 0.944 & -0.056 & 0.002 & 0.006\\
+0.3 & 100 & substitution & 0.944 & -0.05642 & 0.00241 & 0.00559\\
 \hline
-0.3 & 1000 & km & 1.049 & 0.049 & 0.000 & 0.003\\
+0.3 & 1000 & km & 1.049 & 0.04939 & 0.00026 & 0.00270\\
 \hline
-0.3 & 1000 & mle & 0.974 & -0.026 & 0.000 & 0.001\\
+0.3 & 1000 & mle & 0.974 & -0.02554 & 0.00024 & 0.00089\\
 \hline
-0.3 & 1000 & ros & 1.004 & 0.004 & 0.000 & 0.000\\
+0.3 & 1000 & ros & 1.004 & 0.00377 & 0.00024 & 0.00025\\
 \hline
-0.3 & 1000 & substitution & 0.945 & -0.055 & 0.000 & 0.003\\
+0.3 & 1000 & substitution & 0.945 & -0.05540 & 0.00022 & 0.00329\\
 \hline
-0.5 & 10 & km & 1.148 & 0.148 & 0.037 & 0.059\\
+0.5 & 10 & km & 1.148 & 0.14806 & 0.03718 & 0.05907\\
 \hline
-0.5 & 10 & mle & 0.908 & -0.092 & 0.022 & 0.031\\
+0.5 & 10 & mle & 0.908 & -0.09188 & 0.02236 & 0.03078\\
 \hline
-0.5 & 10 & ros & 0.967 & -0.033 & 0.028 & 0.029\\
+0.5 & 10 & ros & 0.967 & -0.03257 & 0.02810 & 0.02914\\
 \hline
-0.5 & 10 & substitution & 0.908 & -0.092 & 0.024 & 0.032\\
+0.5 & 10 & substitution & 0.908 & -0.09229 & 0.02368 & 0.03217\\
 \hline
-0.5 & 100 & km & 1.129 & 0.129 & 0.004 & 0.020\\
+0.5 & 100 & km & 1.129 & 0.12867 & 0.00372 & 0.02027\\
 \hline
-0.5 & 100 & mle & 0.904 & -0.096 & 0.002 & 0.012\\
+0.5 & 100 & mle & 0.904 & -0.09649 & 0.00240 & 0.01171\\
 \hline
-0.5 & 100 & ros & 0.996 & -0.004 & 0.003 & 0.003\\
+0.5 & 100 & ros & 0.996 & -0.00399 & 0.00316 & 0.00317\\
 \hline
-0.5 & 100 & substitution & 0.904 & -0.096 & 0.003 & 0.012\\
+0.5 & 100 & substitution & 0.904 & -0.09614 & 0.00250 & 0.01174\\
 \hline
-0.5 & 1000 & km & 1.129 & 0.129 & 0.000 & 0.017\\
+0.5 & 1000 & km & 1.129 & 0.12885 & 0.00035 & 0.01695\\
 \hline
-0.5 & 1000 & mle & 0.905 & -0.095 & 0.000 & 0.009\\
+0.5 & 1000 & mle & 0.905 & -0.09535 & 0.00023 & 0.00932\\
 \hline
-0.5 & 1000 & ros & 1.005 & 0.005 & 0.000 & 0.000\\
+0.5 & 1000 & ros & 1.005 & 0.00515 & 0.00029 & 0.00032\\
 \hline
-0.5 & 1000 & substitution & 0.905 & -0.095 & 0.000 & 0.009\\
+0.5 & 1000 & substitution & 0.905 & -0.09484 & 0.00023 & 0.00923\\
 \hline
 \end{tabular}
 \end{table}
@@ -686,77 +612,77 @@ prop\_cens & samplesize & method & Avg\_Mean & Bias & Variance & MSE\\
 \hline
 prop\_cens & samplesize & method & Avg\_Mean & Bias & Variance & MSE\\
 \hline
-0.1 & 10 & km & 1.012 & 0.012 & 0.063 & 0.063\\
+0.1 & 10 & km & 1.012 & 0.01191 & 0.06330 & 0.06341\\
 \hline
 0.1 & 10 & mle & NA & NA & NA & NA\\
 \hline
-0.1 & 10 & ros & 0.997 & -0.003 & 0.062 & 0.062\\
+0.1 & 10 & ros & 0.997 & -0.00265 & 0.06173 & 0.06170\\
 \hline
-0.1 & 10 & substitution & 0.992 & -0.008 & 0.062 & 0.062\\
+0.1 & 10 & substitution & 0.992 & -0.00761 & 0.06186 & 0.06189\\
 \hline
-0.1 & 100 & km & 1.010 & 0.010 & 0.006 & 0.007\\
+0.1 & 100 & km & 1.010 & 0.00974 & 0.00646 & 0.00656\\
 \hline
 0.1 & 100 & mle & NA & NA & NA & NA\\
 \hline
-0.1 & 100 & ros & 1.005 & 0.005 & 0.006 & 0.006\\
+0.1 & 100 & ros & 1.005 & 0.00469 & 0.00647 & 0.00648\\
 \hline
-0.1 & 100 & substitution & 0.994 & -0.006 & 0.006 & 0.007\\
+0.1 & 100 & substitution & 0.994 & -0.00553 & 0.00649 & 0.00652\\
 \hline
-0.1 & 1000 & km & 1.007 & 0.007 & 0.001 & 0.001\\
+0.1 & 1000 & km & 1.007 & 0.00693 & 0.00067 & 0.00072\\
 \hline
 0.1 & 1000 & mle & NA & NA & NA & NA\\
 \hline
-0.1 & 1000 & ros & 1.003 & 0.003 & 0.001 & 0.001\\
+0.1 & 1000 & ros & 1.003 & 0.00308 & 0.00066 & 0.00067\\
 \hline
-0.1 & 1000 & substitution & 0.992 & -0.008 & 0.001 & 0.001\\
+0.1 & 1000 & substitution & 0.992 & -0.00798 & 0.00071 & 0.00077\\
 \hline
-0.3 & 10 & km & 1.063 & 0.063 & 0.073 & 0.077\\
+0.3 & 10 & km & 1.063 & 0.06291 & 0.07325 & 0.07717\\
 \hline
 0.3 & 10 & mle & NA & NA & NA & NA\\
 \hline
-0.3 & 10 & ros & 0.991 & -0.009 & 0.064 & 0.064\\
+0.3 & 10 & ros & 0.991 & -0.00916 & 0.06389 & 0.06394\\
 \hline
-0.3 & 10 & substitution & 0.970 & -0.030 & 0.064 & 0.065\\
+0.3 & 10 & substitution & 0.970 & -0.02978 & 0.06372 & 0.06457\\
 \hline
-0.3 & 100 & km & 1.053 & 0.053 & 0.007 & 0.010\\
+0.3 & 100 & km & 1.053 & 0.05270 & 0.00719 & 0.00996\\
 \hline
 0.3 & 100 & mle & NA & NA & NA & NA\\
 \hline
-0.3 & 100 & ros & 1.011 & 0.011 & 0.007 & 0.007\\
+0.3 & 100 & ros & 1.011 & 0.01140 & 0.00685 & 0.00698\\
 \hline
-0.3 & 100 & substitution & 0.972 & -0.028 & 0.007 & 0.008\\
+0.3 & 100 & substitution & 0.972 & -0.02764 & 0.00717 & 0.00793\\
 \hline
-0.3 & 1000 & km & 1.054 & 0.054 & 0.001 & 0.004\\
+0.3 & 1000 & km & 1.054 & 0.05368 & 0.00073 & 0.00361\\
 \hline
 0.3 & 1000 & mle & NA & NA & NA & NA\\
 \hline
-0.3 & 1000 & ros & 1.017 & 0.017 & 0.001 & 0.001\\
+0.3 & 1000 & ros & 1.017 & 0.01683 & 0.00085 & 0.00113\\
 \hline
-0.3 & 1000 & substitution & 0.974 & -0.026 & 0.002 & 0.002\\
+0.3 & 1000 & substitution & 0.974 & -0.02557 & 0.00152 & 0.00217\\
 \hline
-0.5 & 10 & km & 1.193 & 0.193 & 0.109 & 0.146\\
+0.5 & 10 & km & 1.193 & 0.19309 & 0.10925 & 0.14648\\
 \hline
 0.5 & 10 & mle & NA & NA & NA & NA\\
 \hline
-0.5 & 10 & ros & 0.992 & -0.008 & 0.076 & 0.076\\
+0.5 & 10 & ros & 0.992 & -0.00789 & 0.07636 & 0.07638\\
 \hline
-0.5 & 10 & substitution & 0.968 & -0.032 & 0.074 & 0.075\\
+0.5 & 10 & substitution & 0.968 & -0.03151 & 0.07419 & 0.07514\\
 \hline
-0.5 & 100 & km & 1.162 & 0.162 & 0.010 & 0.036\\
+0.5 & 100 & km & 1.162 & 0.16154 & 0.00992 & 0.03601\\
 \hline
 0.5 & 100 & mle & NA & NA & NA & NA\\
 \hline
-0.5 & 100 & ros & 1.023 & 0.023 & 0.008 & 0.008\\
+0.5 & 100 & ros & 1.023 & 0.02269 & 0.00792 & 0.00844\\
 \hline
-0.5 & 100 & substitution & 0.961 & -0.039 & 0.009 & 0.011\\
+0.5 & 100 & substitution & 0.961 & -0.03925 & 0.00946 & 0.01100\\
 \hline
-0.5 & 1000 & km & 1.163 & 0.163 & 0.002 & 0.029\\
+0.5 & 1000 & km & 1.163 & 0.16301 & 0.00201 & 0.02858\\
 \hline
 0.5 & 1000 & mle & NA & NA & NA & NA\\
 \hline
-0.5 & 1000 & ros & 1.036 & 0.036 & 0.002 & 0.003\\
+0.5 & 1000 & ros & 1.036 & 0.03598 & 0.00164 & 0.00293\\
 \hline
-0.5 & 1000 & substitution & 0.964 & -0.036 & 0.004 & 0.005\\
+0.5 & 1000 & substitution & 0.964 & -0.03594 & 0.00405 & 0.00534\\
 \hline
 \end{tabular}
 \end{table}
@@ -769,117 +695,90 @@ prop\_cens & samplesize & method & Avg\_Mean & Bias & Variance & MSE\\
 \hline
 prop\_cens & samplesize & method & Avg\_Mean & Bias & Variance & MSE\\
 \hline
-0.1 & 10 & km & 1.010 & 0.010 & 0.077 & 0.077\\
+0.1 & 10 & km & 1.010 & 0.00977 & 0.07703 & 0.07710\\
 \hline
 0.1 & 10 & mle & NA & NA & NA & NA\\
 \hline
-0.1 & 10 & ros & 0.997 & -0.003 & 0.075 & 0.075\\
+0.1 & 10 & ros & 0.997 & -0.00339 & 0.07518 & 0.07516\\
 \hline
-0.1 & 10 & substitution & 0.993 & -0.007 & 0.075 & 0.075\\
+0.1 & 10 & substitution & 0.993 & -0.00678 & 0.07525 & 0.07527\\
 \hline
-0.1 & 100 & km & 1.010 & 0.010 & 0.008 & 0.008\\
+0.1 & 100 & km & 1.010 & 0.00998 & 0.00768 & 0.00778\\
 \hline
 0.1 & 100 & mle & NA & NA & NA & NA\\
 \hline
-0.1 & 100 & ros & 1.006 & 0.006 & 0.008 & 0.008\\
+0.1 & 100 & ros & 1.006 & 0.00626 & 0.00768 & 0.00772\\
 \hline
-0.1 & 100 & substitution & 0.998 & -0.002 & 0.008 & 0.008\\
+0.1 & 100 & substitution & 0.998 & -0.00215 & 0.00768 & 0.00768\\
 \hline
-0.1 & 1000 & km & 1.006 & 0.006 & 0.001 & 0.001\\
+0.1 & 1000 & km & 1.006 & 0.00625 & 0.00077 & 0.00081\\
 \hline
 0.1 & 1000 & mle & NA & NA & NA & NA\\
 \hline
-0.1 & 1000 & ros & 1.004 & 0.004 & 0.001 & 0.001\\
+0.1 & 1000 & ros & 1.004 & 0.00374 & 0.00077 & 0.00079\\
 \hline
-0.1 & 1000 & substitution & 0.995 & -0.005 & 0.001 & 0.001\\
+0.1 & 1000 & substitution & 0.995 & -0.00548 & 0.00081 & 0.00084\\
 \hline
-0.3 & 10 & km & 1.067 & 0.067 & 0.086 & 0.091\\
+0.3 & 10 & km & 1.067 & 0.06660 & 0.08638 & 0.09078\\
 \hline
 0.3 & 10 & mle & NA & NA & NA & NA\\
 \hline
-0.3 & 10 & ros & 0.996 & -0.004 & 0.075 & 0.075\\
+0.3 & 10 & ros & 0.996 & -0.00440 & 0.07540 & 0.07540\\
 \hline
-0.3 & 10 & substitution & 0.981 & -0.019 & 0.075 & 0.076\\
+0.3 & 10 & substitution & 0.981 & -0.01896 & 0.07526 & 0.07559\\
 \hline
-0.3 & 100 & km & 1.054 & 0.054 & 0.008 & 0.011\\
+0.3 & 100 & km & 1.054 & 0.05434 & 0.00845 & 0.01140\\
 \hline
 0.3 & 100 & mle & NA & NA & NA & NA\\
 \hline
-0.3 & 100 & ros & 1.016 & 0.016 & 0.008 & 0.008\\
+0.3 & 100 & ros & 1.016 & 0.01566 & 0.00804 & 0.00829\\
 \hline
-0.3 & 100 & substitution & 0.982 & -0.018 & 0.008 & 0.009\\
+0.3 & 100 & substitution & 0.982 & -0.01761 & 0.00825 & 0.00856\\
 \hline
-0.3 & 1000 & km & 1.055 & 0.055 & 0.001 & 0.004\\
+0.3 & 1000 & km & 1.055 & 0.05451 & 0.00085 & 0.00382\\
 \hline
 0.3 & 1000 & mle & NA & NA & NA & NA\\
 \hline
-0.3 & 1000 & ros & 1.021 & 0.021 & 0.001 & 0.001\\
+0.3 & 1000 & ros & 1.021 & 0.02059 & 0.00094 & 0.00136\\
 \hline
-0.3 & 1000 & substitution & 0.984 & -0.016 & 0.002 & 0.002\\
+0.3 & 1000 & substitution & 0.984 & -0.01618 & 0.00152 & 0.00178\\
 \hline
-0.5 & 10 & km & 1.221 & 0.221 & 0.128 & 0.177\\
+0.5 & 10 & km & 1.221 & 0.22073 & 0.12826 & 0.17694\\
 \hline
 0.5 & 10 & mle & NA & NA & NA & NA\\
 \hline
-0.5 & 10 & ros & 1.009 & 0.009 & 0.089 & 0.089\\
+0.5 & 10 & ros & 1.009 & 0.00898 & 0.08864 & 0.08869\\
 \hline
-0.5 & 10 & substitution & 0.998 & -0.002 & 0.086 & 0.086\\
+0.5 & 10 & substitution & 0.998 & -0.00169 & 0.08642 & 0.08639\\
 \hline
-0.5 & 100 & km & 1.173 & 0.173 & 0.012 & 0.042\\
+0.5 & 100 & km & 1.173 & 0.17290 & 0.01172 & 0.04162\\
 \hline
 0.5 & 100 & mle & NA & NA & NA & NA\\
 \hline
-0.5 & 100 & ros & 1.033 & 0.033 & 0.009 & 0.010\\
+0.5 & 100 & ros & 1.033 & 0.03267 & 0.00934 & 0.01040\\
 \hline
-0.5 & 100 & substitution & 0.980 & -0.020 & 0.011 & 0.011\\
+0.5 & 100 & substitution & 0.980 & -0.01968 & 0.01051 & 0.01090\\
 \hline
-0.5 & 1000 & km & 1.173 & 0.173 & 0.002 & 0.032\\
+0.5 & 1000 & km & 1.173 & 0.17294 & 0.00201 & 0.03192\\
 \hline
 0.5 & 1000 & mle & NA & NA & NA & NA\\
 \hline
-0.5 & 1000 & ros & 1.045 & 0.045 & 0.002 & 0.004\\
+0.5 & 1000 & ros & 1.045 & 0.04497 & 0.00165 & 0.00367\\
 \hline
-0.5 & 1000 & substitution & 0.982 & -0.018 & 0.004 & 0.004\\
+0.5 & 1000 & substitution & 0.982 & -0.01751 & 0.00372 & 0.00402\\
 \hline
 \end{tabular}
 \end{table}
-From the results of our simulation study, we can see that with the data from the log-normal distribution\ldots{}
-\begin{itemize}
-\item
-  the methods which obtained the largest underestimates of the average sample means was with mle and substitution when censoring rates were \textgreater{} 50\% (regardless of sample size)
-\item
-  km method for all censoring rates and all sample sizes gave large overestimates, had very large, positive bias values compared to all other methods
-\item
-  variance is largely dependent only on sample size (to be expected)
-\item
-  in the case of low censoring (0.1) all methods perform equally well
-\item
-  in the case of medium (0.3) and high censoring (0.50) km did not work as well as other methods
-\item
-  in the case of medium censoring (0.30) ros performed the best, with mle following closely as compared to the other two methods. ros and mle had bias and mse values which were lower than the other two.
-\item
-  in the case of high censoring (0.50) and large sample size (1000), ros performed SIGNIFICANTLY better than all other methods (low bias, low mse)
-\end{itemize}
-We can see with the exponential and weibull\ldots{}
-\begin{itemize}
-\item
-  all methods perform equally well in the case of low (0.10) censoring with all sample sizes
-\item
-  km does the worst with with medium (0.30) and high (0.50) censoring when compared to the other methods.
-\item
-  in the case of medium (0.3)and high (0.5) censoring, ros performs the best with substitution not far behind
-\end{itemize}
-To sum it all up\ldots{}
-\begin{itemize}
-\item
-  regardless of distributional assumptions all of the methods perform well when censoring is low, with very minute differences
-\item
-  ros performed the best in the case of medium and high censoring for all 3 distributions
-\item
-  while mle was only used in the case of the lognormal data, it also performs quite well (though not as good as ros)
-\item
-  km is unreliable with any moderate or high amounts of censoring for all distributions
-\end{itemize}
+From the results of our simulation study, we can see that with the data generated from the log-normal distribution, in the case of low censoring (0.10), when dealing with sample sizes of 10 and 100, the methods are largely comparable to one another. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significant worse than KM. MLE and ROS perform rather equally well in all sample sizes for low-censoring.
+
+When considering medium censoring (0.30), much of the same observations still hold true. Substitution performs the worse, followed by KM. MLE and ROS both perform well. However, ROS has a slight edge over MLE, especially as sample sizes increase, attaining lower MSE values than the latter.
+
+All four methods begin to perform worse when the censoring rate is increased to 0.5, which is to be expected. As more and more missingness is introduced within the dataset, it becomes more difficult to obtain accurate estimates for all methods. Once again, substitution and KM attain high absolute bias and MSE values. However, it is now KM which performs worse than substitution in the setting of high censoring. Similarly to before, albeit being more noticeable now, ROS performs better than MLE with all sample sizes.
+
+We can see with the exponential and Weibull cases, all three methods perform equally well in the case of low (0.10) censoring with all sample sizes, obtaining similar bias and MSE values across all sample sizes for both the exponential and Weibull datasets. KM consistently performs the worst with with medium (0.30) and high (0.50) censoring when compared to the other methods across all sample sizes. In these censoring settings, it is also the case that ROS performs the best with substitution not far behind.
+
+In summary, regardless of distributional assumptions all of the methods perform well when censoring is low, with very minute differences in performance metrics. KM does not perform well in the lognormal distribution with high censoring rates and struggles in the exponential and Weibull cases with medium and high censoring rates. While MLE was only used in the case of the lognormal data, it also performs quite well, although not quite as well as ROS. ROS performed the best in the case of medium and high censoring across all 3 distributions.
+
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
@@ -899,10 +798,88 @@ Shortcomings in the results presented in this study very well may come from the 
 
 {[}can write this chapter after some preliminary exploration with coal groundwater data{]}
 
+\hypertarget{casestudy}{%
+\chapter{Case Study}\label{casestudy}}
+
+\hypertarget{background}{%
+\section{Background}\label{background}}
+
+Coal is one of the most dangerous combustible fuels which is being burned in all across the world as one of the largest methods of obtaining energy. Yet, although it is a fossil fuel which is naturally abundant and easy to utilize, it is comprised of a long list of dangerous chemicals including -- but not limited to: arsenic, radium, boron, and a large list of other chemicals which prove to be dangerous to humans and animals alike. (Kelderman et al., 2019)
+
+Power plants produce electricity by burning this coal, and as a result of how prevalent it is within the US - over 100 million tons of coal ash are produced every year. This side-product as a result of the coal combustion is often disposed by directly being dumped into landfills and waste ponds. (Kelderman et al., 2019)
+
+Only recently have these complaints and lawsuits regarding the disposing practices made by non-profit environmental organizations been heard. Due to the onslaught of pressure put on the Environmental Protection Agency -- the Coal Ash Rule was bor in 2015. (Kelderman et al., 2019)
+
+This rule has forced over 265 coal power plants -- about 3/4 of all coal power plants in the US - to make data regarding chemical concentrations publicly available to the general population. (Kelderman et al., 2019)
+
+In their analysis using this data, the Environmental Integrity Project -- a non-profit organization dedicated to issues involving environmental justice have concluded that essentially all groundwater under coal plants are contaminated. (Kelderman et al., 2019)
+
+However, is this really the case? There are many naturally occurring chemicals existing in groundwater as as such, perhaps their claims are overstated.
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figures/upgradientdowngradient} 
+
+}
+
+\caption{Difference Between Upgradient and Downgradient Wells}\label{fig:upgradientdowngradient}
+\end{figure}
+Typically in a coal ash plant, there exists two types of wells: upgradient wells and downgradient wells. These wells are essential to measure the amount of contamination being caused by coal ash. Upgradient wells, also known as background wells, measures the concentrations of chemicals in groundwater before it passes through an coal ash dump. Conversely, downgradient wells measure the concentrations of chemicals in groundwater after it passes through a coal ash dump.
+\begin{itemize}
+\tightlist
+\item
+  ``80\% of the US population is served by 14\% of the utilities,'' so if something were to get into the water distribution system, it can easily spread amongst the US population which is why contamination in water services is so important. (Byer \& Carlson, 2019)
+\end{itemize}
+With this information, typically -- one estimates the amount of chemical contamination caused by a coal as dump by subtracting the upgradient concentration from the downgradient concentration of a chemical (downgradient concentration - upgradient concentration).
+
+However, due to the lack of proper reporting guidelines prior to the enactment of the Coal Ash Rule, we believe that there may be retired or even unregulated upgradient wells which can cause the concentrations of chemicals being recorded from these upgradient wells to be inaccurate or even completely wrong.
+
+Our end goal remains the same as the EIP: to identify contaminated groundwater in coal plants -- but to attempt to find a way to effectively correct the improper/inaccurate values resulting from LOD errors and other factors which the EIP may not have considered.
+
+The limit of detection problem stems from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount, thus affecting the measurements recorded.
+
+Our plan is to utilize methods designed to calculate descriptive statistics of interest when in the presence of left censored data. Specifically, we would like to calculate average concentrations of certain coal-risk heavy contaminants with regards to downgradient and upgradient wells -- and seeing if our values differ if we had instead simply worked with the dataset without accounting for the left censored values.
+
+\hypertarget{data}{%
+\section{Data}\label{data}}
+
+\hypertarget{coalashrule}{%
+\subsection{Coal Ash Rule}\label{coalashrule}}
+
+A large coal ash spill at the Tennessee Valley Authority (TVA) which occured on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US. (Environmental Protection Agency, 2020)
+
+This was known as the Coal Ash Rule, passed on December 19, 2014. (Environmental Protection Agency, 2020)
+
+Changes were made to the Coal Ash Rule over the years in the form of `amendments,' one of which made required facility information and data to be made publicaly available to the public (April 15, 2015 rule change) (Environmental Protection Agency, 2020)
+
+\hypertarget{source-of-data}{%
+\subsection{Source of Data}\label{source-of-data}}
+
+The data used in the study are from the results published in ``Annual Groundwater Monitoring and Corrective Action Reports'' which were made available to the public in March 2018 as a result of the Coal Ash Rule. (Environmental Integrity Project, 2020)
+
+These reports are in PDF format and are thousands of pages long, which makes it difficult for individuals to look through the data in a meaningful way. (Environmental Integrity Project, 2020)
+
+The EIP obtained the data from an online, publicly available database containing groundwater monitoring results from the first ``Annual Groundwater Monitoring and Corrective Action Reports'' in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule (Environmental Integrity Project, 2020)
+
+They wrangled the data into a more accessible machine-readable format which contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants, which is downloadable from the EIP's website. (Environmental Integrity Project, 2020)
+
+\newpage
+
+\hypertarget{variables}{%
+\subsection{Variables}\label{variables}}
+
+The dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells which represent an observation in the dataset. There are two types of wells -- upgradient and downgradient wells. The variables consist of information regarding the specific chemical concentrations of each well.
+
+\hypertarget{plan-of-action}{%
+\subsection{Plan of Action}\label{plan-of-action}}
+
+Within the report, the EIP mentions certain restrictions within the data that have caused their data to potentially be inaccurate (specifically, with limit of detection problems, and a large amount of missing chemical data). The limit of detection problem comes when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to have duplicate, wrong values -- which can cause for misguided analysis.The other issue is less guided/formed, but for brevity, we think that a lot of the issues in the data comes from the potential possibility of contamination during data collection from investigators from non coal-ash sources. This may include things like: retired/unregulated wells which are old and have chemicals leaking into the groundwater, mismanagement in measuring, etc.
+
+My project hopes to work with methods on handling this missing data -- alongside investing potential uses of bootstrapping and other resampling methods (potentially?) in order to try to come up with a more statistically accurate and sound result by looking to assuage the problems that the EIP faced in their analysis. Specifically, to find a way to split up the data into ''uncontaminated'' and ''contaminated'' wells in order to find the natural distribution of chemicals in each -- and doing to so in the face of data corrupted by LOD problems and inaccuracies. I'm hoping to apply and compare different ways of altering the data to account for these myriad of issues in order to look for more salient findings that the EIP might have missed or if not, to see if improvements can be made regarding the way that contaminated coal ash wells are being identified.
+
 \hypertarget{conclusion}{%
 \chapter{Conclusion}\label{conclusion}}
 
-{[}write a few paragraphss to wrap up entire thesis{]}
+{[}write a few paragraphs to wrap up entire thesis{]}
 
 \appendix
 

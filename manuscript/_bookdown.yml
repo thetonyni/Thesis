@@ -6,8 +6,8 @@ book_filename: "Tony-Ni_StatThesis"
 # they are automatically processed in the index.Rmd file
 rmd_files: ["index.Rmd",
             "01-introduction.Rmd",
-            "02-methodology.Rmd",
-            "03-simulations.Rmd",
+            "02-simulations.Rmd",
+            "03-casestudy.Rmd",
             "04-conclusion.Rmd",
             "06-appendixA.Rmd",
             "07-appendixB.Rmd",

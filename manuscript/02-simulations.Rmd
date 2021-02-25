@@ -504,54 +504,30 @@ The results of our simulation study are presented in the following tables below.
 \newpage
 
 ```{r, echo = FALSE}
-knitr::kable(df.ln, caption = "Performance metrics of our our 4 methods with data derived from the log-normal distribution with mean = 1 and SD = 0.5.")
+knitr::kable(df.ln, caption = "Performance metrics of our our 4 methods with data derived from the log-normal distribution with mean = 1 and SD = 0.5.", digits = 5)
 ```
 
 \newpage
 
 ```{r, echo = FALSE}
-knitr::kable(df.exp, caption = "Performance metrics of our our 3 methods (MLE method absent) with data derived from the exponential distribution with a shape parameter = 1.")
+knitr::kable(df.exp, caption = "Performance metrics of our our 3 methods (MLE method absent) with data derived from the exponential distribution with a shape parameter = 1.", digits = 5)
 ```
 
 \newpage
 
 ```{r, echo = FALSE}
-knitr::kable(df.w, caption = "Performance metrics of our our 3 methods (MLE method absent) with data derived from the Weibull distribution with a shape parameter = 1 and scale parameter = 1.")
+knitr::kable(df.w, caption = "Performance metrics of our our 3 methods (MLE method absent) with data derived from the Weibull distribution with a shape parameter = 1 and scale parameter = 1.", digits = 5)
 ```
 
-From the results of our simulation study, we can see that with the data from the log-normal distribution... 
+From the results of our simulation study, we can see that with the data generated from the log-normal distribution, in the case of low censoring (0.10), when dealing with sample sizes of 10 and 100, the methods are largely comparable to one another. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significant worse than KM. MLE and ROS perform rather equally well in all sample sizes for low-censoring. 
 
-* the methods which obtained the largest underestimates of the average sample means was with mle and substitution when censoring rates were > 50% (regardless of sample size)
+When considering medium censoring (0.30), much of the same observations still hold true. Substitution performs the worse, followed by KM. MLE and ROS both perform well. However, ROS has a slight edge over MLE, especially as sample sizes increase, attaining lower MSE values than the latter.
 
-* km method for all censoring rates and all sample sizes gave large overestimates, had very large, positive bias values compared to all other methods
+All four methods begin to perform worse when the censoring rate is increased to 0.5, which is to be expected. As more and more missingness is introduced within the dataset, it becomes more difficult to obtain accurate estimates for all methods. Once again, substitution and KM attain high absolute bias and MSE values. However, it is now KM which performs worse than substitution in the setting of high censoring. Similarly to before, albeit being more noticeable now, ROS performs better than MLE with all sample sizes.
 
-* variance is largely dependent only on sample size (to be expected)
+We can see with the exponential and Weibull cases, all three methods perform equally well in the case of low (0.10) censoring with all sample sizes, obtaining similar bias and MSE values across all sample sizes for both the exponential and Weibull datasets. KM consistently performs the worst with with medium (0.30) and high (0.50) censoring when compared to the other methods across all sample sizes. In these censoring settings, it is also the case that ROS performs the best with substitution not far behind.
 
-* in the case of low censoring (0.1) all methods perform equally well
-
-* in the case of medium (0.3) and high censoring (0.50) km did not work as well as other methods
-
-* in the case of medium censoring (0.30) ros performed the best, with mle following closely as compared to the other two methods. ros and mle had bias and mse values which were lower than the other two.
-
-* in the case of high censoring (0.50) and large sample size (1000), ros performed SIGNIFICANTLY better than all other methods (low bias, low mse)
-
-We can see with the exponential and weibull...
-
-* all methods perform equally well in the case of low (0.10) censoring with all sample sizes
-
-* km does the worst with with medium (0.30) and high (0.50) censoring when compared to the other methods. 
-
-* in the case of medium (0.3)and high (0.5) censoring, ros performs the best with substitution not far behind
-
-To sum it all up...
-
-* regardless of distributional assumptions all of the methods perform well when censoring is low, with very minute differences
-
-* ros performed the best in the case of medium and high censoring for all 3 distributions
-
-* while mle was only used in the case of the lognormal data, it also performs quite well (though not as good as ros)
-
-* km is unreliable with any moderate or high amounts of censoring for all distributions
+In summary, regardless of distributional assumptions all of the methods perform well when censoring is low, with very minute differences in performance metrics. KM does not perform well in the lognormal distribution with high censoring rates and struggles in the exponential and Weibull cases with medium and high censoring rates. While MLE was only used in the case of the lognormal data, it also performs quite well, although not quite as well as ROS. ROS performed the best in the case of medium and high censoring across all 3 distributions.
 
 ## Discussion {#discussion}
 

@@ -6,4 +6,4 @@ output:
 
 # Conclusion {#conclusion}
 
-[write a few paragraphss to wrap up entire thesis]
+[write a few paragraphs to wrap up entire thesis]
