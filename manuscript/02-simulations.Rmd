@@ -80,6 +80,7 @@ library(tidyverse)
 library(Metrics) #package to help calculate mse
 library(NADA) #package with implementation of many methods
 library(survival)
+library(kableExtra)
 ```
 
 ```{r generateLN, include = FALSE}
@@ -502,15 +503,55 @@ df.w <- df.tall %>%
 The results of our simulation study are presented in the following tables below.
 
 ```{r, echo = FALSE}
-knitr::kable(df.ln, caption = "Performance metrics of our our 4 methods with data derived from the log-normal distribution with mean = 1 and SD = 0.5.", digits = 5)
+ln.table <- df.ln %>%
+  select(-"prop_cens") %>%
+  select(c(2, 1, 3:5)) %>%
+  rename(" " = "method", "Sample Size" = "samplesize", 
+         "Avg. Mean" = "Avg_Mean")
+
+knitr::kable(ln.table, caption = "Performance metrics of our our 
+             4 methods with data derived from the log-normal 
+             distribution with mean = 1 and SD = 0.5.", 
+             digits = 5, booktabs = "T") %>%
+  kable_styling(font_size = 11.5) %>%
+  pack_rows("Censoring Rate = 0.1", 1, 12) %>%
+  pack_rows("Censoring Rate = 0.3", 13, 24, latex_gap_space = "1em") %>%
+  pack_rows("Censoring Rate = 0.5", 25, 36, latex_gap_space = "1em")
 ```
 
 ```{r, echo = FALSE}
-knitr::kable(df.exp, caption = "Performance metrics of our our 3 methods (MLE method absent) with data derived from the exponential distribution with a shape parameter = 1.", digits = 5)
+exp.table <- df.exp %>%
+  select(-"prop_cens") %>%
+  select(c(2, 1, 3:5)) %>%
+  rename(" " = "method", "Sample Size" = "samplesize", 
+         "Avg. Mean" = "Avg_Mean")
+
+knitr::kable(exp.table, caption = "Performance metrics of our our 3 
+             methods (MLE method absent) with data derived from the 
+             exponential distribution with a shape parameter = 1.", 
+             digits = 5, booktabs = "T") %>%
+  kable_styling(font_size = 11.5) %>%
+  pack_rows("Censoring Rate = 0.1", 1, 12) %>%
+  pack_rows("Censoring Rate = 0.3", 13, 24, latex_gap_space = "1em") %>%
+  pack_rows("Censoring Rate = 0.5", 25, 36, latex_gap_space = "1em")
 ```
 
 ```{r, echo = FALSE}
-knitr::kable(df.w, caption = "Performance metrics of our our 3 methods (MLE method absent) with data derived from the Weibull distribution with a shape parameter = 1 and scale parameter = 1.", digits = 5)
+w.table <- df.w %>%
+  select(-"prop_cens") %>%
+  select(c(2, 1, 3:5)) %>%
+  rename(" " = "method", "Sample Size" = "samplesize", 
+         "Avg. Mean" = "Avg_Mean")
+
+knitr::kable(w.table, caption = "Performance metrics of our our 3 methods 
+             (MLE method absent) with data derived from the Weibull 
+             distribution with a shape parameter = 1 and 
+             scale parameter = 1.", 
+             digits = 5, booktabs = "T") %>%
+  kable_styling(font_size = 11.5) %>%
+  pack_rows("Censoring Rate = 0.1", 1, 12) %>%
+  pack_rows("Censoring Rate = 0.3", 13, 24, latex_gap_space = "1em") %>%
+  pack_rows("Censoring Rate = 0.5", 25, 36, latex_gap_space = "1em")
 ```
 
 From the results of our simulation study, we can see that with the data generated from the log-normal distribution, in the case of low censoring (0.10), when dealing with sample sizes of 10 and 100, the methods are largely comparable to one another. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significant worse than KM. MLE and ROS perform rather equally well in all sample sizes for low-censoring. 

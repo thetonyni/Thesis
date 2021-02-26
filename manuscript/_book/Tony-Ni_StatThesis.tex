@@ -24,6 +24,20 @@
 \usepackage{rotating}
 \usepackage{fancyvrb}
 % User-added packages:
+	\usepackage{booktabs}
+ \usepackage{longtable}
+ \usepackage{array}
+ \usepackage{multirow}
+ \usepackage{wrapfig}
+ \usepackage{float}
+ \usepackage{colortbl}
+ \usepackage{pdflscape}
+ \usepackage{tabu}
+ \usepackage{threeparttable}
+ \usepackage{threeparttablex}
+ \usepackage[normalem]{ulem}
+ \usepackage{makecell}
+ \usepackage{xcolor}
 % End user-added packages
 
 %===========================================================
@@ -521,248 +535,171 @@ As the MSE is always positive, MSE values closer to zero are more desirable -- a
 The results of our simulation study are presented in the following tables below.
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-1}Performance metrics of our our 4 methods with data derived from the log-normal distribution with mean = 1 and SD = 0.5.}
+\caption{\label{tab:unnamed-chunk-1}Performance metrics of our our 
+             4 methods with data derived from the log-normal 
+             distribution with mean = 1 and SD = 0.5.}
 \centering
-\begin{tabular}[t]{r|r|l|r|r|r|r}
-\hline
-prop\_cens & samplesize & method & Avg\_Mean & Bias & Variance & MSE\\
-\hline
-0.1 & 10 & km & 1.009 & 0.00924 & 0.02289 & 0.02295\\
-\hline
-0.1 & 10 & mle & 0.997 & -0.00262 & 0.02276 & 0.02275\\
-\hline
-0.1 & 10 & ros & 0.991 & -0.00923 & 0.02190 & 0.02197\\
-\hline
-0.1 & 10 & substitution & 0.981 & -0.01901 & 0.02201 & 0.02235\\
-\hline
-0.1 & 100 & km & 1.008 & 0.00766 & 0.00263 & 0.00268\\
-\hline
-0.1 & 100 & mle & 0.998 & -0.00178 & 0.00263 & 0.00263\\
-\hline
-0.1 & 100 & ros & 0.999 & -0.00142 & 0.00258 & 0.00258\\
-\hline
-0.1 & 100 & substitution & 0.983 & -0.01707 & 0.00255 & 0.00284\\
-\hline
-0.1 & 1000 & km & 1.009 & 0.00913 & 0.00024 & 0.00033\\
-\hline
-0.1 & 1000 & mle & 1.000 & -0.00004 & 0.00024 & 0.00024\\
-\hline
-0.1 & 1000 & ros & 1.001 & 0.00127 & 0.00024 & 0.00024\\
-\hline
-0.1 & 1000 & substitution & 0.985 & -0.01536 & 0.00024 & 0.00047\\
-\hline
-0.3 & 10 & km & 1.050 & 0.05015 & 0.02754 & 0.03002\\
-\hline
-0.3 & 10 & mle & 0.968 & -0.03235 & 0.02431 & 0.02534\\
-\hline
-0.3 & 10 & ros & 0.976 & -0.02381 & 0.02374 & 0.02429\\
-\hline
-0.3 & 10 & substitution & 0.937 & -0.06286 & 0.02298 & 0.02691\\
-\hline
-0.3 & 100 & km & 1.049 & 0.04904 & 0.00288 & 0.00528\\
-\hline
-0.3 & 100 & mle & 0.974 & -0.02628 & 0.00252 & 0.00321\\
-\hline
-0.3 & 100 & ros & 1.000 & -0.00001 & 0.00259 & 0.00259\\
-\hline
-0.3 & 100 & substitution & 0.944 & -0.05642 & 0.00241 & 0.00559\\
-\hline
-0.3 & 1000 & km & 1.049 & 0.04939 & 0.00026 & 0.00270\\
-\hline
-0.3 & 1000 & mle & 0.974 & -0.02554 & 0.00024 & 0.00089\\
-\hline
-0.3 & 1000 & ros & 1.004 & 0.00377 & 0.00024 & 0.00025\\
-\hline
-0.3 & 1000 & substitution & 0.945 & -0.05540 & 0.00022 & 0.00329\\
-\hline
-0.5 & 10 & km & 1.148 & 0.14806 & 0.03718 & 0.05907\\
-\hline
-0.5 & 10 & mle & 0.908 & -0.09188 & 0.02236 & 0.03078\\
-\hline
-0.5 & 10 & ros & 0.967 & -0.03257 & 0.02810 & 0.02914\\
-\hline
-0.5 & 10 & substitution & 0.908 & -0.09229 & 0.02368 & 0.03217\\
-\hline
-0.5 & 100 & km & 1.129 & 0.12867 & 0.00372 & 0.02027\\
-\hline
-0.5 & 100 & mle & 0.904 & -0.09649 & 0.00240 & 0.01171\\
-\hline
-0.5 & 100 & ros & 0.996 & -0.00399 & 0.00316 & 0.00317\\
-\hline
-0.5 & 100 & substitution & 0.904 & -0.09614 & 0.00250 & 0.01174\\
-\hline
-0.5 & 1000 & km & 1.129 & 0.12885 & 0.00035 & 0.01695\\
-\hline
-0.5 & 1000 & mle & 0.905 & -0.09535 & 0.00023 & 0.00932\\
-\hline
-0.5 & 1000 & ros & 1.005 & 0.00515 & 0.00029 & 0.00032\\
-\hline
-0.5 & 1000 & substitution & 0.905 & -0.09484 & 0.00023 & 0.00923\\
-\hline
+\fontsize{11.5}{13.5}\selectfont
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Sample Size & Avg. Mean & Bias & Variance\\
+\midrule
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Censoring Rate = 0.1}}\\
+\hspace{1em}km & 10 & 1.009 & 0.00924 & 0.02289\\
+\hspace{1em}mle & 10 & 0.997 & -0.00262 & 0.02276\\
+\hspace{1em}ros & 10 & 0.991 & -0.00923 & 0.02190\\
+\hspace{1em}substitution & 10 & 0.981 & -0.01901 & 0.02201\\
+\hspace{1em}km & 100 & 1.008 & 0.00766 & 0.00263\\
+\hspace{1em}mle & 100 & 0.998 & -0.00178 & 0.00263\\
+\hspace{1em}ros & 100 & 0.999 & -0.00142 & 0.00258\\
+\hspace{1em}substitution & 100 & 0.983 & -0.01707 & 0.00255\\
+\hspace{1em}km & 1000 & 1.009 & 0.00913 & 0.00024\\
+\hspace{1em}mle & 1000 & 1.000 & -0.00004 & 0.00024\\
+\hspace{1em}ros & 1000 & 1.001 & 0.00127 & 0.00024\\
+\hspace{1em}substitution & 1000 & 0.985 & -0.01536 & 0.00024\\
+\addlinespace[1em]
+\multicolumn{5}{l}{\textbf{Censoring Rate = 0.3}}\\
+\hspace{1em}km & 10 & 1.050 & 0.05015 & 0.02754\\
+\hspace{1em}mle & 10 & 0.968 & -0.03235 & 0.02431\\
+\hspace{1em}ros & 10 & 0.976 & -0.02381 & 0.02374\\
+\hspace{1em}substitution & 10 & 0.937 & -0.06286 & 0.02298\\
+\hspace{1em}km & 100 & 1.049 & 0.04904 & 0.00288\\
+\hspace{1em}mle & 100 & 0.974 & -0.02628 & 0.00252\\
+\hspace{1em}ros & 100 & 1.000 & -0.00001 & 0.00259\\
+\hspace{1em}substitution & 100 & 0.944 & -0.05642 & 0.00241\\
+\hspace{1em}km & 1000 & 1.049 & 0.04939 & 0.00026\\
+\hspace{1em}mle & 1000 & 0.974 & -0.02554 & 0.00024\\
+\hspace{1em}ros & 1000 & 1.004 & 0.00377 & 0.00024\\
+\hspace{1em}substitution & 1000 & 0.945 & -0.05540 & 0.00022\\
+\addlinespace[1em]
+\multicolumn{5}{l}{\textbf{Censoring Rate = 0.5}}\\
+\hspace{1em}km & 10 & 1.148 & 0.14806 & 0.03718\\
+\hspace{1em}mle & 10 & 0.908 & -0.09188 & 0.02236\\
+\hspace{1em}ros & 10 & 0.967 & -0.03257 & 0.02810\\
+\hspace{1em}substitution & 10 & 0.908 & -0.09229 & 0.02368\\
+\hspace{1em}km & 100 & 1.129 & 0.12867 & 0.00372\\
+\hspace{1em}mle & 100 & 0.904 & -0.09649 & 0.00240\\
+\hspace{1em}ros & 100 & 0.996 & -0.00399 & 0.00316\\
+\hspace{1em}substitution & 100 & 0.904 & -0.09614 & 0.00250\\
+\hspace{1em}km & 1000 & 1.129 & 0.12885 & 0.00035\\
+\hspace{1em}mle & 1000 & 0.905 & -0.09535 & 0.00023\\
+\hspace{1em}ros & 1000 & 1.005 & 0.00515 & 0.00029\\
+\hspace{1em}substitution & 1000 & 0.905 & -0.09484 & 0.00023\\
+\bottomrule
 \end{tabular}
 \end{table}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-2}Performance metrics of our our 3 methods (MLE method absent) with data derived from the exponential distribution with a shape parameter = 1.}
+\caption{\label{tab:unnamed-chunk-2}Performance metrics of our our 3 
+             methods (MLE method absent) with data derived from the 
+             exponential distribution with a shape parameter = 1.}
 \centering
-\begin{tabular}[t]{r|r|l|r|r|r|r}
-\hline
-prop\_cens & samplesize & method & Avg\_Mean & Bias & Variance & MSE\\
-\hline
-0.1 & 10 & km & 1.012 & 0.01191 & 0.06330 & 0.06341\\
-\hline
-0.1 & 10 & mle & NA & NA & NA & NA\\
-\hline
-0.1 & 10 & ros & 0.997 & -0.00265 & 0.06173 & 0.06170\\
-\hline
-0.1 & 10 & substitution & 0.992 & -0.00761 & 0.06186 & 0.06189\\
-\hline
-0.1 & 100 & km & 1.010 & 0.00974 & 0.00646 & 0.00656\\
-\hline
-0.1 & 100 & mle & NA & NA & NA & NA\\
-\hline
-0.1 & 100 & ros & 1.005 & 0.00469 & 0.00647 & 0.00648\\
-\hline
-0.1 & 100 & substitution & 0.994 & -0.00553 & 0.00649 & 0.00652\\
-\hline
-0.1 & 1000 & km & 1.007 & 0.00693 & 0.00067 & 0.00072\\
-\hline
-0.1 & 1000 & mle & NA & NA & NA & NA\\
-\hline
-0.1 & 1000 & ros & 1.003 & 0.00308 & 0.00066 & 0.00067\\
-\hline
-0.1 & 1000 & substitution & 0.992 & -0.00798 & 0.00071 & 0.00077\\
-\hline
-0.3 & 10 & km & 1.063 & 0.06291 & 0.07325 & 0.07717\\
-\hline
-0.3 & 10 & mle & NA & NA & NA & NA\\
-\hline
-0.3 & 10 & ros & 0.991 & -0.00916 & 0.06389 & 0.06394\\
-\hline
-0.3 & 10 & substitution & 0.970 & -0.02978 & 0.06372 & 0.06457\\
-\hline
-0.3 & 100 & km & 1.053 & 0.05270 & 0.00719 & 0.00996\\
-\hline
-0.3 & 100 & mle & NA & NA & NA & NA\\
-\hline
-0.3 & 100 & ros & 1.011 & 0.01140 & 0.00685 & 0.00698\\
-\hline
-0.3 & 100 & substitution & 0.972 & -0.02764 & 0.00717 & 0.00793\\
-\hline
-0.3 & 1000 & km & 1.054 & 0.05368 & 0.00073 & 0.00361\\
-\hline
-0.3 & 1000 & mle & NA & NA & NA & NA\\
-\hline
-0.3 & 1000 & ros & 1.017 & 0.01683 & 0.00085 & 0.00113\\
-\hline
-0.3 & 1000 & substitution & 0.974 & -0.02557 & 0.00152 & 0.00217\\
-\hline
-0.5 & 10 & km & 1.193 & 0.19309 & 0.10925 & 0.14648\\
-\hline
-0.5 & 10 & mle & NA & NA & NA & NA\\
-\hline
-0.5 & 10 & ros & 0.992 & -0.00789 & 0.07636 & 0.07638\\
-\hline
-0.5 & 10 & substitution & 0.968 & -0.03151 & 0.07419 & 0.07514\\
-\hline
-0.5 & 100 & km & 1.162 & 0.16154 & 0.00992 & 0.03601\\
-\hline
-0.5 & 100 & mle & NA & NA & NA & NA\\
-\hline
-0.5 & 100 & ros & 1.023 & 0.02269 & 0.00792 & 0.00844\\
-\hline
-0.5 & 100 & substitution & 0.961 & -0.03925 & 0.00946 & 0.01100\\
-\hline
-0.5 & 1000 & km & 1.163 & 0.16301 & 0.00201 & 0.02858\\
-\hline
-0.5 & 1000 & mle & NA & NA & NA & NA\\
-\hline
-0.5 & 1000 & ros & 1.036 & 0.03598 & 0.00164 & 0.00293\\
-\hline
-0.5 & 1000 & substitution & 0.964 & -0.03594 & 0.00405 & 0.00534\\
-\hline
+\fontsize{11.5}{13.5}\selectfont
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Sample Size & Avg. Mean & Bias & Variance\\
+\midrule
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Censoring Rate = 0.1}}\\
+\hspace{1em}km & 10 & 1.012 & 0.01191 & 0.06330\\
+\hspace{1em}mle & 10 & NA & NA & \vphantom{2} NA\\
+\hspace{1em}ros & 10 & 0.997 & -0.00265 & 0.06173\\
+\hspace{1em}substitution & 10 & 0.992 & -0.00761 & 0.06186\\
+\hspace{1em}km & 100 & 1.010 & 0.00974 & 0.00646\\
+\hspace{1em}mle & 100 & NA & NA & \vphantom{2} NA\\
+\hspace{1em}ros & 100 & 1.005 & 0.00469 & 0.00647\\
+\hspace{1em}substitution & 100 & 0.994 & -0.00553 & 0.00649\\
+\hspace{1em}km & 1000 & 1.007 & 0.00693 & 0.00067\\
+\hspace{1em}mle & 1000 & NA & NA & \vphantom{2} NA\\
+\hspace{1em}ros & 1000 & 1.003 & 0.00308 & 0.00066\\
+\hspace{1em}substitution & 1000 & 0.992 & -0.00798 & 0.00071\\
+\addlinespace[1em]
+\multicolumn{5}{l}{\textbf{Censoring Rate = 0.3}}\\
+\hspace{1em}km & 10 & 1.063 & 0.06291 & 0.07325\\
+\hspace{1em}mle & 10 & NA & NA & \vphantom{1} NA\\
+\hspace{1em}ros & 10 & 0.991 & -0.00916 & 0.06389\\
+\hspace{1em}substitution & 10 & 0.970 & -0.02978 & 0.06372\\
+\hspace{1em}km & 100 & 1.053 & 0.05270 & 0.00719\\
+\hspace{1em}mle & 100 & NA & NA & \vphantom{1} NA\\
+\hspace{1em}ros & 100 & 1.011 & 0.01140 & 0.00685\\
+\hspace{1em}substitution & 100 & 0.972 & -0.02764 & 0.00717\\
+\hspace{1em}km & 1000 & 1.054 & 0.05368 & 0.00073\\
+\hspace{1em}mle & 1000 & NA & NA & \vphantom{1} NA\\
+\hspace{1em}ros & 1000 & 1.017 & 0.01683 & 0.00085\\
+\hspace{1em}substitution & 1000 & 0.974 & -0.02557 & 0.00152\\
+\addlinespace[1em]
+\multicolumn{5}{l}{\textbf{Censoring Rate = 0.5}}\\
+\hspace{1em}km & 10 & 1.193 & 0.19309 & 0.10925\\
+\hspace{1em}mle & 10 & NA & NA & NA\\
+\hspace{1em}ros & 10 & 0.992 & -0.00789 & 0.07636\\
+\hspace{1em}substitution & 10 & 0.968 & -0.03151 & 0.07419\\
+\hspace{1em}km & 100 & 1.162 & 0.16154 & 0.00992\\
+\hspace{1em}mle & 100 & NA & NA & NA\\
+\hspace{1em}ros & 100 & 1.023 & 0.02269 & 0.00792\\
+\hspace{1em}substitution & 100 & 0.961 & -0.03925 & 0.00946\\
+\hspace{1em}km & 1000 & 1.163 & 0.16301 & 0.00201\\
+\hspace{1em}mle & 1000 & NA & NA & NA\\
+\hspace{1em}ros & 1000 & 1.036 & 0.03598 & 0.00164\\
+\hspace{1em}substitution & 1000 & 0.964 & -0.03594 & 0.00405\\
+\bottomrule
 \end{tabular}
 \end{table}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-3}Performance metrics of our our 3 methods (MLE method absent) with data derived from the Weibull distribution with a shape parameter = 1 and scale parameter = 1.}
+\caption{\label{tab:unnamed-chunk-3}Performance metrics of our our 3 methods 
+             (MLE method absent) with data derived from the Weibull 
+             distribution with a shape parameter = 1 and 
+             scale parameter = 1.}
 \centering
-\begin{tabular}[t]{r|r|l|r|r|r|r}
-\hline
-prop\_cens & samplesize & method & Avg\_Mean & Bias & Variance & MSE\\
-\hline
-0.1 & 10 & km & 1.010 & 0.00977 & 0.07703 & 0.07710\\
-\hline
-0.1 & 10 & mle & NA & NA & NA & NA\\
-\hline
-0.1 & 10 & ros & 0.997 & -0.00339 & 0.07518 & 0.07516\\
-\hline
-0.1 & 10 & substitution & 0.993 & -0.00678 & 0.07525 & 0.07527\\
-\hline
-0.1 & 100 & km & 1.010 & 0.00998 & 0.00768 & 0.00778\\
-\hline
-0.1 & 100 & mle & NA & NA & NA & NA\\
-\hline
-0.1 & 100 & ros & 1.006 & 0.00626 & 0.00768 & 0.00772\\
-\hline
-0.1 & 100 & substitution & 0.998 & -0.00215 & 0.00768 & 0.00768\\
-\hline
-0.1 & 1000 & km & 1.006 & 0.00625 & 0.00077 & 0.00081\\
-\hline
-0.1 & 1000 & mle & NA & NA & NA & NA\\
-\hline
-0.1 & 1000 & ros & 1.004 & 0.00374 & 0.00077 & 0.00079\\
-\hline
-0.1 & 1000 & substitution & 0.995 & -0.00548 & 0.00081 & 0.00084\\
-\hline
-0.3 & 10 & km & 1.067 & 0.06660 & 0.08638 & 0.09078\\
-\hline
-0.3 & 10 & mle & NA & NA & NA & NA\\
-\hline
-0.3 & 10 & ros & 0.996 & -0.00440 & 0.07540 & 0.07540\\
-\hline
-0.3 & 10 & substitution & 0.981 & -0.01896 & 0.07526 & 0.07559\\
-\hline
-0.3 & 100 & km & 1.054 & 0.05434 & 0.00845 & 0.01140\\
-\hline
-0.3 & 100 & mle & NA & NA & NA & NA\\
-\hline
-0.3 & 100 & ros & 1.016 & 0.01566 & 0.00804 & 0.00829\\
-\hline
-0.3 & 100 & substitution & 0.982 & -0.01761 & 0.00825 & 0.00856\\
-\hline
-0.3 & 1000 & km & 1.055 & 0.05451 & 0.00085 & 0.00382\\
-\hline
-0.3 & 1000 & mle & NA & NA & NA & NA\\
-\hline
-0.3 & 1000 & ros & 1.021 & 0.02059 & 0.00094 & 0.00136\\
-\hline
-0.3 & 1000 & substitution & 0.984 & -0.01618 & 0.00152 & 0.00178\\
-\hline
-0.5 & 10 & km & 1.221 & 0.22073 & 0.12826 & 0.17694\\
-\hline
-0.5 & 10 & mle & NA & NA & NA & NA\\
-\hline
-0.5 & 10 & ros & 1.009 & 0.00898 & 0.08864 & 0.08869\\
-\hline
-0.5 & 10 & substitution & 0.998 & -0.00169 & 0.08642 & 0.08639\\
-\hline
-0.5 & 100 & km & 1.173 & 0.17290 & 0.01172 & 0.04162\\
-\hline
-0.5 & 100 & mle & NA & NA & NA & NA\\
-\hline
-0.5 & 100 & ros & 1.033 & 0.03267 & 0.00934 & 0.01040\\
-\hline
-0.5 & 100 & substitution & 0.980 & -0.01968 & 0.01051 & 0.01090\\
-\hline
-0.5 & 1000 & km & 1.173 & 0.17294 & 0.00201 & 0.03192\\
-\hline
-0.5 & 1000 & mle & NA & NA & NA & NA\\
-\hline
-0.5 & 1000 & ros & 1.045 & 0.04497 & 0.00165 & 0.00367\\
-\hline
-0.5 & 1000 & substitution & 0.982 & -0.01751 & 0.00372 & 0.00402\\
-\hline
+\fontsize{11.5}{13.5}\selectfont
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Sample Size & Avg. Mean & Bias & Variance\\
+\midrule
+\addlinespace[0.3em]
+\multicolumn{5}{l}{\textbf{Censoring Rate = 0.1}}\\
+\hspace{1em}km & 10 & 1.010 & 0.00977 & 0.07703\\
+\hspace{1em}mle & 10 & NA & NA & \vphantom{2} NA\\
+\hspace{1em}ros & 10 & 0.997 & -0.00339 & 0.07518\\
+\hspace{1em}substitution & 10 & 0.993 & -0.00678 & 0.07525\\
+\hspace{1em}km & 100 & 1.010 & 0.00998 & 0.00768\\
+\hspace{1em}mle & 100 & NA & NA & \vphantom{2} NA\\
+\hspace{1em}ros & 100 & 1.006 & 0.00626 & 0.00768\\
+\hspace{1em}substitution & 100 & 0.998 & -0.00215 & 0.00768\\
+\hspace{1em}km & 1000 & 1.006 & 0.00625 & 0.00077\\
+\hspace{1em}mle & 1000 & NA & NA & \vphantom{2} NA\\
+\hspace{1em}ros & 1000 & 1.004 & 0.00374 & 0.00077\\
+\hspace{1em}substitution & 1000 & 0.995 & -0.00548 & 0.00081\\
+\addlinespace[1em]
+\multicolumn{5}{l}{\textbf{Censoring Rate = 0.3}}\\
+\hspace{1em}km & 10 & 1.067 & 0.06660 & 0.08638\\
+\hspace{1em}mle & 10 & NA & NA & \vphantom{1} NA\\
+\hspace{1em}ros & 10 & 0.996 & -0.00440 & 0.07540\\
+\hspace{1em}substitution & 10 & 0.981 & -0.01896 & 0.07526\\
+\hspace{1em}km & 100 & 1.054 & 0.05434 & 0.00845\\
+\hspace{1em}mle & 100 & NA & NA & \vphantom{1} NA\\
+\hspace{1em}ros & 100 & 1.016 & 0.01566 & 0.00804\\
+\hspace{1em}substitution & 100 & 0.982 & -0.01761 & 0.00825\\
+\hspace{1em}km & 1000 & 1.055 & 0.05451 & 0.00085\\
+\hspace{1em}mle & 1000 & NA & NA & \vphantom{1} NA\\
+\hspace{1em}ros & 1000 & 1.021 & 0.02059 & 0.00094\\
+\hspace{1em}substitution & 1000 & 0.984 & -0.01618 & 0.00152\\
+\addlinespace[1em]
+\multicolumn{5}{l}{\textbf{Censoring Rate = 0.5}}\\
+\hspace{1em}km & 10 & 1.221 & 0.22073 & 0.12826\\
+\hspace{1em}mle & 10 & NA & NA & NA\\
+\hspace{1em}ros & 10 & 1.009 & 0.00898 & 0.08864\\
+\hspace{1em}substitution & 10 & 0.998 & -0.00169 & 0.08642\\
+\hspace{1em}km & 100 & 1.173 & 0.17290 & 0.01172\\
+\hspace{1em}mle & 100 & NA & NA & NA\\
+\hspace{1em}ros & 100 & 1.033 & 0.03267 & 0.00934\\
+\hspace{1em}substitution & 100 & 0.980 & -0.01968 & 0.01051\\
+\hspace{1em}km & 1000 & 1.173 & 0.17294 & 0.00201\\
+\hspace{1em}mle & 1000 & NA & NA & NA\\
+\hspace{1em}ros & 1000 & 1.045 & 0.04497 & 0.00165\\
+\hspace{1em}substitution & 1000 & 0.982 & -0.01751 & 0.00372\\
+\bottomrule
 \end{tabular}
 \end{table}
 From the results of our simulation study, we can see that with the data generated from the log-normal distribution, in the case of low censoring (0.10), when dealing with sample sizes of 10 and 100, the methods are largely comparable to one another. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significant worse than KM. MLE and ROS perform rather equally well in all sample sizes for low-censoring.
@@ -903,6 +840,7 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \FunctionTok{library}\NormalTok{(Metrics) }\CommentTok{\#package to help calculate mse}
 \FunctionTok{library}\NormalTok{(NADA) }\CommentTok{\#package with implementation of many methods}
 \FunctionTok{library}\NormalTok{(survival)}
+\FunctionTok{library}\NormalTok{(kableExtra)}
 \end{Highlighting}
 \end{Shaded}
 \hypertarget{generating-data}{%
