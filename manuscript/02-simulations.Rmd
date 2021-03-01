@@ -505,7 +505,7 @@ The results of our simulation study are presented in the following tables below.
 ```{r, echo = FALSE}
 ln.table <- df.ln %>%
   select(-"prop_cens") %>%
-  select(c(2, 1, 3:5)) %>%
+  select(c(2, 1, 3:6)) %>%
   rename(" " = "method", "Sample Size" = "samplesize", 
          "Avg. Mean" = "Avg_Mean")
 
@@ -522,7 +522,7 @@ knitr::kable(ln.table, caption = "Performance metrics of our our
 ```{r, echo = FALSE}
 exp.table <- df.exp %>%
   select(-"prop_cens") %>%
-  select(c(2, 1, 3:5)) %>%
+  select(c(2, 1, 3:6)) %>%
   rename(" " = "method", "Sample Size" = "samplesize", 
          "Avg. Mean" = "Avg_Mean")
 
@@ -539,7 +539,7 @@ knitr::kable(exp.table, caption = "Performance metrics of our our 3
 ```{r, echo = FALSE}
 w.table <- df.w %>%
   select(-"prop_cens") %>%
-  select(c(2, 1, 3:5)) %>%
+  select(c(2, 1, 3:6)) %>%
   rename(" " = "method", "Sample Size" = "samplesize", 
          "Avg. Mean" = "Avg_Mean")
 
@@ -566,16 +566,22 @@ In summary, regardless of distributional assumptions all of the methods perform 
 
 ## Discussion {#discussion}
 
-[discuss findings from the simulation study. are the results expected from knowledge gained from literature search? are they different? compare/contrast with literature. what things seem to be shared between our findings and that in literature?
+It important to note that while there are a large number of papers which discuss the ideal method or strategy to handle left-censored data,these studies have a large number of differences in censoring rates, distribution used, methods used, and other aspects of design setups which make comparisons regarding the results obtained from the studies quite difficult. As such, descriptions of specifics regarding the study design in the following studies will be omitted as necessary.
+
+Several results from our simulation studies agree with previous findings conducted from other investigators in the field. @Gilliom1986 claims that with the lognormal distribution, the ROS method was superior. This claim is furthered with our own results: we find that the ROS method is rather robust, even with censoring and produces an accurate and precise estimate of the mean in all cases in our simulation study. 
+
+Another investigation by @Kroll1996 found that with regards to a lognormal distribution only, ROS and MLE worked extremely well, with MLE outperforming the other methods especially in highly censored cases. While the MLE method did perform rather well in most cases in our simulation study, it did not outperform the ROS method, which in fact obtained much better estimates of the mean in highly censored settings. 
+
+There are of course also studies which offer differing results from the ones we obtained in our simulation study.
+
+@Schmoyer1996 compared only MLE and KM and found that the KM method performed nearly as well as the MLE in the case of the lognormal distribution. However, this was not the case in our simulation study. While the KM and MLE methods were able to perform adequately in the case of low (0.1) and medium (0.3) censoring, they performed the worst out of all four methods when dealing with highly censored cases. The censoring rates used in their study consisted of 25%, 50%, and 70% -- which far exceeded the censoring values used in this thesis. 
+
+@She1997 conducted a study investigating censored water quality data with the intent of investigating how well the KM method performs with regards to the same methods we utilize in this thesis. The results from She's study showed that KM outperformed all other methods, which contradicts the findings in the simulation study conducted in this thesis. Upon further investigation, the size of the dataset utilized by She consisted of 56 observations from water monitoring stations, in which around 11 were censored (20% of the dataset). While the KM method is not ideal for highly censored cases from the results of our simulation study, it certainly is able to be used for smaller sample sizes -- which is further supported with She's findings. There may be a difference in how well the methods perform with actual data as compared to simulated data -- which we will investigate in the next chapter. 
 
 ### Limitations {#limitations}
 
-[discuss some limitations of the simulation study -- ideas include things such as how simulated data =/= real life data, discuss some limitations, future plans?]
-
-Shortcomings in the results presented in this study very well may come from the fact that we generated data with known distributional parameters. It could be the case that the effectiveness of our methods were only due to having such artificial data. Alterations in our study to instead generate data from methods such as randomized pulls from an a real-world dataset of interest via. methods such as bootstrapping could provide different insights.
+Shortcomings in the results presented in this study may come from the fact that we generated data with known distributional parameters. It could be the case that the effectiveness of our methods were only due to having such artificial data. Alterations in our study to instead generate data from methods such as randomized pulls from an a real-world dataset of interest via. methods such as bootstrapping could provide different insights. As we discussed previously with the results from @She1997, methods may perform differently when utilized with artificial datasets as compared to real world, left censored data. We do not claim our findings in the simulation study to be representative for all cases of left censored data.
 
 ## Study on Real Data {#real_data}
-
-[connect back to chapter 1]
 
 [can write this chapter after some preliminary exploration with coal groundwater data]
