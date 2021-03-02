@@ -168,8 +168,54 @@ NC_subset4 <- NC_subset3 %>%
 knitr::kable(NC_subset4)
 ```
 
-Generally, when considering only the wells that have measurements below detection -- it seems like a higher proportion of the upgradient wells have measurements below detection when compared to their downgradient counterparts.
+Generally, when considering only the wells that have measurements below detection -- it seems like a higher proportion of the upgradient wells have measurements below detection when compared to their downgradient counterparts. This is to be expected -- upgradient wells are used to measure water quality before it passes through a coal ash plant, downgradient wells to measure water quality after passing through the plant. 
 
 Ideally, we would like to know the average level of contamination (for a contaminant) with regards to upgradient and downgradient wells. However, due to the the proportions of measurements which are below the limit of detection being so high -- it may pose challenges in our endeavor. 
 
 We could try to calculate averages without accounting for censoring to see what happens and then applying our methods and see if there are any differences. We have no way of knowing what the true averages will be due to so many being below the limit of detection -- however, we can definitely look to see if there are differences.
+
+@Kelderman2019 compiled a list of the "top 10 most contaminated sites in the U.S." which I wanted to delve further into:
+
+```{r}
+top10 <- c("San Miguel Plant",
+           "Allen Steam Station",
+           "Jim Bridger Power Plant",
+           "Naughton Power Plant",
+           "New Castle Generating Station",
+           "Allen Fossil Plant",
+           "Brandywine Ash Management Facility",
+           "Hunter Power Plant",
+           "R.D. Morrow, Sr. Generating Station",
+           "Ghent Generating Station")
+
+top10df <- full %>%
+  filter(site %in% top10)
+
+top10df %>%
+  group_by(site)%>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+```
+
+/newpage
+
+```{e}
+#how many obs are below detection in each site
+top10df %>%
+  group_by(site, below.detection) %>%
+  summarize(n = n()) 
+```
+
+There is a significant number of observations below the limit of detection which was not discussed (of being accounted for) in @Kelderman2019's report. I'm curious to see if the top 10 most contaminated sites in the U.S. would change, if we start accounting for these below detection values. 
+
+\newpage 
+
+How did the authors decide how to rank these top 10 sites by? They calculated a ratio of the "highest onsite average concentration of that pollutant to the health-based thresholds", and essentially the higher the ratio was -- the more dangerous that contaminant was determined to be. A contaminant with the ratio "x200" had concentrations that were 200 times greater than the health-based threshold. It is also essential to note that the authors only looked at the downgradient wells to determine if a well was contaminated or not (when in reality, the upgradient _could_ be contaminated also).
+
+```{r, echo = FALSE, intervalcensoringexample, fig.cap="Interval Censoring Example", out.width = '100%'}
+knitr::include_graphics(path = "figures/orig_top10.png")
+```
+
+We can apply the techniques in the simulation study (substitution, km, mle, ros) to estimate the average concentration of each contaminant in the downgradient wells across all sites, and compile a list of the top 10 wells, much like @Kelderman2019 did, and then compare to see whether or not if the list matches up -- and if the ratio changes if we use these methods to handle left-censored values.
+
+
