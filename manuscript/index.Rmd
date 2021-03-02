@@ -67,7 +67,7 @@ R has some built-in options that may be useful. Some recommended values are set 
 -->
 ```{r set_options, include = FALSE}
 # Default width of R ouput
-options(width = 65, digits = 3)
+options(width = 65, digits = 3, knitr.kable.NA = '')
 ```
 
 

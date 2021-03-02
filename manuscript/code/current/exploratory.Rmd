@@ -217,5 +217,3 @@ knitr::include_graphics(path = "figures/orig_top10.png")
 ```
 
 We can apply the techniques in the simulation study (substitution, km, mle, ros) to estimate the average concentration of each contaminant in the downgradient wells across all sites, and compile a list of the top 10 wells, much like @Kelderman2019 did, and then compare to see whether or not if the list matches up -- and if the ratio changes if we use these methods to handle left-censored values.
-
-
