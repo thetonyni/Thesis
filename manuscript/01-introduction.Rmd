@@ -36,6 +36,7 @@ There is a final possibility for individuals who choose to censor themselves. Il
 
 Right censoring is the most common type of censoring and can often be found in clinical trial studies, mortality studies, and other forms of surival analyses.
 -->
+
 ### Left Censoring {#left}
 
 ```{r, echo = FALSE, leftcensoringexample, fig.cap="Left Censoring Example", out.width = '100%'}

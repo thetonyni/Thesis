@@ -16,19 +16,18 @@ The introduction should provide an overview of the work you set out to do and pr
 
 -->
 
+```{r}
+library(tidyverse)
+```
+
+
 ## Background {#background}
 
-Coal is one of the most dangerous combustible fuels which is being burned in all across the world as one of the largest methods of obtaining energy. Yet, although it is a fossil fuel which is naturally abundant and easy to utilize, it is comprised of a long list of dangerous chemicals including -- but not limited to: arsenic, radium, boron, and a large list of other chemicals which prove to be dangerous to humans and animals alike. [@Kelderman2019]
+Coal is one of the most prevalent combustible fuels being burned all across the world, as it is one of the easiest methods of obtaining energy due to the abundance of the substance. Generally, coal plants produce electricity by burning coal, which produces coal ash as a byproduct. Over 100 million tons of coal ash are produced every year at these plants, which are then disposed through landfills and waste ponds at these plants. The main concern of ecologists regarding this matter is that the coal ash produced by these plants can often contaminate the local groundwater, leading to toxic contaminants being found in local water sources. Coal ash is dangerous due to its composition, which contains a long list of dangerous chemicals including -- but not limited to: arsenic, radium, boron, and a large list of other contaminants toxic to humans and animals alike [@Kelderman2019]. 
 
-Power plants produce electricity by burning this coal, and as a result of how prevalent it is within the US - over 100 million tons of coal ash are produced every year. This side-product as a result of the coal combustion is often disposed by directly being dumped into landfills and waste ponds. [@Kelderman2019]
+Complaints and concerns regarding the disposing practices of coal plants have only increased after the 2010 Kingston Fossil Plant coal ash incident in Tennessee. This area has become an attractive location in which many sites of ecological studies have been conducted the years following the incident. Leaching experiments conducted by @Ruhl2010 has revealed significant levels of dissolved Arsenic, Boron, Strontium, and Barium in the water which has been in contact with the coal ash, which they note to be threat to infaunal species in the water. Prompted by environmental organizations, groups, and individuals alike, an onslaught of pressure was put on the Environmental Protection Agency, which resulted in the Coal Ash Rule being put into effect in 2015 [@Kelderman2019].
 
-Only recently have these complaints and lawsuits regarding the disposing practices made by non-profit environmental organizations been heard. Due to the onslaught of pressure put on the Environmental Protection Agency -- the Coal Ash Rule was bor in 2015. [@Kelderman2019]
-
-This rule has forced over 265 coal power plants -- about 3/4 of all coal power plants in the US - to make data regarding chemical concentrations publicly available to the general population. [@Kelderman2019]
-
-In their analysis using this data, the Environmental Integrity Project -- a non-profit organization dedicated to issues involving environmental justice have concluded that essentially all groundwater under coal plants are contaminated. [@Kelderman2019]
-
-However, is this really the case? There are many naturally occurring chemicals existing in groundwater as as such, perhaps their claims are overstated.
+This rule has forced over 265 coal power plants -- about 3/4 of all coal power plants in the US - to make data regarding chemical concentrations publicly available to the general population. In their analysis using this data, the @EIP2020 -- a non-profit organization dedicated to issues involving environmental justice, has discussed the prevalence of groundwater contamination for wells located near coal related facilities. 
 
 <!-- insert picture here -->
 
@@ -38,19 +37,17 @@ knitr::include_graphics(path = "figures/upgradientdowngradient.jpg")
 
 Typically in a coal ash plant, there exists two types of wells: upgradient wells and downgradient wells. These wells are essential to measure the amount of contamination being caused by coal ash. Upgradient wells, also known as background wells, measures the concentrations of chemicals in groundwater before it passes through an coal ash dump. Conversely, downgradient wells measure the concentrations of chemicals in groundwater after it passes through a coal ash dump.
 
-* "80% of the US population is served by 14% of the utilities," so if something were to get into the water distribution system, it can easily spread amongst the US population which is why contamination in water services is so important. [@Byer2019]
+<!--With this information, typically -- one estimates the amount of chemical contamination caused by a coal as dump by subtracting the upgradient concentration from the downgradient concentration of a chemical (downgradient concentration - upgradient concentration). -->
 
-With this information, typically -- one estimates the amount of chemical contamination caused by a coal as dump by subtracting the upgradient concentration from the downgradient concentration of a chemical (downgradient concentration - upgradient concentration).
+While both types of well are susceptible to contamination through coal ash related means, it is more frequently the case that we focus on the downgradient wells, as they are more closely linked to the water accessed by the general public.
 
-However, due to the lack of proper reporting guidelines prior to the enactment of the Coal Ash Rule, we believe that there may be retired or even unregulated upgradient wells which can cause the concentrations of chemicals being recorded from these upgradient wells to be inaccurate or even completely wrong.
+The goal of the study conducted by @Kelderman2019 was to identify the percentage of coal plants which have unsafe levels of contamination. Determining whether if a well was contaminated or not was largely influenced by the average mean concentrations of the contaminant in question for that well. If the average mean contamination of a contaminant, say, arsenic, was above the health-based threshold considered necessary to ensure safety, then that well would be marked as an "exceedance," and deemed to be contaminated.  
 
-<!-- mayhaps remove the stat lingo BELOW -->
+@Kelderman2019 notes the possibility of contamination being caused by an external factor, unrelated to the coal ash, and provides a stipulation as how to account for this. They excluded tallying the wells in which the mean downgradient values were lower than the mean upgradient values, as this would mean that the contamination was not caused by the coal plant itself.
 
-Our end goal remains the same as the EIP: to identify contaminated groundwater in coal plants -- but to attempt to find a way to effectively correct the improper/inaccurate values resulting from LOD errors and other factors which the EIP may not have considered. 
+Our end goal remains the same as the @Kelderman2019: to identify contaminated groundwater in coal plants. In their report, it is not mentioned if left censored values were being accounted for in the calculations of the average concentrations of the downgradient and upgradient wells. As such, it may be prudent to check to see if the proportion of wells in the U.S. in which contamination is present would be altered if we used our techniques to calculate the average concentrations of the contaminants.
 
 The limit of detection problem stems from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount, thus affecting the measurements recorded.
-
-Our plan is to utilize methods designed to calculate descriptive statistics of interest when in the presence of left censored data. Specifically, we would like to calculate average concentrations of certain coal-risk heavy contaminants with regards to downgradient and upgradient wells -- and seeing if our values differ if we had instead simply worked with the dataset without accounting for the left censored values.
 
 ## Data {#data}
 <!-- 
@@ -61,37 +58,76 @@ the data is NOT just a single of coalset, give examples of contaminants that it�
 many sites within sites
 -->
 
+It is important to note where the data used originated from, before we delve into the details of our case study. As such, a brief history regarding the Coal Ash Rule and its origin will be explored, alongside details regarding our coal ash dataset.
+
 ### Coal Ash Rule {#coalashrule}
 
 <!-- EXPLAIN COAL ASH RULE HERE AND HOW THE EIP (Environmental Integrity Project) HAS HELPED MAKE THIS RULE -->
 
-A large coal ash spill at the Tennessee Valley Authority (TVA) which occured on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US.  [@Car2020]
+A large coal ash spill at the Tennessee Valley Authority (TVA) which occurred on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US. This was known as the Coal Ash Rule, which passed legislation on December 19, 2014 [@Car2020].
 
-This was known as the Coal Ash Rule, passed on December 19, 2014. [@Car2020]
-
-Changes were made to the Coal Ash Rule over the years in the form of 'amendments,' one of which made required facility information and data to be made publicaly available to the public (April 15, 2015 rule change) [@Car2020]
+Changes were made to the Coal Ash Rule over the years in the form of 'amendments,' in which the most relevant to this study, required coal facilities to publish information and data regarding the concentrations of contaminants in the wells.
 
 ### Source of Data
 
-The data used in the study are from the results published in "Annual Groundwater Monitoring and Corrective Action Reports" which were made available to the public in March 2018 as a result of the Coal Ash Rule.  [@EIP2020]
+The data used in the study are from the results published in "Annual Groundwater Monitoring and Corrective Action Reports," which were made available to the public in March 2018 as a result of the Coal Ash Rule. These reports are in PDF format and are thousands of pages long, which makes it difficult for individuals to parse through data in a meaningful way.
 
-These reports are in PDF format and are thousands of pages long, which makes it difficult for individuals to look through the data in a meaningful way. [@EIP2020]
+The @EIP2020 obtained the data from an online, publicly available database containing groundwater monitoring results from the first "Annual Groundwater Monitoring and Corrective Action Reports" in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule.
 
-
-The EIP obtained the data from an online, publicly available database containing groundwater monitoring results from the first "Annual Groundwater Monitoring and Corrective Action Reports" in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule [@EIP2020]
-
-
-They wrangled the data into a more accessible machine-readable format which contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants, which is downloadable from the EIP's website. [@EIP2020]
+They wrangled the data into a more accessible machine-readable format which contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants, downloadable from the EIP's website, which we use in our case study.
 
 \newpage
 
 ### Variables {#variables}
 <!-- TALK ABOUT VARIABLES AND WELLS/SITES HERE AND WHAT THEY MEAN -->
 
-The dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells which represent an observation in the dataset. There are two types of wells -- upgradient and downgradient wells. The variables consist of information regarding the specific chemical concentrations of each well. 
+ The dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells, which represent an observation in the dataset. 
+ 
+There are two types of wells -- upgradient and downgradient wells. The variables consist of information regarding the specific chemical concentrations of each well, the details of which can be viewed in the table below.
+
+<!-- TABLE OF DATA DICTIONARY TO INSERT HERE -->
+
+```{r, echo = FALSE}
+dd_var <- c("State", "Site", "Disposal Area", "Type of Well",
+            "ID of Well", "Gradient Type", 
+            "Sample Date", 
+            "Contaminant Name", "Measurement Unit",
+            "Below Detection", "Concentration")
+
+dd_varname<- c("state", "site", "disposal.area", "type", "well.id",
+             "gradient", "samp.date", "contaminant",
+             "measurement.unit", "below.detection",
+             "concentration")
+
+dd_desc <- c("State where the well is located in",
+             "Site where the well is located in",
+             "Disposal area where the well is located in",
+             "Type of well",
+             "ID of well",
+             "Gradient of the well",
+             "Date when the sample was collected",
+             "Name of contaminant being measured",
+             "Type of measurement unit for concentration",
+             "LOD status for the concentration",
+             "Concentration of contaminant")
+
+dd <- as.data.frame(cbind(dd_var, dd_varname, dd_desc)) %>%
+  rename("Variable" = "dd_var",
+         "Variable Name" = "dd_varname",
+         "Description" = "dd_desc") 
+
+```
+
+```{r, echo = FALSE}
+knitr::kable(dd, caption = "Data dictionary for the coal dataset.",
+             booktabs = "T", linesep = "\\addlinespace")
+```
 
 ### Plan of Action
 
-Within the report, the EIP mentions certain restrictions within the data that have caused their data to  potentially  be  inaccurate  (specifically,  with  limit  of  detection  problems,  and  a  large  amount of missing chemical data).  The limit of detection problem comes when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to have duplicate, wrong values – which can cause for misguided analysis.The other issue is less guided/formed, but for brevity, we think that a lot of the issues in the data comes from the potential possibility of contamination during data collection from investigators from non coal-ash sources.  This may include things like: retired/unregulated wells which are old and have chemicals leaking into the groundwater, mismanagement in measuring, etc.
+The investigation conducted by @Kelderman2019 mentions certain restrictions within the data that we believe may have caused their analysis to potentially be inaccurate. Specifically with the limit of detection problem arises when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to be considered "below detection." These values are often encoded as NA or even mistakenly marked as 0. There are no mentions of any attempts to account for or handle these missing values, which is the motivation for this case study.
 
-My project hopes to work with methods on handling this missing data – alongside investing potential uses of bootstrapping and other resampling methods (potentially?)  in order to try to come up with a more statistically accurate and sound result by looking to assuage the problems that the EIP faced in their analysis.  Specifically, to find a way to split up the data into ”uncontaminated” and ”contaminated” wells in order to find the natural distribution of chemicals in each – and doing to so in the face of data corrupted by LOD problems and inaccuracies.  I’m hoping to apply and compare different ways of altering the data to account for these myriad of issues in order to look for more salient findings that the EIP might have missed or if not, to see if improvements can be made regarding the way that contaminated coal ash wells are being identified.
+Our investigation works with methods on handling this missing data through the techniques detailed in chapter 1 in order to obtain more accurate and precise estimates of the mean concentrations of contaminants at coal ash sites. Through our newly obtained estimates, we hope to see if they might lead us to different beliefs than the claims made by @Kelderman2019 regarding the most contaminated wells in the U.S.
+
+## Application
+
