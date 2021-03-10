@@ -753,11 +753,7 @@ Shortcomings in the results presented in this study may come from the fact that 
 
 \hypertarget{casestudy}{%
 \chapter{Case Study}\label{casestudy}}
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(tidyverse)}
-\end{Highlighting}
-\end{Shaded}
+
 \hypertarget{background}{%
 \section{Background}\label{background}}
 
@@ -812,36 +808,49 @@ They wrangled the data into a more accessible machine-readable format which cont
 \hypertarget{variables}{%
 \subsection{Variables}\label{variables}}
 
-The dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells, which represent an observation in the dataset.
+Specifics regarding the variables in the coal dataset can be viewed in Table 3.1. Each observation in the dataset represents a well which measures the concentration of the contaminant in question. Most of the variables are explanatory, such as the state, site, and disposal area in which the well is located in. However, there are several variables specific to groundwater data collection which are important to note.
 
-There are two types of wells -- upgradient and downgradient wells. The variables consist of information regarding the specific chemical concentrations of each well, the details of which can be viewed in the table below.
+There are four different types that each well can be classified as, which is represented in the \texttt{type} variable. These consist of: \texttt{L}, \texttt{M}, \texttt{SI}, and \texttt{U} which stand for ``landfill,'' ``mixed,'' ``surface-impacted,'' and "uniform
+
+The coal dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells, which represent an observation in the dataset.
 \begin{table}
 
 \caption{\label{tab:unnamed-chunk-6}Data dictionary for the coal dataset.}
 \centering
-\begin{tabular}[t]{lll}
+\begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{7.6cm}}
 \toprule
 Variable & Variable Name & Description\\
 \midrule
-State & state & State where the well is located in\\
+State & state & The state where the site is located.\\
 \addlinespace
-Site & site & Site where the well is located in\\
+Site & site & The name of the site as it is presented in its
+             groundwater monitoring \vphantom{1} report.\\
 \addlinespace
-Disposal Area & disposal.area & Disposal area where the well is located in\\
+Disposal Area & disposal.area & The name of the disposal area(s) as they are presented 
+             in the groundwater monitoring report. Note: some wells 
+             monitor groundwater from more than one disposal unit.\\
 \addlinespace
-Type of Well & type & Type of well\\
+Type of Well & type & The type of disposal unit. SI = surface impoundment, 
+             L= landfill, M = mixed multi-unit (landfill and surface 
+             impoundment), and U = unknown.\\
 \addlinespace
-ID of Well & well.id & ID of well\\
+ID of Well & well.id & The identifier given to each monitoring well in the 
+             groundwater monitoring report.\\
 \addlinespace
-Gradient Type & gradient & Gradient of the well\\
+Gradient Type & gradient & The location of the groundwater monitoring well 
+             relative to the regulated ash disposal unit it 
+             monitors.\\
 \addlinespace
-Sample Date & samp.date & Date when the sample was collected\\
+Sample Date & samp.date & The date the well was sampled.\\
 \addlinespace
-Contaminant Name & contaminant & Name of contaminant being measured\\
+Contaminant Name & contaminant & The contaminant name. These have been standardized to 
+             allow for analyses across plants.\\
 \addlinespace
-Measurement Unit & measurement.unit & Type of measurement unit for concentration\\
+Measurement Unit & measurement.unit & The concentration units. These include mg/l, ug/l, 
+             pCi/l, and standard units (SU) for pH.\\
 \addlinespace
-Below Detection & below.detection & LOD status for the concentration\\
+Below Detection & below.detection & LOD status for the concentration, '<' indicates that 
+             the concentration was below the LOD.\\
 \addlinespace
 Concentration & concentration & Concentration of contaminant\\
 \bottomrule
