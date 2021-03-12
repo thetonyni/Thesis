@@ -82,16 +82,11 @@ They wrangled the data into a more accessible machine-readable format which cont
 ### Variables {#variables}
 <!-- TALK ABOUT VARIABLES AND WELLS/SITES HERE AND WHAT THEY MEAN -->
 
+The coal dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells, which represent an observation in the dataset. There are over 265 coal plants, also known as "sites," in this dataset. A single site is divided into multiple subsections, known as "disposal areas." Each well can be associated with a disposal area and subsequently, a site.
+
 Specifics regarding the variables in the coal dataset can be viewed in Table 3.1. Each observation in the dataset represents a well which measures the concentration of the contaminant in question. Most of the variables are explanatory, such as the state, site, and disposal area in which the well is located in. However, there are several variables specific to groundwater data collection which are important to note.
 
-There are four different types that each well can be classified as, which is represented in the `type` variable. These consist of: `L`, `M`, `SI`, and `U` which stand for "landfill," "mixed," "surface-impacted," and "uniform
-
-The coal dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells, which represent an observation in the dataset. 
-
-
-
-
-
+There are four different types that each well can be classified as, which is represented in the `type` variable. These consist of: `L`, `M`, `SI`, and `U` which stand for "landfill," "mixed," "surface-impacted," and "unknown." We have already mentioned downgradient and upgradient wells during our discussion of the coal ash rule, but we will provide more detail now. In a groundwater monitoring system it is common to have designated wells for specific purposes. A common approach in a coal site is to have separate wells, upgradient wells, whose purpose is to measure "natural" water conditions and downgradient wells, which measure water conditions after it passes through a coal ash disposal area.
 
 <!-- TABLE OF DATA DICTIONARY TO INSERT HERE -->
 
@@ -128,7 +123,7 @@ dd_desc <- c("The state where the site is located.",
              pCi/l, and standard units (SU) for pH.",
              "LOD status for the concentration, '<' indicates that 
              the concentration was below the LOD.",
-             "Concentration of contaminant")
+             "The concentration of the contaminant.")
 
 dd <- as.data.frame(cbind(dd_var, dd_varname, dd_desc)) %>%
   rename("Variable" = "dd_var",
