@@ -10,70 +10,76 @@ Having discussed the various methods to handle left-censored data in the previou
 
 ## Aims {#aims}
 
-The question of which method is the best to use is frequently discussed topic within the field. Many studies have been conducted over the years to evaluate the performance of these methods to handle left-censored data, with the results being widely varied and largely inconclusive. First and foremost, a large issue comes in that every conducted study widely differs in the methods being investigated and the scope of the study. As an example of the broad differences between studies which can make comparisons difficult, [@Antweiler2015] evaluates the effectiveness of 11 different methods with several censoring rates and distributional assumptions, using the median absolute deviation (MAD) as their performance metric of choice. Meanwhile, [@Hall2020] focuses instead on the applications of such methods from a water-quality focused context and investigates the performance of the four methods used in this thesis -- except with water stream concentration data, and no focus on distributional assumptions nor censoring rates. As each of these studies are concerned with their own goals -- the reasoning and conclusion that they reach will inevitably be different. Studies that are more focused on a general, broad audience, with no assumptions as to what sort of data the individual is working with -- may find more use with the conclusion and results that investigators like Antweiler come up with. There may also be individuals who are more focused on the performance of such methods in a specific context, as in the study conducted by Hall. There is no common ground between statisticians on the optimality of methods, prompting our own foray into this topic. I wish to incorporate the detailed specifications of a simulation study, while keeping it applicable towards the coal contamination water quality data that I am hoping to apply the methods to.
+The question of which method is the best to use is frequently discussed topic within the field. Many studies have been conducted over the years to evaluate the performance of these methods to handle left-censored data, with the results being widely varied and largely inconclusive. First and foremost, a large issue comes in that every conducted study widely differs in the methods being investigated and the scope of the study. As an example of the broad differences between studies which can make comparisons difficult, [@Antweiler2015] evaluates the effectiveness of 11 different methods with several censoring rates and distributional assumptions, using the median absolute deviation (MAD) as their performance metric of choice. Meanwhile, [@Hall2020] focuses instead on the applications of such methods from a water-quality focused context and investigates the performance of the four methods used in this thesis while disregarding distributional assumptions and censoring rates. 
 
-Through our simulation study, we wish to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. Several investigators in this field have found issues with certain methods underperforming under certain conditions, and brings up the possibility of particular methods being more equipped than others to deal with different rates of censoring. Specifically, a study on methodologies to handling left-censored microbial risk assessment conducted by [@Canales2018] found that the substitution method seemed to work much better than expected while other methods, such as the MLE method, seemed to have trouble when applied to highly skewed data. Results from other works [@Antweiler2015] suggest that regardless of the method being utilized, obtaining reliable estimates from datasets where censoring was greater than 40% was unfeasible. This particular study also suggests that the size of the data had no influence on the result of the estimate in question. 
+As each of these studies are concerned with their own goals -- specifics of their study will inevitably be different. Studies that are more focused on a general, broad audience, with no assumptions as to what sort of data the individual is working with -- may find more use with the conclusion and results that investigators like Antweiler come up with. There may also be individuals who are more focused on the performance of such methods in a specific context, as in the study conducted by Hall. There is no common ground between statisticians on the optimality of methods, prompting our own foray into this topic. I wish to incorporate the detailed specifications of a simulation study, in essence, taking into consideration distributional parameters of the data-generating mechanism, censoring rates, and sample sizes for each run, while also keeping it applicable to our case-study specific data.
 
-Claims regarding the effectiveness of methods with regards to censoring rates, distribution of data, and sample size are all highly contentious. In order to get a better idea of sense of how these claims hold up, our goal is to evaluate the validity of those claims by conducting a simulation study of our own which will put those claims into practice. We must note that we don't expect one method to be significantly above the others in terms of performance for all settings, but we do hope to see which method might be best for certain settings, in terms of distributional assumptions, censoring rates, and sample sizes. This approach and aim of our simulation study will then largely depend on how we will generate the data to be used in order to achieve our goal.
+With our simulation study, we wish to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. Several investigators in this field have found issues with certain methods underperforming under certain conditions, and brings up the possibility of particular methods being more equipped than others to deal with different rates of censoring. To provide an example of an instance when investigators have found a certain method to perform better than others, we can take a look at @Canales2018's study on methods to handle left-censored microbial risk assessment. They found that the substitution method seemed to work much better than expected while other methods, such as the MLE method, seemed to have trouble when applied to highly skewed data. Meanwhile @Antweiler2015's report suggest that regardless of the method or sample size, obtaining reliable estimates from datasets where censoring was greater than 40% was unfeasible.
+
+Claims regarding the effectiveness of methods with regards to censoring rates, distribution of data, and sample size are all highly contentious. In order to get a better idea of sense of how these claims hold up, our goal is to evaluate the validity of those claims by conducting a simulation study of our own to put these methods into practice. We expect the results of our simulation study to largely depend on how we specify our data generating mechanism, which will be discussed shortly.
 
 ## Data-Generating Mechanisms {#data_generating_mechanisms}
 
-The data generated for use in our study will be obtained by using parametric draws from user-specified distributions (log-normal, exponential, and Weibull), as the methods utilized can only be used with non-negative distributions [@Yavuz2017]. Our data-generating mechanism also alters criterion such as the sample size, $n_{obs} = \{10, 100, 1000\}$ and censoring rate $R = \{0.10, 0.20, 0.30, 0.40, 0.50\}$.
+The data generated for use in our study will be obtained by using parametric draws from user-specified distributions (log-normal, exponential, and Weibull), as the methods utilized can only be used with non-negative distributions [@Yavuz2017]. Our data-generating mechanism also alters criterion such as the sample size, $n_{obs} = \{10, 100, 1000\}$ and censoring rate, $R = \{0.10, 0.30, 0.50\}$. In the following sections, we will often interchangeably use "small, medium, large" and "low, medium, and high" to differentiate between the different values for sample size and censoring rate, respectively. For example, "small sample size" is equivalent to $n_{obs} = 10$ and "high censoring rate" is equivalent to $R = {0.50}$.
 
-Censored values are generated and determined by first arranging the uncensored observations in ascending order, and then from the censoring rate. For instance, if our censoring rate were $R = 0.15$, the lowest 0.15 of the observations will be marked as censored while the rest remain uncensored.
+We begin by generating draws from a specified distribution of size $n_obs$, and then determine our censored values by arranging the uncensored observations in ascending order, and then setting those in the lowest $100R \ \%$ to be censored. If the censoring rate were to be $R = 0.10$, the lowest 10% of the observations will be marked as censored while the rest remain uncensored.
+
+\newpage
 
 ## Estimands {#estimands}
 
-Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data [@Shoari2018]. in our simulation study, we want to evaluate just how well these methods are able to estimate a population quantity. We will be using the sample mean as an estimator for our estimand, the population mean, $\mu$.
+Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data [@Shoari2018]. In our simulation study, we will be using the sample mean as an estimator for our estimand, the population mean, $\mu$.
 
 ## Performance Measures {#performance_measures}
 
-Morris et al. (2019) define performance measures as numeric metrics used to assess the performance of the method in question. The criterions we will use to assess the performance of each of our four methods will consist of: bias, variance, and mean squared error (MSE).
+@Morris2019 define performance measures as numeric metrics used to assess the performance of the method in question. The criterion we will use to assess the performance of each of our four methods will consist of: bias, variance, and mean squared error (MSE).
 
 ### Variance
 
-Before defining variance, it is important to have a good grasp of the concept of precision. Precision simply refers to how far away estimates from different samples are from one another. Low precision indicates that the estimates from each sample are close to one another in value and vice versa. 
+Prior to defining variance, we must discuss the concept of _precision_. Precision simply refers to how far away estimates from different samples are from one another. Low precision indicates that the estimates from each sample are far from one another in value, while high precision indicates the opposite. Knowing this, _variance_ is a metric which informs us on the precision of an estimator. It is defined as the average squared deviation of the estimator from its average:
 
-Knowing this, variance is a metric which informs us on the precision of an estimator. It is defined as simply the average squared deviation of the estimator from its average, which in our case is defined as:
+$$Variance = E[(\hat{\mu}-E(\hat{\mu}))^2]$$
 
-$Variance = E[(\hat{\mu}-E(\hat{\mu}))^2]$
-
-Estimators with low variances generally remain close in value throughout all samples, while those with high variance may wildly differ between samples. As such, it is generally preferable to have an estimator with low variance. However, it is important to note that precision measurements, such as the variance, are not a sole indicator of an estimator's performance [@Walther2005]. While precise estimators are ideal, it is also important to assess the estimator's bias, how close it is to the true value.
+Estimators with low variances generally remain close in value throughout all samples, while those with high variance may wildly differ between samples. It is generally preferable to have an estimator with low variance. Precision measurements, such as the variance, are not a sole indicator of an estimator's performance [@Walther2005]. While useful for assessing how close values are to one another, it is just as important to obtain the estimator's $bias$, a measure of how close the obtained estimate is to the true value.
 
 ### Bias
 
-Bias is defined as the difference between an estimator's expected value and the true value of the parameter. In our case, we are using the estimator $\hat{\mu}$ to "estimate" the true population mean, $\mu$, in each of our samples. As such, bias can be defined in our case as:
+The next performance metric which we will use is bias, which is defined as the difference between an estimator's expected value and the true value of the parameter. In our case, we are using the estimator $\hat{\mu}$ to estimate the true population mean, $\mu$, in each of our samples. The formal definition of bias is as follows: 
 
-$Bias = E(\hat{\mu}) - \mu$
+$$Bias = E(\hat{\mu}) - \mu$$
 
-It is important to note that bias is a metric which only informs us on the difference of the estimator from the true parameter, and tells us nothing regarding accuracy nor precision.
+Bias informs us on the difference of the estimator from the true parameter. A natural question to ask is often whether if an estimator is any "good". One possible measures of this idea "good," naturally comes in the idea of an unbiased estimator. If the bias of an estimator were to be equal to zero, we would define the estimator to be _unbiased_, meaning that the estimator produces parameter estimates which are on average, equal to the true value. 
 
-If the bias of an estimator were to be equal to zero, we would define the estimator to be _unbiased_, meaning that the estimator produces parameter estimates which are on average, equal to the true value.
+An estimator being unbiased does not necessarily equate to it being ideal. An unbiased estimator could have high variance, which would mean that the estimator in each sample would be significantly different from one another, but on average -- they equal the true population estimand. 
 
-However, it is important to note that just because an estimator is unbiased, does not necessarily tell us anything about the quality of our estimator (of being good or bad). An unbiased estimator could have high variance, which would mean that the estimator in each sample would be significantly different from one another, but on average -- they equal the true population estimand. 
-
-On that same note, it would not be very useful if an estimator had low variance but high bias, either -- as this would mean that each sample would consistently produce similar estimates which are very far away from the true population estimand in question. 
+On the opposite hand, it would also not be very useful if an estimator had low variance but high bias. This would mean that each sample would consistently produce similar estimates which are very far from the true population estimand.
 
 ### Mean Squared Error (MSE)
 
-We generally would like estimators which have low bias and low variance, but it can be difficult to achieve both at once. As such, it is common to instead turn to a quantity known as the mean squared error (MSE), which is a quantitative measurement used to assess the accuracy of an estimator. The MSE measures how far away, on average, an estimator is from its true value.
+Evidently we do not want our estimator to be too biased nor too variant. This conflict is known as the _bias-variance tradeoff_, a dilemma in which we can never simultaneously minimize the bias and variance of our estimator.
 
-(NOTE: section below is VERY messy, need to clean up, play around with math mode, blah)
+While we generally would like estimators which have low bias and low variance, it can be difficult to achieve both at once. As such, it is common to instead turn to a quantity known as the _mean squared error_ (MSE), which is a quantitative measurement used to assess the accuracy of an estimator. The MSE measures how far away, on average, an estimator is from its true value and makes use of both bias and variance in its calculations. The formal definition of MSE is:
 
-$MSE = E[(\hat{\mu} -\mu)^2] = Var(\hat{\mu})+[Bias(\hat{\mu})]^2$
+$$MSE = E[(\hat{\mu} -\mu)^2] = Var(\hat{\mu})+[Bias(\hat{\mu})]^2$$
 
 We can show that the MSE of estimator can be rewritten in terms of its variance and bias:
 
 $$E[(\hat{\mu} -\mu)^2] = E(\hat{\mu}^2) + \mu^2 - 2E(\hat{\mu})\mu$$
-Since we know bias to be $Bias = E(\hat{\mu}) - \mu$, it follows that $Bias^2 = E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta$. We already know variance to be $Variance = E[(\hat{\mu}-E(\hat{\mu}))^2] = E(\hat{\mu}^2) - E^2(\hat{\mu})$. Thus, combining the square of the bias with variance yields:
+From $Bias = E(\hat{\mu}) - \mu$, it follows that:
 
-$Bias^2 + Var = [E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta] + [E(\hat{\mu}^2) - E^2(\hat{\mu})]$ the $E^2(\hat{\mu})$ terms cancel out, and we are left with: $E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta = E[(\hat{\mu} -\mu)^2] = Bias$.
+$$Bias^2 = E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta$$
+
+From $Variance = E[(\hat{\mu}-E(\hat{\mu}))^2] = E(\hat{\mu}^2) - E^2(\hat{\mu})$, we can combine the square of the bias with variance, which yields:
+
+$$Bias^2 + Var = [E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta] + [E(\hat{\mu}^2) - E^2(\hat{\mu})]$$
+
+The $E^2(\hat{\mu})$ terms cancel out, and we are left with:
+
+$$E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta = E[(\hat{\mu} -\mu)^2] = Bias$$
 
 As the MSE is always positive, MSE values closer to zero are more desirable -- as it is an indicator that the estimator is accurate.
 
 ## Results {#results}
-
-[place figures/tables from results of simulation study here, along with explanation]
 
 ```{r libraries, include = FALSE}
 library(tidyverse)
@@ -584,4 +590,4 @@ Shortcomings in the results presented in this study may come from the fact that 
 
 ## Study on Real Data {#real_data}
 
-[can write this chapter after some preliminary exploration with coal groundwater data]
+[can write this section after some preliminary exploration with coal groundwater data]
