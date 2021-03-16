@@ -31,16 +31,20 @@
 \contentsline {subsection}{\numberline {3.2.3}Variables}{34}{subsection.3.2.3}%
 \contentsline {subsection}{\numberline {3.2.4}Plan of Action}{35}{subsection.3.2.4}%
 \contentsline {section}{\numberline {3.3}Application}{37}{section.3.3}%
-\contentsline {chapter}{Chapter 4: Conclusion}{39}{chapter.4}%
-\contentsline {chapter}{Appendix A: Main Appendix}{41}{appendix.A}%
-\contentsline {section}{\numberline {A.1}In the main file \ref {ref-labels}:}{41}{section.A.1}%
-\contentsline {section}{\numberline {A.2}In Chapter \ref {ref-labels}:}{41}{section.A.2}%
-\contentsline {chapter}{Appendix B: Simulation Appendix}{43}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Libraries}{43}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Generating Data}{43}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Setup}{45}{section.B.3}%
-\contentsline {section}{\numberline {B.4}Lognormal}{46}{section.B.4}%
-\contentsline {section}{\numberline {B.5}Exponential}{48}{section.B.5}%
-\contentsline {section}{\numberline {B.6}Weibull}{51}{section.B.6}%
-\contentsline {chapter}{Corrections}{55}{appendix*.12}%
-\contentsline {chapter}{References}{57}{appendix*.13}%
+\contentsline {subsection}{\numberline {3.3.1}Background (tentative title)}{37}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Kelderman's Top 10 Sites}{37}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}(Our) Top 10 Sites}{39}{subsection.3.3.3}%
+\contentsline {chapter}{Chapter 4: Conclusion}{41}{chapter.4}%
+\contentsline {chapter}{Appendix A: Main Appendix}{43}{appendix.A}%
+\contentsline {section}{\numberline {A.1}In the main file \ref {ref-labels}:}{43}{section.A.1}%
+\contentsline {section}{\numberline {A.2}In Chapter \ref {ref-labels}:}{43}{section.A.2}%
+\contentsline {section}{\numberline {A.3}In Chapter @ref\{03-casestudy\}:}{43}{section.A.3}%
+\contentsline {chapter}{Appendix B: Simulation Appendix}{45}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Libraries}{45}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Generating Data}{45}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Setup}{47}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Lognormal}{48}{section.B.4}%
+\contentsline {section}{\numberline {B.5}Exponential}{50}{section.B.5}%
+\contentsline {section}{\numberline {B.6}Weibull}{53}{section.B.6}%
+\contentsline {chapter}{Corrections}{57}{appendix*.12}%
+\contentsline {chapter}{References}{59}{appendix*.13}%

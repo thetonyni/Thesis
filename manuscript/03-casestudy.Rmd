@@ -16,7 +16,7 @@ The introduction should provide an overview of the work you set out to do and pr
 
 -->
 
-```{r, echo = FALSE}
+```{r, warning = FALSE, echo = FALSE}
 library(tidyverse)
 library(kableExtra)
 library(mosaic)
@@ -213,7 +213,9 @@ state_abb <- state.abb
 states_map <- map_data("state")
 ```
 
-Text here blah blah
+### Background (tentative title)
+
+Text here blah blah talk about wells in the US
 
 ```{r map, echo = FALSE, message = FALSE}
 plot_usmap(data = states_n, values = "n", regions = "states") +
@@ -227,7 +229,48 @@ plot_usmap(data = states_n, values = "n", regions = "states") +
   ggtitle("Count of Groundwater Wells across U.S. States")
 ```
 
+### Kelderman's Top 10 Sites
 
+Talk about about what kelderman did to get the top 10 most contaminated sites, what procedures/methodologies they used to determine that/etc.
+
+tables below super ugly (FIX!!!!!)
+
+```{r keldermantop10, echo = FALSE, message = FALSE, cache = TRUE}
+keldermantop10 <- c("San Miguel Plant",
+           "Allen Steam Station",
+           "Jim Bridger Power Plant",
+           "Naughton Power Plant",
+           "New Castle Generating Station",
+           "Allen Fossil Plant",
+           "Brandywine Ash Management Facility",
+           "Hunter Power Plant",
+           "R.D. Morrow, Sr. Generating Station",
+           "Ghent Generating Station")
+
+keldermantop10df <- full %>%
+  filter(site %in% keldermantop10)
+
+#number of wells in kelderman's top 10 sites
+keldermantop10df %>%
+  group_by(site)%>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+  kable() #temporary table (ugly)
+```
+
+```{r}
+#how many well are below detection in each site
+keldermantop10df %>%
+  group_by(site, below.detection) %>%
+  summarize(n = n()) %>%
+  kable() #temporary table (ugly)
+```
+
+Blah Blah, talk about applying our methods to obtain new mean estimates, discuss how we will use kelderman's procedure to obtain our own top 10 sites (for each censoring method)
+
+### (Our) Top 10 Sites
+
+[code to be worked on here]
 
 
 

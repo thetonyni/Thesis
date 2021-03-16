@@ -759,9 +759,7 @@ Shortcomings in the results presented in this study may come from the fact that 
 
 \hypertarget{casestudy}{%
 \chapter{Case Study}\label{casestudy}}
-\begin{verbatim}
-   Warning: package 'usmap' was built under R version 4.0.3
-\end{verbatim}
+
 \hypertarget{background}{%
 \section{Background}\label{background}}
 
@@ -880,8 +878,106 @@ We will follow their criterion(s) for determining if a well is contaminated and 
 \hypertarget{application}{%
 \section{Application}\label{application}}
 
-Text here blah blah
+\hypertarget{background-tentative-title}{%
+\subsection{Background (tentative title)}\label{background-tentative-title}}
+
+Text here blah blah talk about wells in the US
 \begin{center}\includegraphics{Tony-Ni_StatThesis_files/figure-latex/map-1} \end{center}
+
+\hypertarget{keldermans-top-10-sites}{%
+\subsection{Kelderman's Top 10 Sites}\label{keldermans-top-10-sites}}
+
+Talk about about what kelderman did to get the top 10 most contaminated sites, what procedures/methodologies they used to determine that/etc.
+
+tables below super ugly (FIX!!!!!)
+\begin{tabular}{l|r}
+\hline
+site & n\\
+\hline
+Allen Steam Station & 9938\\
+\hline
+Jim Bridger Power Plant & 8932\\
+\hline
+Naughton Power Plant & 6485\\
+\hline
+San Miguel Plant & 4177\\
+\hline
+Ghent Generating Station & 3895\\
+\hline
+Hunter Power Plant & 2010\\
+\hline
+Brandywine Ash Management Facility & 1988\\
+\hline
+Allen Fossil Plant & 1952\\
+\hline
+New Castle Generating Station & 1749\\
+\hline
+R.D. Morrow, Sr. Generating Station & 1701\\
+\hline
+\end{tabular}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#how many well are below detection in each site}
+\NormalTok{keldermantop10df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(site, below.detection) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable}\NormalTok{() }\CommentTok{\#temporary table (ugly)}
+\end{Highlighting}
+\end{Shaded}
+\begin{verbatim}
+   `summarise()` regrouping output by 'site' (override with `.groups` argument)
+\end{verbatim}
+\begin{tabular}{l|l|r}
+\hline
+site & below.detection & n\\
+\hline
+Allen Fossil Plant & < & 776\\
+\hline
+Allen Fossil Plant &  & 1176\\
+\hline
+Allen Steam Station & < & 2748\\
+\hline
+Allen Steam Station &  & 7190\\
+\hline
+Brandywine Ash Management Facility & < & 490\\
+\hline
+Brandywine Ash Management Facility &  & 1498\\
+\hline
+Ghent Generating Station & < & 2027\\
+\hline
+Ghent Generating Station &  & 1868\\
+\hline
+Hunter Power Plant & < & 715\\
+\hline
+Hunter Power Plant &  & 1295\\
+\hline
+Jim Bridger Power Plant & < & 3671\\
+\hline
+Jim Bridger Power Plant &  & 5261\\
+\hline
+Naughton Power Plant & < & 2533\\
+\hline
+Naughton Power Plant &  & 3952\\
+\hline
+New Castle Generating Station & < & 809\\
+\hline
+New Castle Generating Station &  & 940\\
+\hline
+R.D. Morrow, Sr. Generating Station & < & 774\\
+\hline
+R.D. Morrow, Sr. Generating Station &  & 927\\
+\hline
+San Miguel Plant & < & 1370\\
+\hline
+San Miguel Plant &  & 2807\\
+\hline
+\end{tabular}
+Blah Blah, talk about applying our methods to obtain new mean estimates, discuss how we will use kelderman's procedure to obtain our own top 10 sites (for each censoring method)
+
+\hypertarget{our-top-10-sites}{%
+\subsection{(Our) Top 10 Sites}\label{our-top-10-sites}}
+
+{[}code to be worked on here{]}
 
 \hypertarget{conclusion}{%
 \chapter{Conclusion}\label{conclusion}}
@@ -900,6 +996,9 @@ This first appendix includes all of the R chunks of code that were hidden throug
 
 \hypertarget{in-chapter-refref-labels}{%
 \section{In Chapter \ref{ref-labels}:}\label{in-chapter-refref-labels}}
+
+\hypertarget{in-chapter-ref03-casestudy}{%
+\section{In Chapter @ref\{03-casestudy\}:}\label{in-chapter-ref03-casestudy}}
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#breaking apart into different datasets for each region}
