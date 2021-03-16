@@ -105,8 +105,6 @@ if(!file.exists("CoverSheet.pdf")){
 }
 ```
 
-
-
 <!-- 
 If knitting to HTML, the following code is required to number equations in HTML files. You may delete the following code from your final document if you wish, but it should not affect your work.
 -->

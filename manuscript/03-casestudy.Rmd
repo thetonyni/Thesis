@@ -19,6 +19,8 @@ The introduction should provide an overview of the work you set out to do and pr
 ```{r, echo = FALSE}
 library(tidyverse)
 library(kableExtra)
+library(mosaic)
+library(usmap)
 ```
 
 
@@ -144,11 +146,88 @@ knitr::kable(dd, caption = "Data dictionary for the coal dataset.",
 
 ### Plan of Action
 
-The investigation conducted by @Kelderman2019 mentions certain restrictions within the data that we believe may have caused their analysis to potentially be inaccurate. Specifically with the limit of detection problem arises when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to be considered "below detection." These values are often encoded as NA or even mistakenly marked as 0. There are no mentions of any attempts to account for or handle these missing values, which is the motivation for this case study.
+The investigation conducted by @Kelderman2019 mentions certain restrictions within the data that we believe may have caused their analysis to potentially be inaccurate. Specifically with the limit of detection problem arises when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to be considered "below detection." These values are often encoded as NA or even mistakenly marked as 0. Mentions of attempts to account for or handle these missing values are absent from the report, which is the motivation for this case study.
 
 Our investigation works with methods on handling this missing data through the techniques detailed in chapter 1 in order to obtain more accurate and precise estimates of the mean concentrations of contaminants at coal ash sites. Through our newly obtained estimates, we hope to see if they might lead us to different beliefs than the claims made by @Kelderman2019 regarding the the top 10 most contaminated wells in the U.S.
 
 We will follow their criterion(s) for determining if a well is contaminated and most other aspects. The only difference in our case study is how we obtain the average concentrations of the contaminants in the wells. We will use our four different methods to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if we obtain any different conclusions given our different methods.
 
 ## Application
+
+```{r, echo = FALSE}
+#importing in full dataset
+import_df <- read_csv("code/current/data/chemical_data.csv", col_types = cols())
+```
+
+```{r prelim, echo = FALSE, message = FALSE, cache = TRUE}
+#breaking apart into different datasets for each region
+northeast <- import_df %>%
+  filter(state %in% c("ME", "NH", "VT", "NY", "PA", "NJ", "MD", 
+                      "MA", "DE", "RI", "CT")) %>%
+  mutate(region = "northeast")
+
+midwest <- import_df %>%
+  filter(state %in% c("OH", "IN", "MI", "IL", "WI", "MN", "IA", 
+                      "MO", "ND", "SD", "NE", "KS"))%>%
+  mutate(region = "midwest")
+
+west <- import_df %>%
+  filter(state %in% c("WA", "MT", "OR", "ID", "WY", "CA", "NV", 
+                      "UT", "CO", "AZ", "NM", "AK", "HI")) %>%
+  mutate(region = "west")
+
+south <- import_df %>%
+  filter(state %in% c("WV", "VA", "KY", "TN", "NC", "SC", "GA", 
+                      "FL", "MS", "AL", "LA", "AR", "OK", "TX", "PR")) %>%
+  mutate(region = "south")
+
+#rejoin them back together for future ref. if needed
+full <- list(northeast, midwest, west, south) %>% 
+  reduce(full_join)
+
+#more tidying
+midwest_n <- midwest %>%
+  group_by(state) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+
+northeast_n <- northeast %>%
+  group_by(state) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+
+south_n <- south %>%
+  group_by(state) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+
+west_n <- west %>%
+  group_by(state) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+
+states_n <- rbind(midwest_n, northeast_n, south_n, west_n)
+
+state_name <- state.name
+state_abb <- state.abb
+states_map <- map_data("state")
+```
+
+Text here blah blah
+
+```{r map, echo = FALSE, message = FALSE}
+plot_usmap(data = states_n, values = "n", regions = "states") +
+  scale_fill_continuous(low = "white", high = "red", 
+                        name = "Well Counts (2018)", 
+                        label = scales::comma) + 
+  theme(legend.position = "right", 
+        panel.background = element_rect(color = "black", 
+                                        fill = "white"),
+        plot.background = element_rect(color = "white")) +
+  ggtitle("Count of Groundwater Wells across U.S. States")
+```
+
+
+
+
 

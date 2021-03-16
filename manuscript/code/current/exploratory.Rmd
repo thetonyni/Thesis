@@ -18,8 +18,16 @@ library(usmap)
 
 ```{r}
 #importing in full dataset
-import_df <- read_csv("data/chemical_data.csv")
+import_df <- read_csv("code/current/data/chemical_data.csv")
 ```
+
+```{r}
+import_df %>%
+  group_by(gradient) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n))
+```
+
 
 ```{r}
 #breaking apart into different datasets for each region

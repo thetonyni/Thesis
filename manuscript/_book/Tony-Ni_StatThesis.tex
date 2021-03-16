@@ -759,7 +759,9 @@ Shortcomings in the results presented in this study may come from the fact that 
 
 \hypertarget{casestudy}{%
 \chapter{Case Study}\label{casestudy}}
-
+\begin{verbatim}
+   Warning: package 'usmap' was built under R version 4.0.3
+\end{verbatim}
 \hypertarget{background}{%
 \section{Background}\label{background}}
 
@@ -869,7 +871,7 @@ Concentration & concentration & The concentration of the contaminant.\\
 \hypertarget{plan-of-action}{%
 \subsection{Plan of Action}\label{plan-of-action}}
 
-The investigation conducted by Kelderman et al. (2019) mentions certain restrictions within the data that we believe may have caused their analysis to potentially be inaccurate. Specifically with the limit of detection problem arises when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to be considered ``below detection.'' These values are often encoded as NA or even mistakenly marked as 0. There are no mentions of any attempts to account for or handle these missing values, which is the motivation for this case study.
+The investigation conducted by Kelderman et al. (2019) mentions certain restrictions within the data that we believe may have caused their analysis to potentially be inaccurate. Specifically with the limit of detection problem arises when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to be considered ``below detection.'' These values are often encoded as NA or even mistakenly marked as 0. Mentions of attempts to account for or handle these missing values are absent from the report, which is the motivation for this case study.
 
 Our investigation works with methods on handling this missing data through the techniques detailed in chapter 1 in order to obtain more accurate and precise estimates of the mean concentrations of contaminants at coal ash sites. Through our newly obtained estimates, we hope to see if they might lead us to different beliefs than the claims made by Kelderman et al. (2019) regarding the the top 10 most contaminated wells in the U.S.
 
@@ -877,6 +879,9 @@ We will follow their criterion(s) for determining if a well is contaminated and 
 
 \hypertarget{application}{%
 \section{Application}\label{application}}
+
+Text here blah blah
+\begin{center}\includegraphics{Tony-Ni_StatThesis_files/figure-latex/map-1} \end{center}
 
 \hypertarget{conclusion}{%
 \chapter{Conclusion}\label{conclusion}}
@@ -895,7 +900,61 @@ This first appendix includes all of the R chunks of code that were hidden throug
 
 \hypertarget{in-chapter-refref-labels}{%
 \section{In Chapter \ref{ref-labels}:}\label{in-chapter-refref-labels}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#breaking apart into different datasets for each region}
+\NormalTok{northeast }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ME"}\NormalTok{, }\StringTok{"NH"}\NormalTok{, }\StringTok{"VT"}\NormalTok{, }\StringTok{"NY"}\NormalTok{, }\StringTok{"PA"}\NormalTok{, }\StringTok{"NJ"}\NormalTok{, }\StringTok{"MD"}\NormalTok{, }
+                      \StringTok{"MA"}\NormalTok{, }\StringTok{"DE"}\NormalTok{, }\StringTok{"RI"}\NormalTok{, }\StringTok{"CT"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"northeast"}\NormalTok{)}
 
+\NormalTok{midwest }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"OH"}\NormalTok{, }\StringTok{"IN"}\NormalTok{, }\StringTok{"MI"}\NormalTok{, }\StringTok{"IL"}\NormalTok{, }\StringTok{"WI"}\NormalTok{, }\StringTok{"MN"}\NormalTok{, }\StringTok{"IA"}\NormalTok{, }
+                      \StringTok{"MO"}\NormalTok{, }\StringTok{"ND"}\NormalTok{, }\StringTok{"SD"}\NormalTok{, }\StringTok{"NE"}\NormalTok{, }\StringTok{"KS"}\NormalTok{))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"midwest"}\NormalTok{)}
+
+\NormalTok{west }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"WA"}\NormalTok{, }\StringTok{"MT"}\NormalTok{, }\StringTok{"OR"}\NormalTok{, }\StringTok{"ID"}\NormalTok{, }\StringTok{"WY"}\NormalTok{, }\StringTok{"CA"}\NormalTok{, }\StringTok{"NV"}\NormalTok{, }
+                      \StringTok{"UT"}\NormalTok{, }\StringTok{"CO"}\NormalTok{, }\StringTok{"AZ"}\NormalTok{, }\StringTok{"NM"}\NormalTok{, }\StringTok{"AK"}\NormalTok{, }\StringTok{"HI"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"west"}\NormalTok{)}
+
+\NormalTok{south }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"WV"}\NormalTok{, }\StringTok{"VA"}\NormalTok{, }\StringTok{"KY"}\NormalTok{, }\StringTok{"TN"}\NormalTok{, }\StringTok{"NC"}\NormalTok{, }\StringTok{"SC"}\NormalTok{, }\StringTok{"GA"}\NormalTok{, }
+                      \StringTok{"FL"}\NormalTok{, }\StringTok{"MS"}\NormalTok{, }\StringTok{"AL"}\NormalTok{, }\StringTok{"LA"}\NormalTok{, }\StringTok{"AR"}\NormalTok{, }\StringTok{"OK"}\NormalTok{, }\StringTok{"TX"}\NormalTok{, }\StringTok{"PR"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"south"}\NormalTok{)}
+
+\CommentTok{\#rejoin them back together for future ref. if needed}
+\NormalTok{full }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(northeast, midwest, west, south) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{reduce}\NormalTok{(full\_join)}
+
+\CommentTok{\#more tidying}
+\NormalTok{midwest\_n }\OtherTok{\textless{}{-}}\NormalTok{ midwest }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n))}
+
+\NormalTok{northeast\_n }\OtherTok{\textless{}{-}}\NormalTok{ northeast }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n))}
+
+\NormalTok{south\_n }\OtherTok{\textless{}{-}}\NormalTok{ south }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n))}
+
+\NormalTok{west\_n }\OtherTok{\textless{}{-}}\NormalTok{ west }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n))}
+
+\NormalTok{states\_n }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(midwest\_n, northeast\_n, south\_n, west\_n)}
+
+\NormalTok{state\_name }\OtherTok{\textless{}{-}}\NormalTok{ state.name}
+\NormalTok{state\_abb }\OtherTok{\textless{}{-}}\NormalTok{ state.abb}
+\NormalTok{states\_map }\OtherTok{\textless{}{-}} \FunctionTok{map\_data}\NormalTok{(}\StringTok{"state"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 \hypertarget{simulation-appendix}{%
 \chapter{Simulation Appendix}\label{simulation-appendix}}
 
