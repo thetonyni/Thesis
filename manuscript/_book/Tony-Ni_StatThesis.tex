@@ -893,7 +893,23 @@ As we can see from figure 3.2, out of the 265 sites in our dataset, most of them
 \hypertarget{keldermans-top-10-sites}{%
 \subsection{Kelderman's Top 10 Sites}\label{keldermans-top-10-sites}}
 
-Talk about about what kelderman did to get the top 10 most contaminated sites, what procedures/methodologies they used to determine that/etc.
+As stated previously, Kelderman et al. (2019) compiled a list of the top 10 most contaminated sites across the U.S., following the EPA's health-based threshold for specific contaminants. We will briefly follow with a discussion on their methodology in determining these top 10 most contaminated sites.
+
+First, they calculated the average mean concentration for all contaminants in each well across all dates. To ensure that all observations used in this calculation were attributable to the coal site in question, there are several guidelines that were followed.
+
+After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area -- were removed.
+
+It is also important to note that since upgradient wells measure the quality of the water \emph{before} it passes through a coal site, they are also removed.
+
+These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site.
+
+The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table {[}PUT TABLE NUMBER HERE{]}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#CODE TO MAKE HEALTH BASED THRESHOLDS TABLE}
+\end{Highlighting}
+\end{Shaded}
+For each site, the wells with the highest average concentration of each contaminant were identified and subseqeuently compared to their respective health-based thresholds. A ratio is then calculated for each of these highest average contaminants to the health-based thresholds. These contaminant-specific ratios are then summed together in order to get a cumulative ``contamination score'' for each site. Contamination scores of a higher magnitude indicates more ``severe'' contamination, with the top 10 highest contamination scores comprising the top 10 most contaminated sites.
 
 tables below super ugly (FIX!!!!!)
 \begin{tabular}{l|r}

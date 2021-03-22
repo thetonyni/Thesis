@@ -33,7 +33,7 @@
 \contentsline {section}{\numberline {3.3}Application}{36}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Background (tentative title)}{36}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Kelderman's Top 10 Sites}{37}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}(Our) Top 10 Sites}{39}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.3}(Our) Top 10 Sites}{40}{subsection.3.3.3}%
 \contentsline {chapter}{Chapter 4: Conclusion}{41}{chapter.4}%
 \contentsline {chapter}{Appendix A: Main Appendix}{43}{appendix.A}%
 \contentsline {section}{\numberline {A.1}In the main file \ref {ref-labels}:}{43}{section.A.1}%

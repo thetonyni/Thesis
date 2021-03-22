@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  22 MAR 2021 13:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  22 MAR 2021 16:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -953,76 +953,76 @@ Overfull \hbox (36.13387pt too wide) in paragraph at lines 887--888
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[36]
+[36] [37 <./Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[37 <./Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf>]
+[38]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[38] [39] [40
-
-]
+[39] [40]
 Chapter 4.
-[41] [42
+[41
+
+] [42
 
 ]
 Appendix A.
 
-LaTeX Warning: Reference `ref-labels' on page 43 undefined on input line 1001.
+LaTeX Warning: Reference `ref-labels' on page 43 undefined on input line 1017.
 
 
-LaTeX Warning: Reference `ref-labels' on page 43 undefined on input line 1004.
+LaTeX Warning: Reference `ref-labels' on page 43 undefined on input line 1020.
 
 [43] [44]
 Appendix B.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1089.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1105.
 [45
 
 ]
-Underfull \vbox (badness 10000) detected at line 1156
+Underfull \vbox (badness 10000) detected at line 1172
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1156
+Underfull \vbox (badness 10000) detected at line 1172
  []
 
 [46]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [47]
-Overfull \vbox (1.49452pt too high) detected at line 1277
+Overfull \vbox (1.49452pt too high) detected at line 1293
  []
 
 [48]
-Underfull \vbox (badness 10000) detected at line 1277
+Underfull \vbox (badness 10000) detected at line 1293
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1277
+Underfull \vbox (badness 10000) detected at line 1293
  []
 
 [49] [50]
-Underfull \vbox (badness 10000) detected at line 1389
+Underfull \vbox (badness 10000) detected at line 1405
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1389
+Underfull \vbox (badness 10000) detected at line 1405
  []
 
 [51]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [52]
-Overfull \vbox (1.49452pt too high) detected at line 1505
+Overfull \vbox (1.49452pt too high) detected at line 1521
  []
 
 [53]
-Underfull \vbox (badness 10000) detected at line 1505
+Underfull \vbox (badness 10000) detected at line 1521
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1505
+Underfull \vbox (badness 10000) detected at line 1521
  []
 
 [54] [55] [56
@@ -1030,26 +1030,26 @@ Underfull \vbox (badness 10000) detected at line 1505
 ] [57] [58
 
 ]
-Underfull \hbox (badness 3872) in paragraph at lines 1531--1533
+Underfull \hbox (badness 3872) in paragraph at lines 1547--1549
  \T1/lmr/m/n/12 (+20) Left-Censored En-vi-ron-men-tal Data Us-ing R. \T1/lmr/m/
 it/12 (+20) Tech-notes\T1/lmr/m/n/12 (+20) , \T1/lmr/m/it/12 (+20) 9\T1/lmr/m/n
 /12 (+20) (2), 153--172.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1531--1533
+Underfull \hbox (badness 10000) in paragraph at lines 1547--1549
  \T1/lmr/m/n/12 (+20) Re-trieved from [][]$\T1/lmtt/m/n/12 https : / / www . ep
 a . gov / sites / production / files / 2016 -[]
  []
 
 
-Underfull \hbox (badness 2932) in paragraph at lines 1543--1545
+Underfull \hbox (badness 2932) in paragraph at lines 1559--1561
  [][]\T1/lmr/m/n/12 (+20) Environmental In-tegrity Project. (2020). Coal Ash Gr
 ound-wa-ter Con-
  []
 
 
-Underfull \hbox (badness 1859) in paragraph at lines 1543--1545
+Underfull \hbox (badness 1859) in paragraph at lines 1559--1561
  \T1/lmr/m/n/12 (+20) tam-i-na-tion: Doc-u-ment-ing Coal Ash Pol-lu-tion. Re-tr
 ieved from [][]$\T1/lmtt/m/n/12 https :
  []
@@ -1060,7 +1060,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [59
 
 ]
-Underfull \hbox (badness 1237) in paragraph at lines 1570--1572
+Underfull \hbox (badness 1237) in paragraph at lines 1586--1588
  \T1/lmr/m/n/12 (+20) tiles us-ing cen-sored data. \T1/lmr/m/it/12 (+20) Wa-ter
  Re-sources Re-search\T1/lmr/m/n/12 (+20) , \T1/lmr/m/it/12 (+20) 32\T1/lmr/m/n
 /12 (+20) (4), 1005--1012.
@@ -1117,7 +1117,7 @@ sy8.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/l
 m/lmtk10.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/pub
 lic/lm/lmtt12.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
 1/public/lm/lmtti10.pfb>
-Output written on Tony-Ni_StatThesis.pdf (76 pages, 498023 bytes).
+Output written on Tony-Ni_StatThesis.pdf (76 pages, 500458 bytes).
 PDF statistics:
  821 PDF objects out of 1000 (max. 8388607)
  715 compressed objects within 8 object streams
