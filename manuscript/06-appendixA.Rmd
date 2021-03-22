@@ -16,7 +16,7 @@ This first appendix includes all of the R chunks of code that were hidden throug
 
 ## In Chapter \@ref(ref-labels):
 
-## In Chapter \@ref{03-casestudy}:
+## In Chapter 3:
 
 ```{r ref.label="prelim", echo=TRUE, eval=FALSE}
 ```

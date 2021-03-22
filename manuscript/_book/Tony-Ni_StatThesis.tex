@@ -881,9 +881,15 @@ We will follow their criterion(s) for determining if a well is contaminated and 
 \hypertarget{background-tentative-title}{%
 \subsection{Background (tentative title)}\label{background-tentative-title}}
 
-Text here blah blah talk about wells in the US
-\begin{center}\includegraphics{Tony-Ni_StatThesis_files/figure-latex/map-1} \end{center}
+Out of the 265 wells in our dataset, most of them are concentrated heavily in the mid-western and southern areas of the United States.
+\begin{figure}
 
+{\centering \includegraphics{Tony-Ni_StatThesis_files/figure-latex/usmap-1} 
+
+}
+
+\caption{Counts of Coal Sites in the United States}\label{fig:usmap}
+\end{figure}
 \hypertarget{keldermans-top-10-sites}{%
 \subsection{Kelderman's Top 10 Sites}\label{keldermans-top-10-sites}}
 
@@ -997,8 +1003,8 @@ This first appendix includes all of the R chunks of code that were hidden throug
 \hypertarget{in-chapter-refref-labels}{%
 \section{In Chapter \ref{ref-labels}:}\label{in-chapter-refref-labels}}
 
-\hypertarget{in-chapter-ref03-casestudy}{%
-\section{In Chapter @ref\{03-casestudy\}:}\label{in-chapter-ref03-casestudy}}
+\hypertarget{in-chapter-3}{%
+\section{In Chapter 3:}\label{in-chapter-3}}
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#breaking apart into different datasets for each region}
@@ -1026,26 +1032,27 @@ This first appendix includes all of the R chunks of code that were hidden throug
 \NormalTok{full }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(northeast, midwest, west, south) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{reduce}\NormalTok{(full\_join)}
 
-\CommentTok{\#more tidying}
+\CommentTok{\#getting \# of sites in each state}
+
 \NormalTok{midwest\_n }\OtherTok{\textless{}{-}}\NormalTok{ midwest }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n))}
+  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
 
 \NormalTok{northeast\_n }\OtherTok{\textless{}{-}}\NormalTok{ northeast }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n))}
+  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
 
 \NormalTok{south\_n }\OtherTok{\textless{}{-}}\NormalTok{ south }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n))}
+  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
 
 \NormalTok{west\_n }\OtherTok{\textless{}{-}}\NormalTok{ west }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n))}
+  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
 
 \NormalTok{states\_n }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(midwest\_n, northeast\_n, south\_n, west\_n)}
 

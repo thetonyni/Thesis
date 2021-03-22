@@ -38,7 +38,7 @@
 \contentsline {chapter}{Appendix A: Main Appendix}{43}{appendix.A}%
 \contentsline {section}{\numberline {A.1}In the main file \ref {ref-labels}:}{43}{section.A.1}%
 \contentsline {section}{\numberline {A.2}In Chapter \ref {ref-labels}:}{43}{section.A.2}%
-\contentsline {section}{\numberline {A.3}In Chapter @ref\{03-casestudy\}:}{43}{section.A.3}%
+\contentsline {section}{\numberline {A.3}In Chapter 3:}{43}{section.A.3}%
 \contentsline {chapter}{Appendix B: Simulation Appendix}{45}{appendix.B}%
 \contentsline {section}{\numberline {B.1}Libraries}{45}{section.B.1}%
 \contentsline {section}{\numberline {B.2}Generating Data}{45}{section.B.2}%
@@ -46,5 +46,5 @@
 \contentsline {section}{\numberline {B.4}Lognormal}{48}{section.B.4}%
 \contentsline {section}{\numberline {B.5}Exponential}{50}{section.B.5}%
 \contentsline {section}{\numberline {B.6}Weibull}{53}{section.B.6}%
-\contentsline {chapter}{Corrections}{57}{appendix*.12}%
-\contentsline {chapter}{References}{59}{appendix*.13}%
+\contentsline {chapter}{Corrections}{57}{appendix*.13}%
+\contentsline {chapter}{References}{59}{appendix*.14}%

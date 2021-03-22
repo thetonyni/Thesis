@@ -185,26 +185,27 @@ south <- import_df %>%
 full <- list(northeast, midwest, west, south) %>% 
   reduce(full_join)
 
-#more tidying
+#getting # of sites in each state
+
 midwest_n <- midwest %>%
   group_by(state) %>%
-  summarize(n = n()) %>%
-  arrange(desc(n))
+  distinct(site) %>%
+  summarize(n = n())
 
 northeast_n <- northeast %>%
   group_by(state) %>%
-  summarize(n = n()) %>%
-  arrange(desc(n))
+  distinct(site) %>%
+  summarize(n = n())
 
 south_n <- south %>%
   group_by(state) %>%
-  summarize(n = n()) %>%
-  arrange(desc(n))
+  distinct(site) %>%
+  summarize(n = n())
 
 west_n <- west %>%
   group_by(state) %>%
-  summarize(n = n()) %>%
-  arrange(desc(n))
+  distinct(site) %>%
+  summarize(n = n())
 
 states_n <- rbind(midwest_n, northeast_n, south_n, west_n)
 
@@ -215,21 +216,22 @@ states_map <- map_data("state")
 
 ### Background (tentative title)
 
-Text here blah blah talk about wells in the US
+As we can see from figure 3.2, out of the 265 sites in our dataset, most of them are concentrated heavily in the mid-western and southern areas of the United States. The report written by @Kelderman2019 pointed out that 91% of these sites (242 sites, to be precise) had groundwater wells with contaminants at an unsafe level determined by the health-based threshold put out by the EPA.
 
-```{r map, echo = FALSE, message = FALSE}
+```{r, usmap, echo = FALSE, message = FALSE, fig.cap="Counts of Coal Sites in the United States"}
 plot_usmap(data = states_n, values = "n", regions = "states") +
   scale_fill_continuous(low = "white", high = "red", 
                         name = "Well Counts (2018)", 
                         label = scales::comma) + 
   theme(legend.position = "right", 
-        panel.background = element_rect(color = "black", 
+        panel.background = element_rect(color = "white", 
                                         fill = "white"),
-        plot.background = element_rect(color = "white")) +
-  ggtitle("Count of Groundwater Wells across U.S. States")
+        plot.background = element_rect(color = "white"))
 ```
 
 ### Kelderman's Top 10 Sites
+
+
 
 Talk about about what kelderman did to get the top 10 most contaminated sites, what procedures/methodologies they used to determine that/etc.
 
@@ -271,6 +273,3 @@ Blah Blah, talk about applying our methods to obtain new mean estimates, discuss
 ### (Our) Top 10 Sites
 
 [code to be worked on here]
-
-
-
