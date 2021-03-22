@@ -48,10 +48,6 @@ The goal of the study conducted by @Kelderman2019 was to identify the percentage
 
 @Kelderman2019 notes the possibility of contamination being caused by an external factor, unrelated to the coal ash, and provides a stipulation as how to account for this. They excluded tallying the wells in which the mean downgradient values were lower than the mean upgradient values, as this would mean that the contamination was not caused by the coal plant itself.
 
-Our end goal remains the same as the @Kelderman2019: to identify contaminated groundwater in coal plants. In their report, it is not mentioned if left censored values were being accounted for in the calculations of the average concentrations of the downgradient and upgradient wells. As such, it may be prudent to check to see if the proportion of wells in the U.S. in which contamination is present would be altered if we used our techniques to calculate the average concentrations of the contaminants.
-
-The limit of detection problem stems from the measuring devices' inability to obtain chemical concentrations smaller than a certain threshold amount, thus affecting the measurements recorded.
-
 ## Data {#data}
 <!-- 
 WHERE THE DATA CAME FROM
@@ -146,7 +142,11 @@ knitr::kable(dd, caption = "Data dictionary for the coal dataset.",
 
 ### Plan of Action
 
-The investigation conducted by @Kelderman2019 mentions certain restrictions within the data that we believe may have caused their analysis to potentially be inaccurate. Specifically with the limit of detection problem arises when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to be considered "below detection." These values are often encoded as NA or even mistakenly marked as 0. Mentions of attempts to account for or handle these missing values are absent from the report, which is the motivation for this case study.
+The investigation conducted by @Kelderman2019 mentions certain restrictions within the data that we believe may have caused their analysis to potentially be inaccurate. The limit of detection problem arises when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to be considered "below detection." These values are often encoded as NA or even mistakenly marked as 0. 
+
+Our end goal remains the same as the @Kelderman2019: to identify contaminated groundwater in coal plants. @Kelderman2019 handled these censored values by assuming that their concentration was one half of the detection limit. In essence, they employed the substitution method in in order to obtain calculations of the average concentrations of the downgradient and upgradient wells. From our previous discussion on sentiment regarding the substitution method and from our simulation study, we observe that the substitution method may not be the best way to handle left-censored data in most, if not all, of our settings.
+
+The goal of our case study is to employ the techniques we introduced back in chapter 2 to see if they would result in potential differently conclusions. Specifically, we wish to check if the proportion of wells in the U.S. in which contamination is present would be altered if we used our techniques to calculate the average concentrations of the contaminants. Rather than utilizing the substitution method as @Kelderman2019 has done, we are interested to employ the MLE, KM, and ROS methods in handling for left-censored cases.
 
 Our investigation works with methods on handling this missing data through the techniques detailed in chapter 1 in order to obtain more accurate and precise estimates of the mean concentrations of contaminants at coal ash sites. Through our newly obtained estimates, we hope to see if they might lead us to different beliefs than the claims made by @Kelderman2019 regarding the the top 10 most contaminated wells in the U.S.
 

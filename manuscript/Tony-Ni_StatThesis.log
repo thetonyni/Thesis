@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  22 MAR 2021 12:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  22 MAR 2021 13:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -928,18 +928,16 @@ File: figures/upgradientdowngradient.jpg Graphic file (type jpg)
 Package pdftex.def Info: figures/upgradientdowngradient.jpg  used on input line
  773.
 (pdftex.def)             Requested size: 433.62pt x 241.79337pt.
-[30 <./figures/upgradientdowngradient.jpg>]
+[30 <./figures/upgradientdowngradient.jpg>] [31] [32]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[31] [32] [33]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[34]
-Overfull \hbox (11.25261pt too wide) in paragraph at lines 830--868
+[33]
+Overfull \hbox (11.25261pt too wide) in paragraph at lines 826--864
  [][] 
  []
 
-<Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf, id=526, 469.755pt x 325.215
+[34] [35]
+<Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf, id=532, 469.755pt x 325.215
 pt>
 File: Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf Graphic file (type pdf)
 
@@ -952,8 +950,11 @@ Overfull \hbox (36.13387pt too wide) in paragraph at lines 887--888
  [][] 
  []
 
-[35] [36]
-Underfull \vbox (badness 4556) has occurred while \output is active []
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[36]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [37 <./Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1116,7 +1117,7 @@ sy8.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/l
 m/lmtk10.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/pub
 lic/lm/lmtt12.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
 1/public/lm/lmtti10.pfb>
-Output written on Tony-Ni_StatThesis.pdf (76 pages, 497461 bytes).
+Output written on Tony-Ni_StatThesis.pdf (76 pages, 498023 bytes).
 PDF statistics:
  821 PDF objects out of 1000 (max. 8388607)
  715 compressed objects within 8 object streams
