@@ -246,12 +246,12 @@ hbt_names <- c("Antimony", "Arsenic", "Barium", "Beryllium",
                "Lead", "Lithium", "Mercury", "Molybdenum",
                "Radium", "Selenium", "Sulfate", "Thallium")
 
-hbt_values <- c("6 mcg/L", "10 mcg/L", "2 mg/L",
-                "4 mcg/L", "3 mg/L", "5 mcg/L",
-                "100 mcg/L", "6 mcg/L", "4 mg/L",
-                "15 mcg/L", "40 mcg/L", "2 mcg/L",
-                "40 mcg/L", "5 pCi/L", "50 mcg/L",
-                "500 mg/L", "2 mcg/L")
+hbt_values <- c("6 ug/L", "10 ug/L", "2 mg/L",
+                "4 ug/L", "3 mg/L", "5 ug/L",
+                "100 ug/L", "6 ug/L", "4 mg/L",
+                "15 ug/L", "40 ug/L", "2 ug/L",
+                "40 ug/L", "5 pCi/L", "50 ug/L",
+                "500 mg/L", "2 ug/L")
 
 hbt <- as.data.frame(cbind(hbt_names, hbt_values)) %>%
   rename("Contaminant" = "hbt_names",
@@ -269,14 +269,14 @@ For each site, the wells with the highest average concentration of each contamin
 While the contamination scores are not explicitly published in @Kelderman2019's report, the site names of the top ten most contaminated sites in the country according to their analysis which in descending order severity are as follows:
 
       1. San Miguel Plant,
-      2. Allen Steam Station,
-      3. Jim Bridger Power Plant,
-      4. Naughton Power Plant,
-      5. New Castle Generating Station,
-      6. Allen Fossil Plant,
-      7. Brandywine Ash Management Facility,
-      8. Hunter Power Plant,
-      9. R.D. Morrow, Sr. Generating Station,
+      2. Allen Steam Station
+      3. Jim Bridger Power Plant
+      4. Naughton Power Plant
+      5. New Castle Generating Station
+      6. Allen Fossil Plant
+      7. Brandywine Ash Management Facility
+      8. Hunter Power Plant
+      9. R.D. Morrow, Sr. Generating Station
       10. Ghent Generating Station
 
 We will follow their criterion(s) for determining if a well is contaminated, with the only difference being how we obtain the average concentrations of the contaminants in the wells. We will use our four different methods to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if we obtain any different conclusions.
@@ -287,13 +287,69 @@ We will follow their criterion(s) for determining if a well is contaminated, wit
 
 First, they calculated the average mean concentration for all contaminants in each well across all dates. 
 
-```{r}
+```{r, echo = FALSE}
 #we need to standardize values, some wells report concentration of contaminants in different units, we will standardize all units to the units provided by the health-based threshold set by the EPA
 
+#template to find different units
+full %>%
+  filter(grepl("Antimony", contaminant)) %>% #select all rows containing __
+  group_by(measurement.unit) %>%
+  summarize(n = n())
+
+#antimony has units mg/L and ug/L, we need to change all to ug/L
+antimony <- full %>%
+  filter(grepl("Antimony", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")
+  
+#arsenic has units mg/L and ug/L, we need to change all to ug/L
+arsenic <- full %>%
+  filter(grepl("Arsenic", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")
+
+#barium has units  mg/l and ug/l, we need to change all to mg
+
+#beryllium has units mg/l and ug/l, we need to change all to ug
+
+#boron has units mg/l and ug/l, we need to change all to mg
+
+#cadmium has units mg/l and ug/l, we need to change all to ug
+
+#chromium has units mg/l and ug/l, we need to change all to ug
+
+#cobalt has units mg/l and ug/l, we need to change all to ug
+
+#fluoride has units mg/l and mg/l, we need to change all to mg
+
+#lead has units mg/l and ug/l, we need to change all to ug
+
+#lithium has units mg/l and ug/l, we need to change all to ug
+
+#mercury has units mg/l and ug/l, we need to change all to ug
+
+#molybdenum has units mg/l and ug/l, we need to change all to ug
+
+#radium has units mg/l (14), pCi/l (30k+), ug/l (1), we need to change all to pCi
+
+#selenium has units mg/l (23k+), pCi/l (8), ug/l (14k+), we need to change all to ug
+
+#sulfate has units mg/l and ug/l, we need to change all to mg
+
+#thallium has units mg/l (23k+), pCi/l (16), ug/l (13k+), we need to change all to ug
+```
+
+```{r}
 #calculation of avg mean concentration for all contaminants in each well across all dates
 
-
 ```
+
 
 
 To ensure that all observations used in this calculation were attributable to the coal site in question, there are several guidelines that were followed.
