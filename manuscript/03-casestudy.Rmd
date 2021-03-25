@@ -150,8 +150,6 @@ The goal of our case study is to employ the techniques we introduced back in cha
 
 Our investigation works with methods on handling this missing data through the techniques detailed in chapter 1 in order to obtain more accurate and precise estimates of the mean concentrations of contaminants at coal ash sites. Through our newly obtained estimates, we hope to see if they might lead us to different beliefs than the claims made by @Kelderman2019 regarding the the top 10 most contaminated wells in the U.S.
 
-We will follow their criterion(s) for determining if a well is contaminated and most other aspects. The only difference in our case study is how we obtain the average concentrations of the contaminants in the wells. We will use our four different methods to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if we obtain any different conclusions given our different methods.
-
 ## Application
 
 ```{r, echo = FALSE}
@@ -183,7 +181,8 @@ south <- import_df %>%
 
 #rejoin them back together for future ref. if needed
 full <- list(northeast, midwest, west, south) %>% 
-  reduce(full_join)
+  reduce(full_join) %>%
+  select(-c("qualifier", "link"))
 
 #getting # of sites in each state
 
@@ -231,59 +230,78 @@ plot_usmap(data = states_n, values = "n", regions = "states") +
 
 ### Kelderman's Top 10 Sites
 
-As stated previously, @Kelderman2019 compiled a list of the top 10 most contaminated sites across the U.S., following the EPA's health-based threshold for specific contaminants. We will briefly follow with a discussion on their methodology in determining these top 10 most contaminated sites.
+As stated previously, @Kelderman2019 compiled a list of the top ten most contaminated sites across the U.S., following the EPA's health-based threshold for specific contaminants. We will briefly follow with a discussion on their methodology in determining these top ten most contaminated sites.
 
 First, they calculated the average mean concentration for all contaminants in each well across all dates. To ensure that all observations used in this calculation were attributable to the coal site in question, there are several guidelines that were followed.
 
-After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area -- were removed. 
+After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area were removed. It is also important to note that since upgradient wells measure the quality of the water _before_ it passes through a coal site, they are also removed.
 
-It is also important to note that since upgradient wells measure the quality of the water _before_ it passes through a coal site, they are also removed.
+These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table 3.2.
 
-These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. 
-
-The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table [PUT TABLE NUMBER HERE].
-
-```{r}
+```{r echo = FALSE}
 #CODE TO MAKE HEALTH BASED THRESHOLDS TABLE
+
+hbt_names <- c("Antimony", "Arsenic", "Barium", "Beryllium",
+               "Boron", "Cadmium", "Chromium", "Cobalt", "Fluoride",
+               "Lead", "Lithium", "Mercury", "Molybdenum",
+               "Radium", "Selenium", "Sulfate", "Thallium")
+
+hbt_values <- c("6 mcg/L", "10 mcg/L", "2 mg/L",
+                "4 mcg/L", "3 mg/L", "5 mcg/L",
+                "100 mcg/L", "6 mcg/L", "4 mg/L",
+                "15 mcg/L", "40 mcg/L", "2 mcg/L",
+                "40 mcg/L", "5 pCi/L", "50 mcg/L",
+                "500 mg/L", "2 mcg/L")
+
+hbt <- as.data.frame(cbind(hbt_names, hbt_values)) %>%
+  rename("Contaminant" = "hbt_names",
+         "Exceedance Limit" = "hbt_values") 
 ```
 
-For each site, the wells with the highest average concentration of each contaminant were identified and subseqeuently compared to their respective health-based thresholds. A ratio is then calculated for each of these highest average contaminants to the health-based thresholds. These contaminant-specific ratios are then summed together in order to get a cumulative "contamination score" for each site. Contamination scores of a higher magnitude indicates more "severe" contamination, with the top 10 highest contamination scores comprising the top 10 most contaminated sites.
-
-tables below super ugly (FIX!!!!!)
-
-```{r keldermantop10, echo = FALSE, message = FALSE, cache = TRUE}
-keldermantop10 <- c("San Miguel Plant",
-           "Allen Steam Station",
-           "Jim Bridger Power Plant",
-           "Naughton Power Plant",
-           "New Castle Generating Station",
-           "Allen Fossil Plant",
-           "Brandywine Ash Management Facility",
-           "Hunter Power Plant",
-           "R.D. Morrow, Sr. Generating Station",
-           "Ghent Generating Station")
-
-keldermantop10df <- full %>%
-  filter(site %in% keldermantop10)
-
-#number of wells in kelderman's top 10 sites
-keldermantop10df %>%
-  group_by(site)%>%
-  summarize(n = n()) %>%
-  arrange(desc(n)) %>%
-  kable() #temporary table (ugly)
+```{r, echo = FALSE}
+knitr::kable(hbt, caption = "Health-based thresholds set by EPA.",
+             booktabs = "T", linesep = "\\addlinespace") %>%
+             column_spec(3, width = "7.6cm")
 ```
 
-```{r}
-#how many well are below detection in each site
-keldermantop10df %>%
-  group_by(site, below.detection) %>%
-  summarize(n = n()) %>%
-  kable() #temporary table (ugly)
-```
+For each site, the wells with the highest average concentration of each contaminant were identified and compared to their respective health-based thresholds. A ratio is then calculated for each of these highest average contaminants to the health-based thresholds. These contaminant-specific ratios are then summed together in order to get a cumulative "contamination score" for each site. Contamination scores of a higher magnitude indicates more "severe" contamination, with the top ten highest contamination scores comprising the top ten most contaminated sites.
 
-Blah Blah, talk about applying our methods to obtain new mean estimates, discuss how we will use kelderman's procedure to obtain our own top 10 sites (for each censoring method)
+While the contamination scores are not explicitly published in @Kelderman2019's report, the site names of the top ten most contaminated sites in the country according to their analysis which in descending order severity are as follows:
 
-### (Our) Top 10 Sites
+      1. San Miguel Plant,
+      2. Allen Steam Station,
+      3. Jim Bridger Power Plant,
+      4. Naughton Power Plant,
+      5. New Castle Generating Station,
+      6. Allen Fossil Plant,
+      7. Brandywine Ash Management Facility,
+      8. Hunter Power Plant,
+      9. R.D. Morrow, Sr. Generating Station,
+      10. Ghent Generating Station
+
+We will follow their criterion(s) for determining if a well is contaminated, with the only difference being how we obtain the average concentrations of the contaminants in the wells. We will use our four different methods to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if we obtain any different conclusions.
+
+### (Our) Top Ten Most Contaminated Sites
 
 [code to be worked on here]
+
+First, they calculated the average mean concentration for all contaminants in each well across all dates. 
+
+```{r}
+#we need to standardize values, some wells report concentration of contaminants in different units, we will standardize all units to the units provided by the health-based threshold set by the EPA
+
+#calculation of avg mean concentration for all contaminants in each well across all dates
+
+
+```
+
+
+To ensure that all observations used in this calculation were attributable to the coal site in question, there are several guidelines that were followed.
+
+After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area were removed. It is also important to note that since upgradient wells measure the quality of the water _before_ it passes through a coal site, they are also removed.
+
+These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table 3.2.
+
+For each site, the wells with the highest average concentration of each contaminant were identified and compared to their respective health-based thresholds. A ratio is then calculated for each of these highest average contaminants to the health-based thresholds. These contaminant-specific ratios are then summed together in order to get a cumulative "contamination score" for each site. Contamination scores of a higher magnitude indicates more "severe" contamination, with the top ten highest contamination scores comprising the top ten most contaminated sites.
+
+

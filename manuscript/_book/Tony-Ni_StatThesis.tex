@@ -873,8 +873,6 @@ The goal of our case study is to employ the techniques we introduced back in cha
 
 Our investigation works with methods on handling this missing data through the techniques detailed in chapter 1 in order to obtain more accurate and precise estimates of the mean concentrations of contaminants at coal ash sites. Through our newly obtained estimates, we hope to see if they might lead us to different beliefs than the claims made by Kelderman et al. (2019) regarding the the top 10 most contaminated wells in the U.S.
 
-We will follow their criterion(s) for determining if a well is contaminated and most other aspects. The only difference in our case study is how we obtain the average concentrations of the contaminants in the wells. We will use our four different methods to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if we obtain any different conclusions given our different methods.
-
 \hypertarget{application}{%
 \section{Application}\label{application}}
 
@@ -893,111 +891,76 @@ As we can see from figure 3.2, out of the 265 sites in our dataset, most of them
 \hypertarget{keldermans-top-10-sites}{%
 \subsection{Kelderman's Top 10 Sites}\label{keldermans-top-10-sites}}
 
-As stated previously, Kelderman et al. (2019) compiled a list of the top 10 most contaminated sites across the U.S., following the EPA's health-based threshold for specific contaminants. We will briefly follow with a discussion on their methodology in determining these top 10 most contaminated sites.
+As stated previously, Kelderman et al. (2019) compiled a list of the top ten most contaminated sites across the U.S., following the EPA's health-based threshold for specific contaminants. We will briefly follow with a discussion on their methodology in determining these top ten most contaminated sites.
 
 First, they calculated the average mean concentration for all contaminants in each well across all dates. To ensure that all observations used in this calculation were attributable to the coal site in question, there are several guidelines that were followed.
 
-After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area -- were removed.
+After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area were removed. It is also important to note that since upgradient wells measure the quality of the water \emph{before} it passes through a coal site, they are also removed.
 
-It is also important to note that since upgradient wells measure the quality of the water \emph{before} it passes through a coal site, they are also removed.
+These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table 3.2.
+\begin{table}
 
-These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site.
-
-The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table {[}PUT TABLE NUMBER HERE{]}.
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#CODE TO MAKE HEALTH BASED THRESHOLDS TABLE}
-\end{Highlighting}
-\end{Shaded}
-For each site, the wells with the highest average concentration of each contaminant were identified and subseqeuently compared to their respective health-based thresholds. A ratio is then calculated for each of these highest average contaminants to the health-based thresholds. These contaminant-specific ratios are then summed together in order to get a cumulative ``contamination score'' for each site. Contamination scores of a higher magnitude indicates more ``severe'' contamination, with the top 10 highest contamination scores comprising the top 10 most contaminated sites.
-
-tables below super ugly (FIX!!!!!)
-\begin{tabular}{l|r}
-\hline
-site & n\\
-\hline
-Allen Steam Station & 9938\\
-\hline
-Jim Bridger Power Plant & 8932\\
-\hline
-Naughton Power Plant & 6485\\
-\hline
-San Miguel Plant & 4177\\
-\hline
-Ghent Generating Station & 3895\\
-\hline
-Hunter Power Plant & 2010\\
-\hline
-Brandywine Ash Management Facility & 1988\\
-\hline
-Allen Fossil Plant & 1952\\
-\hline
-New Castle Generating Station & 1749\\
-\hline
-R.D. Morrow, Sr. Generating Station & 1701\\
-\hline
+\caption{\label{tab:unnamed-chunk-9}Health-based thresholds set by EPA.}
+\centering
+\begin{tabular}[t]{ll>{}p{7.6cm}}
+\toprule
+Contaminant & Exceedance Limit\\
+\midrule
+Antimony & 6 mcg/L\\
+\addlinespace
+Arsenic & 10 mcg/L\\
+\addlinespace
+Barium & 2 mg/L\\
+\addlinespace
+Beryllium & 4 mcg/L\\
+\addlinespace
+Boron & 3 mg/L\\
+\addlinespace
+Cadmium & 5 mcg/L\\
+\addlinespace
+Chromium & 100 mcg/L\\
+\addlinespace
+Cobalt & 6 mcg/L\\
+\addlinespace
+Fluoride & 4 mg/L\\
+\addlinespace
+Lead & 15 mcg/L\\
+\addlinespace
+Lithium & 40 mcg/L\\
+\addlinespace
+Mercury & 2 mcg/L\\
+\addlinespace
+Molybdenum & 40 mcg/L\\
+\addlinespace
+Radium & 5 pCi/L\\
+\addlinespace
+Selenium & 50 mcg/L\\
+\addlinespace
+Sulfate & 500 mg/L\\
+\addlinespace
+Thallium & 2 mcg/L\\
+\bottomrule
 \end{tabular}
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#how many well are below detection in each site}
-\NormalTok{keldermantop10df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(site, below.detection) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{kable}\NormalTok{() }\CommentTok{\#temporary table (ugly)}
-\end{Highlighting}
-\end{Shaded}
+\end{table}
+For each site, the wells with the highest average concentration of each contaminant were identified and compared to their respective health-based thresholds. A ratio is then calculated for each of these highest average contaminants to the health-based thresholds. These contaminant-specific ratios are then summed together in order to get a cumulative ``contamination score'' for each site. Contamination scores of a higher magnitude indicates more ``severe'' contamination, with the top ten highest contamination scores comprising the top ten most contaminated sites.
+
+While the contamination scores are not explicitly published in Kelderman et al. (2019)'s report, the site names of the top ten most contaminated sites in the country according to their analysis which in descending order severity are as follows:
 \begin{verbatim}
-   `summarise()` regrouping output by 'site' (override with `.groups` argument)
+  1. San Miguel Plant,
+  2. Allen Steam Station,
+  3. Jim Bridger Power Plant,
+  4. Naughton Power Plant,
+  5. New Castle Generating Station,
+  6. Allen Fossil Plant,
+  7. Brandywine Ash Management Facility,
+  8. Hunter Power Plant,
+  9. R.D. Morrow, Sr. Generating Station,
+  10. Ghent Generating Station
 \end{verbatim}
-\begin{tabular}{l|l|r}
-\hline
-site & below.detection & n\\
-\hline
-Allen Fossil Plant & < & 776\\
-\hline
-Allen Fossil Plant &  & 1176\\
-\hline
-Allen Steam Station & < & 2748\\
-\hline
-Allen Steam Station &  & 7190\\
-\hline
-Brandywine Ash Management Facility & < & 490\\
-\hline
-Brandywine Ash Management Facility &  & 1498\\
-\hline
-Ghent Generating Station & < & 2027\\
-\hline
-Ghent Generating Station &  & 1868\\
-\hline
-Hunter Power Plant & < & 715\\
-\hline
-Hunter Power Plant &  & 1295\\
-\hline
-Jim Bridger Power Plant & < & 3671\\
-\hline
-Jim Bridger Power Plant &  & 5261\\
-\hline
-Naughton Power Plant & < & 2533\\
-\hline
-Naughton Power Plant &  & 3952\\
-\hline
-New Castle Generating Station & < & 809\\
-\hline
-New Castle Generating Station &  & 940\\
-\hline
-R.D. Morrow, Sr. Generating Station & < & 774\\
-\hline
-R.D. Morrow, Sr. Generating Station &  & 927\\
-\hline
-San Miguel Plant & < & 1370\\
-\hline
-San Miguel Plant &  & 2807\\
-\hline
-\end{tabular}
-Blah Blah, talk about applying our methods to obtain new mean estimates, discuss how we will use kelderman's procedure to obtain our own top 10 sites (for each censoring method)
+We will follow their criterion(s) for determining if a well is contaminated, the specifics of which we will outline in the next section. The only difference in our case study is how we obtain the average concentrations of the contaminants in the wells. We will use our four different methods to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if we obtain any different conclusions given our different methods.
 
-\hypertarget{our-top-10-sites}{%
-\subsection{(Our) Top 10 Sites}\label{our-top-10-sites}}
+\hypertarget{our-top-ten-most-contaminated-sites}{%
+\subsection{(Our) Top Ten Most Contaminated Sites}\label{our-top-ten-most-contaminated-sites}}
 
 {[}code to be worked on here{]}
 
