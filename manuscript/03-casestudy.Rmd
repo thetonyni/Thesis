@@ -459,27 +459,44 @@ df_std <- rbind(antimony, arsenic, barium, beryllium, boron, cadmium,
 Now we perform the procedure using the 1/2(LOD) substitution censoring method, akin to @Kelderman2019's implementation:
 
 ```{r}
-#prevent scientific notation
-options(scipen=999)
-
 #calculation of avg mean concentration for all contaminants in each well across all dates
 
 #get average mean conc for all contaminants in each well
 avg_control <- df_std %>%
-  group_by(well.id, contaminant, measurement.unit, gradient) %>%
-  summarize(avg_conc = mean(concentration))
+  group_by(well.id, contaminant, measurement.unit, gradient, disposal.area) %>%
+  summarize(avg_conc = mean(concentration)) %>%
+  ungroup()
 
 #get highest avg. upgradient concentrations for each contaminant
-highestupgrad <- avg_control %>%
+highestupgrad_control <- avg_control %>%
   filter(gradient %in% "Upgradient") %>%
-  group_by(well.id, contaminant) %>%
-  summarize(max_conc = max(avg_conc))
+  group_by(contaminant, disposal.area) %>%
+  summarize(max_conc = max(avg_conc)) %>%
+  ungroup()
 
 #remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area
-avg_control2 <- avg_control %>%
-  filter(gradient %in% "Downgradient") %>%
-  filter(avg_conc > max)
+downgrad_control <- avg_control %>%
+  filter(gradient %in% "Downgradient")
+
+downgrad_control2 <- downgrad_control %>%
+  select(c(well.id, contaminant, disposal.area, avg_conc))
+
+downgrad_control3 <- left_join(downgrad_control2, highestupgrad_control) %>%
+  mutate(max_conc = case_when(
+    is.na(max_conc) ~ -9999999, #accounting for na's
+    TRUE ~ max_conc))
+
+downgrad_control4 <- downgrad_control3 %>% #all downgradient mean concentrations that were greater than “background” levels
+  filter(avg_conc > max_conc)
+
+#next steps to do ratios and mathing
+
+
+
+#NOTE TO SELF: something to discuss in following section/exceptions: 
+#while trying to match wells with their associated disposal areas, recognized that the naming conventions for disposal areas is a bit strange... for example the disposal named 'north ash basin system' has only downgradient wells but 'North Ash Basin System, RWS Type I South Landfill FP# 26-06' has only upgradient wells. as such, when we are trying to find the highest average upgradient concentration of a contaminant for a certain disposal area, we may not 100% account for all wells, since 1) we do not know if these disposal areas are even connected 2) time-constraint of going through and picking out keywords for disposal areas and matching them, etc. as such, we need to keep in mind that some exceptions may be missed...
 ```
+
 
 
 After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area were removed. It is also important to note that since upgradient wells measure the quality of the water _before_ it passes through a coal site, they are also removed.
