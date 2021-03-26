@@ -315,44 +315,172 @@ arsenic <- full %>%
          measurement.unit = "ug/l")
 
 #barium has units  mg/l and ug/l, we need to change all to mg
+barium <- full %>%
+  filter(grepl("Barium", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration,
+             measurement.unit %in% "ug/l" ~ concentration/1000),
+         measurement.unit = "mg/l")
 
 #beryllium has units mg/l and ug/l, we need to change all to ug
+beryllium <- full %>%
+  filter(grepl("Beryllium", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")
 
 #boron has units mg/l and ug/l, we need to change all to mg
+boron <- full %>%
+  filter(grepl("Boron", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration,
+             measurement.unit %in% "ug/l" ~ concentration/1000),
+         measurement.unit = "mg/l")
 
 #cadmium has units mg/l and ug/l, we need to change all to ug
+cadmium <- full %>%
+  filter(grepl("Cadmium", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")
 
 #chromium has units mg/l and ug/l, we need to change all to ug
+chromium <- full %>%
+  filter(grepl("Chromium", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")
 
 #cobalt has units mg/l and ug/l, we need to change all to ug
+cobalt <- full %>%
+  filter(grepl("Cobalt", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")
 
 #fluoride has units mg/l and mg/l, we need to change all to mg
+fluoride <- full %>%
+  filter(grepl("Fluoride", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration,
+             measurement.unit %in% "ug/l" ~ concentration/1000),
+         measurement.unit = "mg/l")
 
 #lead has units mg/l and ug/l, we need to change all to ug
+lead <- full %>%
+  filter(grepl("Lead", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")
 
 #lithium has units mg/l and ug/l, we need to change all to ug
+lithium <- full %>%
+  filter(grepl("Lithium", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")
+
 
 #mercury has units mg/l and ug/l, we need to change all to ug
+mercury <- full %>%
+  filter(grepl("Mercury", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")
+
 
 #molybdenum has units mg/l and ug/l, we need to change all to ug
+molybdenum <- full %>%
+  filter(grepl("Molybdenum", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")
+
 
 #radium has units mg/l (14), pCi/l (30k+), ug/l (1), we need to change all to pCi
+radium <- full %>%
+  filter(grepl("Radium", contaminant)) %>%
+  filter(measurement.unit %in% "pCi/l")
 
 #selenium has units mg/l (23k+), pCi/l (8), ug/l (14k+), we need to change all to ug
+selenium <- full %>%
+  filter(grepl("Radium", contaminant)) %>%
+  filter(measurement.unit %in% c("mg/l, ug/l")) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")  
 
 #sulfate has units mg/l and ug/l, we need to change all to mg
+sulfate <- full %>%
+  filter(grepl("Sulfate", contaminant)) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration,
+             measurement.unit %in% "ug/l" ~ concentration/1000),
+         measurement.unit = "mg/l")
 
 #thallium has units mg/l (23k+), pCi/l (16), ug/l (13k+), we need to change all to ug
+thallium <- full %>%
+  filter(grepl("Thallium", contaminant)) %>%
+  filter(measurement.unit %in% c("mg/l, ug/l")) %>%
+  mutate(concentration = 
+           case_when(
+             measurement.unit %in% "mg/l" ~ concentration*1000,
+             measurement.unit %in% "ug/l" ~ concentration),
+         measurement.unit = "ug/l")  
+
+#recombine back into new standardized df
+df_std <- rbind(antimony, arsenic, barium, beryllium, boron, cadmium,
+                chromium, cobalt, fluoride, lead, lithium, mercury, 
+                molybdenum, radium, selenium, sulfate, thallium)
 ```
+
+Now we perform the procedure using the 1/2(LOD) substitution censoring method, akin to @Kelderman2019's implementation:
 
 ```{r}
+#prevent scientific notation
+options(scipen=999)
+
 #calculation of avg mean concentration for all contaminants in each well across all dates
 
+#get average mean conc for all contaminants in each well
+avg_control <- df_std %>%
+  group_by(well.id, contaminant, measurement.unit, gradient) %>%
+  summarize(avg_conc = mean(concentration))
+
+#get highest avg. upgradient concentrations for each contaminant
+highestupgrad <- avg_control %>%
+  filter(gradient %in% "Upgradient") %>%
+  group_by(well.id, contaminant) %>%
+  summarize(max_conc = max(avg_conc))
+
+#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area
+avg_control2 <- avg_control %>%
+  filter(gradient %in% "Downgradient") %>%
+  filter(avg_conc > max)
 ```
 
-
-
-To ensure that all observations used in this calculation were attributable to the coal site in question, there are several guidelines that were followed.
 
 After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area were removed. It is also important to note that since upgradient wells measure the quality of the water _before_ it passes through a coal site, they are also removed.
 
