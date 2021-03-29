@@ -246,22 +246,25 @@ hbt_names <- c("Antimony", "Arsenic", "Barium", "Beryllium",
                "Lead", "Lithium", "Mercury", "Molybdenum",
                "Radium", "Selenium", "Sulfate", "Thallium")
 
-hbt_values <- c("6 ug/L", "10 ug/L", "2 mg/L",
-                "4 ug/L", "3 mg/L", "5 ug/L",
-                "100 ug/L", "6 ug/L", "4 mg/L",
-                "15 ug/L", "40 ug/L", "2 ug/L",
-                "40 ug/L", "5 pCi/L", "50 ug/L",
-                "500 mg/L", "2 ug/L")
+hbt_values <- c(6, 10, 2, 4, 
+                3, 5, 100, 6, 4,
+                15, 40, 2, 40, 
+                5, 50, 500, 2)
 
-hbt <- as.data.frame(cbind(hbt_names, hbt_values)) %>%
+hbt_units <- c("ug/L", "ug/L", "mg/L", "ug/L", 
+               "mg/L", "ug/L", "ug/L", "ug/L", "mg/L",
+               "ug/L", "ug/L", "ug/L","ug/L", 
+               "pCi/L", "ug/L", "mg/L", "ug/L")
+
+hbt <- as.data.frame(cbind(hbt_names, hbt_values, hbt_units)) %>%
   rename("Contaminant" = "hbt_names",
-         "Exceedance Limit" = "hbt_values") 
+         "Exceedance Limit" = "hbt_values",
+         "Unit" = "hbt_units") 
 ```
 
 ```{r, echo = FALSE}
 knitr::kable(hbt, caption = "Health-based thresholds set by EPA.",
-             booktabs = "T", linesep = "\\addlinespace") %>%
-             column_spec(3, width = "7.6cm")
+             booktabs = "T", linesep = "\\addlinespace")
 ```
 
 For each site, the wells with the highest average concentration of each contaminant were identified and compared to their respective health-based thresholds. A ratio is then calculated for each of these highest average contaminants to the health-based thresholds. These contaminant-specific ratios are then summed together in order to get a cumulative "contamination score" for each site. Contamination scores of a higher magnitude indicates more "severe" contamination, with the top ten highest contamination scores comprising the top ten most contaminated sites.
@@ -489,7 +492,39 @@ downgrad_control3 <- left_join(downgrad_control2, highestupgrad_control) %>%
 downgrad_control4 <- downgrad_control3 %>% #all downgradient mean concentrations that were greater than “background” levels
   filter(avg_conc > max_conc)
 
-#next steps to do ratios and mathing
+#for each disposal area, identify the well(s) with the highest mean concentration of each contaminant
+highest_control <- downgrad_control4 %>%
+  group_by(disposal.area, contaminant) %>%
+  slice(which.max(avg_conc)) %>%
+  mutate(contaminant = recode(contaminant,
+                              "Antimony, total" = "Antimony",
+                              "Arsenic, total" = "Arsenic",
+                              "Barium, total" = "Barium",
+                              "Beryllium, total" = "Beryllium",
+                              "Boron, total" = "Boron",
+                              "Cadmium, total" = "Cadmium",
+                              "Chromium, total" = "Chromium",
+                              "Cobalt, total" = "Cobalt",
+                              "Fluoride, total" = "Fluoride",
+                              "Lead, total" = "Lead",
+                              "Lithium, total" = "Lithium",
+                              "Mercury, total" = "Mercury",
+                              "Molybdenum, total" = "Molybdenum",
+                              "Radium 226+228" = "Radium",
+                              "Selenium, total" = "Selenium",
+                              "Thallium, total" = "Thallium"))
+
+hbt_case <- hbt %>% #case sensitivity
+  rename("contaminant" = "Contaminant",
+         "limit" = "Exceedance Limit",
+         "unit" = "Unit") 
+  
+highest_control2 <- left_join(highest_control, hbt_case, by = "contaminant")
+
+
+highest_control3 <- highest_control2 %>%
+  mutate(ratio = avg_conc/as.numeric(limit)) #calculate the ratios -> ‘highest average’ concentrations/health-based threshold
+
 
 
 
