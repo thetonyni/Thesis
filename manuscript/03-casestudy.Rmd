@@ -466,35 +466,31 @@ Now we perform the procedure using the 1/2(LOD) substitution censoring method, a
 
 #get average mean conc for all contaminants in each well
 avg_control <- df_std %>%
-  group_by(well.id, contaminant, measurement.unit, gradient, disposal.area) %>%
+  group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
   summarize(avg_conc = mean(concentration)) %>%
   ungroup()
 
-#get highest avg. upgradient concentrations for each contaminant
-highestupgrad_control <- avg_control %>%
+#get highest avg. upgradient concentrations for each contaminant/site
+upgrad_control <- avg_control %>%
   filter(gradient %in% "Upgradient") %>%
-  group_by(contaminant, disposal.area) %>%
-  summarize(max_conc = max(avg_conc)) %>%
+  group_by(contaminant, site) %>%
+  summarize(upgrad_conc = min(avg_conc)) %>%
   ungroup()
 
-#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area
+#remove upgradient wells
 downgrad_control <- avg_control %>%
-  filter(gradient %in% "Downgradient")
+  filter(gradient %in% "Downgradient") %>%
+  select(c(well.id, contaminant, site, avg_conc))
 
-downgrad_control2 <- downgrad_control %>%
-  select(c(well.id, contaminant, disposal.area, avg_conc))
+#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site
 
-downgrad_control3 <- left_join(downgrad_control2, highestupgrad_control) %>%
-  mutate(max_conc = case_when(
-    is.na(max_conc) ~ -9999999, #accounting for na's
-    TRUE ~ max_conc))
+downgrad_control2 <- left_join(downgrad_control, upgrad_control) %>%
+  filter(avg_conc > upgrad_conc) #remove downgradient mean concentrations that were greater than “background” levels
 
-downgrad_control4 <- downgrad_control3 %>% #all downgradient mean concentrations that were greater than “background” levels
-  filter(avg_conc > max_conc)
 
-#for each disposal area, identify the well(s) with the highest mean concentration of each contaminant
-highest_control <- downgrad_control4 %>%
-  group_by(disposal.area, contaminant) %>%
+#for each site, identify the well(s) with the highest mean concentration of each contaminant
+highest_control <- downgrad_control2 %>%
+  group_by(site, contaminant) %>%
   slice(which.max(avg_conc)) %>%
   mutate(contaminant = recode(contaminant,
                               "Antimony, total" = "Antimony",
@@ -519,17 +515,11 @@ hbt_case <- hbt %>% #case sensitivity
          "limit" = "Exceedance Limit",
          "unit" = "Unit") 
   
-highest_control2 <- left_join(highest_control, hbt_case, by = "contaminant")
-
-
-highest_control3 <- highest_control2 %>%
-  mutate(ratio = avg_conc/as.numeric(limit)) #calculate the ratios -> ‘highest average’ concentrations/health-based threshold
-
-
-
-
-#NOTE TO SELF: something to discuss in following section/exceptions: 
-#while trying to match wells with their associated disposal areas, recognized that the naming conventions for disposal areas is a bit strange... for example the disposal named 'north ash basin system' has only downgradient wells but 'North Ash Basin System, RWS Type I South Landfill FP# 26-06' has only upgradient wells. as such, when we are trying to find the highest average upgradient concentration of a contaminant for a certain disposal area, we may not 100% account for all wells, since 1) we do not know if these disposal areas are even connected 2) time-constraint of going through and picking out keywords for disposal areas and matching them, etc. as such, we need to keep in mind that some exceptions may be missed...
+highest_control2 <- left_join(highest_control, hbt_case, by = "contaminant") %>%
+  mutate(ratio = avg_conc/as.numeric(limit)) %>% #calculate the ratios -> ‘highest average’ concentrations/hbt
+  group_by(site) %>%
+  summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
+  arrange(desc(composite_score))
 ```
 
 
