@@ -459,7 +459,7 @@ df_std <- rbind(antimony, arsenic, barium, beryllium, boron, cadmium,
                 molybdenum, radium, selenium, sulfate, thallium)
 ```
 
-Now we perform the procedure using the 1/2(LOD) substitution censoring method, akin to @Kelderman2019's implementation:
+First, we perform analysis as is and treat values below the limit of detection as uncensored values, this will be our baseline "control" method.
 
 ```{r}
 #calculation of avg mean concentration for all contaminants in each well across all dates
@@ -515,19 +515,160 @@ hbt_case <- hbt %>% #case sensitivity
          "limit" = "Exceedance Limit",
          "unit" = "Unit") 
   
-highest_control2 <- left_join(highest_control, hbt_case, by = "contaminant") %>%
+top10_control <- left_join(highest_control, hbt_case, by = "contaminant") %>%
   mutate(ratio = avg_conc/as.numeric(limit)) %>% #calculate the ratios -> ‘highest average’ concentrations/hbt
   group_by(site) %>%
   summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
-  arrange(desc(composite_score))
+  arrange(desc(composite_score)) %>%
+  slice(1:10)
+
+#figure out a cute printing template -- then repeat for all other censoring methods
+top10_control
+```
+
+Our top ten most contaminated sites when we don't use any methods to account for censoring caused us to obtain slightly different results than the top ten sites that @Kelderman2019 obtained -- specifically Sebree Generating Station is in our top ten list while Ghent Generating Station is on theirs. Also the ranking/order of our top ten sites is slightly different as well. This should not be much of a concern however, we are more focused on the methods to handle left-censoring and observing if they alter the top ten sites obtained with this baseline implementation.
+
+Next, we will utilize the 1/2(LOD) substitution method implemented by @Kelderman2019.
+
+```{r}
+#calculation of avg mean concentration for all contaminants in each well across all dates
+
+#get average mean conc for all contaminants in each well
+avg_substitution <- df_std %>%
+  mutate(concentration_new = if_else(below.detection %in% "<", 
+                                     concentration/2, concentration))%>%
+  group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
+  summarize(avg_conc = mean(concentration_new)) %>%
+  ungroup()
+
+#get highest avg. upgradient concentrations for each contaminant/site
+upgrad_substitution <- avg_substitution %>%
+  filter(gradient %in% "Upgradient") %>%
+  group_by(contaminant, site) %>%
+  summarize(upgrad_conc = min(avg_conc)) %>%
+  ungroup()
+
+#remove upgradient wells
+downgrad_substitution <- avg_substitution %>%
+  filter(gradient %in% "Downgradient") %>%
+  select(c(well.id, contaminant, site, avg_conc))
+
+#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site
+downgrad_substitution2 <- left_join(downgrad_substitution, upgrad_substitution) %>%
+  filter(avg_conc > upgrad_conc) #remove downgradient mean concentrations that were greater than “background” levels
+
+
+#for each site, identify the well(s) with the highest mean concentration of each contaminant
+highest_substitution <- downgrad_substitution2 %>%
+  group_by(site, contaminant) %>%
+  slice(which.max(avg_conc)) %>%
+  mutate(contaminant = recode(contaminant,
+                              "Antimony, total" = "Antimony",
+                              "Arsenic, total" = "Arsenic",
+                              "Barium, total" = "Barium",
+                              "Beryllium, total" = "Beryllium",
+                              "Boron, total" = "Boron",
+                              "Cadmium, total" = "Cadmium",
+                              "Chromium, total" = "Chromium",
+                              "Cobalt, total" = "Cobalt",
+                              "Fluoride, total" = "Fluoride",
+                              "Lead, total" = "Lead",
+                              "Lithium, total" = "Lithium",
+                              "Mercury, total" = "Mercury",
+                              "Molybdenum, total" = "Molybdenum",
+                              "Radium 226+228" = "Radium",
+                              "Selenium, total" = "Selenium",
+                              "Thallium, total" = "Thallium"))
+
+top10_substitution <- left_join(highest_substitution, hbt_case, by = "contaminant") %>%
+  mutate(ratio = avg_conc/as.numeric(limit)) %>% #calculate the ratios -> ‘highest average’ concentrations/hbt
+  group_by(site) %>%
+  summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
+  arrange(desc(composite_score)) %>%
+  slice(1:10)
+
+#figure out a cute printing template -- then repeat for all other censoring methods
+top10_substitution 
+```
+
+```{r}
+library(NADA)
+
+get_mle_mean <- function(values, censored){
+  mle = cenmle(values, censored)
+  return(mean(mle)[1])
+}
+
+#calculation of avg mean concentration for all contaminants in each well across all dates
+
+#get average mean conc for all contaminants in each well
+avg_mle <- df_std %>%
+  mutate(censored = if_else(below.detection %in% "<", 
+                                     TRUE, FALSE)) %>%
+  filter(concentration >= 0) %>%
+  group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
+  do(data.frame(avg_conc = get_mle_mean(avg_mle$concentration, avg_mle$censored))) %>%
+  ungroup()
+
+
+
+mle = cenmle(avg_mle$concentration, avg_mle$censored)
+
+
+
+
+#get highest avg. upgradient concentrations for each contaminant/site
+upgrad_substitution <- avg_substitution %>%
+  filter(gradient %in% "Upgradient") %>%
+  group_by(contaminant, site) %>%
+  summarize(upgrad_conc = min(avg_conc)) %>%
+  ungroup()
+
+#remove upgradient wells
+downgrad_substitution <- avg_substitution %>%
+  filter(gradient %in% "Downgradient") %>%
+  select(c(well.id, contaminant, site, avg_conc))
+
+#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site
+downgrad_substitution2 <- left_join(downgrad_substitution, upgrad_substitution) %>%
+  filter(avg_conc > upgrad_conc) #remove downgradient mean concentrations that were greater than “background” levels
+
+
+#for each site, identify the well(s) with the highest mean concentration of each contaminant
+highest_substitution <- downgrad_substitution2 %>%
+  group_by(site, contaminant) %>%
+  slice(which.max(avg_conc)) %>%
+  mutate(contaminant = recode(contaminant,
+                              "Antimony, total" = "Antimony",
+                              "Arsenic, total" = "Arsenic",
+                              "Barium, total" = "Barium",
+                              "Beryllium, total" = "Beryllium",
+                              "Boron, total" = "Boron",
+                              "Cadmium, total" = "Cadmium",
+                              "Chromium, total" = "Chromium",
+                              "Cobalt, total" = "Cobalt",
+                              "Fluoride, total" = "Fluoride",
+                              "Lead, total" = "Lead",
+                              "Lithium, total" = "Lithium",
+                              "Mercury, total" = "Mercury",
+                              "Molybdenum, total" = "Molybdenum",
+                              "Radium 226+228" = "Radium",
+                              "Selenium, total" = "Selenium",
+                              "Thallium, total" = "Thallium"))
+
+top10_substitution <- left_join(highest_substitution, hbt_case, by = "contaminant") %>%
+  mutate(ratio = avg_conc/as.numeric(limit)) %>% #calculate the ratios -> ‘highest average’ concentrations/hbt
+  group_by(site) %>%
+  summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
+  arrange(desc(composite_score)) %>%
+  slice(1:10)
+
+#figure out a cute printing template -- then repeat for all other censoring methods
+top10_substitution 
 ```
 
 
+Notes: control+substitution are same top 10, but composite scores slightly differ
 
-After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area were removed. It is also important to note that since upgradient wells measure the quality of the water _before_ it passes through a coal site, they are also removed.
-
-These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table 3.2.
-
-For each site, the wells with the highest average concentration of each contaminant were identified and compared to their respective health-based thresholds. A ratio is then calculated for each of these highest average contaminants to the health-based thresholds. These contaminant-specific ratios are then summed together in order to get a cumulative "contamination score" for each site. Contamination scores of a higher magnitude indicates more "severe" contamination, with the top ten highest contamination scores comprising the top ten most contaminated sites.
 
 
