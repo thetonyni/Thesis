@@ -33,7 +33,7 @@
 \contentsline {section}{\numberline {3.3}Application}{36}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Background (tentative title)}{36}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Kelderman's Top 10 Sites}{37}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}(Our) Top Ten Most Contaminated Sites}{39}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.3}(Our) Top Ten Most Contaminated Sites}{40}{subsection.3.3.3}%
 \contentsline {chapter}{Chapter 4: Conclusion}{43}{chapter.4}%
 \contentsline {chapter}{Appendix A: Main Appendix}{45}{appendix.A}%
 \contentsline {section}{\numberline {A.1}In the main file \ref {ref-labels}:}{45}{section.A.1}%
@@ -46,5 +46,5 @@
 \contentsline {section}{\numberline {B.4}Lognormal}{50}{section.B.4}%
 \contentsline {section}{\numberline {B.5}Exponential}{52}{section.B.5}%
 \contentsline {section}{\numberline {B.6}Weibull}{55}{section.B.6}%
-\contentsline {chapter}{Corrections}{59}{appendix*.14}%
-\contentsline {chapter}{References}{61}{appendix*.15}%
+\contentsline {chapter}{Corrections}{59}{appendix*.17}%
+\contentsline {chapter}{References}{61}{appendix*.18}%

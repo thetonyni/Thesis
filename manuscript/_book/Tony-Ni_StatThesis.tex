@@ -447,6 +447,8 @@ Let \(x_i\) \(\ldots\) \(x_n\) be the values for the observations \(i = 1, 2, ..
 
 It must be known that the KM-method is not an imputation procedure, but instead an estimation technique that allows for the calculation of descriptive statistics for left-censored datasets. Nian (1997 gives the expressions to calculate the estimated mean, median, and variance below:
 
+NOTE TO SELF::: USE ``backslash'' displaystyle to do pretty bottom/above indexes
+
 \(\hat{\mu} = \int_{0}^{\infty} \hat{S}(t) \ dt\)
 \(\hat{M} = \hat{S}^{-1} \left (\frac{1}{2} \right)\)
 \(Var(\hat{\mu}) = \sum_{i=1}^{r} \left( \int_{t_i}^{\infty}\hat{S}(t) \ dt \right)^2 \frac{d_i}{n_i(n_i - d_i)}\)
@@ -957,101 +959,125 @@ While the contamination scores are not explicitly published in Kelderman et al. 
   9. R.D. Morrow, Sr. Generating Station
   10. Ghent Generating Station
 \end{verbatim}
-We will follow their criterion(s) for determining if a well is contaminated, with the only difference being how we obtain the average concentrations of the contaminants in the wells. We will use our four different methods to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if we obtain any different conclusions.
+We will follow their criterion(s) for determining if a well is contaminated, with the only difference being how we obtain the average concentrations of the contaminants in the wells. We will use our several left-censored estimation techniques to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if our results significantly differ from the top ten list of most contaminated sites obtained by Kelderman et al. (2019). We will also have a baseline implementation of the methods described by Kelderman et al. (2019), without any attempts to account for the censored data. This implementation will serve as our control in which we will compare our left-censored estimation techniques towards.
 
 \hypertarget{our-top-ten-most-contaminated-sites}{%
 \subsection{(Our) Top Ten Most Contaminated Sites}\label{our-top-ten-most-contaminated-sites}}
+\begin{table}
 
-{[}code to be worked on here{]}
+\caption{\label{tab:unnamed-chunk-16}Top 10 most contaminated sites 
+             for our baseline (control) implementation.}
+\centering
+\fontsize{11.5}{13.5}\selectfont
+\begin{tabular}[t]{lr}
+\toprule
+Site & Composite Score\\
+\midrule
+San Miguel Plant & 940\\
+\addlinespace
+Allen Steam Station & 565\\
+\addlinespace
+New Castle Generating Station & 441\\
+\addlinespace
+Brandywine Ash Management Facility & 422\\
+\addlinespace
+R.D. Morrow, Sr. Generating Station & 402\\
+\addlinespace
+Allen Fossil Plant & 368\\
+\addlinespace
+Hunter Power Plant & 345\\
+\addlinespace
+Naughton Power Plant & 273\\
+\addlinespace
+Jim Bridger Power Plant & 266\\
+\addlinespace
+Sebree Generating Station & 266\\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}
 
-First, they calculated the average mean concentration for all contaminants in each well across all dates.
-\begin{verbatim}
-   `summarise()` ungrouping output (override with `.groups` argument)
-\end{verbatim}
-\begin{verbatim}
-   # A tibble: 2 x 2
-     measurement.unit     n
-     <chr>            <int>
-   1 mg/l             23391
-   2 ug/l             13908
-\end{verbatim}
-Now we perform the procedure using the 1/2(LOD) substitution censoring method, akin to Kelderman et al. (2019)'s implementation:
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#calculation of avg mean concentration for all contaminants in each well across all dates}
+\caption{\label{tab:unnamed-chunk-17}Top 10 most contaminated sites 
+             for our substitution method implementation.}
+\centering
+\fontsize{11.5}{13.5}\selectfont
+\begin{tabular}[t]{lr}
+\toprule
+Site & Composite Score\\
+\midrule
+San Miguel Plant & 939\\
+\addlinespace
+Allen Steam Station & 565\\
+\addlinespace
+New Castle Generating Station & 441\\
+\addlinespace
+Brandywine Ash Management Facility & 419\\
+\addlinespace
+R.D. Morrow, Sr. Generating Station & 403\\
+\addlinespace
+Allen Fossil Plant & 367\\
+\addlinespace
+Hunter Power Plant & 345\\
+\addlinespace
+Naughton Power Plant & 272\\
+\addlinespace
+Jim Bridger Power Plant & 265\\
+\addlinespace
+Sebree Generating Station & 264\\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}
 
-\CommentTok{\#get average mean conc for all contaminants in each well}
-\NormalTok{avg\_control }\OtherTok{\textless{}{-}}\NormalTok{ df\_std }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(well.id, contaminant, measurement.unit, gradient, disposal.area) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{avg\_conc =} \FunctionTok{mean}\NormalTok{(concentration)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ungroup}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-\begin{verbatim}
-   `summarise()` regrouping output by 'well.id', 'contaminant', 'measurement.unit', 'gradient' (override with `.groups` argument)
-\end{verbatim}
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#get highest avg. upgradient concentrations for each contaminant}
-\NormalTok{highestupgrad\_control }\OtherTok{\textless{}{-}}\NormalTok{ avg\_control }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Upgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(contaminant, disposal.area) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{max\_conc =} \FunctionTok{max}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ungroup}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-\begin{verbatim}
-   `summarise()` regrouping output by 'contaminant' (override with `.groups` argument)
-\end{verbatim}
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area}
-\NormalTok{downgrad\_control }\OtherTok{\textless{}{-}}\NormalTok{ avg\_control }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Downgradient"}\NormalTok{)}
+\caption{\label{tab:unnamed-chunk-18}Top 10 most contaminated sites 
+             for our KM method implementation.}
+\centering
+\fontsize{11.5}{13.5}\selectfont
+\begin{tabular}[t]{lr}
+\toprule
+Site & Composite Score\\
+\midrule
+San Miguel Plant & 941\\
+\addlinespace
+Allen Steam Station & 565\\
+\addlinespace
+New Castle Generating Station & 441\\
+\addlinespace
+Brandywine Ash Management Facility & 422\\
+\addlinespace
+R.D. Morrow, Sr. Generating Station & 404\\
+\addlinespace
+Allen Fossil Plant & 368\\
+\addlinespace
+Ghent Generating Station & 363\\
+\addlinespace
+Hunter Power Plant & 345\\
+\addlinespace
+Naughton Power Plant & 274\\
+\addlinespace
+Jim Bridger Power Plant & 265\\
+\bottomrule
+\end{tabular}
+\end{table}
+The results from our baseline implementation which calculates mean estimates without any attempt to account for censoring, obtains the top ten site presented in Table 3.3. When comparing this to the original substitution method using 1/2(LOD) implemented by Kelderman et al. (2019), 9 out of the 10 sites are shared, with the only major difference being the order in which the sites are presented. As the composite scores of the sites were not originally published in Kelderman et al. (2019)'s report, we are unable to delve into more of the specifics regarding the magnitude of difference between the two implementations. As such, we found it prudent to perform their analysis using the substitution method, the results of which are presented in Table 3.4.
 
-\NormalTok{downgrad\_control2 }\OtherTok{\textless{}{-}}\NormalTok{ downgrad\_control }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(well.id, contaminant, disposal.area, avg\_conc))}
+We note that there are already
 
-\NormalTok{downgrad\_control3 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(downgrad\_control2, highestupgrad\_control) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{max\_conc =} \FunctionTok{case\_when}\NormalTok{(}
-    \FunctionTok{is.na}\NormalTok{(max\_conc) }\SpecialCharTok{\textasciitilde{}} \SpecialCharTok{{-}}\DecValTok{9999999}\NormalTok{, }\CommentTok{\#accounting for na\textquotesingle{}s}
-    \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}}\NormalTok{ max\_conc))}
-\end{Highlighting}
-\end{Shaded}
-\begin{verbatim}
-   Joining, by = c("contaminant", "disposal.area")
-\end{verbatim}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{downgrad\_control4 }\OtherTok{\textless{}{-}}\NormalTok{ downgrad\_control3 }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#all downgradient mean concentrations that were greater than “background” levels}
-  \FunctionTok{filter}\NormalTok{(avg\_conc }\SpecialCharTok{\textgreater{}}\NormalTok{ max\_conc)}
+Our top ten most contaminated sites when we don't use any methods to account for censoring caused us to obtain slightly different results than the top ten sites that Kelderman et al. (2019) obtained -- specifically Sebree Generating Station is in our top ten list while Ghent Generating Station is on theirs. Also the ranking/order of our top ten sites is slightly different as well. This should not be much of a concern however, we are more focused on the methods to handle left-censoring and observing if they alter the top ten sites obtained with this baseline implementation.
 
-\CommentTok{\#for each disposal area, identify the well(s) with the highest mean concentration of each contaminant}
-\NormalTok{highest\_control }\OtherTok{\textless{}{-}}\NormalTok{ downgrad\_control4 }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(disposal.area, contaminant) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{slice}\NormalTok{(}\FunctionTok{which.max}\NormalTok{(avg\_conc))}
+Next, we will utilize the 1/2(LOD) substitution method implemented by Kelderman et al. (2019).
 
+MLE method troublesome to utilize:
 
-\CommentTok{\# }
-\CommentTok{\# TEST\_highest\_control2 \textless{}{-} left\_join(highest\_control, hbt, by)}
-\CommentTok{\#   }
-\CommentTok{\#   }
-\CommentTok{\#   highest\_control \%\textgreater{}\%}
-\CommentTok{\#   left\_join(\#get only 1 of the highest of each contaminant in a disposal area}
-\CommentTok{\#   mutate(ratio = avg\_conc/) \#calculate the ratios {-}\textgreater{} ‘highest average’ concentrations/health{-}based threshold}
-\CommentTok{\# }
+firstly, had to remove all observations that were 0 due to inability of lognormal distribution specification to handle 0 values (log(0) = undefined), when 0 values were removed, algorithm obtained troublesome values for several sites (namely Inf, values in the millions, etc. due to high rate of censoring for some of the sites, due to this, we will not use the results from the mle method), since omitting observations whose concentrations are equal to zero already makes it difficult to compare the effectiveness of the MLE method to the other methods.
 
+We can recall our discussion in the results for the MLE method resulting in overinflated estimates when the data being used is highly skewed.
 
+(we may want to check to see if our data is highly skewed to prove this as well)
 
-\CommentTok{\#NOTE TO SELF: something to discuss in following section/exceptions: }
-\CommentTok{\#while trying to match wells with their associated disposal areas, recognized that the naming conventions for disposal areas is a bit strange... for example the disposal named \textquotesingle{}north ash basin system\textquotesingle{} has only downgradient wells but \textquotesingle{}North Ash Basin System, RWS Type I South Landfill FP\# 26{-}06\textquotesingle{} has only upgradient wells. as such, when we are trying to find the highest average upgradient concentration of a contaminant for a certain disposal area, we may not 100\% account for all wells, since 1) we do not know if these disposal areas are even connected 2) time{-}constraint of going through and picking out keywords for disposal areas and matching them, etc. as such, we need to keep in mind that some exceptions may be missed...}
-\end{Highlighting}
-\end{Shaded}
-After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area were removed. It is also important to note that since upgradient wells measure the quality of the water \emph{before} it passes through a coal site, they are also removed.
+ROS unable to be run due to errors with \textgreater80\% of data for some groupings being censored. As stated previously, ROS is only able to be run if more than half the data is known/uncensored. As such, we are unable to implement ROS with our current dataset.
 
-These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table 3.2.
-
-For each site, the wells with the highest average concentration of each contaminant were identified and compared to their respective health-based thresholds. A ratio is then calculated for each of these highest average contaminants to the health-based thresholds. These contaminant-specific ratios are then summed together in order to get a cumulative ``contamination score'' for each site. Contamination scores of a higher magnitude indicates more ``severe'' contamination, with the top ten highest contamination scores comprising the top ten most contaminated sites.
+Thus summarizing the results of the top ten most contaminated sites from the methods which were able to be implemented (control, substitution with 1/2(LOD), and KM), are as follows:
 
 \hypertarget{conclusion}{%
 \chapter{Conclusion}\label{conclusion}}

@@ -282,19 +282,15 @@ While the contamination scores are not explicitly published in @Kelderman2019's 
       9. R.D. Morrow, Sr. Generating Station
       10. Ghent Generating Station
 
-We will follow their criterion(s) for determining if a well is contaminated, with the only difference being how we obtain the average concentrations of the contaminants in the wells. We will use our four different methods to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if we obtain any different conclusions.
+We will follow their criterion(s) for determining if a well is contaminated, with the only difference being how we obtain the average concentrations of the contaminants in the wells. We will use our several left-censored estimation techniques to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if our results significantly differ from the top ten list of most contaminated sites obtained by @Kelderman2019. We will also have a baseline implementation of the methods described by @Kelderman2019, without any attempts to account for the censored data. This implementation will serve as our control in which we will compare our left-censored estimation techniques towards.
 
 ### (Our) Top Ten Most Contaminated Sites
 
-[code to be worked on here]
-
-First, they calculated the average mean concentration for all contaminants in each well across all dates. 
-
-```{r, echo = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
 #we need to standardize values, some wells report concentration of contaminants in different units, we will standardize all units to the units provided by the health-based threshold set by the EPA
 
 #template to find different units
-full %>%
+template <- full %>%
   filter(grepl("Antimony", contaminant)) %>% #select all rows containing __
   group_by(measurement.unit) %>%
   summarize(n = n())
@@ -459,9 +455,7 @@ df_std <- rbind(antimony, arsenic, barium, beryllium, boron, cadmium,
                 molybdenum, radium, selenium, sulfate, thallium)
 ```
 
-First, we perform analysis as is and treat values below the limit of detection as uncensored values, this will be our baseline "control" method.
-
-```{r}
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
 #calculation of avg mean concentration for all contaminants in each well across all dates
 
 #get average mean conc for all contaminants in each well
@@ -521,16 +515,9 @@ top10_control <- left_join(highest_control, hbt_case, by = "contaminant") %>%
   summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
   arrange(desc(composite_score)) %>%
   slice(1:10)
-
-#figure out a cute printing template -- then repeat for all other censoring methods
-top10_control
 ```
 
-Our top ten most contaminated sites when we don't use any methods to account for censoring caused us to obtain slightly different results than the top ten sites that @Kelderman2019 obtained -- specifically Sebree Generating Station is in our top ten list while Ghent Generating Station is on theirs. Also the ranking/order of our top ten sites is slightly different as well. This should not be much of a concern however, we are more focused on the methods to handle left-censoring and observing if they alter the top ten sites obtained with this baseline implementation.
-
-Next, we will utilize the 1/2(LOD) substitution method implemented by @Kelderman2019.
-
-```{r}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, cache = TRUE}
 #calculation of avg mean concentration for all contaminants in each well across all dates
 
 #get average mean conc for all contaminants in each well
@@ -555,7 +542,7 @@ downgrad_substitution <- avg_substitution %>%
 
 #remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site
 downgrad_substitution2 <- left_join(downgrad_substitution, upgrad_substitution) %>%
-  filter(avg_conc > upgrad_conc) #remove downgradient mean concentrations that were greater than “background” levels
+  filter(avg_conc >= upgrad_conc) #remove downgradient mean concentrations that were lower than “background” levels
 
 
 #for each site, identify the well(s) with the highest mean concentration of each contaminant
@@ -586,12 +573,9 @@ top10_substitution <- left_join(highest_substitution, hbt_case, by = "contaminan
   summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
   arrange(desc(composite_score)) %>%
   slice(1:10)
-
-#figure out a cute printing template -- then repeat for all other censoring methods
-top10_substitution 
 ```
 
-```{r, eval = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, eval = FALSE}
 
 get_mle_mean <- function(values, censored){
   mle = cenmle(values, censored)
@@ -625,7 +609,7 @@ downgrad_mle <- avg_mle2 %>%
 
 #remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site
 downgrad_mle2 <- left_join(downgrad_mle, upgrad_mle) %>%
-  filter(avg_conc > upgrad_conc) #remove downgradient mean concentrations that were greater than “background” levels
+  filter(avg_conc >= upgrad_conc) #remove downgradient mean concentrations that were lower than “background” levels
 
 
 #for each site, identify the well(s) with the highest mean concentration of each contaminant
@@ -656,20 +640,9 @@ top10_mle <- left_join(highest_mle, hbt_case, by = "contaminant") %>%
   summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
   arrange(desc(composite_score)) %>%
   slice(1:10)
-
-#figure out a cute printing template -- then repeat for all other censoring methods
-top10_mle 
 ```
 
-MLE method troublesome to utilize:
-
-firstly, had to remove all observations that were 0 due to inability of lognormal distribution specification to handle 0 values (log(0) = undefined), when 0 values were removed, algorithm obtained troublesome values for several sites (namely Inf, values in the millions, etc. due to high rate of censoring for some of the sites, due to this, we will not use the results from the mle method), since omitting observations whose concentrations are equal to zero already makes it difficult to compare the effectiveness of the MLE method to the other methods. 
-
-We can recall our discussion in the results for the MLE method resulting in overinflated estimates when the data being used is highly skewed.
-
-(we may want to check to see if our data is highly skewed to prove this as well)
-
-```{r}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, cache = TRUE}
 get_km_mean <- function(values, censored){
   km = cenfit(values, censored)
   mean(km)[[1]]
@@ -699,7 +672,7 @@ downgrad_km <- avg_km %>%
 
 #remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site
 downgrad_km2 <- left_join(downgrad_km, upgrad_km) %>%
-  filter(avg_conc > upgrad_conc) #remove downgradient mean concentrations that were greater than “background” levels
+  filter(avg_conc >= upgrad_conc) #remove downgradient mean concentrations that were lower than “background” levels
 
 
 #for each site, identify the well(s) with the highest mean concentration of each contaminant
@@ -730,12 +703,9 @@ top10_km <- left_join(highest_km, hbt_case, by = "contaminant") %>%
   summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
   arrange(desc(composite_score)) %>%
   slice(1:10)
-
-#figure out a cute printing template -- then repeat for all other censoring methods
-top10_km 
 ```
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo = FALSE, message = FALSE, warning = FALSE}
 get_ros_mean <- function(values, censored){
   ros_res = ros(values, censored)
   NADA::mean(ros_res)
@@ -761,8 +731,6 @@ test <- cbind.data.frame(obs, censored, groups) %>%
   do(summarize(., avg_conc = get_ros_mean(.$obs, .$censored))) %>%
   ungroup()
 
-
-
 #get average mean conc for all contaminants in each well
 avg_control <- df_std %>%
   group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
@@ -783,7 +751,7 @@ downgrad_ros <- avg_ros %>%
 
 #remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site
 downgrad_ros2 <- left_join(downgrad_ros, upgrad_ros) %>%
-  filter(avg_conc > upgrad_conc) #remove downgradient mean concentrations that were greater than “background” levels
+  filter(avg_conc >= upgrad_conc) #remove downgradient mean concentrations that were lower than “background” levels
 
 
 #for each site, identify the well(s) with the highest mean concentration of each contaminant
@@ -814,19 +782,57 @@ top10_ros <- left_join(highest_ros, hbt_case, by = "contaminant") %>%
   summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
   arrange(desc(composite_score)) %>%
   slice(1:10)
-
-#figure out a cute printing template -- then repeat for all other censoring methods
-top10_ros 
 ```
 
-ROS unable to be run due to errors with >80% of data for some groupings being censored. As stated previously, ROS is only able to be run if more than half the data is known/uncensored. As such, we are unable to implement ROS with our current dataset.
+```{r, echo = FALSE}
+options(scipen=999) #prevent scientific notation
+
+top10_control.table <- top10_control %>%
+  rename("Site" = "site", 
+         "Composite Score" = "composite_score")
+
+knitr::kable(top10_control.table, caption = "Top 10 most contaminated sites 
+             for our baseline (control) implementation.", 
+             digits = 5, booktabs = "T", linesep = "\\addlinespace") %>%
+  kable_styling(font_size = 11.5) 
+```
+
+```{r, echo = FALSE}
+top10_substitution.table <- top10_substitution %>%
+  rename("Site" = "site", 
+         "Composite Score" = "composite_score")
+
+knitr::kable(top10_substitution.table, caption = "Top 10 most contaminated sites 
+             for our substitution method implementation.", 
+             digits = 5, booktabs = "T", linesep = "\\addlinespace") %>%
+  kable_styling(font_size = 11.5) 
+```
+
+```{r, echo = FALSE}
+top10_km.table <- top10_km %>%
+  rename("Site" = "site", 
+         "Composite Score" = "composite_score")
+
+knitr::kable(top10_km.table, caption = "Top 10 most contaminated sites 
+             for our KM method implementation.", 
+             digits = 5, booktabs = "T", linesep = "\\addlinespace") %>%
+  kable_styling(font_size = 11.5) 
+```
+
+The results from our baseline implementation which calculates mean estimates without any attempt to account for censoring, obtains the top ten site presented in Table 3.3. When comparing this to the original substitution method using 1/2(LOD) implemented by @Kelderman2019, 9 out of the 10 sites are shared, with the only major difference being the order in which the sites are presented. As the composite scores of the sites were not originally published in @Kelderman2019's report, we are unable to delve into more of the specifics regarding the magnitude of difference between the two implementations. As such, we found it prudent to perform their analysis using the substitution method, the results of which are presented in Table 3.4. 
+
+Something unexpected to note is that although we followed the procedures outlined by @Kelderman2019 in their implementation of the substitution method, our top ten sites presented in Table 3.5 somewhat differ from theirs. Reproducible code was not provided in their report and attempts to completely reproduce their top ten list would not be conducive to the goal of this report. As such, from now on, we will proceed with the analysis with _our_ top ten list produced by the substitution method as the norm, for the sake of comparability with our other methods.
+
+The top ten sites obtained using th
+
+The MLE method and the ROS method are absent from this case-study. It can be recalled that in our previous discussion regarding the MLE method, we discussed the MLE method often resulting in overinflated estimates when the data is highly skewed. Due to this limitation, using the MLE method does not provide very useful information in our study. One instance of this problem occurs where we have one well with an abnormally large concenration and hundreds of smaller wells in which the concentration is 0, the MLE method would provide concentration estimates nearing infinity, and throw the analysis into disarray, as such, using the MLE method is not beneficial in this setting.
+
+The ROS method was absent for a similar reason, but with the limitations more-so being on the capabilities of the method itself. As we discussed previously, the ROS method can only be used in settings when more than half the data is uncensored. Unfortunately with our data, censoring far exceeds 50%, and as such, the ROS method is unable to be implemented. [PROVIDE PROOF? numbers?????]
+
+[continue here]
+
+Our top ten most contaminated sites when we don't use any methods to account for censoring caused us to obtain slightly different results than the top ten sites that @Kelderman2019 obtained -- specifically Sebree Generating Station is in our top ten list while Ghent Generating Station is on theirs. Also the ranking/order of our top ten sites is slightly different as well. This should not be much of a concern however, we are more focused on the methods to handle left-censoring and observing if they alter the top ten sites obtained with this baseline implementation.
+
+Next, we will utilize the 1/2(LOD) substitution method implemented by @Kelderman2019.
 
 Thus summarizing the results of the top ten most contaminated sites from the methods which were able to be implemented (control, substitution with 1/2(LOD), and KM), are as follows:
-
-```{r}
-#combining all top 10 results into table
-top10_combined <- cbind(top10_control, top10_substitution, top10_km)
-```
-
-
-

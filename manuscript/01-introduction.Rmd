@@ -183,7 +183,7 @@ The KM-estimator is a statistic used to estimate the survival curve from the emp
 
 The KM-estimator when performing an empirical estimation of the survival curve at time $t$ can be represented by the following equation:
 
-$$\hat{S}(t) = \displaystyle \prod_{\ t_i \le \ t }\left(1-\frac{d_i}{n_i}\right)$$
+$$\hat{S}(t) = \prod_{\ t_i \le \ t }\left(1-\frac{d_i}{n_i}\right)$$
 where $t_i$ is the distinct event time, $d_i$ is the number of event occurrences at time $t_i$, and $n_i$ is the number of followup times ($t_i$) that are $\ge$ $t_i$ (how many observations in sample survived at least/or past the time $t_i$) [@Klein2003].
 
 Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method, allows for the estimation of the survival curve with left-censored values. 
@@ -194,7 +194,7 @@ Let $x_i$ $\ldots$ $x_n$ be the values for the observations $i = 1, 2, ..., n$. 
 
 It must be known that the KM-method is not an imputation procedure, but instead an estimation technique that allows for the calculation of descriptive statistics for left-censored datasets. Nian (1997 gives the expressions to calculate the estimated mean, median, and variance below:
 
-[USE \displaystyle to do pretty bottom/above indexes]
+NOTE TO SELF::: USE "backslash" displaystyle to do pretty bottom/above indexes
 
 $\hat{\mu} = \int_{0}^{\infty} \hat{S}(t) \ dt$
 $\hat{M} = \hat{S}^{-1} \left (\frac{1}{2} \right)$
