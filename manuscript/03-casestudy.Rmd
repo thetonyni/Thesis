@@ -591,8 +591,7 @@ top10_substitution <- left_join(highest_substitution, hbt_case, by = "contaminan
 top10_substitution 
 ```
 
-```{r}
-library(NADA)
+```{r, eval = FALSE}
 
 get_mle_mean <- function(values, censored){
   mle = cenmle(values, censored)
@@ -605,37 +604,32 @@ get_mle_mean <- function(values, censored){
 avg_mle <- df_std %>%
   mutate(censored = if_else(below.detection %in% "<", 
                                      TRUE, FALSE)) %>%
-  filter(concentration >= 0) %>%
+  filter(concentration > 0)
+
+avg_mle2 <- avg_mle %>%
   group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
-  do(data.frame(avg_conc = get_mle_mean(avg_mle$concentration, avg_mle$censored))) %>%
+  do(summarize(., avg_conc = get_mle_mean(.$concentration, .$censored))) %>%
   ungroup()
 
-
-
-mle = cenmle(avg_mle$concentration, avg_mle$censored)
-
-
-
-
 #get highest avg. upgradient concentrations for each contaminant/site
-upgrad_substitution <- avg_substitution %>%
+upgrad_mle <- avg_mle2 %>%
   filter(gradient %in% "Upgradient") %>%
   group_by(contaminant, site) %>%
   summarize(upgrad_conc = min(avg_conc)) %>%
   ungroup()
 
 #remove upgradient wells
-downgrad_substitution <- avg_substitution %>%
+downgrad_mle <- avg_mle2 %>%
   filter(gradient %in% "Downgradient") %>%
   select(c(well.id, contaminant, site, avg_conc))
 
 #remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site
-downgrad_substitution2 <- left_join(downgrad_substitution, upgrad_substitution) %>%
+downgrad_mle2 <- left_join(downgrad_mle, upgrad_mle) %>%
   filter(avg_conc > upgrad_conc) #remove downgradient mean concentrations that were greater than “background” levels
 
 
 #for each site, identify the well(s) with the highest mean concentration of each contaminant
-highest_substitution <- downgrad_substitution2 %>%
+highest_mle <- downgrad_mle2 %>%
   group_by(site, contaminant) %>%
   slice(which.max(avg_conc)) %>%
   mutate(contaminant = recode(contaminant,
@@ -656,7 +650,7 @@ highest_substitution <- downgrad_substitution2 %>%
                               "Selenium, total" = "Selenium",
                               "Thallium, total" = "Thallium"))
 
-top10_substitution <- left_join(highest_substitution, hbt_case, by = "contaminant") %>%
+top10_mle <- left_join(highest_mle, hbt_case, by = "contaminant") %>%
   mutate(ratio = avg_conc/as.numeric(limit)) %>% #calculate the ratios -> ‘highest average’ concentrations/hbt
   group_by(site) %>%
   summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
@@ -664,11 +658,175 @@ top10_substitution <- left_join(highest_substitution, hbt_case, by = "contaminan
   slice(1:10)
 
 #figure out a cute printing template -- then repeat for all other censoring methods
-top10_substitution 
+top10_mle 
 ```
 
+MLE method troublesome to utilize:
 
-Notes: control+substitution are same top 10, but composite scores slightly differ
+firstly, had to remove all observations that were 0 due to inability of lognormal distribution specification to handle 0 values (log(0) = undefined), when 0 values were removed, algorithm obtained troublesome values for several sites (namely Inf, values in the millions, etc. due to high rate of censoring for some of the sites, due to this, we will not use the results from the mle method), since omitting observations whose concentrations are equal to zero already makes it difficult to compare the effectiveness of the MLE method to the other methods. 
+
+We can recall our discussion in the results for the MLE method resulting in overinflated estimates when the data being used is highly skewed.
+
+(we may want to check to see if our data is highly skewed to prove this as well)
+
+```{r}
+get_km_mean <- function(values, censored){
+  km = cenfit(values, censored)
+  mean(km)[[1]]
+}
+
+#calculation of avg mean concentration for all contaminants in each well across all dates
+
+#get average mean conc for all contaminants in each well
+avg_km <- df_std %>%
+  mutate(censored = if_else(below.detection %in% "<", 
+                                     TRUE, FALSE)) %>%
+  group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
+  do(summarize(., avg_conc = get_km_mean(.$concentration, .$censored))) %>%
+  ungroup()
+
+#get highest avg. upgradient concentrations for each contaminant/site
+upgrad_km <- avg_km %>%
+  filter(gradient %in% "Upgradient") %>%
+  group_by(contaminant, site) %>%
+  summarize(upgrad_conc = min(avg_conc)) %>%
+  ungroup()
+
+#remove upgradient wells
+downgrad_km <- avg_km %>%
+  filter(gradient %in% "Downgradient") %>%
+  select(c(well.id, contaminant, site, avg_conc))
+
+#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site
+downgrad_km2 <- left_join(downgrad_km, upgrad_km) %>%
+  filter(avg_conc > upgrad_conc) #remove downgradient mean concentrations that were greater than “background” levels
+
+
+#for each site, identify the well(s) with the highest mean concentration of each contaminant
+highest_km <- downgrad_km2 %>%
+  group_by(site, contaminant) %>%
+  slice(which.max(avg_conc)) %>%
+  mutate(contaminant = recode(contaminant,
+                              "Antimony, total" = "Antimony",
+                              "Arsenic, total" = "Arsenic",
+                              "Barium, total" = "Barium",
+                              "Beryllium, total" = "Beryllium",
+                              "Boron, total" = "Boron",
+                              "Cadmium, total" = "Cadmium",
+                              "Chromium, total" = "Chromium",
+                              "Cobalt, total" = "Cobalt",
+                              "Fluoride, total" = "Fluoride",
+                              "Lead, total" = "Lead",
+                              "Lithium, total" = "Lithium",
+                              "Mercury, total" = "Mercury",
+                              "Molybdenum, total" = "Molybdenum",
+                              "Radium 226+228" = "Radium",
+                              "Selenium, total" = "Selenium",
+                              "Thallium, total" = "Thallium"))
+
+top10_km <- left_join(highest_km, hbt_case, by = "contaminant") %>%
+  mutate(ratio = avg_conc/as.numeric(limit)) %>% #calculate the ratios -> ‘highest average’ concentrations/hbt
+  group_by(site) %>%
+  summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
+  arrange(desc(composite_score)) %>%
+  slice(1:10)
+
+#figure out a cute printing template -- then repeat for all other censoring methods
+top10_km 
+```
+
+```{r, eval = FALSE}
+get_ros_mean <- function(values, censored){
+  ros_res = ros(values, censored)
+  NADA::mean(ros_res)
+}
+
+#calculation of avg mean concentration for all contaminants in each well across all dates
+
+#get average mean conc for all contaminants in each well
+avg_ros <- df_std %>%
+  mutate(censored = if_else(below.detection %in% "<", 
+                                     TRUE, FALSE)) %>%
+  group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
+  do(summarize(., avg_conc = get_ros_mean(.$concentration, .$censored))) %>%
+  ungroup()
+
+
+obs      = c(0.5,    0.5,   1.0,  1.5,   5.0,    10,   100)
+censored = c(TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE)
+groups   = c("A", "A", "A", "B", "B", "B", "B")
+
+test <- cbind.data.frame(obs, censored, groups) %>%
+  group_by(groups) %>%
+  do(summarize(., avg_conc = get_ros_mean(.$obs, .$censored))) %>%
+  ungroup()
+
+
+
+#get average mean conc for all contaminants in each well
+avg_control <- df_std %>%
+  group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
+  summarize(avg_conc = mean(concentration)) %>%
+  ungroup()
+
+#get highest avg. upgradient concentrations for each contaminant/site
+upgrad_ros <- avg_ros %>%
+  filter(gradient %in% "Upgradient") %>%
+  group_by(contaminant, site) %>%
+  summarize(upgrad_conc = min(avg_conc)) %>%
+  ungroup()
+
+#remove upgradient wells
+downgrad_ros <- avg_ros %>%
+  filter(gradient %in% "Downgradient") %>%
+  select(c(well.id, contaminant, site, avg_conc))
+
+#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site
+downgrad_ros2 <- left_join(downgrad_ros, upgrad_ros) %>%
+  filter(avg_conc > upgrad_conc) #remove downgradient mean concentrations that were greater than “background” levels
+
+
+#for each site, identify the well(s) with the highest mean concentration of each contaminant
+highest_ros <- downgrad_ros2 %>%
+  group_by(site, contaminant) %>%
+  slice(which.max(avg_conc)) %>%
+  mutate(contaminant = recode(contaminant,
+                              "Antimony, total" = "Antimony",
+                              "Arsenic, total" = "Arsenic",
+                              "Barium, total" = "Barium",
+                              "Beryllium, total" = "Beryllium",
+                              "Boron, total" = "Boron",
+                              "Cadmium, total" = "Cadmium",
+                              "Chromium, total" = "Chromium",
+                              "Cobalt, total" = "Cobalt",
+                              "Fluoride, total" = "Fluoride",
+                              "Lead, total" = "Lead",
+                              "Lithium, total" = "Lithium",
+                              "Mercury, total" = "Mercury",
+                              "Molybdenum, total" = "Molybdenum",
+                              "Radium 226+228" = "Radium",
+                              "Selenium, total" = "Selenium",
+                              "Thallium, total" = "Thallium"))
+
+top10_ros <- left_join(highest_ros, hbt_case, by = "contaminant") %>%
+  mutate(ratio = avg_conc/as.numeric(limit)) %>% #calculate the ratios -> ‘highest average’ concentrations/hbt
+  group_by(site) %>%
+  summarize(composite_score = sum(ratio)) %>% #sum together all contaminants for a site to get a composite score
+  arrange(desc(composite_score)) %>%
+  slice(1:10)
+
+#figure out a cute printing template -- then repeat for all other censoring methods
+top10_ros 
+```
+
+ROS unable to be run due to errors with >80% of data for some groupings being censored. As stated previously, ROS is only able to be run if more than half the data is known/uncensored. As such, we are unable to implement ROS with our current dataset.
+
+Thus summarizing the results of the top ten most contaminated sites from the methods which were able to be implemented (control, substitution with 1/2(LOD), and KM), are as follows:
+
+```{r}
+#combining all top 10 results into table
+top10_combined <- cbind(top10_control, top10_substitution, top10_km)
+```
 
 
 
