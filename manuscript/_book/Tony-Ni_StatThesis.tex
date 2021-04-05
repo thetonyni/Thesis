@@ -302,8 +302,8 @@ Use this space to thank those who have helped you in the thesis process (profess
 \pagenumbering{arabic}
 \pagestyle{fancyplain} % turns page numbering back on
 
-\hypertarget{intro}{%
-\chapter{Introduction}\label{intro}}
+\hypertarget{introduction-intro}{%
+\chapter{Introduction \{intro\}}\label{introduction-intro}}
 
 The concept of missing data is ubiquitous within academic disciplines and often complicates innumerable types of real-world studies. Missing data will be defined within this thesis as \emph{occurences within a dataset where there is no value stored for a variable in the observation of interest}. As most studies often utilize data collected through mediums such as surveys, questionnaires, or field research, missing data is an unavoidable problem. Missing data hinders one's ability to work with and analyze the phenomena at hand, as data is often the basis of all studies.
 
@@ -765,11 +765,11 @@ Shortcomings in the results presented in this study may come from the fact that 
 \hypertarget{background}{%
 \section{Background}\label{background}}
 
-Coal is one of the most prevalent combustible fuels being burned all across the world, as it is one of the easiest methods of obtaining energy due to the abundance of the substance. Generally, coal plants produce electricity by burning coal, which produces coal ash as a byproduct. Over 100 million tons of coal ash are produced every year at these plants, which are then disposed through landfills and waste ponds at these plants. The main concern of ecologists regarding this matter is that the coal ash produced by these plants can often contaminate the local groundwater, leading to toxic contaminants being found in local water sources. Coal ash is dangerous due to its composition, which contains a long list of dangerous chemicals including -- but not limited to: arsenic, radium, boron, and a large list of other contaminants toxic to humans and animals alike (Kelderman et al., 2019).
+Coal is one of the most prevalent combustible fuels being utilized all over the world, as it is one of the easiest methods of obtaining energy due to the abundance of the substance. Generally, coal plants produce electricity by burning coal, which produces coal ash as a byproduct. Over 100 million tons of coal ash are produced every year at these plants, which are then disposed through landfills and waste ponds at these plants. The main concern of ecologists regarding this matter is that the coal ash produced by these plants can often contaminate the local groundwater, leading to toxic contaminants being found in local water sources. Coal ash is dangerous due to its composition, which contains a long list of dangerous chemicals including -- but not limited to: arsenic, radium, boron, and other contaminants which have been found to be toxic to humans and animals alike (Kelderman et al., 2019).
 
-Complaints and concerns regarding the disposing practices of coal plants have only increased after the 2010 Kingston Fossil Plant coal ash incident in Tennessee. This area has become an attractive location in which many sites of ecological studies have been conducted the years following the incident. Leaching experiments conducted by Ruhl, Vengosh, Dwyer, Hsu-Kim, \& Deonarine (2010) has revealed significant levels of dissolved Arsenic, Boron, Strontium, and Barium in the water which has been in contact with the coal ash, which they note to be threat to infaunal species in the water. Prompted by environmental organizations, groups, and individuals alike, an onslaught of pressure was put on the Environmental Protection Agency, which resulted in the Coal Ash Rule being put into effect in 2015 (Kelderman et al., 2019).
+Only recently has there been an increase in the frequency of complaints and concerns regarding the disposing practices of coal plants. This is due to disturbances at coal plants, such as the 2010 Kingston Fossil Plant coal ash incident in Tennessee. This area has become an attractive location in which many sites of ecological studies have been conducted the years following the incident. Leaching experiments conducted by Ruhl, Vengosh, Dwyer, Hsu-Kim, \& Deonarine (2010) has revealed significant levels of dissolved arsenic, boron, strontium, and barium in the water which has been in contact with the coal ash, which they specifically note to be threat to aquatic life in the surrounding area. Prompted by environmental organizations, groups, and individuals alike, an onslaught of pressure was put on the Environmental Protection Agency, which resulted in the Coal Ash Rule being put into effect in 2015 (Kelderman et al., 2019).
 
-This rule has forced over 265 coal power plants -- about 3/4 of all coal power plants in the US - to make data regarding chemical concentrations publicly available to the general population. In their analysis using this data, the Environmental Integrity Project (2020) -- a non-profit organization dedicated to issues involving environmental justice, has discussed the prevalence of groundwater contamination for wells located near coal related facilities.
+This rule has forced over 265 coal plants -- about 3/4 of all coal plants in the US -- to make data regarding chemical concentrations publicly available to the general population. In their analysis using this data, the Environmental Integrity Project (2020), a non-profit organization dedicated to environmental justice issues, have discussed the prevalence of groundwater contamination for in the wells located in these coal related facilities.
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figures/upgradientdowngradient} 
@@ -778,13 +778,11 @@ This rule has forced over 265 coal power plants -- about 3/4 of all coal power p
 
 \caption{Difference Between Upgradient and Downgradient Wells}\label{fig:upgradientdowngradient}
 \end{figure}
-Typically in a coal ash plant, there exists two types of wells: upgradient wells and downgradient wells. These wells are essential to measure the amount of contamination being caused by coal ash. Upgradient wells, also known as background wells, measures the concentrations of chemicals in groundwater before it passes through an coal ash dump. Conversely, downgradient wells measure the concentrations of chemicals in groundwater after it passes through a coal ash dump.
+Typically in a coal ash plant, there exists two types of wells: upgradient wells and downgradient wells. These wells are essential to measure the amount of contamination being caused by coal ash. Upgradient wells, also known as background wells, measures the concentrations of chemicals in groundwater before it passes through an coal ash dump. Conversely, downgradient wells measure the concentrations of chemicals in groundwater after it passes through a coal ash dump. Figure \ref{fig:upgradientdowngradient} is a useful visualization detailing the specifics regarding the differences between the two types of wells. While both types of well are susceptible to contamination through coal ash related means, it is more frequently the case that we focus on the concentrations of downgradient wells as they are good indicators of possible contamination in the water being accessed by the general public.
 
-While both types of well are susceptible to contamination through coal ash related means, it is more frequently the case that we focus on the downgradient wells, as they are more closely linked to the water accessed by the general public.
+The goal of the study conducted by Kelderman et al. (2019) was to identify the percentage of coal plants which have unsafe levels of contamination. High concentrations of toxic chemicals are what classify a well as being contaminated or not. More specifically, we obtain the mean concentrations of the contaminant in question for all the wells measuring a specific chemical in a site. If the mean contamination of a contaminant in question, say, arsenic, was above the health-based thresholds set by the EPA, then that well would be marked as an ``exceedance,'' and deemed to be contaminated.
 
-The goal of the study conducted by Kelderman et al. (2019) was to identify the percentage of coal plants which have unsafe levels of contamination. Determining whether if a well was contaminated or not was largely influenced by the average mean concentrations of the contaminant in question for that well. If the average mean contamination of a contaminant, say, arsenic, was above the health-based threshold considered necessary to ensure safety, then that well would be marked as an ``exceedance,'' and deemed to be contaminated.
-
-Kelderman et al. (2019) notes the possibility of contamination being caused by an external factor, unrelated to the coal ash, and provides a stipulation as how to account for this. They excluded tallying the wells in which the mean downgradient values were lower than the mean upgradient values, as this would mean that the contamination was not caused by the coal plant itself.
+Kelderman et al. (2019) notes the possibility of contamination being caused by an external factor, unrelated to the coal ash, and provides a stipulation as how to account for this. In the process of calculating mean concentrations, they excluded wells in which the mean downgradient values were lower than the mean upgradient values, as this would mean that the contamination was not caused by the coal plant itself. They also exclude upgradient wells in this calculation, as the focus is on possible contamination in downgradient well in the coal plant.
 
 \hypertarget{data}{%
 \section{Data}\label{data}}
@@ -794,20 +792,12 @@ It is important to note where the data used originated from, before we delve int
 \hypertarget{coalashrule}{%
 \subsection{Coal Ash Rule}\label{coalashrule}}
 
-A large coal ash spill at the Tennessee Valley Authority (TVA) which occurred on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US. This was known as the Coal Ash Rule, which passed legislation on December 19, 2014 (Environmental Protection Agency, 2020).
-
-Changes were made to the Coal Ash Rule over the years in the form of `amendments,' in which the most relevant to this study, required coal facilities to publish information and data regarding the concentrations of contaminants in the wells.
+A large coal ash spill at the Tennessee Valley Authority which occurred on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US. This was known as the Coal Ash Rule, which passed legislation on December 19, 2014 (Environmental Protection Agency, 2020). Over the years, several changes were made to the Coal Ash Rule in the form of amendments. One of these amendments (published on the April 15, 2015) stated that coal plants would be required to publish data regarding the concentrations of contaminants in the wells and other facility information to the general public.
 
 \hypertarget{source-of-data}{%
 \subsection{Source of Data}\label{source-of-data}}
 
-The data used in the study are from the results published in ``Annual Groundwater Monitoring and Corrective Action Reports,'' which were made available to the public in March 2018 as a result of the Coal Ash Rule. These reports are in PDF format and are thousands of pages long, which makes it difficult for individuals to parse through data in a meaningful way.
-
-The Environmental Integrity Project (2020) obtained the data from an online, publicly available database containing groundwater monitoring results from the first ``Annual Groundwater Monitoring and Corrective Action Reports'' in 2018 which was collected from coal plants and coal ash dumps under the Coal Ash Rule.
-
-They wrangled the data into a more accessible machine-readable format which contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants, downloadable from the EIP's website, which we use in our case study.
-
-\newpage
+The data used in the study are from a collection of results published by each coal plant in their ``Annual Groundwater Monitoring and Corrective Action Reports.'' These reports are coal-specific, in PDF format, and can often be up to thousands of pages long, which makes it difficult for individuals to parse through data in a meaningful way. Due to this inaccessibility, the Environmental Integrity Project (2020) began a long project to parse and wrangle through these reports to compile them into a more accessible machine-readable format. This compilation contains information from over 443 annual groundwater monitoring reports posted by 265 coal ash plants, and is downloadable from the EIP's website. This dataset compiled by the Environmental Integrity Project are what we will utilize in our case study.
 
 \hypertarget{variables}{%
 \subsection{Variables}\label{variables}}
@@ -818,12 +808,12 @@ Specifics regarding the variables in the coal dataset can be viewed in Table 3.1
 
 There are four different types that each well can be classified as, which is represented in the \texttt{type} variable. These consist of: \texttt{L}, \texttt{M}, \texttt{SI}, and \texttt{U} which stand for ``landfill,'' ``mixed,'' ``surface-impacted,'' and ``unknown.'' We have already mentioned downgradient and upgradient wells during our discussion of the coal ash rule, but we will provide more detail now. In a groundwater monitoring system it is common to have designated wells for specific purposes. A common approach in a coal site is to have separate wells, upgradient wells, whose purpose is to measure ``natural'' water conditions and downgradient wells, which measures water conditions after it passes through a coal ash disposal area.
 
-Coal plants may also follow different reporting protocols, which neccisitates the our ``measurement unit,'' column. While some contaminants such as radium, are measured only in one unit (pCi/L) -- most others are measured differently across sites. One sits may measure arsenic with using milligrams/L while another site uses micrograms/L.
+Coal plants may also follow different reporting protocols, which necessitates the ``measurement unit'' column. While some contaminants such as radium, are measured only in one unit (pCi/L) -- most others are measured differently across sites. One site may measure arsenic with using milligrams/L while another site uses micrograms/L.
 
-The remaining variables in our dataset are mostly self explanatory, containing information regarding the date when sample was collected, unique ID of the well, and whether if the measurement is below the limit of detection.
+The remaining variables in our dataset are mostly self explanatory, containing information regarding the date when sample was collected, unique ID of the well, and whether if the measurement is below the limit of detection. A data dictionary of all variables in the dataset can be viewed in Table \ref{tab:datadictionary}.
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-6}Data dictionary for the coal dataset.}
+\caption{\label{tab:datadictionary}Data dictionary for the coal dataset.}
 \centering
 \begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{7.6cm}}
 \toprule
@@ -869,15 +859,22 @@ Concentration & concentration & The concentration of the contaminant.\\
 
 The investigation conducted by Kelderman et al. (2019) mentions certain restrictions within the data that we believe may have caused their analysis to potentially be inaccurate. The limit of detection problem arises when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to be considered ``below detection.'' These values are often encoded as NA or even mistakenly marked as 0.
 
-Our end goal remains the same as the Kelderman et al. (2019): to identify contaminated groundwater in coal plants. Kelderman et al. (2019) handled these censored values by assuming that their concentration was one half of the detection limit. In essence, they employed the substitution method in in order to obtain calculations of the average concentrations of the downgradient and upgradient wells. From our previous discussion on sentiment regarding the substitution method and from our simulation study, we observe that the substitution method may not be the best way to handle left-censored data in most, if not all, of our settings.
+Our end goal remains the same as the original research question proposed by Kelderman et al. (2019), which is to identify (the top ten most) contaminated coal plants. Around 2/3 of all wells in the dataset have concentrations found to be below the detection limit. This is a significant portion of the data being censored, which we believe may have significant consequences in the results obtained during analysis. Kelderman et al. (2019) handled these censored values by assuming that their concentration was one half of the detection limit. In essence, they employed the substitution method we discussed previously, with a replacement value of \(\frac{1}{2}\) LOD for the values below the detection limit.
 
-The goal of our case study is to employ the techniques we introduced back in chapter 2 to see if they would result in potential differently conclusions. Specifically, we wish to check if the proportion of wells in the U.S. in which contamination is present would be altered if we used our techniques to calculate the average concentrations of the contaminants. Rather than utilizing the substitution method as Kelderman et al. (2019) has done, we are interested to employ the MLE, KM, and ROS methods in handling for left-censored cases.
-
-Our investigation works with methods on handling this missing data through the techniques detailed in chapter 1 in order to obtain more accurate and precise estimates of the mean concentrations of contaminants at coal ash sites. Through our newly obtained estimates, we hope to see if they might lead us to different beliefs than the claims made by Kelderman et al. (2019) regarding the the top 10 most contaminated wells in the U.S.
+The goal of our case study is to employ the techniques we introduced back in chapter 2 to see if they would result in potential differently conclusions. Specifically, we wish to check if the proportion of wells in the U.S. in which contamination is present would be altered if we used our mean estimation techniques to calculate the average concentrations of the contaminants. We would also like to implement a baseline (control) method in which we calculate mean estimates while disregarding the censoring status of the observations and see if our methods truly offer any different conclusions than the claims made by Kelderman et al. (2019) regarding the top 10 most contaminated wells in the U.S.
 
 \hypertarget{application}{%
 \section{Application}\label{application}}
-
+\begin{verbatim}
+   # A tibble: 2 x 2
+     below.detection      n
+     <chr>            <int>
+   1 <               260634
+   2 <NA>            548359
+\end{verbatim}
+\begin{verbatim}
+   [1] 0.678
+\end{verbatim}
 \hypertarget{background-tentative-title}{%
 \subsection{Background (tentative title)}\label{background-tentative-title}}
 
@@ -902,7 +899,7 @@ After these values are obtained, any wells with average downgradient concentrati
 These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table 3.2.
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-9}Health-based thresholds set by EPA.}
+\caption{\label{tab:unnamed-chunk-7}Health-based thresholds set by EPA.}
 \centering
 \begin{tabular}[t]{lll}
 \toprule
@@ -965,7 +962,7 @@ We will follow their criterion(s) for determining if a well is contaminated, wit
 \subsection{(Our) Top Ten Most Contaminated Sites}\label{our-top-ten-most-contaminated-sites}}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-16}Top 10 most contaminated sites 
+\caption{\label{tab:unnamed-chunk-10}Top 10 most contaminated sites 
              for our baseline (control) implementation.}
 \centering
 \fontsize{11.5}{13.5}\selectfont
@@ -997,7 +994,7 @@ Sebree Generating Station & 266\\
 \end{table}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-17}Top 10 most contaminated sites 
+\caption{\label{tab:unnamed-chunk-11}Top 10 most contaminated sites 
              for our substitution method implementation.}
 \centering
 \fontsize{11.5}{13.5}\selectfont
@@ -1029,7 +1026,7 @@ Sebree Generating Station & 264\\
 \end{table}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-18}Top 10 most contaminated sites 
+\caption{\label{tab:unnamed-chunk-12}Top 10 most contaminated sites 
              for our KM method implementation.}
 \centering
 \fontsize{11.5}{13.5}\selectfont
@@ -1061,23 +1058,15 @@ Jim Bridger Power Plant & 265\\
 \end{table}
 The results from our baseline implementation which calculates mean estimates without any attempt to account for censoring, obtains the top ten site presented in Table 3.3. When comparing this to the original substitution method using 1/2(LOD) implemented by Kelderman et al. (2019), 9 out of the 10 sites are shared, with the only major difference being the order in which the sites are presented. As the composite scores of the sites were not originally published in Kelderman et al. (2019)'s report, we are unable to delve into more of the specifics regarding the magnitude of difference between the two implementations. As such, we found it prudent to perform their analysis using the substitution method, the results of which are presented in Table 3.4.
 
-We note that there are already
+Something unexpected to note is that although we followed the procedures outlined by Kelderman et al. (2019) in their implementation of the substitution method, our top ten sites presented in Table 3.5 somewhat differ from theirs. Reproducible code was not provided in their report and attempts to completely reproduce their top ten list would not be conducive to the goal of this report. As such, from now on, we will proceed with the analysis with \emph{our} top ten list produced by the substitution method as the norm, for the sake of comparability with our other methods.
 
-Our top ten most contaminated sites when we don't use any methods to account for censoring caused us to obtain slightly different results than the top ten sites that Kelderman et al. (2019) obtained -- specifically Sebree Generating Station is in our top ten list while Ghent Generating Station is on theirs. Also the ranking/order of our top ten sites is slightly different as well. This should not be much of a concern however, we are more focused on the methods to handle left-censoring and observing if they alter the top ten sites obtained with this baseline implementation.
+It is also important to note that the MLE method and the ROS method are absent from this case-study. It can be recalled that in our previous discussion regarding the MLE method, we discussed the MLE method often resulting in overinflated estimates when the data is highly skewed. Due to this limitation, using the MLE method does not provide very useful information in our study. One instance of this problem occurs where we have one well with an abnormally large concenration and hundreds of smaller wells in which the concentration is 0, the MLE method would provide concentration estimates nearing infinity, and throw the analysis into disarray, as such, using the MLE method is not beneficial in this setting.
 
-Next, we will utilize the 1/2(LOD) substitution method implemented by Kelderman et al. (2019).
+The ROS method was absent for a similar reason, but with the limitations more-so being on the capabilities of the method itself. As we discussed previously, the ROS method can only be used in settings when more than half the data is uncensored. Unfortunately with our data, censoring far exceeds 50\%, and as such, the ROS method is unable to be implemented. {[}PROVIDE PROOF? numbers?????{]}
 
-MLE method troublesome to utilize:
+The top ten sites obtained using our substitution implementation are the sites as the ones obtained from our baseline implementation, with the same ordering but slight differences in the composite scores. With our KM method, the Ghent Generating Station replaces the Sebree Generating Station as one of the top ten most contaminates sites, with some slight differences in the ordering of the sites in the latter half of the list.
 
-firstly, had to remove all observations that were 0 due to inability of lognormal distribution specification to handle 0 values (log(0) = undefined), when 0 values were removed, algorithm obtained troublesome values for several sites (namely Inf, values in the millions, etc. due to high rate of censoring for some of the sites, due to this, we will not use the results from the mle method), since omitting observations whose concentrations are equal to zero already makes it difficult to compare the effectiveness of the MLE method to the other methods.
-
-We can recall our discussion in the results for the MLE method resulting in overinflated estimates when the data being used is highly skewed.
-
-(we may want to check to see if our data is highly skewed to prove this as well)
-
-ROS unable to be run due to errors with \textgreater80\% of data for some groupings being censored. As stated previously, ROS is only able to be run if more than half the data is known/uncensored. As such, we are unable to implement ROS with our current dataset.
-
-Thus summarizing the results of the top ten most contaminated sites from the methods which were able to be implemented (control, substitution with 1/2(LOD), and KM), are as follows:
+It is not a surprise that our left-censoring mean estimation techniques did not provide much of a different result than what we obtained with our baseline implementation. Left-censoring techniques are not as useful with this case-study, where we are focused on finding the extremities of the dataset, i.e.~wells with the highest concentration of contaminants. If the research question was instead, identifying wells that were potentially contaminated, the distinction between the results obtained by these methods would be more visible. Kelderman et al. (2019)'s implementation of the substitution method as a way to account for left-censoring is justifiable due to its ease of implementation and the results we just discussed, regarding the lack of differences in top ten sites when comparing all three implementations we used.
 
 \hypertarget{conclusion}{%
 \chapter{Conclusion}\label{conclusion}}
@@ -1101,6 +1090,15 @@ This first appendix includes all of the R chunks of code that were hidden throug
 \section{In Chapter 3:}\label{in-chapter-3}}
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\#importing in full dataset}
+\NormalTok{import\_df }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"code/current/data/chemical\_data.csv"}\NormalTok{, }\AttributeTok{col\_types =} \FunctionTok{cols}\NormalTok{())}
+
+\NormalTok{import\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(below.detection) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
+
+\DecValTok{548359}\SpecialCharTok{/}\NormalTok{(}\DecValTok{260634}\SpecialCharTok{+}\DecValTok{548359}\NormalTok{) }\CommentTok{\#proportion of obs. below detection}
+
 \CommentTok{\#breaking apart into different datasets for each region}
 \NormalTok{northeast }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ME"}\NormalTok{, }\StringTok{"NH"}\NormalTok{, }\StringTok{"VT"}\NormalTok{, }\StringTok{"NY"}\NormalTok{, }\StringTok{"PA"}\NormalTok{, }\StringTok{"NJ"}\NormalTok{, }\StringTok{"MD"}\NormalTok{, }
@@ -1156,13 +1154,16 @@ This first appendix includes all of the R chunks of code that were hidden throug
 \NormalTok{states\_map }\OtherTok{\textless{}{-}} \FunctionTok{map\_data}\NormalTok{(}\StringTok{"state"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-\hypertarget{simulation-appendix}{%
-\chapter{Simulation Appendix}\label{simulation-appendix}}
+\hypertarget{simulation-and-case-study-appendix}{%
+\chapter{Simulation and Case Study Appendix}\label{simulation-and-case-study-appendix}}
 
-The second appendix, Appendix B, contains all necessary code required to run the simulation study.
+The second appendix, Appendix B, contains all necessary code required to run the simulation study and for our case study.
+
+\hypertarget{simulation-study}{%
+\section{Simulation Study}\label{simulation-study}}
 
 \hypertarget{libraries}{%
-\section{Libraries}\label{libraries}}
+\subsection{Libraries}\label{libraries}}
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
@@ -1173,7 +1174,7 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \end{Highlighting}
 \end{Shaded}
 \hypertarget{generating-data}{%
-\section{Generating Data}\label{generating-data}}
+\subsection{Generating Data}\label{generating-data}}
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#function will generate a vector of numbers from the lognormal }
@@ -1250,7 +1251,7 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \end{Highlighting}
 \end{Shaded}
 \hypertarget{setup}{%
-\section{Setup}\label{setup}}
+\subsection{Setup}\label{setup}}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{iterations }\OtherTok{\textless{}{-}} \DecValTok{1000} \CommentTok{\#number of iterations}
@@ -1270,7 +1271,7 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \end{Highlighting}
 \end{Shaded}
 \hypertarget{lognormal}{%
-\section{Lognormal}\label{lognormal}}
+\subsection{Lognormal}\label{lognormal}}
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#LOGNORMAL}
@@ -1371,7 +1372,7 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \end{Highlighting}
 \end{Shaded}
 \hypertarget{exponential}{%
-\section{Exponential}\label{exponential}}
+\subsection{Exponential}\label{exponential}}
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#EXPONENTIAL}
@@ -1483,7 +1484,7 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \end{Highlighting}
 \end{Shaded}
 \hypertarget{weibull}{%
-\section{Weibull}\label{weibull}}
+\subsection{Weibull}\label{weibull}}
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#WEIBULL}
@@ -1596,6 +1597,433 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \NormalTok{            ) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ungroup}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{case-study}{%
+\section{Case Study}\label{case-study}}
+
+\hypertarget{preliminary}{%
+\subsection{Preliminary}\label{preliminary}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#importing in full dataset}
+\NormalTok{import\_df }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"code/current/data/chemical\_data.csv"}\NormalTok{, }\AttributeTok{col\_types =} \FunctionTok{cols}\NormalTok{())}
+
+\NormalTok{import\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(below.detection) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
+
+\DecValTok{548359}\SpecialCharTok{/}\NormalTok{(}\DecValTok{260634}\SpecialCharTok{+}\DecValTok{548359}\NormalTok{) }\CommentTok{\#proportion of obs. below detection}
+
+\CommentTok{\#breaking apart into different datasets for each region}
+\NormalTok{northeast }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ME"}\NormalTok{, }\StringTok{"NH"}\NormalTok{, }\StringTok{"VT"}\NormalTok{, }\StringTok{"NY"}\NormalTok{, }\StringTok{"PA"}\NormalTok{, }\StringTok{"NJ"}\NormalTok{, }\StringTok{"MD"}\NormalTok{, }
+                      \StringTok{"MA"}\NormalTok{, }\StringTok{"DE"}\NormalTok{, }\StringTok{"RI"}\NormalTok{, }\StringTok{"CT"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"northeast"}\NormalTok{)}
+
+\NormalTok{midwest }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"OH"}\NormalTok{, }\StringTok{"IN"}\NormalTok{, }\StringTok{"MI"}\NormalTok{, }\StringTok{"IL"}\NormalTok{, }\StringTok{"WI"}\NormalTok{, }\StringTok{"MN"}\NormalTok{, }\StringTok{"IA"}\NormalTok{, }
+                      \StringTok{"MO"}\NormalTok{, }\StringTok{"ND"}\NormalTok{, }\StringTok{"SD"}\NormalTok{, }\StringTok{"NE"}\NormalTok{, }\StringTok{"KS"}\NormalTok{))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"midwest"}\NormalTok{)}
+
+\NormalTok{west }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"WA"}\NormalTok{, }\StringTok{"MT"}\NormalTok{, }\StringTok{"OR"}\NormalTok{, }\StringTok{"ID"}\NormalTok{, }\StringTok{"WY"}\NormalTok{, }\StringTok{"CA"}\NormalTok{, }\StringTok{"NV"}\NormalTok{, }
+                      \StringTok{"UT"}\NormalTok{, }\StringTok{"CO"}\NormalTok{, }\StringTok{"AZ"}\NormalTok{, }\StringTok{"NM"}\NormalTok{, }\StringTok{"AK"}\NormalTok{, }\StringTok{"HI"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"west"}\NormalTok{)}
+
+\NormalTok{south }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"WV"}\NormalTok{, }\StringTok{"VA"}\NormalTok{, }\StringTok{"KY"}\NormalTok{, }\StringTok{"TN"}\NormalTok{, }\StringTok{"NC"}\NormalTok{, }\StringTok{"SC"}\NormalTok{, }\StringTok{"GA"}\NormalTok{, }
+                      \StringTok{"FL"}\NormalTok{, }\StringTok{"MS"}\NormalTok{, }\StringTok{"AL"}\NormalTok{, }\StringTok{"LA"}\NormalTok{, }\StringTok{"AR"}\NormalTok{, }\StringTok{"OK"}\NormalTok{, }\StringTok{"TX"}\NormalTok{, }\StringTok{"PR"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"south"}\NormalTok{)}
+
+\CommentTok{\#rejoin them back together for future ref. if needed}
+\NormalTok{full }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(northeast, midwest, west, south) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{reduce}\NormalTok{(full\_join) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"qualifier"}\NormalTok{, }\StringTok{"link"}\NormalTok{))}
+
+\CommentTok{\#getting \# of sites in each state}
+
+\NormalTok{midwest\_n }\OtherTok{\textless{}{-}}\NormalTok{ midwest }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
+
+\NormalTok{northeast\_n }\OtherTok{\textless{}{-}}\NormalTok{ northeast }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
+
+\NormalTok{south\_n }\OtherTok{\textless{}{-}}\NormalTok{ south }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
+
+\NormalTok{west\_n }\OtherTok{\textless{}{-}}\NormalTok{ west }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
+
+\NormalTok{states\_n }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(midwest\_n, northeast\_n, south\_n, west\_n)}
+
+\NormalTok{state\_name }\OtherTok{\textless{}{-}}\NormalTok{ state.name}
+\NormalTok{state\_abb }\OtherTok{\textless{}{-}}\NormalTok{ state.abb}
+\NormalTok{states\_map }\OtherTok{\textless{}{-}} \FunctionTok{map\_data}\NormalTok{(}\StringTok{"state"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#we need to standardize values, some wells report concentration of contaminants in different units, we will standardize all units to the units provided by the health{-}based threshold set by the EPA}
+
+\CommentTok{\#template to find different units}
+\NormalTok{template }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Antimony"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#select all rows containing \_\_}
+  \FunctionTok{group\_by}\NormalTok{(measurement.unit) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
+
+\CommentTok{\#antimony has units mg/L and ug/L, we need to change all to ug/L}
+\NormalTok{antimony }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Antimony"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)}
+  
+\CommentTok{\#arsenic has units mg/L and ug/L, we need to change all to ug/L}
+\NormalTok{arsenic }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Arsenic"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)}
+
+\CommentTok{\#barium has units  mg/l and ug/l, we need to change all to mg}
+\NormalTok{barium }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Barium"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{/}\DecValTok{1000}\NormalTok{),}
+         \AttributeTok{measurement.unit =} \StringTok{"mg/l"}\NormalTok{)}
+
+\CommentTok{\#beryllium has units mg/l and ug/l, we need to change all to ug}
+\NormalTok{beryllium }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Beryllium"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)}
+
+\CommentTok{\#boron has units mg/l and ug/l, we need to change all to mg}
+\NormalTok{boron }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Boron"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{/}\DecValTok{1000}\NormalTok{),}
+         \AttributeTok{measurement.unit =} \StringTok{"mg/l"}\NormalTok{)}
+
+\CommentTok{\#cadmium has units mg/l and ug/l, we need to change all to ug}
+\NormalTok{cadmium }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Cadmium"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)}
+
+\CommentTok{\#chromium has units mg/l and ug/l, we need to change all to ug}
+\NormalTok{chromium }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Chromium"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)}
+
+\CommentTok{\#cobalt has units mg/l and ug/l, we need to change all to ug}
+\NormalTok{cobalt }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Cobalt"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)}
+
+\CommentTok{\#fluoride has units mg/l and mg/l, we need to change all to mg}
+\NormalTok{fluoride }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Fluoride"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{/}\DecValTok{1000}\NormalTok{),}
+         \AttributeTok{measurement.unit =} \StringTok{"mg/l"}\NormalTok{)}
+
+\CommentTok{\#lead has units mg/l and ug/l, we need to change all to ug}
+\NormalTok{lead }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Lead"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)}
+
+\CommentTok{\#lithium has units mg/l and ug/l, we need to change all to ug}
+\NormalTok{lithium }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Lithium"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)}
+
+
+\CommentTok{\#mercury has units mg/l and ug/l, we need to change all to ug}
+\NormalTok{mercury }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Mercury"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)}
+
+
+\CommentTok{\#molybdenum has units mg/l and ug/l, we need to change all to ug}
+\NormalTok{molybdenum }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Molybdenum"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)}
+
+
+\CommentTok{\#radium has units mg/l (14), pCi/l (30k+), ug/l (1), we need to change all to pCi}
+\NormalTok{radium }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Radium"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"pCi/l"}\NormalTok{)}
+
+\CommentTok{\#selenium has units mg/l (23k+), pCi/l (8), ug/l (14k+), we need to change all to ug}
+\NormalTok{selenium }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Radium"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(measurement.unit }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"mg/l, ug/l"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)  }
+
+\CommentTok{\#sulfate has units mg/l and ug/l, we need to change all to mg}
+\NormalTok{sulfate }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Sulfate"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{/}\DecValTok{1000}\NormalTok{),}
+         \AttributeTok{measurement.unit =} \StringTok{"mg/l"}\NormalTok{)}
+
+\CommentTok{\#thallium has units mg/l (23k+), pCi/l (16), ug/l (13k+), we need to change all to ug}
+\NormalTok{thallium }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Thallium"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(measurement.unit }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"mg/l, ug/l"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration =} 
+           \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"mg/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{,}
+\NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration),}
+         \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)  }
+
+\CommentTok{\#recombine back into new standardized df}
+\NormalTok{df\_std }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(antimony, arsenic, barium, beryllium, boron, cadmium,}
+\NormalTok{                chromium, cobalt, fluoride, lead, lithium, mercury, }
+\NormalTok{                molybdenum, radium, selenium, sulfate, thallium)}
+\end{Highlighting}
+\end{Shaded}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#calculation of avg mean concentration for all contaminants in each well across all dates}
+
+\CommentTok{\#get average mean conc for all contaminants in each well}
+\NormalTok{avg\_control }\OtherTok{\textless{}{-}}\NormalTok{ df\_std }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(well.id, contaminant, measurement.unit, gradient, site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{avg\_conc =} \FunctionTok{mean}\NormalTok{(concentration)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\CommentTok{\#get highest avg. upgradient concentrations for each contaminant/site}
+\NormalTok{upgrad\_control }\OtherTok{\textless{}{-}}\NormalTok{ avg\_control }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Upgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(contaminant, site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{upgrad\_conc =} \FunctionTok{min}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\CommentTok{\#remove upgradient wells}
+\NormalTok{downgrad\_control }\OtherTok{\textless{}{-}}\NormalTok{ avg\_control }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Downgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(well.id, contaminant, site, avg\_conc))}
+
+\CommentTok{\#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site}
+
+\NormalTok{downgrad\_control2 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(downgrad\_control, upgrad\_control) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(avg\_conc }\SpecialCharTok{\textgreater{}}\NormalTok{ upgrad\_conc) }\CommentTok{\#remove downgradient mean concentrations that were greater than “background” levels}
+
+
+\CommentTok{\#for each site, identify the well(s) with the highest mean concentration of each contaminant}
+\NormalTok{highest\_control }\OtherTok{\textless{}{-}}\NormalTok{ downgrad\_control2 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(site, contaminant) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\FunctionTok{which.max}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{contaminant =} \FunctionTok{recode}\NormalTok{(contaminant,}
+                              \StringTok{"Antimony, total"} \OtherTok{=} \StringTok{"Antimony"}\NormalTok{,}
+                              \StringTok{"Arsenic, total"} \OtherTok{=} \StringTok{"Arsenic"}\NormalTok{,}
+                              \StringTok{"Barium, total"} \OtherTok{=} \StringTok{"Barium"}\NormalTok{,}
+                              \StringTok{"Beryllium, total"} \OtherTok{=} \StringTok{"Beryllium"}\NormalTok{,}
+                              \StringTok{"Boron, total"} \OtherTok{=} \StringTok{"Boron"}\NormalTok{,}
+                              \StringTok{"Cadmium, total"} \OtherTok{=} \StringTok{"Cadmium"}\NormalTok{,}
+                              \StringTok{"Chromium, total"} \OtherTok{=} \StringTok{"Chromium"}\NormalTok{,}
+                              \StringTok{"Cobalt, total"} \OtherTok{=} \StringTok{"Cobalt"}\NormalTok{,}
+                              \StringTok{"Fluoride, total"} \OtherTok{=} \StringTok{"Fluoride"}\NormalTok{,}
+                              \StringTok{"Lead, total"} \OtherTok{=} \StringTok{"Lead"}\NormalTok{,}
+                              \StringTok{"Lithium, total"} \OtherTok{=} \StringTok{"Lithium"}\NormalTok{,}
+                              \StringTok{"Mercury, total"} \OtherTok{=} \StringTok{"Mercury"}\NormalTok{,}
+                              \StringTok{"Molybdenum, total"} \OtherTok{=} \StringTok{"Molybdenum"}\NormalTok{,}
+                              \StringTok{"Radium 226+228"} \OtherTok{=} \StringTok{"Radium"}\NormalTok{,}
+                              \StringTok{"Selenium, total"} \OtherTok{=} \StringTok{"Selenium"}\NormalTok{,}
+                              \StringTok{"Thallium, total"} \OtherTok{=} \StringTok{"Thallium"}\NormalTok{))}
+
+\NormalTok{hbt\_case }\OtherTok{\textless{}{-}}\NormalTok{ hbt }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#case sensitivity}
+  \FunctionTok{rename}\NormalTok{(}\StringTok{"contaminant"} \OtherTok{=} \StringTok{"Contaminant"}\NormalTok{,}
+         \StringTok{"limit"} \OtherTok{=} \StringTok{"Exceedance Limit"}\NormalTok{,}
+         \StringTok{"unit"} \OtherTok{=} \StringTok{"Unit"}\NormalTok{) }
+  
+\NormalTok{top10\_control }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(highest\_control, hbt\_case, }\AttributeTok{by =} \StringTok{"contaminant"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ratio =}\NormalTok{ avg\_conc}\SpecialCharTok{/}\FunctionTok{as.numeric}\NormalTok{(limit)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#calculate the ratios {-}\textgreater{} ‘highest average’ concentrations/hbt}
+  \FunctionTok{group\_by}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{composite\_score =} \FunctionTok{sum}\NormalTok{(ratio)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#sum together all contaminants for a site to get a composite score}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(composite\_score)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#calculation of avg mean concentration for all contaminants in each well across all dates}
+
+\CommentTok{\#get average mean conc for all contaminants in each well}
+\NormalTok{avg\_substitution }\OtherTok{\textless{}{-}}\NormalTok{ df\_std }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration\_new =} \FunctionTok{if\_else}\NormalTok{(below.detection }\SpecialCharTok{\%in\%} \StringTok{"\textless{}"}\NormalTok{, }
+\NormalTok{                                     concentration}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, concentration))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(well.id, contaminant, measurement.unit, gradient, site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{avg\_conc =} \FunctionTok{mean}\NormalTok{(concentration\_new)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\CommentTok{\#get highest avg. upgradient concentrations for each contaminant/site}
+\NormalTok{upgrad\_substitution }\OtherTok{\textless{}{-}}\NormalTok{ avg\_substitution }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Upgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(contaminant, site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{upgrad\_conc =} \FunctionTok{min}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\CommentTok{\#remove upgradient wells}
+\NormalTok{downgrad\_substitution }\OtherTok{\textless{}{-}}\NormalTok{ avg\_substitution }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Downgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(well.id, contaminant, site, avg\_conc))}
+
+\CommentTok{\#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site}
+\NormalTok{downgrad\_substitution2 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(downgrad\_substitution, upgrad\_substitution) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(avg\_conc }\SpecialCharTok{\textgreater{}=}\NormalTok{ upgrad\_conc) }\CommentTok{\#remove downgradient mean concentrations that were lower than “background” levels}
+
+
+\CommentTok{\#for each site, identify the well(s) with the highest mean concentration of each contaminant}
+\NormalTok{highest\_substitution }\OtherTok{\textless{}{-}}\NormalTok{ downgrad\_substitution2 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(site, contaminant) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\FunctionTok{which.max}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{contaminant =} \FunctionTok{recode}\NormalTok{(contaminant,}
+                              \StringTok{"Antimony, total"} \OtherTok{=} \StringTok{"Antimony"}\NormalTok{,}
+                              \StringTok{"Arsenic, total"} \OtherTok{=} \StringTok{"Arsenic"}\NormalTok{,}
+                              \StringTok{"Barium, total"} \OtherTok{=} \StringTok{"Barium"}\NormalTok{,}
+                              \StringTok{"Beryllium, total"} \OtherTok{=} \StringTok{"Beryllium"}\NormalTok{,}
+                              \StringTok{"Boron, total"} \OtherTok{=} \StringTok{"Boron"}\NormalTok{,}
+                              \StringTok{"Cadmium, total"} \OtherTok{=} \StringTok{"Cadmium"}\NormalTok{,}
+                              \StringTok{"Chromium, total"} \OtherTok{=} \StringTok{"Chromium"}\NormalTok{,}
+                              \StringTok{"Cobalt, total"} \OtherTok{=} \StringTok{"Cobalt"}\NormalTok{,}
+                              \StringTok{"Fluoride, total"} \OtherTok{=} \StringTok{"Fluoride"}\NormalTok{,}
+                              \StringTok{"Lead, total"} \OtherTok{=} \StringTok{"Lead"}\NormalTok{,}
+                              \StringTok{"Lithium, total"} \OtherTok{=} \StringTok{"Lithium"}\NormalTok{,}
+                              \StringTok{"Mercury, total"} \OtherTok{=} \StringTok{"Mercury"}\NormalTok{,}
+                              \StringTok{"Molybdenum, total"} \OtherTok{=} \StringTok{"Molybdenum"}\NormalTok{,}
+                              \StringTok{"Radium 226+228"} \OtherTok{=} \StringTok{"Radium"}\NormalTok{,}
+                              \StringTok{"Selenium, total"} \OtherTok{=} \StringTok{"Selenium"}\NormalTok{,}
+                              \StringTok{"Thallium, total"} \OtherTok{=} \StringTok{"Thallium"}\NormalTok{))}
+
+\NormalTok{top10\_substitution }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(highest\_substitution, hbt\_case, }\AttributeTok{by =} \StringTok{"contaminant"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ratio =}\NormalTok{ avg\_conc}\SpecialCharTok{/}\FunctionTok{as.numeric}\NormalTok{(limit)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#calculate the ratios {-}\textgreater{} ‘highest average’ concentrations/hbt}
+  \FunctionTok{group\_by}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{composite\_score =} \FunctionTok{sum}\NormalTok{(ratio)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#sum together all contaminants for a site to get a composite score}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(composite\_score)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{get\_km\_mean }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(values, censored)\{}
+\NormalTok{  km }\OtherTok{=} \FunctionTok{cenfit}\NormalTok{(values, censored)}
+  \FunctionTok{mean}\NormalTok{(km)[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{\}}
+
+\CommentTok{\#calculation of avg mean concentration for all contaminants in each well across all dates}
+
+\CommentTok{\#get average mean conc for all contaminants in each well}
+\NormalTok{avg\_km }\OtherTok{\textless{}{-}}\NormalTok{ df\_std }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{censored =} \FunctionTok{if\_else}\NormalTok{(below.detection }\SpecialCharTok{\%in\%} \StringTok{"\textless{}"}\NormalTok{, }
+                                     \ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(well.id, contaminant, measurement.unit, gradient, site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{do}\NormalTok{(}\FunctionTok{summarize}\NormalTok{(., }\AttributeTok{avg\_conc =} \FunctionTok{get\_km\_mean}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{concentration, .}\SpecialCharTok{$}\NormalTok{censored))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\CommentTok{\#get highest avg. upgradient concentrations for each contaminant/site}
+\NormalTok{upgrad\_km }\OtherTok{\textless{}{-}}\NormalTok{ avg\_km }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Upgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(contaminant, site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{upgrad\_conc =} \FunctionTok{min}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
+
+\CommentTok{\#remove upgradient wells}
+\NormalTok{downgrad\_km }\OtherTok{\textless{}{-}}\NormalTok{ avg\_km }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Downgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(well.id, contaminant, site, avg\_conc))}
+
+\CommentTok{\#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site}
+\NormalTok{downgrad\_km2 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(downgrad\_km, upgrad\_km) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(avg\_conc }\SpecialCharTok{\textgreater{}=}\NormalTok{ upgrad\_conc) }\CommentTok{\#remove downgradient mean concentrations that were lower than “background” levels}
+
+
+\CommentTok{\#for each site, identify the well(s) with the highest mean concentration of each contaminant}
+\NormalTok{highest\_km }\OtherTok{\textless{}{-}}\NormalTok{ downgrad\_km2 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(site, contaminant) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\FunctionTok{which.max}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{contaminant =} \FunctionTok{recode}\NormalTok{(contaminant,}
+                              \StringTok{"Antimony, total"} \OtherTok{=} \StringTok{"Antimony"}\NormalTok{,}
+                              \StringTok{"Arsenic, total"} \OtherTok{=} \StringTok{"Arsenic"}\NormalTok{,}
+                              \StringTok{"Barium, total"} \OtherTok{=} \StringTok{"Barium"}\NormalTok{,}
+                              \StringTok{"Beryllium, total"} \OtherTok{=} \StringTok{"Beryllium"}\NormalTok{,}
+                              \StringTok{"Boron, total"} \OtherTok{=} \StringTok{"Boron"}\NormalTok{,}
+                              \StringTok{"Cadmium, total"} \OtherTok{=} \StringTok{"Cadmium"}\NormalTok{,}
+                              \StringTok{"Chromium, total"} \OtherTok{=} \StringTok{"Chromium"}\NormalTok{,}
+                              \StringTok{"Cobalt, total"} \OtherTok{=} \StringTok{"Cobalt"}\NormalTok{,}
+                              \StringTok{"Fluoride, total"} \OtherTok{=} \StringTok{"Fluoride"}\NormalTok{,}
+                              \StringTok{"Lead, total"} \OtherTok{=} \StringTok{"Lead"}\NormalTok{,}
+                              \StringTok{"Lithium, total"} \OtherTok{=} \StringTok{"Lithium"}\NormalTok{,}
+                              \StringTok{"Mercury, total"} \OtherTok{=} \StringTok{"Mercury"}\NormalTok{,}
+                              \StringTok{"Molybdenum, total"} \OtherTok{=} \StringTok{"Molybdenum"}\NormalTok{,}
+                              \StringTok{"Radium 226+228"} \OtherTok{=} \StringTok{"Radium"}\NormalTok{,}
+                              \StringTok{"Selenium, total"} \OtherTok{=} \StringTok{"Selenium"}\NormalTok{,}
+                              \StringTok{"Thallium, total"} \OtherTok{=} \StringTok{"Thallium"}\NormalTok{))}
+
+\NormalTok{top10\_km }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(highest\_km, hbt\_case, }\AttributeTok{by =} \StringTok{"contaminant"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ratio =}\NormalTok{ avg\_conc}\SpecialCharTok{/}\FunctionTok{as.numeric}\NormalTok{(limit)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#calculate the ratios {-}\textgreater{} ‘highest average’ concentrations/hbt}
+  \FunctionTok{group\_by}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{composite\_score =} \FunctionTok{sum}\NormalTok{(ratio)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#sum together all contaminants for a site to get a composite score}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(composite\_score)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 \hypertarget{corrections}{%

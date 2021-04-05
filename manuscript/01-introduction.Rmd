@@ -9,7 +9,7 @@ library(mosaic)
 library(knitr)
 ```
 
-# Introduction {#intro}
+# Introduction {intro}
 
 The concept of missing data is ubiquitous within academic disciplines and often complicates innumerable types of real-world studies. Missing data will be defined within this thesis as _occurences within a dataset where there is no value stored for a variable in the observation of interest_. As most studies often utilize data collected through mediums such as surveys, questionnaires, or field research, missing data is an unavoidable problem.  Missing data hinders one's ability to work with and analyze the phenomena at hand, as data is often the basis of all studies.
 

@@ -1,35 +1,55 @@
-# Simulation Appendix
+# Simulation and Case Study Appendix
 
-The second appendix, Appendix B, contains all necessary code required to run the simulation study.
+The second appendix, Appendix B, contains all necessary code required to run the simulation study and for our case study.
 
-## Libraries
+## Simulation Study
+
+### Libraries
 
 ```{r app_libraries, ref.label="libraries", echo=TRUE, eval=FALSE}
 ```
 
-## Generating Data
+### Generating Data
 
 ```{r app_gd, ref.label=c("generateLN", "generateEXP", "generateW"), echo=TRUE, eval=FALSE}
 ```
 
-## Setup
+### Setup
 
 ```{r app_setup, ref.label= "setup", echo=TRUE, eval=FALSE}
 ```
 
-## Lognormal
+### Lognormal
 
 ```{r app_ln, ref.label= "lognormal", echo=TRUE, eval=FALSE}
 ```
 
-## Exponential
+### Exponential
 
-```{r app_ln, ref.label= "exponential", echo=TRUE, eval=FALSE}
+```{r app_exp, ref.label= "exponential", echo=TRUE, eval=FALSE}
 ```
 
-## Weibull
+### Weibull
 
-```{r app_ln, ref.label= "weibull", echo=TRUE, eval=FALSE}
+```{r app_w, ref.label= "weibull", echo=TRUE, eval=FALSE}
 ```
 
+## Case Study
+
+###  Preliminary
+
+```{r app_prelim, ref.label= "prelim", echo=TRUE, eval=FALSE}
+```
+
+```{r app_standardize, ref.label= "standardize", echo=TRUE, eval=FALSE}
+```
+
+```{r app_baseline, ref.label= "baseline", echo=TRUE, eval=FALSE}
+```
+
+```{r app_substitution, ref.label= "substitution", echo=TRUE, eval=FALSE}
+```
+
+```{r app_km, ref.label= "km", echo=TRUE, eval=FALSE}
+```
 
