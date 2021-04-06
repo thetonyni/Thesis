@@ -60,7 +60,7 @@ The data used in the study are from a collection of results published by each co
 
 The coal dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells, which represent an observation in the dataset. There are over 265 coal plants, also known as "sites," in this dataset. A single site is divided into multiple subsections, known as "disposal areas." Each well can be associated with a disposal area and subsequently, a site.
 
-Specifics regarding the variables in the coal dataset can be viewed in Table 3.1. Each observation in the dataset represents a well which measures the concentration of the contaminant in question. Most of the variables are explanatory, such as the state, site, and disposal area in which the well is located in. However, there are several variables specific to groundwater data collection which are important to note.
+Specifics regarding the variables in the coal dataset can be viewed in Table \ref{tab:datadictionary}. Each observation in the dataset represents a well which measures the concentration of the contaminant in question. Most of the variables are explanatory, such as the state, site, and disposal area in which the well is located in. However, there are several variables specific to groundwater data collection which are important to note.
 
 There are four different types that each well can be classified as, which is represented in the `type` variable. These consist of: `L`, `M`, `SI`, and `U` which stand for "landfill," "mixed," "surface-impacted," and "unknown." We have already mentioned downgradient and upgradient wells during our discussion of the coal ash rule, but we will provide more detail now. In a groundwater monitoring system it is common to have designated wells for specific purposes. A common approach in a coal site is to have separate wells, upgradient wells, whose purpose is to measure "natural" water conditions and downgradient wells, which measures water conditions after it passes through a coal ash disposal area.
 
@@ -128,16 +128,20 @@ The goal of our case study is to employ the techniques we introduced back in cha
 
 ## Application
 
-```{r prelim, echo = FALSE, message = FALSE, cache = TRUE}
+```{r, echo = FALSE, message = FALSE}
 #importing in full dataset
 import_df <- read_csv("code/current/data/chemical_data.csv", col_types = cols())
+```
 
+```{r, echo = FALSE, results = FALSE, message = FALSE, include = FALSE}
 #import_df %>%
 #  group_by(below.detection) %>%
 #  summarize(n = n())
 
 #548359/(260634+548359) #proportion of obs. below detection
+```
 
+```{r prelim, echo = FALSE, message = FALSE, cache = TRUE}
 #breaking apart into different datasets for each region
 northeast <- import_df %>%
   filter(state %in% c("ME", "NH", "VT", "NY", "PA", "NJ", "MD", 
@@ -216,7 +220,7 @@ First, they calculated the average mean concentration for all contaminants in ea
 
 After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area were removed. It is also important to note that since upgradient wells measure the quality of the water _before_ it passes through a coal site, they are also removed.
 
-These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table 3.2.
+These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table \ref{tab:hbt}.
 
 ```{r echo = FALSE}
 #CODE TO MAKE HEALTH BASED THRESHOLDS TABLE
@@ -242,7 +246,7 @@ hbt <- as.data.frame(cbind(hbt_names, hbt_values, hbt_units)) %>%
          "Unit" = "hbt_units") 
 ```
 
-```{r, echo = FALSE}
+```{r hbt, echo = FALSE}
 knitr::kable(hbt, caption = "Health-based thresholds set by EPA.",
              booktabs = "T", linesep = "\\addlinespace")
 ```
@@ -764,7 +768,7 @@ top10_ros <- left_join(highest_ros, hbt_case, by = "contaminant") %>%
   slice(1:10)
 ```
 
-```{r, echo = FALSE}
+```{r top10baseline, echo = FALSE}
 options(scipen=999) #prevent scientific notation
 
 top10_control.table <- top10_control %>%
@@ -777,7 +781,7 @@ knitr::kable(top10_control.table, caption = "Top 10 most contaminated sites
   kable_styling(font_size = 11.5) 
 ```
 
-```{r, echo = FALSE}
+```{r top10substitution, echo = FALSE}
 top10_substitution.table <- top10_substitution %>%
   rename("Site" = "site", 
          "Composite Score" = "composite_score")
@@ -788,7 +792,7 @@ knitr::kable(top10_substitution.table, caption = "Top 10 most contaminated sites
   kable_styling(font_size = 11.5) 
 ```
 
-```{r, echo = FALSE}
+```{r top10km, echo = FALSE}
 top10_km.table <- top10_km %>%
   rename("Site" = "site", 
          "Composite Score" = "composite_score")
@@ -799,14 +803,14 @@ knitr::kable(top10_km.table, caption = "Top 10 most contaminated sites
   kable_styling(font_size = 11.5) 
 ```
 
-The results from our baseline implementation which calculates mean estimates without any attempt to account for censoring, obtains the top ten site presented in Table 3.3. When comparing this to the original substitution method using 1/2(LOD) implemented by @Kelderman2019, 9 out of the 10 sites are shared, with the only major difference being the order in which the sites are presented. As the composite scores of the sites were not originally published in @Kelderman2019's report, we are unable to delve into more of the specifics regarding the magnitude of difference between the two implementations. As such, we found it prudent to perform their analysis using the substitution method, the results of which are presented in Table 3.4. 
+The results from our baseline implementation which calculates mean estimates without any attempt to account for censoring, obtains the top ten sites presented in Table \ref{tab:top10baseline}. When comparing this to the original substitution method using 1/2(LOD) implemented by @Kelderman2019, 9 out of the 10 sites are shared, with the only major difference being the order in which the sites are presented. As the composite scores of the sites were not originally published in @Kelderman2019's report, we are unable to delve into more of the specifics regarding the magnitude of difference between the two implementations. As such, we found it prudent to perform their analysis using the substitution method, the results of which are presented in Table \ref{tab:top10substitution}. 
 
-Something unexpected to note is that although we followed the procedures outlined by @Kelderman2019 in their implementation of the substitution method, our top ten sites presented in Table 3.5 somewhat differ from theirs. Reproducible code was not provided in their report and attempts to completely reproduce their top ten list would not be conducive to the goal of this report. As such, from now on, we will proceed with the analysis with _our_ top ten list produced by the substitution method as the norm, for the sake of comparability with our other methods.
+Something unexpected to note is that although we followed the procedures outlined by @Kelderman2019 in their implementation of the substitution method, our top ten sites presented in Table \ref{tab:top10km} somewhat differ from theirs. Reproducible code was not provided in their report and attempts to completely reproduce their top ten list would not be conducive to the goal of this report. As such, from now on, we will proceed with the analysis with _our_ top ten list produced by the substitution method as the norm, for the sake of comparability with our other methods.
 
-It is also important to note that the MLE method and the ROS method are absent from this case-study. It can be recalled that in our previous discussion regarding the MLE method, we discussed the MLE method often resulting in overinflated estimates when the data is highly skewed. Due to this limitation, using the MLE method does not provide very useful information in our study. One instance of this problem occurs where we have one well with an abnormally large concenration and hundreds of smaller wells in which the concentration is 0, the MLE method would provide concentration estimates nearing infinity, and throw the analysis into disarray, as such, using the MLE method is not beneficial in this setting.
+It is also important to note that the MLE method and the ROS method are absent from this case-study. It can be recalled that in our previous discussion regarding the MLE method, we discussed noted a limitation of the MLE method being how it can obtain overinflated estimates when the data is highly skewed. In our attempt to use the MLE method, we found that the estimates we obtained did not provide very useful information. To exemplify this, we had one well with an abnormally large concentration, a sign that it was most likely contaminated, and hundreds of smaller wells in which the concentration is 0. The MLE method gave us mean estimates nearing infinity, which threw our analysis into disarray. As such, we refrained from utilizing the MLE method in this specific case study.
 
-The ROS method was absent for a similar reason, but with the limitations more-so being on the capabilities of the method itself. As we discussed previously, the ROS method can only be used in settings when more than half the data is uncensored. Unfortunately with our data, censoring far exceeds 50%, and as such, the ROS method is unable to be implemented. [PROVIDE PROOF? numbers?????]
+The ROS method was absent for a similar reason, but with the limitations more-so being on the capabilities of the method itself. As we discussed previously, the ROS method can only be used in settings when more than half the data is uncensored. Unfortunately with our data, censoring far exceeds 50%, and as such, the ROS method is unable to be implemented [@EPA2009].
 
-The top ten sites obtained using our substitution implementation are the sites as the ones obtained from our baseline implementation, with the same ordering but slight differences in the composite scores. With our KM method, the Ghent Generating Station replaces the Sebree Generating Station as one of the top ten most contaminates sites, with some slight differences in the ordering of the sites in the latter half of the list. 
+The top ten sites obtained using our substitution implementation are the same sites as the ones obtained from our baseline implementation, with the same ordering but slight differences in the composite scores. With our KM method, the Ghent Generating Station replaces the Sebree Generating Station as one of the top ten most contaminated sites, with some slight differences in the ordering of the sites in the latter half of the list. 
 
 It is not a surprise that our left-censoring mean estimation techniques did not provide much of a different result than what we obtained with our baseline implementation. Left-censoring techniques are not as useful with this case-study, where we are focused on finding the extremities of the dataset, i.e. wells with the highest concentration of contaminants. If the research question was instead, identifying wells that were potentially contaminated, the distinction between the results obtained by these methods would be more visible. @Kelderman2019's implementation of the substitution method as a way to account for left-censoring is justifiable due to its ease of implementation and the results we just discussed, regarding the lack of differences in top ten sites when comparing all three implementations we used.
