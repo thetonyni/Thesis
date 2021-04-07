@@ -305,16 +305,36 @@ Use this space to thank those who have helped you in the thesis process (profess
 \hypertarget{introduction-intro}{%
 \chapter{Introduction \{intro\}}\label{introduction-intro}}
 
-The concept of missing data is ubiquitous within academic disciplines and often complicates innumerable types of real-world studies. Missing data will be defined within this thesis as \emph{occurences within a dataset where there is no value stored for a variable in the observation of interest}. As most studies often utilize data collected through mediums such as surveys, questionnaires, or field research, missing data is an unavoidable problem. Missing data hinders one's ability to work with and analyze the phenomena at hand, as data is often the basis of all studies.
+The concept of missing data is ubiquitous across academic disciplines and often complicates real-world studies. Most studies utilize data collected through surveys, questionnaires, and/or field research which is why missing data is often unavoidable. Missing data can hinder one's ability to work with and analyze the phenomena at hand, giving rise to inaccurate or even misleading analyses.
 
-Barnard and Meng (1999) outline three significant issues when conducting analysis on missing data. Firstly, it can introduce estimation bias within an analysis. Estimation bias is defined as \emph{the difference between and estimator's expected value and the true value of the parameter being estimated}. Another issue is that missing data can often lead to a reduction in statistical power, which can affect the conclusions one makes during studies involving hypothesis testing. Finally, missing data can introduce complications with statistical software and lead to functions not working as intended, if they have not accounted for the possibility of the data containing missingness.
+Barnard \& Meng (1999) outline several significant issues when conducting analysis on missing data. Firstly, missing data can introduce bias in regards to parameter estimation. It can also lead to a reduction in statistical power, which can affect the conclusions one makes during studies involving hypothesis testing. Finally, missing data can introduce complications with statistical software and lead to functions not working as intended, if they have not accounted for the possibility of the data containing missingness.
 
-This thesis will go into a more specific instance of missing data known as censoring, which is \emph{the condition when one has only partial information regarding the values of a measurement within a dataset}. We will introduce and define the three types of censored data, discuss the challenges with the reporting of censored data, and explore common statistical approaches to handling censored data.
+This thesis will go into a more specific instance of missing data known as censoring, which is \emph{the condition when one has only partial information regarding the values of a measurement within a dataset}. In this chapter, we will introduce and define the three types of censored data, discuss the challenges with the reporting of censored data, and explore common statistical approaches to handling censored data.
 
 \hypertarget{censored_data}{%
 \section{Censored Data}\label{censored_data}}
 
-As discussed previously, censored data is a specific type of missingness where one has only partial information regarding the values of a measurement in a dataset. There are many types of censoring which can occur, but three main ones which are the most common: right censoring, interval censoring, and left censoring.
+As discussed previously, censored data is a specific type of missingness where one has only partial information regarding the values of a measurement in a dataset. There are three types of censoring which can occur: right censoring, interval censoring, and left censoring.
+
+\hypertarget{right}{%
+\subsection{Right Censoring}\label{right}}
+
+Right censoring is a specific instance in which we only know that the true value of a data point lies above a certain threshold, but it is unknown by how much. Suppose a study on income and mortality is conducted with the variable of interest, \(T\), being the time measured from the start of the study to the death of the participant. The study has a duration of 5 years, in which participants are expected to submit a form regarding their annual income. The value for the participant would be considered to be right-censored if at any point during the study, they failed to follow-up, or if the participant was still alive at the conclusion of the 5 year study. In this design study, several possibilities can occur, illustrated in Figure \ref{fig:rightcensoringexample}.
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figures/right_censoring_example} 
+
+}
+
+\caption{Right Censoring Example}\label{fig:rightcensoringexample}
+\end{figure}
+As illustrated by individual A in Figure \ref{fig:rightcensoringexample}, this individual lives on until the termination of the study. We don't know at what point they passed away exactly, since they didn't pass away during the time constraints of the study. As such, the only information we have is \(T > 5\).
+
+If an individual does pass away at some point, \(t_i\), \emph{during} the study, then \(T = t_i\). This can be illustrated within Figure \ref{fig:rightcensoringexample} by individuals B, C, and D for which \(T = 3\), \(T = 4\), and \(T = 1\).
+
+There is a final possibility for individuals who choose to censor themselves. Illustrated in Figure \ref{fig:rightcensoringexample} by individuals E and F, we can see that they are marked as censored at \(T = 3\) and \(T = 1\), respectively. These individuals may have chosen to stop submitting information to the study or drop out of the study entirely without warning. As we have no information about whether or not if they died or simply did not submit their form, all we know is that the individual died/will die at some point after the point at which they were censored.
+
+Right censoring is the most common type of censoring and can often be found in clinical trial studies, mortality studies, and other forms of surival analyses.
 
 \hypertarget{left}{%
 \subsection{Left Censoring}\label{left}}
@@ -326,33 +346,50 @@ As discussed previously, censored data is a specific type of missingness where o
 
 \caption{Left Censoring Example}\label{fig:leftcensoringexample}
 \end{figure}
-Left censoring is a specific instance of censoring in which we only know that the true value of a data point falls below a certain threshold which we call the \emph{limit of detection} (LOD).
+In contrast with right censoring, left censoring is a specific instance of censoring in which we only know that the true value of a data point falls below a certain threshold which we call the \emph{limit of detection} (LOD).
 
 To understand this concept better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You plan to wake up every morning far before the sun rises, but on the first day of the study, you oversleep and wake up at 7:00 A.M. with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit (7:00 A.M.).
 
 Left censoring is commonly found in environmental, water quality, and chemical-related research where the focus is on the concentration of an analyte. Due to limitations on measuring instruments, left censored data are commonly found in these types of studies. The most pressing issue of left-censored data mostly lie in the difficulty of distinguishing between extremely low values and statistical noise (Hall, Perry, \& Anderson, 2020).
 
+\hypertarget{interval}{%
+\subsection{Interval Censoring}\label{interval}}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figures/interval_censoring_example_fix} 
+
+}
+
+\caption{Interval Censoring Example}\label{fig:intervalcensoringexample}
+\end{figure}
+Interval censoring is another form of censoring in which the random variable of interest is known to be between an interval of two values. Considering a random variable \(T\), which denotes the survival time of interest, if interval censoring is at hand, we can denote the interval containing \(T\) to be \(I = [t_1, t_2]\), with \(t_1\) being the beginning of the interval and \(t_2\) being the end of the interval. Left and right censoring are special cases of interval censoring. In the case of left censoring, \(t_1 = 0\); and conversely in the case of right censoring, \(t_2 = \infty\).
+
+To conceptualize interval censoring, we can consider a example study on virus testing in which participants get their blood drawn in order to detect whether or not they test positive for a virus or not. The random variable in question is \(T\), which represents the exact timepoint at which the subject contracted the virus. If an individual was first tested at time \(t_1\) and tested negative, but was tested again at a later time \(t_2\) and tested positive, the specific time \(t\) at which the subject contracted the virus is unknown. All we know is that it lies somewhere between the interval, \(I = [t_1, t_2]\), but not the exact time at which they contracted it.
+
+The focus of my thesis deals specifically with the challenges of reporting and working with left-censored data.
+
 \hypertarget{challenges}{%
 \section{Challenges of Reporting Censored Data}\label{challenges}}
 
-There is no universal reporting practice for values below the LOD which can lead to confusion amongst researchers. The lack of standardization makes it difficult to distinguish LOD values with uncensored values. This can lead to LOD values unintentionally being overlooked, causing faulty analysis or conclusions which are heavily flawed.
+There is no universal reporting practice for values below the LOD which can lead to confusion amongst researchers. The lack of standardization makes it difficult to distinguish values below the LOD and uncensored values. This can lead to values below the LOD unintentionally being overlooked, causing faulty analysis or conclusions which are heavily flawed.
 
-In a study involving the precision of lead measurements near concentrations of the limit of detection, Berthouex (1993) discusses the disparity in practices within chemists on ways to record LOD values. He enumerates in a following list, common reporting practices in this field:
+In a study involving the precision of lead measurements near concentrations of the limit of detection, Berthouex (1993) discusses the disparity among chemists regarding practices involving the recording values below the LOD. He enumerates the following list.
 \begin{enumerate}
-  \item Reporting the trace, a chemical whose average concentration is less than 100 $\mu g$
-  \item Reporting  the letters ND, which stand for "not detected"
-  \item Reporting the numerical LOD value itself
-  \item Reporting "<", followed by the numerical LOD value
-  \item Reporting some value between 0 and the LOD value, such as one-half the LOD value
+  \item Reporting the letters ND, "not detected"
+  \item Reporting the numeric value of the LOD
+  \item Reporting "< LOD", where LOD is the numeric value of the LOD 
+  \item Reporting some value between 0 and the LOD, such as one-half the LOD
   \item Reporting the actual measured concentration, even if it falls below the LOD
-  \item Reporting the actual measured concentration, followed by "(LOD)"
+  \item Reporting the actual measured concentration, followed by "(LOD)" 
   \item Reporting the actual measured concentration with a precision ($\pm$) statement
 \end{enumerate}
-The latter three methods are the best procedures to follow, especially from a practical and statistical point of view according to Gilbert (1987). He argues that assuming the small concentration values are not from some sort of measurement error during data collection, then the value holds value. As such, recording a measurement as ``below LOD,'' without any sort of accompanying value would be discarding useful information which could have been used in practice and analysis.
+According to Gilbert (1987), the latter three methods are the best procedures to follow, especially from a practical and statistical point of view. He argues that assuming the small concentration values are not from some sort of measurement error during data collection, then the measured concentration holds value. As such, recording a measurement as ``below LOD'' without any sort of accompanying value would be discarding useful information which could have been used in practice and analysis.
 
-Berthouex (1993) discusses the prevalence in regards to the practice of censoring data by reporting only values which are above the detection limit and discarding those which fail to yield quantifiable results. He discourages this practice and instead suggests the reporting of measurements, even when those values are below the limit of detection.
+Berthouex (1993) discusses the prevalence in regards to the practice of censoring data by reporting only values which are above the detection limit and discarding those which fail to yield quantifiable results. In the study he conducted, five laboratories were assigned tasks to measure samples of a certain solution. The laboratories were not given information regarding the intent of the study, but a general statement that the concentrations being measured were of ``low'' concentrations. All but one laboratory recorded the actual measured concentrations even though they fell below the LOD. Fortunately, the original measurements for the laboratory that did not report values for all samples were maintained and able to be recovered. Berthouex (1993) stresses the importance of standardization in reporting practices for laboratories and suggested reporting all measurements accompanied with some precision statement, so that data is not lost.
 
-Further supporting the stance of keeping all concentration values rather than only those above the detection limit, Monte-Carlo experiements conducted by Gillom (1984) show that linear trends in water-quality data were far more easily able to be detected with uncensored data as compared to censored data. The methods they used to handle censored water quality data were found to produce wild and erratic estimates for the mean and standard deviation of datasets with higher censoring levels than those without. They found a general trend of decreasing classification success with increased censoring levels, attributing it to the limited availability of information in censored data.
+Further supporting the stance of keeping all concentration measurements rather than only those above the detection limit, Monte-Carlo experiments were conducted by Gllllom, Kirsch, Gilroy, \& Survey (1984) to investigate trend-detection for water-quality data. Trend detection is the practice of determining whether the values of a random variable generally increase or decrease over a period of time. They found a general relationship of decreasing trend detection percentages with increased censoring levels, attributing this to the limited availability of information in censored data.
+
+{[}START HERE{]}
 
 \hypertarget{Approaches}{%
 \section{Approaches}\label{Approaches}}
@@ -421,7 +458,7 @@ Canales (2018) outlines a imputation technique which involves replacing censored
 
 The code for the MLE method will be handled with the \texttt{cenmle} function in the \texttt{NADA} package, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values. (remove and write own code??)
 
-As a technique which heavily relies upon knowing a distribution which best models the data, MLE is one of the most well-known parametric approaches to handling LOD values. Many studies use the MLE as a sort of baseline method of handling censored values, to which they compare their new techniques upon (Ganser \& Hewett, 2010). However, it must be known that regardless of the prevalence of the MLE method, it is not free from its own downfalls. Canales (2018) found that the MLE method seems to underperform when the data in question was highly skewed, in which overinflated mean squared errors were often obtained. Being a technique which is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results (Bolks, DeWire, \& Harcum, 2014).
+As a technique which heavily relies upon knowing a distribution which best models the data, MLE is one of the most well-known parametric approaches to handling values below the LOD. Many studies use the MLE as a sort of baseline method of handling censored values, to which they compare their new techniques upon (Ganser \& Hewett, 2010). However, it must be known that regardless of the prevalence of the MLE method, it is not free from its own downfalls. Canales (2018) found that the MLE method seems to underperform when the data in question was highly skewed, in which overinflated mean squared errors were often obtained. Being a technique which is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results (Bolks, DeWire, \& Harcum, 2014).
 
 \hypertarget{rkm}{%
 \subsection{Kaplan-Meier Method}\label{rkm}}
@@ -2024,6 +2061,12 @@ Corrections may be made to the body of the thesis, but every such correction wil
 \leavevmode\hypertarget{ref-Antweiler2015}{}%
 Antweiler, R. C. (2015). {Evaluation of Statistical Treatments of Left-Censored Environmental Data Using Coincident Uncensored Data Sets. II. Group Comparisons}. http://doi.org/\href{https://doi.org/10.1021/acs.est.5b02385}{10.1021/acs.est.5b02385}
 
+\leavevmode\hypertarget{ref-Barnard1999}{}%
+Barnard, J., \& Meng, X. L. (1999). {Applications of multiple imputation in medical studies: From AIDS to NHANES}. \emph{Statistical Methods in Medical Research}, \emph{8}(1), 17--36. http://doi.org/\href{https://doi.org/10.1191/096228099666230705}{10.1191/096228099666230705}
+
+\leavevmode\hypertarget{ref-Berthouex1993}{}%
+Berthouex, P. (1993). {A Study of the Precision of Lead Measurements at Concentrations Near the Method Limit of Detection}, \emph{65}(5), 620--629.
+
 \leavevmode\hypertarget{ref-Bolks2014}{}%
 Bolks, A., DeWire, A., \& Harcum, J. B. (2014). {Baseline Assessment of Left-Censored Environmental Data Using R}. \emph{Technotes}, \emph{9}(2), 153--172. Retrieved from \url{https://www.epa.gov/sites/production/files/2016-05/documents/tech_notes_10_jun2014_r.pdf}
 
@@ -2048,8 +2091,14 @@ Environmental Protection Agency. (2020). {Disposal of Coal Combustion Residuals 
 \leavevmode\hypertarget{ref-Ganser2010}{}%
 Ganser, G. H., \& Hewett, P. (2010). {An Accurate Substitution Method for Analyzing Censored Data}, (April), 233--244. http://doi.org/\href{https://doi.org/10.1080/15459621003609713}{10.1080/15459621003609713}
 
+\leavevmode\hypertarget{ref-Gilbert1987}{}%
+Gilbert, R. O. (1987). \emph{{Statistical Methods for Environmental Pollution Monitoring}}. New York: Van Nostrand Reinhold Co.
+
 \leavevmode\hypertarget{ref-Gilliom1986}{}%
 Gilliom, R. J., \& Helsel, D. R. (1986). {Estimation of Distributional Parameters for Censored Trace Level Water Quality}. \emph{Water Resources Research}, \emph{22}(2), 135--146. http://doi.org/\href{https://doi.org/10.1029/WR022i002p00135}{10.1029/WR022i002p00135}
+
+\leavevmode\hypertarget{ref-Gillom1984}{}%
+Gllllom, R. J., Kirsch, R. M., Gilroy, E. J., \& Survey, U. S. G. (1984). {Effect of Censoring Trace-Level Water-Quality Data Capability Trend-Detection}, (1), 530--535. http://doi.org/\href{https://doi.org/10.1021/es00125a009}{10.1021/es00125a009}
 
 \leavevmode\hypertarget{ref-Hall2020}{}%
 Hall, L. W., Perry, E., \& Anderson, R. D. (2020). {A Comparison of Different Statistical Methods for Addressing Censored Left Data in Temporal Trends Analysis of Pyrethroids in a California Stream}. \emph{Archives of Environmental Contamination and Toxicology}, \emph{79}(4), 508--523. http://doi.org/\href{https://doi.org/10.1007/s00244-020-00769-0}{10.1007/s00244-020-00769-0}
