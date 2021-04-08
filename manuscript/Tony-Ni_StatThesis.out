@@ -10,7 +10,7 @@
 \BOOKMARK [1][-]{section.1.2}{Challenges of Reporting Censored Data}{chapter.1}% 10
 \BOOKMARK [1][-]{section.1.3}{Parameter Estimation for Left-Censored Data}{chapter.1}% 11
 \BOOKMARK [2][-]{subsection.1.3.1}{Substitution Method}{section.1.3}% 12
-\BOOKMARK [2][-]{subsection.1.3.2}{Maximum Likelihood Estimation Method}{section.1.3}% 13
+\BOOKMARK [2][-]{subsection.1.3.2}{Maximum Likelihood Estimation}{section.1.3}% 13
 \BOOKMARK [2][-]{subsection.1.3.3}{Kaplan-Meier Method}{section.1.3}% 14
 \BOOKMARK [2][-]{subsection.1.3.4}{Regression on Order Statistics}{section.1.3}% 15
 \BOOKMARK [0][-]{chapter.2}{Chapter 2: Simulations}{}% 16

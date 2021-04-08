@@ -112,54 +112,44 @@ As mentioned previously, contention between whether this method is statistically
 
 @Lee2005 also provides a critique on substitution methods and claim that they can often introduce a "signal" which was not originally present within the data, or even obstruct an actual signal which was originally present in the data -- leading to misleading and/or inaccurate results. Supporting @Lee2005's claim, Glass and Gray (2001) found the substitution method to introduce large errors and biases when calculating descriptive statistics of interest with left-censored data. Thompson and Nelson (2001) conducted a study in which they found similar results, in that it often led to biased parameter estimates and "artificially small standard error estimates." Hewett and Ganser (2007) also found in their simulation study that the substitution method yielded the lowest average bias and root mean squared error values (comparison metrics to measure accuracy) in their estimation of the mean. Overall, the overall consensus seems to advise against the practice of these substitution techniques.
 
-### Maximum Likelihood Estimation Method {#MLE}
+### Maximum Likelihood Estimation {#MLE}
 
-Maximum likelihood (ML) estimation is a parametric technique which allows us to estimate the parameters of a distribution or model when the data is from a multivariate normal distribution.
+Maximum likelihood (ML) estimation is a parametric technique which allows us to estimate the parameters of a model when the data are from a known distribution.
 
-To give a brief introduction to the mechanisms of ML estimation, let $f(x|\theta)$ denote the probability density function (PDF) which specifies the probability of observing the random variable $x$ given the parameter $\theta$. 
+Let the random variables $X_i, \cdots, X_n$ be independent and identically distributed with probability function $f(x_i|\theta)$, where $\theta$ is the parameter we are interested in estimating.
 
-Given a random, independently and identically distributed (*i.i.d.*) set of random variables $X_1, X_2,...,X_n$ from $f(x|\theta)$, we know that each individual observation $x_i$'s are statistically independent from one another, which allows us to express the PDF as the product of all individual densities. For every observed random sample $x_1,...,x_n$, we can define the joint density function to be:
+For every observed random sample $x_1,\cdots,x_n$, the joint density function is:
 
 $$f(x_1,...,x_n|\theta) = f(x_1|\theta)...f(x_n|\theta) = \prod_{i=1}^{n}f(x_i|\theta)$$
-In most real-life scenarios, the actual (observed) data is already given, and our goal is to find the PDF which is most likely to generate our observed values. In order to solve this inverse problem, we introduce the likelihood function, which is defined as the joint density of the observed data as a function of the parameter (with the data held as a fixed constant). 
 
-In mathematical notation, upon observing the given data, $f(x_1,...,x_n|\Theta)$ becomes a function of $\theta$ alone, so we obtain a likelihood of:
+Our goal is to find the value of $\theta$ which is most likely to generate our observed data. In order to solve this inverse problem, we introduce the likelihood function, which is defined as a function of the parameter given the observed data:
 
-$$lik(\theta) = f(x_1,...,x_n|\theta)$$
-It is important to recognize the difference which separates the likelihood function and the PDF. The PDF is a function of the observed data given a parameter(s). It gives information regarding the probability of a particular data value for a fixed parameter.
+$$L(\theta) = L(\theta|x_i, \cdots, x_n) = \prod_{i=1}^{n}f(x_i|\theta)$$
+Our *maximum likelihood estimate* of our parameter $\theta$, then, is the value $\hat{\theta}$ that maximizes the likelihood function, $L(\theta)$.
 
-On the other hand, the likelihood function is a function of the parameter, given a set of observed data. It tells us the likelihood of observing a particular parameter value for a fixed set of data.
-
-Our goal is to obtain the ML estimate of our parameter which maximizes the likelihood function, $lik(\theta)$, in other words, to obtain a $\theta$ which makes our observed data the most probable.
-
-As we previously declared our random variables $X_1, X_2,...,X_n$ to be i.i.d, we can rewrite the likelihood to be a product of the marginal densities:
-
-$$lik(\theta) = \prod_{i=1}^{n} f(x_i|\theta)$$
-in which we can then maximize the likelihood to find the best mle of $\theta$ to best capture our observed data.
-
-Yavuz et al. (2017) discuss the usage of MLE method, when missing data is present, and note that it is only appropriate to use for non-negative probability distributions such as: exponential, log-normal, normal, and Weibull. 
-
-When left censoring is present, the likelihood function changes in order to account for both the censored observations and the uncensored observations and becomes:
+When left censoring is present, the likelihood function changes in order to account for both the censored observations and the uncensored observations. We define $F(x_i|\theta)$ to the cumulative distribution function for our RVs conditioned on $\theta$. Our new likelihood function when left censoring is present is:
 
 $$lik(\theta) = \prod_{i=1}^n f(x_i|\theta)^{\delta_{i}} \ \times F(x_i|\theta)^{1-{\delta_{i}}}$$
 
-in which $\delta_{i}$ is an indicator, representing whether or not if the $i$th observation is censored or not:
+\noindent where $\delta_{i}$ indicates whether or not the $i$th observation is censored:
 
 $$\delta_i =
 \begin{cases}
-  0, & \text{if censored} \\
-  1, & \text{if uncensored}
+  0 & \text{if censored} \\
+  1 & \text{if uncensored}
 \end{cases}$$
 
-From this updated definition of the likelihood function which must be used in the presence of left censored data, it is then possible to follow typical procedures to find the estimator, $\theta$, which maximizes the likelihood, also known as the _maximum likelihood estimator_. With this knowledge, the descriptive statistics of interest (mean, variance, etc.) relating to the specified distribution can be calculated.
+It is then possible to follow typical procedures to find the maximum likelihood estimates of the parameteres of interest (mean, variance, etc.) from our censored data.
 
-Canales (2018) outlines a imputation technique which involves replacing censored observations with values from the estimated parameterized distribution. However, is not mentioned explicitly how this imputation method is conducted. 
+@Yavuz2017 discusses the usage of ML estimation when missing data is present, and notes it is only appropriate for non-negative probability distributions such as the exponential, log-normal, and Weibull models. This is one limitation of ML estimation, it cannot be applied for data which do not fit a specified model -- and is very limited in scope.
 
+<!--
 The code for the MLE method will be handled with the `cenmle` function in the `NADA` package, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values. (remove and write own code??)
+-->
 
-As a technique which heavily relies upon knowing a distribution which best models the data, MLE is one of the most well-known parametric approaches to handling values below the LOD. Many studies use the MLE as a sort of baseline method of handling censored values, to which they compare their new techniques upon [@Ganser2010]. However, it must be known that regardless of the prevalence of the MLE method, it is not free from its own downfalls. Canales (2018) found that the MLE method seems to underperform when the data in question was highly skewed, in which overinflated mean squared errors were often obtained. Being a technique which is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results [@Bolks2014].
+ML estimation is one of the most well-known parametric approaches to handling left-censored data. Many studies use ML estimation as a baseline method of handling censored values, to which they compare their new techniques [@Ganser2010]. Despite its prevalence, ML estimation has its weaknesses. @Canales2018 found that the ML estimation seems to underperform when the data in question was highly skewed, producing overinflated mean squared errors. Additionally, because ML estimation is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results [@Bolks2014]. Regardless of these limitations, it is a definite staple in the field of parameter estimation with regards to censored data.
 
-<!-- * Useful slides to refer to here [https://www.eurachem.org/images/stories/workshops/2017_10_PT/pdf/contrib/O05-Mancin.pdf] -->
+[START HERE]
 
 ### Kaplan-Meier Method {#rkm}
 
