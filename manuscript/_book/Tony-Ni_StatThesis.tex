@@ -302,8 +302,8 @@ Use this space to thank those who have helped you in the thesis process (profess
 \pagenumbering{arabic}
 \pagestyle{fancyplain} % turns page numbering back on
 
-\hypertarget{introduction-intro}{%
-\chapter{Introduction \{intro\}}\label{introduction-intro}}
+\hypertarget{intro}{%
+\chapter{Introduction}\label{intro}}
 
 The concept of missing data is ubiquitous across academic disciplines and often complicates real-world studies. Most studies utilize data collected through surveys, questionnaires, and/or field research which is why missing data is often unavoidable. Missing data can hinder one's ability to work with and analyze the phenomena at hand, giving rise to inaccurate or even misleading analyses.
 
@@ -452,42 +452,38 @@ Yavuz, Tekindal, \& Dog (2017) discusses the usage of ML estimation when missing
 
 ML estimation is one of the most well-known parametric approaches to handling left-censored data. Many studies use ML estimation as a baseline method of handling censored values, to which they compare their new techniques (Ganser \& Hewett, 2010). Despite its prevalence, ML estimation has its weaknesses. Canales (2018) found that the ML estimation seems to underperform when the data in question was highly skewed, producing overinflated mean squared errors. Additionally, because ML estimation is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results (Bolks, DeWire, \& Harcum, 2014). Regardless of these limitations, it is a definite staple in the field of parameter estimation with regards to censored data.
 
-{[}START HERE{]}
-
 \hypertarget{rkm}{%
 \subsection{Kaplan-Meier Method}\label{rkm}}
 
-As a phenomenon, censoring is most often discussed in survival analysis, which concerns itself with techniques to analyze a time to an \emph{event variable}. As its name suggests, these variables measure the time which passes until some sort of event occurs. This can be as innocuous as the time until device breaks, time until birds migrate away from their homes, time until a person passes away, etc. Regardless of which, all these scenarios share a common problem in terms of the possibility of the data being ``censored.''
+As a phenomenon, censoring is most often discussed in survival analysis, which concerns itself with techniques to analyze a \emph{time to an event} variable. As its name suggests, these variables measure the time which passes until some event of interest occurs. This can be as innocuous as the time until a device breaks, time until birds migrate away from their homes, time until a person passes away, etc. In all cases, there is a possibility of the data being censored.
 
-The Kaplan-Meier (KM) method is a common nonparametric technique used to deal with censored data. Nonparametric methods do not utilize any information regarding the parameters for a specified distribution, like the mean and standard deviation for the normal distribution. The KM method was originally developed to handle right-censored survival analysis data. The advantages of the KM method lie in its robustness as a nonparametric method, it performs well without having to depend upon distributional assumptions. Many recommend its usage for when there are cases of severe censoring, instances where \textgreater{} 90\% of the data is censored (Canales, 2018).
+The Kaplan-Meier (KM) method is a common nonparametric technique used to deal with censored data. Nonparametric methods do not make assumptions about the underlying distribution of the data. The KM method was originally developed to handle right-censored survival analysis data (Hall, Perry, \& Anderson, 2020). The advantages of the KM method lies in its robustness as a nonparametric method -- it performs well without having to depend upon distributional assumptions. Many recommend its usage in cases of severe censoring, instances where more than 90\% of the data is censored (Canales, 2018).
 
-To introduce the concept of the KM-estimator, it is helpful to take a look into its usages in survival analysis studies where the focus is often on a type of data known as ``time to event'' data. These types of studies often involve events such time to death, time to failure, and so forth.
+The KM-estimator is a statistic used to estimate the survival curve from the data while accounting for censoring. It does this by assuming that censoring is independent from the event of interest and that survival probabilities remain the same in observations found early in the study and those recruited later in the study (Gillespie et al., 2010).
 
-The KM-estimator is a statistic used to estimate the survival curve from the empirical data while accounting for the possibilities of certain values being censored. It does this by assuming that censoring is independent from the event of interest and that survival probabilities remain the same in observations found early in the study and those recruited later in the study.
-
-The KM-estimator when performing an empirical estimation of the survival curve at time \(t\) can be represented by the following equation:
+The KM-estimator of the survival curve at time \(t\) is:
 
 \[\hat{S}(t) = \prod_{\ t_i \le \ t }\left(1-\frac{d_i}{n_i}\right)\]
-where \(t_i\) is the distinct event time, \(d_i\) is the number of event occurrences at time \(t_i\), and \(n_i\) is the number of followup times (\(t_i\)) that are \(\ge\) \(t_i\) (how many observations in sample survived at least/or past the time \(t_i\)) (Klein \& Moeschberge, 2003).
 
-Typically, the KM-estimator can only be used to estimate the distribution function of right-censored data, in which a data point is above a certain threshold, but it is unknown by how much. A simple tweak to the typical KM-method, allows for the estimation of the survival curve with left-censored values.
+where \(t_i\) is the distinct event time, \(d_i\) is the number of event occurrences at time \(t_i\), and \(n_i\) is the number of followup times (\(t_i\)) that are greater than or equal to \(t_i\) (how many observations in sample survived until at least time \(t_i\)) (Klein \& Moeschberge, 2003).
 
-Helsel (2005, as cited in Yavuz et al., 2017) provides a detailed explanation on how to apply the KM method when left censoring is present. Firstly, it is essential to reverse the left-censored data through a transformation algorithm before using the KM method to change them into right-censored data.
+Typically, the KM-estimator is used to estimate the distribution function of right-censored data. Helsel (2005, as cited in Yavuz et al., 2017) provided a simple modification of the KM-estimator to allow for the estimation of the survival curve with left-censored values. In his implementation, he ran the left-censored data through a transformation algorithm before using the KM method to change them into right-censored data.
 
-Let \(x_i\) \(\ldots\) \(x_n\) be the values for the observations \(i = 1, 2, ..., n\). Arrange all the left-censored values in descending order and then subtract them by \(M\), a constant bigger than the biggest value of the dataset, in order to get the transformed, right-censored value, \(M-x_i\). All values are then arranged in ascending order to be used to estimate the survival function through the Kaplan-Meier estimator.
+The transformation algorithm works as follows: First, all the left-censored values in the dataset are arranged in descending order of magnitude. Then these left-censored values are subtracted from \(M\), to get \(M-x_i\), the newly transformed, right-censored value (\(M\) is a constant bigger than the maximum value in the dataset). Finally, the non-censored values and the newly transformed values are then arranged in ascending order to be used to estimate the survival function through the Kaplan-Meier estimator.
 
-It must be known that the KM-method is not an imputation procedure, but instead an estimation technique that allows for the calculation of descriptive statistics for left-censored datasets. Nian (1997 gives the expressions to calculate the estimated mean, median, and variance below:
-
-NOTE TO SELF::: USE ``backslash'' displaystyle to do pretty bottom/above indexes
-
-\(\hat{\mu} = \int_{0}^{\infty} \hat{S}(t) \ dt\)
-\(\hat{M} = \hat{S}^{-1} \left (\frac{1}{2} \right)\)
-\(Var(\hat{\mu}) = \sum_{i=1}^{r} \left( \int_{t_i}^{\infty}\hat{S}(t) \ dt \right)^2 \frac{d_i}{n_i(n_i - d_i)}\)
-
+The KM-method is not an imputation procedure, but instead an estimation technique that allows for the calculation of descriptive statistics for left-censored datasets. She (1997) gives the expressions to calculate the estimated mean, median, and variance:
+\begin{table}[h]
+\begin{tabular}{ll}
+\textbf{Descriptive Statistic} & \textbf{Expression}                                                                                              \\
+Mean ($\hat{\mu}$)             & $\hat{\mu} = \displaystyle \int_{0}^{\infty} \hat{S}(t) \ dt$                                                    \\
+Median ($\hat{M}$)             & $\hat{M} = \displaystyle \hat{S}^{-1} \left (\frac{1}{2} \right)$                                                              \\
+Variance ($Var(\hat{\mu}$)     & $Var(\hat{\mu}) = \displaystyle \sum_{i=1}^{r} \left( \int_{t_i}^{\infty}\hat{S}(t) \ dt \right)^2 \frac{d_i}{n_i(n_i - d_i)}$
+\end{tabular}
+\end{table}
 \hypertarget{ROS}{%
 \subsection{Regression on Order Statistics}\label{ROS}}
 
-Lastly, regression on order statistics (ROS) combines both the parametric nature of the MLE approach and nonparametric nature of the KM method. ROS is a semi-parametric method which assumes an underlying normal or lognormal distribution for the censored measurements but makes no assumption towards the distribution of uncensored measurements.
+Lastly, regression on order statistics (ROS) combines both the parametric nature of the MLE approach and nonparametric nature of the KM method. ROS is a semi-parametric method which assumes an underlying lognormal distribution for the censored measurements but makes no assumption towards the distribution of uncensored measurements.
 
 (Environmental Protection Agency, 2009) provides a a more detailed explanation to the methodology of ROS, but the basic procedures will be outlined in this thesis.
 
@@ -2087,6 +2083,9 @@ Ganser, G. H., \& Hewett, P. (2010). {An Accurate Substitution Method for Analyz
 
 \leavevmode\hypertarget{ref-Gilbert1987}{}%
 Gilbert, R. O. (1987). \emph{{Statistical Methods for Environmental Pollution Monitoring}}. New York: Van Nostrand Reinhold Co.
+
+\leavevmode\hypertarget{ref-Gillespie2010}{}%
+Gillespie, B. W., Chen, Q., Reichert, H., Franzblau, A., Lepkowski, J., Adriaens, P., \ldots{} Garabrant, D. H. (2010). {Estimating Population Distributions When Some Data Are Below a Limit of Detection by Using a Reverse Kaplan-Meier Estimator}. \emph{Epidemiology}, \emph{21}. http://doi.org/\href{https://doi.org/10.1097/EDE.0b013e3181ce9fD8}{10.1097/EDE.0b013e3181ce9fD8}
 
 \leavevmode\hypertarget{ref-Gilliom1986}{}%
 Gilliom, R. J., \& Helsel, D. R. (1986). {Estimation of Distributional Parameters for Censored Trace Level Water Quality}. \emph{Water Resources Research}, \emph{22}(2), 135--146. http://doi.org/\href{https://doi.org/10.1029/WR022i002p00135}{10.1029/WR022i002p00135}

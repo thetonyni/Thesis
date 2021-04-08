@@ -2,7 +2,7 @@
 \contentsline {chapter}{Acknowledgments}{iii}{chapter*.2}%
 \contentsline {chapter}{List of Tables}{vii}{chapter*.3}%
 \contentsline {chapter}{List of Figures}{ix}{chapter*.4}%
-\contentsline {chapter}{Chapter 1: Introduction \{intro\}}{1}{chapter.1}%
+\contentsline {chapter}{Chapter 1: Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Censored Data}{2}{section.1.1}%
 \contentsline {subsection}{\numberline {1.1.1}Right Censoring}{2}{subsection.1.1.1}%
 \contentsline {subsection}{\numberline {1.1.2}Left Censoring}{4}{subsection.1.1.2}%
@@ -51,5 +51,5 @@
 \contentsline {subsection}{\numberline {B.1.6}Weibull}{59}{subsection.B.1.6}%
 \contentsline {section}{\numberline {B.2}Case Study}{61}{section.B.2}%
 \contentsline {subsection}{\numberline {B.2.1}Preliminary}{61}{subsection.B.2.1}%
-\contentsline {chapter}{Corrections}{73}{appendix*.19}%
-\contentsline {chapter}{References}{75}{appendix*.20}%
+\contentsline {chapter}{Corrections}{73}{appendix*.20}%
+\contentsline {chapter}{References}{75}{appendix*.21}%
