@@ -1,7 +1,7 @@
 ---
-title: 'My amazing  title'
+title: 'Parameter Estimation Methods with Left-Censored Missingness'
 author: 'Tony Ni'
-date: 'April DD, 20YY'
+date: 'April 28, 2021'
 institution: 'Amherst College'
 advisor: 'Brittney Bailey'
 # Change department to'Special Programs' if interdisciplinary thesis

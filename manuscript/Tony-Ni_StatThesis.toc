@@ -8,8 +8,8 @@
 \contentsline {subsection}{\numberline {1.1.2}Left Censoring}{4}{subsection.1.1.2}%
 \contentsline {subsection}{\numberline {1.1.3}Interval Censoring}{5}{subsection.1.1.3}%
 \contentsline {section}{\numberline {1.2}Challenges of Reporting Censored Data}{6}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Approaches}{8}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}Substitution Method}{8}{subsection.1.3.1}%
+\contentsline {section}{\numberline {1.3}Parameter Estimation for Left-Censored Data}{8}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Substitution Method}{9}{subsection.1.3.1}%
 \contentsline {subsection}{\numberline {1.3.2}Maximum Likelihood Estimation Method}{10}{subsection.1.3.2}%
 \contentsline {subsection}{\numberline {1.3.3}Kaplan-Meier Method}{13}{subsection.1.3.3}%
 \contentsline {subsection}{\numberline {1.3.4}Regression on Order Statistics}{15}{subsection.1.3.4}%

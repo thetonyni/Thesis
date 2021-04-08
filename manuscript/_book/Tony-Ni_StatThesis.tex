@@ -218,9 +218,9 @@ Use this space to thank those who have helped you in the thesis process (profess
   framerule = 1.5mm, rulecolor = \color{black!15}
   }
 
-\title{My amazing title}
+\title{Parameter Estimation Methods with Left-Censored Missingness}
 \author{Tony Ni}
-\date{April DD, 20YY}
+\date{April 28, 2021}
 \division{}
 \advisor{Brittney Bailey}
 % for second advisor
@@ -389,29 +389,35 @@ Berthouex (1993) discusses the prevalence in regards to the practice of censorin
 
 Further supporting the stance of keeping all concentration measurements rather than only those above the detection limit, Monte-Carlo experiments were conducted by Gllllom, Kirsch, Gilroy, \& Survey (1984) to investigate trend-detection for water-quality data. Trend detection is the practice of determining whether the values of a random variable generally increase or decrease over a period of time. They found a general relationship of decreasing trend detection percentages with increased censoring levels, attributing this to the limited availability of information in censored data.
 
-{[}START HERE{]}
-
 \hypertarget{Approaches}{%
-\section{Approaches}\label{Approaches}}
+\section{Parameter Estimation for Left-Censored Data}\label{Approaches}}
 
-It is important to note that the values below the LOD still contain information, specifically that the values is between the lower bound value (if it exists) and the LOD (Chen et al., 2011). As such, there are a variety of statistical treatments to handle censored data which have been popularized in the statistical literature which will be discussed within this section.
+It is important to note that the values below the LOD still contain information, specifically that the values is between the lower bound value (if it exists) and the LOD (Chen et al., 2011). As such, there are a variety of statistical treatments to handle censored data which have been popularized in the statistical literature.
 
-Omission involves the deletion of data points which are deemed to be invalid as a result of left-censoring or any other deficiencies in the data. This is also more commonly known as \emph{available-case analysis}, in which statistical analysis is conducted while only considering the observations which have no missing data on the variables of interest, and excluding the observations with missing values (May, 2012). May argues against this approach and claims that the loss of information from discarding data and the inflation of standard errors of estimates (when discussing missingness in a regression context) will invariably be inflated as a result of the decreased sample size. The advantages of omission lies in its ease of implementation.
+Before we discuss the techniques which have been popularized through literature and studies regarding parameter estimation with left-censored data, it important to discuss \emph{omission}, the deletion of data points which are deemed to be invalid as a result of left-censoring or any other deficiencies in the data. As a result of being simple to comprehend and implement, omission is a common technique used in lieu of specialized techniques designed to handle missing data.
 
-Apart from available-case analysis, over the past century, a myriad of methods to deal with censoring have been developed to counter this issue -- some more statistically sound than others. We will review some of the most common methods to estimate descriptive statistics involving censored data, which include: substitution, maximum likelihood estimation, Kaplan-Meier, and regression on order statistics (Lafleur et al., 2011).
+One type of omission is known as \emph{available-case analysis}, in which statistical analysis is conducted while only considering the observations which have no missing data on the variables of interest, and excluding the observations with missing values (May, 2012). May argues against this approach and claims that the loss of information from discarding data and the inflation of standard errors of estimates (when discussing missingness in a regression context) will invariably be inflated as a result of the decreased sample size.
+
+Over the past century, a myriad of methods to deal with censoring have been developed to counter this issue of discarding data with omission-based techniques -- some more statistically sound than others. We will review some of the more common methods to estimate descriptive statistics involving censored data, which include: substitution, maximum likelihood estimation, Kaplan-Meier, and regression on order statistics.
 
 \hypertarget{Substitution}{%
 \subsection{Substitution Method}\label{Substitution}}
 
-Often condemned in papers as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences as an appropriate and recommended method to work with left-censored chemical concentration data (Canales, 2018).
+(PREVALENCE)
 
-The substitution method simply involves imputing in a replacement value in lieu of the censored data point. The lack of a global, standardized replacement value to substitute is one of the most pronounced downside of this method. The replacement value used may differ between studies but common values include: \(\frac{LOD}{2}, \frac{LOD}{\sqrt2}\), or \(LOD\) (Lee \& Helsel, 2005). Different disciplines have their own suggested ``best'' replacement value to use, an example being \(\frac{3}{4}\) times the LOD being a common replacement value in geochemistry (Crovelli, 1993). However, it must be recognized that the substitution method is a statistically unsound technique which is often used in non-rigorous statistical settings due to them being quite easy to implement (Chen et al., 2011). As such, there have been several studies in order to investigate the effectiveness of the method.
+The first technique we will discuss is the substitution method, which involves imputing in a replacement value in lieu of the censored data point. As a method commonly condemned in papers as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences (Canales, 2018).
+
+(HOW IT'S USED)
+
+Substitution techniques are easy to understand and to implement, akin to the omission techniques we discussed previously. Observations for which measurements fall below the LOD are replaced with a replacement value, which is non-specific and can vary between studies. A non-exhaustive list of common replacement values include: \(\frac{LOD}{2}, \frac{LOD}{\sqrt2}\), and the \(LOD\) itself (Lee \& Helsel, 2005).
 
 Proponents of the substitution method claim that the replacement value \(\frac{LOD}{2}\) is useful for data sets in which the majority of the data are below the LOD or when the distribution of the data is highly skewed; the definition of ``highly skewed'' being any distribution with a geometric standard deviation (a measure of spread commonly used in tandem with log-normal distributions) of 3 or more (Hornung \& Reed, 1989). They also suggest using \(\frac{LOD}{\sqrt2}\) when there are only a few data points below the LOD or when the data is not highly skewed.
 
-Substitution methods are flawed as they can often introduce a ``signal'' which was not originally present within the data, or even obstruct an actual signal which was present in the original data (Lee \& Helsel, 2005). Numerous authors have advised against the usage of substitution methods for being statistically inappropriate to use. Glass and Gray (2001) found that both introduce large errors and biases in descriptive statistics of interest. Thompson and Nelson (2001) conducted a study in which they found similar results, in that it often led to biased parameter estimates and ``artificially small standard error estimates.'' Hewett and Ganser (2007) also found in their simulation study that the substitution method yielded the lowest average bias and root mean squared error values (comparison metrics to measure accuracy) in their estimation of the mean. Overall, the overall consensus seems to advise against the practice of these substitution techniques.
+Regardless of which replacement value is used, once a dataset is generated containing these replacement values, analysis continues as is, utilizing this new dataset.
 
-{[}paragraph talking about proponents of the substitution methods??{]}
+As mentioned previously, contention between whether this method is statistically sound or not remains to the present day. The lack of a global, standardized replacement value to substitute is one of the most pronounced downsides of this method. Different disciplines have their own suggested ``best'' replacement value to use, an example being \(\frac{3}{4}\) times the LOD being a common replacement value in geochemistry (Crovelli, 1993). Due to the lack of standardization, many regard substitution techniques as a non-rigorous, statistically unsound method for handling left-censored data (Chen et al., 2011).
+
+Lee \& Helsel (2005) also provides a critique on substitution methods and claim that they can often introduce a ``signal'' which was not originally present within the data, or even obstruct an actual signal which was originally present in the data -- leading to misleading and/or inaccurate results. Supporting Lee \& Helsel (2005)'s claim, Glass and Gray (2001) found the substitution method to introduce large errors and biases when calculating descriptive statistics of interest with left-censored data. Thompson and Nelson (2001) conducted a study in which they found similar results, in that it often led to biased parameter estimates and ``artificially small standard error estimates.'' Hewett and Ganser (2007) also found in their simulation study that the substitution method yielded the lowest average bias and root mean squared error values (comparison metrics to measure accuracy) in their estimation of the mean. Overall, the overall consensus seems to advise against the practice of these substitution techniques.
 
 \hypertarget{MLE}{%
 \subsection{Maximum Likelihood Estimation Method}\label{MLE}}
@@ -2114,9 +2120,6 @@ Klein, J. P., \& Moeschberge, M. L. (2003). \emph{{SURVIVAL ANALYSIS: Techniques
 
 \leavevmode\hypertarget{ref-Kroll1996}{}%
 Kroll, C. N., \& Stedinger, J. R. (1996). {Estimation of moments and quantiles using censored data}. \emph{Water Resources Research}, \emph{32}(4), 1005--1012. http://doi.org/\href{https://doi.org/10.1029/95WR03294}{10.1029/95WR03294}
-
-\leavevmode\hypertarget{ref-Lafleur2011}{}%
-Lafleur, B., Lee, W., Billhiemer, D., Lockhart, C., Liu, J., \& Merchant, N. (2011). {Statistical methods for assays with limits of detection: Serum bile acid as a differentiator between patients with normal colons, adenomas, and colorectal cancer}. \emph{Journal of Carcinogenesis}, \emph{10}, 1--8. http://doi.org/\href{https://doi.org/10.4103/1477-3163.79681}{10.4103/1477-3163.79681}
 
 \leavevmode\hypertarget{ref-Lee2005}{}%
 Lee, L., \& Helsel, D. (2005). {Statistical analysis of water-quality data containing multiple detection limits : S-language software for regression on order statistics {\$}}, \emph{31}, 1241--1248. http://doi.org/\href{https://doi.org/10.1016/j.cageo.2005.03.012}{10.1016/j.cageo.2005.03.012}
