@@ -390,7 +390,7 @@ Berthouex (1993) discusses the prevalence in regards to the practice of censorin
 Further supporting the stance of keeping all concentration measurements rather than only those above the detection limit, Monte-Carlo experiments were conducted by Gllllom, Kirsch, Gilroy, \& Survey (1984) to investigate trend-detection for water-quality data. Trend detection is the practice of determining whether the values of a random variable generally increase or decrease over a period of time. They found a general relationship of decreasing trend detection percentages with increased censoring levels, attributing this to the limited availability of information in censored data.
 
 \hypertarget{Approaches}{%
-\section{Parameter Estimation for Left-Censored Data}\label{Approaches}}
+\section{Parameter Estimation Techniques for Left-Censored Data}\label{Approaches}}
 
 It is important to note that the values below the LOD still contain information, specifically that the values is between the lower bound value (if it exists) and the LOD (Chen et al., 2011). As such, there are a variety of statistical treatments to handle censored data which have been popularized in the statistical literature.
 
@@ -403,11 +403,7 @@ Over the past century, a myriad of methods to deal with censoring have been deve
 \hypertarget{Substitution}{%
 \subsection{Substitution Method}\label{Substitution}}
 
-(PREVALENCE)
-
 The first technique we will discuss is the substitution method, which involves imputing in a replacement value in lieu of the censored data point. As a method commonly condemned in papers as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences (Canales, 2018).
-
-(HOW IT'S USED)
 
 Substitution techniques are easy to understand and to implement, akin to the omission techniques we discussed previously. Observations for which measurements fall below the LOD are replaced with a replacement value, which is non-specific and can vary between studies. A non-exhaustive list of common replacement values include: \(\frac{LOD}{2}, \frac{LOD}{\sqrt2}\), and the \(LOD\) itself (Lee \& Helsel, 2005).
 
@@ -483,17 +479,80 @@ Variance ($Var(\hat{\mu}$)     & $Var(\hat{\mu}) = \displaystyle \sum_{i=1}^{r} 
 \hypertarget{ROS}{%
 \subsection{Regression on Order Statistics}\label{ROS}}
 
-Lastly, regression on order statistics (ROS) combines both the parametric nature of the MLE approach and nonparametric nature of the KM method. ROS is a semi-parametric method which assumes an underlying lognormal distribution for the censored measurements but makes no assumption towards the distribution of uncensored measurements.
+Lastly, regression on order statistics (ROS) combines both the parametric nature of the MLE approach and nonparametric nature of the KM method. ROS is a semi-parametric method which assumes an underlying distribution (usually lognormal) for the censored measurements but makes no assumption towards the distribution of uncensored measurements.
 
-(Environmental Protection Agency, 2009) provides a a more detailed explanation to the methodology of ROS, but the basic procedures will be outlined in this thesis.
+Environmental Protection Agency (2009) provides a a more detailed explanation to the methodology of ROS, but the basic procedures will be outlined in this thesis.
 
-ROS begins with the estimation of the cumulative probability associated with each distinct LOD. This cumulative probability is distributed equally between the censored values with a common LOD (see (Environmental Protection Agency, 2009), for more details). A regression model is fit between the uncensored values and the distributional quantiles. The slope and intercept of the regression line from this model is then used to estimate the mean and standard deviation of the distributional model which are then used to generate imputed values for the censored observations.
+A brief explanation as to how ROS works is as follows. ROS begins with the estimation of the cumulative probability associated with each distinct LOD. This cumulative probability is distributed equally between the censored values with a common LOD. Once the censored values are ranked, a linear regression model is fit between the uncensored values and the distributional z-scores from the censored probability plot. The parameters of the regression model (slope and intercept of the regression line) is then used to estimate the mean and standard deviation of the distributional model which are then used to generate imputed values for the censored observations.
 
-In order for ROS to be utilized, there needs to be at least 5 known values and more than half the values within the censored variables must be known. As regression is utilized in this method, the response variable must also be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance (Lee \& Helsel, 2005).
+Delving into the mathematics behind this procedure, we need to first define several variables.
 
-The \texttt{NADA} package contains the function \texttt{ros} which provides an implementation of regression on order statistics which allows us to calculate descriptive statistics for left censored values.
+We define \(k\) be the number of distinct LOD values in the data, \(A_i\) as the number of uncensored values between the \(i\)th and \((i+1)\)th LOD for \(i=1\) to \(k-1\), and \(A_k\) as the number of uncensored values above the highest LOD, \(A_0\) as the number of uncensored values below the lowest LOD.
 
-{[}INSERT PARAGRAPH TO TRANSITION TO CHAPTER 3 (?){]}
+We also define \(B_i\) as the total number of observations (both uncensored and censored) with values below the \(i\)th LOD and \(B_0 = 0\).
+
+We can then write the number of uncensored values below the \(i\)th LOD (\(C_i\)) as:
+
+\[\textrm{Eq. 1.1:} \ \  C_i = B_i - B_{i-1}-A_{i-1}\]
+
+for \(i = 1\) to \(k\).
+
+We can also calculate what is known as the \emph{exceedance probability} (\(pe_{i}\)) for each of our \(k\) LOD values, which represents the proportion of the data greater than or equal to each distinct LOD:
+
+\[\textrm{Eq. 1.2:} \ \  pe_i = pe_{i+1} + \frac{A_i}{A_i+B_i}(1 - pe_{i+1})\]
+where \(pe_i\) is the proportion of the data which exceeds the \(i\)th LOD.
+
+Once we obtain exceedance probabilities for each of our distinct LOD values, we compute the plotting positions, aka. the cumulative probabilities, for each of our uncensored values between the \(i\)th and \((i+1)\)th LOD values with the following equation:
+
+\[\textrm{Eq. 1.3:} \ \  pu_{ij} = (1-pe_i)+(\frac{j}{A_i+1})*(pe_i-pe_{i+1})\]
+
+for \(j = 1\) to \(A_i\) and for \(i = 0\) to \(k\).
+
+We also similarly compute the plotting positions for our censored values with:
+
+\[\textrm{Eq. 1.4:} \ \  pc_{ij} = (\frac{j}{C_i+1})*(1-pe_i)\]
+
+for \(j = 1\) to \(C_i\) and for \(i = 1\) to \(k\).
+
+Having defined the relevant variables and equations, we can detail a step-by-step algorithmic procedure on how the ROS method works.
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Given a dataset with \(n\) observations, identify and sort the \(k\) distinct LOD values.
+\item
+  Compute \(A_0\), \(A_k\), \(A_i\)'s for \(i=1\) to \(k-1\), and \(B_i\) for \(i=1\) to \(k\).
+\item
+  Use Eq. 1.1 to compute \(C_i\) for \(i=1\) to \(k\).
+\item
+  Let \(pe_0 = 1\) and \(pe_{k+1} = 0\). Use Eq. 1.2 to compute \(pe_i\) for \(i=1\) to \(k\).
+\item
+  Sort all \(pe_i\) from \(i=1\) to \(k\). Use Eq. 1.3 to compute \(pu_{ij}\).
+\item
+  Compute normal quantiles (z-scores) by computing \(z_{ij}^{d} = \Phi^{-1}(pd_{ij})\), where \(\Phi^{-1}\) is the inverse standard normal CDF.
+\item
+  Construct censored probability plots using the z-scores from step 6.
+\item
+  Plot \(z_{ij}^{d}\) against a transformation, \(f(\cdot)\), (ex: log, square root, inverse, etc.) of the uncensored values \(x_{ij}^{d}\).
+\item
+  Compute correlation coefficient between the \(z_{ij}^{d}\) and \(f(x_{ij}^{d})\) pairs. The transformation which yields the highest correlation coefficient is the one which most optimizes the left-censored values.
+\item
+  Compute a linear regression of the transformed values, \(f(x_{ij}^{d})\) against the z-scores, \(z_{ij}^{d}\).
+\item
+  Use Eq. 1.4 to compute \(pc_{ij}\) and repeat steps 6 through 8, to obtain z-scores for the censored values.
+\item
+  Obtain the transformed imputed values using the slope and intercept from the regression model in step 10 and the censored z-scores from step 11 using the following expression:
+\end{enumerate}
+\[f(\hat{x}_{ij}^c) = {Intercept} \ + Slope \ * z_{ij}^{c}\]
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{12}
+\tightlist
+\item
+  Combine the transformed imputed values for the censored values with the transformed uncensored values to obtain estimates for the population mean and standard deviation as normal.
+\end{enumerate}
+There are of course, also limitations to the ROS method. In order for ROS to be utilized, there needs to be at least 5 known values and more than half the values within the censored variables must be known. As regression is utilized in this method, the response variable must also be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance (Lee \& Helsel, 2005).
+
+We have now covered
 
 \hypertarget{simulations}{%
 \chapter{Simulations}\label{simulations}}

@@ -8,7 +8,7 @@
 \BOOKMARK [2][-]{subsection.1.1.2}{Left Censoring}{section.1.1}% 8
 \BOOKMARK [2][-]{subsection.1.1.3}{Interval Censoring}{section.1.1}% 9
 \BOOKMARK [1][-]{section.1.2}{Challenges of Reporting Censored Data}{chapter.1}% 10
-\BOOKMARK [1][-]{section.1.3}{Parameter Estimation for Left-Censored Data}{chapter.1}% 11
+\BOOKMARK [1][-]{section.1.3}{Parameter Estimation Techniques for Left-Censored Data}{chapter.1}% 11
 \BOOKMARK [2][-]{subsection.1.3.1}{Substitution Method}{section.1.3}% 12
 \BOOKMARK [2][-]{subsection.1.3.2}{Maximum Likelihood Estimation}{section.1.3}% 13
 \BOOKMARK [2][-]{subsection.1.3.3}{Kaplan-Meier Method}{section.1.3}% 14

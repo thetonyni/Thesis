@@ -8,48 +8,48 @@
 \contentsline {subsection}{\numberline {1.1.2}Left Censoring}{4}{subsection.1.1.2}%
 \contentsline {subsection}{\numberline {1.1.3}Interval Censoring}{5}{subsection.1.1.3}%
 \contentsline {section}{\numberline {1.2}Challenges of Reporting Censored Data}{6}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Parameter Estimation for Left-Censored Data}{8}{section.1.3}%
+\contentsline {section}{\numberline {1.3}Parameter Estimation Techniques for Left-Censored Data}{8}{section.1.3}%
 \contentsline {subsection}{\numberline {1.3.1}Substitution Method}{9}{subsection.1.3.1}%
 \contentsline {subsection}{\numberline {1.3.2}Maximum Likelihood Estimation}{10}{subsection.1.3.2}%
 \contentsline {subsection}{\numberline {1.3.3}Kaplan-Meier Method}{12}{subsection.1.3.3}%
 \contentsline {subsection}{\numberline {1.3.4}Regression on Order Statistics}{14}{subsection.1.3.4}%
-\contentsline {chapter}{Chapter 2: Simulations}{17}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Aims}{17}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Data-Generating Mechanisms}{19}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Estimands}{20}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Performance Measures}{20}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Variance}{20}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Bias}{21}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Mean Squared Error (MSE)}{22}{subsection.2.4.3}%
-\contentsline {section}{\numberline {2.5}Results}{23}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Discussion}{27}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}Limitations}{29}{subsection.2.6.1}%
-\contentsline {section}{\numberline {2.7}Study on Real Data}{29}{section.2.7}%
-\contentsline {chapter}{Chapter 3: Case Study}{31}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Background}{31}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Data}{34}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Coal Ash Rule}{34}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Source of Data}{34}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Variables}{35}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Plan of Action}{36}{subsection.3.2.4}%
-\contentsline {section}{\numberline {3.3}Application}{38}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Background (tentative title)}{38}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Kelderman's Top 10 Sites}{39}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}(Our) Top Ten Most Contaminated Sites}{42}{subsection.3.3.3}%
-\contentsline {chapter}{Chapter 4: Conclusion}{47}{chapter.4}%
-\contentsline {chapter}{Appendix A: Main Appendix}{49}{appendix.A}%
-\contentsline {section}{\numberline {A.1}In the main file \ref {ref-labels}:}{49}{section.A.1}%
-\contentsline {section}{\numberline {A.2}In Chapter \ref {ref-labels}:}{49}{section.A.2}%
-\contentsline {section}{\numberline {A.3}In Chapter 3:}{49}{section.A.3}%
-\contentsline {chapter}{Appendix B: Simulation and Case Study Appendix}{51}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Simulation Study}{51}{section.B.1}%
-\contentsline {subsection}{\numberline {B.1.1}Libraries}{51}{subsection.B.1.1}%
-\contentsline {subsection}{\numberline {B.1.2}Generating Data}{51}{subsection.B.1.2}%
-\contentsline {subsection}{\numberline {B.1.3}Setup}{53}{subsection.B.1.3}%
-\contentsline {subsection}{\numberline {B.1.4}Lognormal}{54}{subsection.B.1.4}%
-\contentsline {subsection}{\numberline {B.1.5}Exponential}{56}{subsection.B.1.5}%
-\contentsline {subsection}{\numberline {B.1.6}Weibull}{59}{subsection.B.1.6}%
-\contentsline {section}{\numberline {B.2}Case Study}{61}{section.B.2}%
-\contentsline {subsection}{\numberline {B.2.1}Preliminary}{61}{subsection.B.2.1}%
-\contentsline {chapter}{Corrections}{73}{appendix*.20}%
-\contentsline {chapter}{References}{75}{appendix*.21}%
+\contentsline {chapter}{Chapter 2: Simulations}{19}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Aims}{19}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Data-Generating Mechanisms}{21}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Estimands}{22}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Performance Measures}{22}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Variance}{22}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Bias}{23}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Mean Squared Error (MSE)}{24}{subsection.2.4.3}%
+\contentsline {section}{\numberline {2.5}Results}{25}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Discussion}{29}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Limitations}{31}{subsection.2.6.1}%
+\contentsline {section}{\numberline {2.7}Study on Real Data}{31}{section.2.7}%
+\contentsline {chapter}{Chapter 3: Case Study}{33}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Background}{33}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Data}{36}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Coal Ash Rule}{36}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Source of Data}{36}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Variables}{37}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Plan of Action}{38}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}Application}{40}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Background (tentative title)}{40}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Kelderman's Top 10 Sites}{41}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}(Our) Top Ten Most Contaminated Sites}{44}{subsection.3.3.3}%
+\contentsline {chapter}{Chapter 4: Conclusion}{49}{chapter.4}%
+\contentsline {chapter}{Appendix A: Main Appendix}{51}{appendix.A}%
+\contentsline {section}{\numberline {A.1}In the main file \ref {ref-labels}:}{51}{section.A.1}%
+\contentsline {section}{\numberline {A.2}In Chapter \ref {ref-labels}:}{51}{section.A.2}%
+\contentsline {section}{\numberline {A.3}In Chapter 3:}{51}{section.A.3}%
+\contentsline {chapter}{Appendix B: Simulation and Case Study Appendix}{53}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Simulation Study}{53}{section.B.1}%
+\contentsline {subsection}{\numberline {B.1.1}Libraries}{53}{subsection.B.1.1}%
+\contentsline {subsection}{\numberline {B.1.2}Generating Data}{53}{subsection.B.1.2}%
+\contentsline {subsection}{\numberline {B.1.3}Setup}{55}{subsection.B.1.3}%
+\contentsline {subsection}{\numberline {B.1.4}Lognormal}{56}{subsection.B.1.4}%
+\contentsline {subsection}{\numberline {B.1.5}Exponential}{58}{subsection.B.1.5}%
+\contentsline {subsection}{\numberline {B.1.6}Weibull}{61}{subsection.B.1.6}%
+\contentsline {section}{\numberline {B.2}Case Study}{63}{section.B.2}%
+\contentsline {subsection}{\numberline {B.2.1}Preliminary}{63}{subsection.B.2.1}%
+\contentsline {chapter}{Corrections}{75}{appendix*.20}%
+\contentsline {chapter}{References}{77}{appendix*.21}%

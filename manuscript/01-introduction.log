@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  8 APR 2021 12:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  9 APR 2021 10:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -583,50 +583,19 @@ File: figures/interval_censoring_example_fix.png Graphic file (type png)
 Package pdftex.def Info: figures/interval_censoring_example_fix.png  used on in
 put line 180.
 (pdftex.def)             Requested size: 469.76889pt x 151.18999pt.
-[3 <./figures/interval_censoring_example_fix.png>] [4] [5] [6]
-
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 493.
-
-[7]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 5
-31.
-(c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [8] (./01-introduction.aux)
-Package rerunfilecheck Info: File `01-introduction.out' has not changed.
-(rerunfilecheck)             Checksum: 66DCF1613A895BD9467359CB3D5B5F43;1939.
- ) 
+[3 <./figures/interval_censoring_example_fix.png>] [4] [5] [6] [7]
+! Display math should end with $$.
+<to be read again> 
+                   e
+l.526 $e
+         = mc^2$ 
 Here is how much of TeX's memory you used:
- 12394 strings out of 481466
- 185035 string characters out of 5920170
- 508093 words of memory out of 5000000
- 28789 multiletter control sequences out of 15000+600000
- 580112 words of font info for 103 fonts, out of 8000000 for 9000
+ 12350 strings out of 481466
+ 184273 string characters out of 5920170
+ 508105 words of memory out of 5000000
+ 28749 multiletter control sequences out of 15000+600000
+ 579959 words of font info for 104 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  66i,12n,72p,520b,405s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.e
-nc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
-hit.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/l
-m-mathex.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips
-/lm/lm-mathsy.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/
-dvips/lm/lm-rm.enc}<c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
-e1/public/lm/lmbx10.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/font
-s/type1/public/lm/lmbx12.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist
-/fonts/type1/public/lm/lmex10.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf
--dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/
-texmf-dist/fonts/type1/public/lm/lmmi5.pfb><c:/Users/theto/AppData/Roaming/Tiny
-TeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb><c:/Users/theto/AppData/Roaming/
-TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/theto/AppData/Roam
-ing/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/theto/AppData/R
-oaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/theto/AppD
-ata/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/theto
-/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/t
-heto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on 01-introduction.pdf (8 pages, 218285 bytes).
-PDF statistics:
- 177 PDF objects out of 1000 (max. 8388607)
- 150 compressed objects within 2 object streams
- 41 named destinations out of 1000 (max. 500000)
- 8296 words of extra memory for PDF output out of 10000 (max. 10000000)
 
+!  ==> Fatal error occurred, no output PDF file produced!
