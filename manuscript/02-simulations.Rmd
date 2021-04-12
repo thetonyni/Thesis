@@ -6,33 +6,37 @@ output:
 
 # Simulations {#simulations}
 
-Having discussed the various methods to handle left-censored data in the previous chapter, we now turn to a simulation study in order to evaluate the strengths and weaknesses of each method in cases of differing censoring rate, sample size, and distribution. We will also discuss the implementation of the methods, data generating mechanisms, and specific evaluation metrics to assess the performance of each method.
+Having discussed four common methods to handle left-censored data in the previous chapter, we now turn to a simulation study in order to evaluate the strengths and weaknesses of each method after varying the censoring rate, sample size, and the underlying distribution of the data. 
 
-## Aims {#aims}
-
-The question of which method is the best to use is frequently discussed topic within the field. Many studies have been conducted over the years to evaluate the performance of these methods to handle left-censored data, with the results being widely varied and largely inconclusive. First and foremost, a large issue comes in that every conducted study widely differs in the methods being investigated and the scope of the study. As an example of the broad differences between studies which can make comparisons difficult, [@Antweiler2015] evaluates the effectiveness of 11 different methods with several censoring rates and distributional assumptions, using the median absolute deviation (MAD) as their performance metric of choice. Meanwhile, [@Hall2020] focuses instead on the applications of such methods from a water-quality focused context and investigates the performance of the four methods used in this thesis while disregarding distributional assumptions and censoring rates. 
-
-As each of these studies are concerned with their own goals -- specifics of their study will inevitably be different. Studies that are more focused on a general, broad audience, with no assumptions as to what sort of data the individual is working with -- may find more use with the conclusion and results that investigators like Antweiler come up with. There may also be individuals who are more focused on the performance of such methods in a specific context, as in the study conducted by Hall. There is no common ground between statisticians on the optimality of methods, prompting our own foray into this topic. I wish to incorporate the detailed specifications of a simulation study, in essence, taking into consideration distributional parameters of the data-generating mechanism, censoring rates, and sample sizes for each run, while also keeping it applicable to our case-study specific data.
-
-With our simulation study, we wish to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. Several investigators in this field have found issues with certain methods underperforming under certain conditions, and brings up the possibility of particular methods being more equipped than others to deal with different rates of censoring. To provide an example of an instance when investigators have found a certain method to perform better than others, we can take a look at @Canales2018's study on methods to handle left-censored microbial risk assessment. They found that the substitution method seemed to work much better than expected while other methods, such as the MLE method, seemed to have trouble when applied to highly skewed data. Meanwhile @Antweiler2015's report suggest that regardless of the method or sample size, obtaining reliable estimates from datasets where censoring was greater than 40% was unfeasible.
-
-Claims regarding the effectiveness of methods with regards to censoring rates, distribution of data, and sample size are all highly contentious. In order to get a better idea of sense of how these claims hold up, our goal is to evaluate the validity of those claims by conducting a simulation study of our own to put these methods into practice. We expect the results of our simulation study to largely depend on how we specify our data generating mechanism, which will be discussed shortly.
+We will also discuss the implementation of the methods, data generating mechanisms, and specific evaluation metrics to assess the performance of each method.
 
 ## Data-Generating Mechanisms {#data_generating_mechanisms}
 
-The data generated for use in our study will be obtained by using parametric draws from user-specified distributions (log-normal, exponential, and Weibull), as the methods utilized can only be used with non-negative distributions [@Yavuz2017]. Our data-generating mechanism also alters criterion such as the sample size, $n_{obs} = \{10, 100, 1000\}$ and censoring rate, $R = \{0.10, 0.30, 0.50\}$. In the following sections, we will often interchangeably use "small, medium, large" and "low, medium, and high" to differentiate between the different values for sample size and censoring rate, respectively. For example, "small sample size" is equivalent to $n_{obs} = 10$ and "high censoring rate" is equivalent to $R = {0.50}$.
+To reflect the typical distributions of left-censored data, we generated data for use in our simulation study with parametric draws from the log-normal, exponential, and Weibull distribution. We also adjusted sample sizes, $n = \{10, 100, 1000\}$ and censoring rate, $R = \{0.10, 0.30, 0.50\}$. The sample sizes are chosen as such to reflect realistic sizes for water quality datasets, which we plan to investigate in the following chapter, with a case-study on coal ash contamination in water wells. Regarding the values we chose for $R$, if we recall from the previous chapter, the ROS method is unable to be implemented when more than half the data is censored, which is why we chose our censoring rates as such. 
 
-We begin by generating draws from a specified distribution of size $n_obs$, and then determine our censored values by arranging the uncensored observations in ascending order, and then setting those in the lowest $100R \ \%$ to be censored. If the censoring rate were to be $R = 0.10$, the lowest 10% of the observations will be marked as censored while the rest remain uncensored.
+In the following sections of this chapter, we will interchangeably use "small, medium, large" and "low, medium, and high" to differentiate between the different values for sample size and censoring rate, respectively. For example, "small sample size" is equivalent to $n = 10$ and "high censoring rate" is equivalent to $R = {0.50}$.
+
+To artificially induce censoring in our simulated data, we arranged the uncensored observations in ascending order and set those in the lowest $100R \%$ to be censored, and the remaining observations as uncensored. As an example, if the censoring rate was $R = 0.10$, the lowest 10% of the observations would be marked as censored while the rest remained uncensored.
 
 \newpage
 
 ## Estimands {#estimands}
 
-Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data [@Shoari2018]. In our simulation study, we will be using the sample mean as an estimator for our estimand, the population mean, $\mu$.
+Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data [@Shoari2018]. Our goal is to estimate the mean of the censored variable of interest. We will be utilizing the four methods we discussed previously to achieve this.
+
+## Implementation in R {#implementation}
+
+All our code will be written using R. For our substitution method, we begin by defining the LOD as the minimum, uncensored value for the variable of interest. We will choose LOD/2 our replacement value. As such, we will replace all censored values in our dataset with LOD/2, and calculate our estimated mean using this newly defined dataset.
+
+For the remaining three methods (KM, MLE, and ROS), we will be using specialized functions from the `NADA` (Nondetects and Data Analysis) package. The code for the MLE method will be handled with the `cenmle` function in the `NADA` package, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values.
+
+We use the `cenfit` function to implement KM. This function "computes an estimate of an empirical cumulative distribution function (ECDF) for censored data using the Kaplan-Meier method," from which we can then obtain summary statistics of interest. Similarly, the `ros` method implements ROS and outputs a dataframe, from which we can then use to also compute our summary statistics of interest.
+
+<!--
 
 ## Performance Measures {#performance_measures}
 
-@Morris2019 define performance measures as numeric metrics used to assess the performance of the method in question. The criterion we will use to assess the performance of each of our four methods will consist of: bias, variance, and mean squared error (MSE).
+The criterion we will use to assess the performance of each of our four methods will consist of: bias, variance, and mean squared error (MSE).
 
 ### Variance
 
@@ -78,6 +82,8 @@ The $E^2(\hat{\mu})$ terms cancel out, and we are left with:
 $$E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta = E[(\hat{\mu} -\mu)^2] = Bias$$
 
 As the MSE is always positive, MSE values closer to zero are more desirable -- as it is an indicator that the estimator is accurate.
+
+-->
 
 ## Results {#results}
 
@@ -506,15 +512,29 @@ df.w <- df.tall %>%
   ungroup()
 ```
 
-The results of our simulation study are presented in the following tables below.
-
-```{r, echo = FALSE}
+```{r, echo = FALSE, message = FALSE, cache = TRUE}
 ln.table <- df.ln %>%
   select(-"prop_cens") %>%
   select(c(2, 1, 3:6)) %>%
   rename(" " = "method", "Sample Size" = "samplesize", 
          "Avg. Mean" = "Avg_Mean")
 
+exp.table <- df.exp %>%
+  select(-"prop_cens") %>%
+  select(c(2, 1, 3:6)) %>%
+  rename(" " = "method", "Sample Size" = "samplesize", 
+         "Avg. Mean" = "Avg_Mean")
+
+w.table <- df.w %>%
+  select(-"prop_cens") %>%
+  select(c(2, 1, 3:6)) %>%
+  rename(" " = "method", "Sample Size" = "samplesize", 
+         "Avg. Mean" = "Avg_Mean")
+```
+
+The results of our simulation study are presented in Tables \@ref(tab:lntable), \@ref(tab:exptable), and \@ref(tab:wtable).
+
+```{r, lntable, echo = FALSE}
 knitr::kable(ln.table, caption = "Performance metrics of our our 
              4 methods with data derived from the log-normal 
              distribution with mean = 1 and SD = 0.5.", 
@@ -525,13 +545,7 @@ knitr::kable(ln.table, caption = "Performance metrics of our our
   pack_rows("Censoring Rate = 0.5", 25, 36, latex_gap_space = "1em")
 ```
 
-```{r, echo = FALSE}
-exp.table <- df.exp %>%
-  select(-"prop_cens") %>%
-  select(c(2, 1, 3:6)) %>%
-  rename(" " = "method", "Sample Size" = "samplesize", 
-         "Avg. Mean" = "Avg_Mean")
-
+```{r, exptable, echo = FALSE}
 knitr::kable(exp.table, caption = "Performance metrics of our our 3 
              methods (MLE method absent) with data derived from the 
              exponential distribution with a shape parameter = 1.", 
@@ -542,13 +556,7 @@ knitr::kable(exp.table, caption = "Performance metrics of our our 3
   pack_rows("Censoring Rate = 0.5", 25, 36, latex_gap_space = "1em")
 ```
 
-```{r, echo = FALSE}
-w.table <- df.w %>%
-  select(-"prop_cens") %>%
-  select(c(2, 1, 3:6)) %>%
-  rename(" " = "method", "Sample Size" = "samplesize", 
-         "Avg. Mean" = "Avg_Mean")
-
+```{r, wtable, echo = FALSE}
 knitr::kable(w.table, caption = "Performance metrics of our our 3 methods 
              (MLE method absent) with data derived from the Weibull 
              distribution with a shape parameter = 1 and 
@@ -587,7 +595,3 @@ There are of course also studies which offer differing results from the ones we 
 ### Limitations {#limitations}
 
 Shortcomings in the results presented in this study may come from the fact that we generated data with known distributional parameters. It could be the case that the effectiveness of our methods were only due to having such artificial data. Alterations in our study to instead generate data from methods such as randomized pulls from an a real-world dataset of interest via. methods such as bootstrapping could provide different insights. As we discussed previously with the results from @She1997, methods may perform differently when utilized with artificial datasets as compared to real world, left censored data. We do not claim our findings in the simulation study to be representative for all cases of left censored data.
-
-## Study on Real Data {#real_data}
-
-[can write this section after some preliminary exploration with coal groundwater data]

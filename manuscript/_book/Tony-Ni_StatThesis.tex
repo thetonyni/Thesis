@@ -552,98 +552,55 @@ Having defined the relevant variables and equations, we can detail a step-by-ste
 \end{enumerate}
 There are of course, also limitations to the ROS method. In order for ROS to be utilized, there needs to be at least 5 known values and more than half the values within the censored variables must be known. As regression is utilized in this method, the response variable must also be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance (Lee \& Helsel, 2005).
 
-We have now covered
+We have now covered the techniques that are commonly used to handle left-censored data. These methods can be classified as either imputation-based techniques, in the case of substitution and ROS, or parameter-estimation techniques, in the case of MLE and KM. How then, can we compare the effectiveness of each of these methods?
+
+Several studies have already been conducted over the years to evaluate the performance of different methods for handling left-censored data, with the results being widely varied and largely inconclusive. However, each study varies wildly in the methods being investigated and the scope of the study -- some leaning more towards seeking theoretical conclusions while others focus on applications to real-world data, such as water-quality data. For example, Antweiler (2015) evaluates the effectiveness of 11 different methods with several censoring rates and distributional assumptions, using the median absolute deviation as their performance metric of choice. Meanwhile, Hall, Perry, \& Anderson (2020) investigated the performance of the four methods used in this thesis while disregarding distributional assumptions and censoring rates, using a water-quality dataset.
+
+As each of these studies are concerned with their own goals -- specifics of their study will inevitably be different. Studies that are more focused on a general, broad audience, with no assumptions as to what sort of data the individual is working with -- may find more use with the conclusion and results that investigators like Antweiler come up with. There may also be individuals who are more focused on the performance of such methods in a specific context, as in the study conducted by Hall. There is no common ground between statisticians on the optimality of methods, prompting our own foray into this topic. I wish to incorporate the detailed specifications of a simulation study, in essence, taking into consideration distributional parameters of the data-generating mechanism, censoring rates, and sample sizes for each run, while also keeping it applicable to our case-study specific data.
+
+Regarding the simulation study that we will conduct in the following chapter, we wish to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. Several investigators in this field have found issues with certain methods underperforming under certain conditions, and brings up the possibility of particular methods being more equipped than others to deal with different rates of censoring. To provide an example of an instance when investigators have found a certain method to perform better than others, we can take a look at Canales (2018)'s study on methods to handle left-censored microbial risk assessment. They found that the substitution method seemed to work much better than expected while other methods, such as the MLE method, seemed to have trouble when applied to highly skewed data. Meanwhile Antweiler (2015)'s report suggest that regardless of the method or sample size, obtaining reliable estimates from datasets where censoring was greater than 40\% was unfeasible.
+
+Claims regarding the effectiveness of methods with regards to censoring rates, distribution of data, and sample size are all highly contentious. In order to get a better idea of sense of how these claims hold up, our goal is to evaluate the validity of those claims by conducting a simulation study of our own to put these methods into practice, comparing and contrasting the effectiveness of our four techniques with regards to censoring rate and sample size.
 
 \hypertarget{simulations}{%
 \chapter{Simulations}\label{simulations}}
 
-Having discussed the various methods to handle left-censored data in the previous chapter, we now turn to a simulation study in order to evaluate the strengths and weaknesses of each method in cases of differing censoring rate, sample size, and distribution. We will also discuss the implementation of the methods, data generating mechanisms, and specific evaluation metrics to assess the performance of each method.
+Having discussed four common methods to handle left-censored data in the previous chapter, we now turn to a simulation study in order to evaluate the strengths and weaknesses of each method after varying the censoring rate, sample size, and the underlying distribution of the data.
 
-\hypertarget{aims}{%
-\section{Aims}\label{aims}}
-
-The question of which method is the best to use is frequently discussed topic within the field. Many studies have been conducted over the years to evaluate the performance of these methods to handle left-censored data, with the results being widely varied and largely inconclusive. First and foremost, a large issue comes in that every conducted study widely differs in the methods being investigated and the scope of the study. As an example of the broad differences between studies which can make comparisons difficult, (Antweiler, 2015) evaluates the effectiveness of 11 different methods with several censoring rates and distributional assumptions, using the median absolute deviation (MAD) as their performance metric of choice. Meanwhile, (Hall, Perry, \& Anderson, 2020) focuses instead on the applications of such methods from a water-quality focused context and investigates the performance of the four methods used in this thesis while disregarding distributional assumptions and censoring rates.
-
-As each of these studies are concerned with their own goals -- specifics of their study will inevitably be different. Studies that are more focused on a general, broad audience, with no assumptions as to what sort of data the individual is working with -- may find more use with the conclusion and results that investigators like Antweiler come up with. There may also be individuals who are more focused on the performance of such methods in a specific context, as in the study conducted by Hall. There is no common ground between statisticians on the optimality of methods, prompting our own foray into this topic. I wish to incorporate the detailed specifications of a simulation study, in essence, taking into consideration distributional parameters of the data-generating mechanism, censoring rates, and sample sizes for each run, while also keeping it applicable to our case-study specific data.
-
-With our simulation study, we wish to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. Several investigators in this field have found issues with certain methods underperforming under certain conditions, and brings up the possibility of particular methods being more equipped than others to deal with different rates of censoring. To provide an example of an instance when investigators have found a certain method to perform better than others, we can take a look at Canales (2018)'s study on methods to handle left-censored microbial risk assessment. They found that the substitution method seemed to work much better than expected while other methods, such as the MLE method, seemed to have trouble when applied to highly skewed data. Meanwhile Antweiler (2015)'s report suggest that regardless of the method or sample size, obtaining reliable estimates from datasets where censoring was greater than 40\% was unfeasible.
-
-Claims regarding the effectiveness of methods with regards to censoring rates, distribution of data, and sample size are all highly contentious. In order to get a better idea of sense of how these claims hold up, our goal is to evaluate the validity of those claims by conducting a simulation study of our own to put these methods into practice. We expect the results of our simulation study to largely depend on how we specify our data generating mechanism, which will be discussed shortly.
+We will also discuss the implementation of the methods, data generating mechanisms, and specific evaluation metrics to assess the performance of each method.
 
 \hypertarget{data_generating_mechanisms}{%
 \section{Data-Generating Mechanisms}\label{data_generating_mechanisms}}
 
-The data generated for use in our study will be obtained by using parametric draws from user-specified distributions (log-normal, exponential, and Weibull), as the methods utilized can only be used with non-negative distributions (Yavuz, Tekindal, \& Dog, 2017). Our data-generating mechanism also alters criterion such as the sample size, \(n_{obs} = \{10, 100, 1000\}\) and censoring rate, \(R = \{0.10, 0.30, 0.50\}\). In the following sections, we will often interchangeably use ``small, medium, large'' and ``low, medium, and high'' to differentiate between the different values for sample size and censoring rate, respectively. For example, ``small sample size'' is equivalent to \(n_{obs} = 10\) and ``high censoring rate'' is equivalent to \(R = {0.50}\).
+To reflect the typical distributions of left-censored data, we generated data for use in our simulation study with parametric draws from the log-normal, exponential, and Weibull distribution. We also adjusted sample sizes, \(n = \{10, 100, 1000\}\) and censoring rate, \(R = \{0.10, 0.30, 0.50\}\). The sample sizes are chosen as such to reflect realistic sizes for water quality datasets, which we plan to investigate in the following chapter, with a case-study on coal ash contamination in water wells. Regarding the values we chose for \(R\), if we recall from the previous chapter, the ROS method is unable to be implemented when more than half the data is censored, which is why we chose our censoring rates as such.
 
-We begin by generating draws from a specified distribution of size \(n_obs\), and then determine our censored values by arranging the uncensored observations in ascending order, and then setting those in the lowest \(100R \ \%\) to be censored. If the censoring rate were to be \(R = 0.10\), the lowest 10\% of the observations will be marked as censored while the rest remain uncensored.
+In the following sections of this chapter, we will interchangeably use ``small, medium, large'' and ``low, medium, and high'' to differentiate between the different values for sample size and censoring rate, respectively. For example, ``small sample size'' is equivalent to \(n = 10\) and ``high censoring rate'' is equivalent to \(R = {0.50}\).
+
+To artificially induce censoring in our simulated data, we arranged the uncensored observations in ascending order and set those in the lowest \(100R \%\) to be censored, and the remaining observations as uncensored. As an example, if the censoring rate was \(R = 0.10\), the lowest 10\% of the observations would be marked as censored while the rest remained uncensored.
 
 \newpage
 
 \hypertarget{estimands}{%
 \section{Estimands}\label{estimands}}
 
-Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data (Shoari, 2018). In our simulation study, we will be using the sample mean as an estimator for our estimand, the population mean, \(\mu\).
+Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data (Shoari, 2018). Our goal is to estimate the mean of the censored variable of interest. We will be utilizing the four methods we discussed previously to achieve this.
 
-\hypertarget{performance_measures}{%
-\section{Performance Measures}\label{performance_measures}}
+\hypertarget{implementation}{%
+\section{Implementation in R}\label{implementation}}
 
-Morris, White, \& Crowther (2019) define performance measures as numeric metrics used to assess the performance of the method in question. The criterion we will use to assess the performance of each of our four methods will consist of: bias, variance, and mean squared error (MSE).
+All our code will be written using R. For our substitution method, we begin by defining the LOD as the minimum, uncensored value for the variable of interest. We will choose LOD/2 our replacement value. As such, we will replace all censored values in our dataset with LOD/2, and calculate our estimated mean using this newly defined dataset.
 
-\hypertarget{variance}{%
-\subsection{Variance}\label{variance}}
+For the remaining three methods (KM, MLE, and ROS), we will be using specialized functions from the \texttt{NADA} (Nondetects and Data Analysis) package. The code for the MLE method will be handled with the \texttt{cenmle} function in the \texttt{NADA} package, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values.
 
-Prior to defining variance, we must discuss the concept of \emph{precision}. Precision simply refers to how far away estimates from different samples are from one another. Low precision indicates that the estimates from each sample are far from one another in value, while high precision indicates the opposite. Knowing this, \emph{variance} is a metric which informs us on the precision of an estimator. It is defined as the average squared deviation of the estimator from its average:
-
-\[Variance = E[(\hat{\mu}-E(\hat{\mu}))^2]\]
-
-Estimators with low variances generally remain close in value throughout all samples, while those with high variance may wildly differ between samples. It is generally preferable to have an estimator with low variance. Precision measurements, such as the variance, are not a sole indicator of an estimator's performance (Walther \& Moore, 2005). While useful for assessing how close values are to one another, it is just as important to obtain the estimator's \(bias\), a measure of how close the obtained estimate is to the true value.
-
-\hypertarget{bias}{%
-\subsection{Bias}\label{bias}}
-
-The next performance metric which we will use is bias, which is defined as the difference between an estimator's expected value and the true value of the parameter. In our case, we are using the estimator \(\hat{\mu}\) to estimate the true population mean, \(\mu\), in each of our samples. The formal definition of bias is as follows:
-
-\[Bias = E(\hat{\mu}) - \mu\]
-
-Bias informs us on the difference of the estimator from the true parameter. A natural question to ask is often whether if an estimator is any ``good.'' One possible measures of this idea ``good,'' naturally comes in the idea of an unbiased estimator. If the bias of an estimator were to be equal to zero, we would define the estimator to be \emph{unbiased}, meaning that the estimator produces parameter estimates which are on average, equal to the true value.
-
-An estimator being unbiased does not necessarily equate to it being ideal. An unbiased estimator could have high variance, which would mean that the estimator in each sample would be significantly different from one another, but on average -- they equal the true population estimand.
-
-On the opposite hand, it would also not be very useful if an estimator had low variance but high bias. This would mean that each sample would consistently produce similar estimates which are very far from the true population estimand.
-
-\hypertarget{mean-squared-error-mse}{%
-\subsection{Mean Squared Error (MSE)}\label{mean-squared-error-mse}}
-
-Evidently we do not want our estimator to be too biased nor too variant. This conflict is known as the \emph{bias-variance tradeoff}, a dilemma in which we can never simultaneously minimize the bias and variance of our estimator.
-
-While we generally would like estimators which have low bias and low variance, it can be difficult to achieve both at once. As such, it is common to instead turn to a quantity known as the \emph{mean squared error} (MSE), which is a quantitative measurement used to assess the accuracy of an estimator. The MSE measures how far away, on average, an estimator is from its true value and makes use of both bias and variance in its calculations. The formal definition of MSE is:
-
-\[MSE = E[(\hat{\mu} -\mu)^2] = Var(\hat{\mu})+[Bias(\hat{\mu})]^2\]
-
-We can show that the MSE of estimator can be rewritten in terms of its variance and bias:
-
-\[E[(\hat{\mu} -\mu)^2] = E(\hat{\mu}^2) + \mu^2 - 2E(\hat{\mu})\mu\]
-From \(Bias = E(\hat{\mu}) - \mu\), it follows that:
-
-\[Bias^2 = E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta\]
-
-From \(Variance = E[(\hat{\mu}-E(\hat{\mu}))^2] = E(\hat{\mu}^2) - E^2(\hat{\mu})\), we can combine the square of the bias with variance, which yields:
-
-\[Bias^2 + Var = [E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta] + [E(\hat{\mu}^2) - E^2(\hat{\mu})]\]
-
-The \(E^2(\hat{\mu})\) terms cancel out, and we are left with:
-
-\[E^2(\hat{\mu}) +\mu^2 -2E(\hat{\mu})\theta = E[(\hat{\mu} -\mu)^2] = Bias\]
-
-As the MSE is always positive, MSE values closer to zero are more desirable -- as it is an indicator that the estimator is accurate.
+We use the \texttt{cenfit} function to implement KM. This function ``computes an estimate of an empirical cumulative distribution function (ECDF) for censored data using the Kaplan-Meier method,'' from which we can then obtain summary statistics of interest. Similarly, the \texttt{ros} method implements ROS and outputs a dataframe, from which we can then use to also compute our summary statistics of interest.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-The results of our simulation study are presented in the following tables below.
+The results of our simulation study are presented in Tables \ref{tab:lntable}, \ref{tab:exptable}, and \ref{tab:wtable}.
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-1}Performance metrics of our our 
+\caption{\label{tab:lntable}Performance metrics of our our 
              4 methods with data derived from the log-normal 
              distribution with mean = 1 and SD = 0.5.}
 \centering
@@ -699,7 +656,7 @@ The results of our simulation study are presented in the following tables below.
 \end{table}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-2}Performance metrics of our our 3 
+\caption{\label{tab:exptable}Performance metrics of our our 3 
              methods (MLE method absent) with data derived from the 
              exponential distribution with a shape parameter = 1.}
 \centering
@@ -755,7 +712,7 @@ The results of our simulation study are presented in the following tables below.
 \end{table}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-3}Performance metrics of our our 3 methods 
+\caption{\label{tab:wtable}Performance metrics of our our 3 methods 
              (MLE method absent) with data derived from the Weibull 
              distribution with a shape parameter = 1 and 
              scale parameter = 1.}
@@ -839,11 +796,6 @@ She (1997) conducted a study investigating censored water quality data with the 
 \subsection{Limitations}\label{limitations}}
 
 Shortcomings in the results presented in this study may come from the fact that we generated data with known distributional parameters. It could be the case that the effectiveness of our methods were only due to having such artificial data. Alterations in our study to instead generate data from methods such as randomized pulls from an a real-world dataset of interest via. methods such as bootstrapping could provide different insights. As we discussed previously with the results from She (1997), methods may perform differently when utilized with artificial datasets as compared to real world, left censored data. We do not claim our findings in the simulation study to be representative for all cases of left censored data.
-
-\hypertarget{real_data}{%
-\section{Study on Real Data}\label{real_data}}
-
-{[}can write this section after some preliminary exploration with coal groundwater data{]}
 
 \hypertarget{casestudy}{%
 \chapter{Case Study}\label{casestudy}}
@@ -2173,9 +2125,6 @@ Lee, L., \& Helsel, D. (2005). {Statistical analysis of water-quality data conta
 \leavevmode\hypertarget{ref-May2012}{}%
 May, R. C. (2012). {Estimation Methods for Data Subject to Detection Limits}, 82.
 
-\leavevmode\hypertarget{ref-Morris2019}{}%
-Morris, T. P., White, I. R., \& Crowther, M. J. (2019). {Using simulation studies to evaluate statistical methods}. \emph{Statistics in Medicine}, \emph{38}(11), 2074--2102. http://doi.org/\href{https://doi.org/10.1002/sim.8086}{10.1002/sim.8086}
-
 \leavevmode\hypertarget{ref-Ruhl2010}{}%
 Ruhl, L., Vengosh, A., Dwyer, G., Hsu-Kim, H., \& Deonarine, A. (2010). {Environmental Impacts of the Coal Ash Spill in Kingston , Tennessee: An 18-Month Survey}, \emph{44}(24), 9272--9278.
 
@@ -2187,9 +2136,6 @@ She, N. (1997). {ANALYZING CENSORED WATER QUALITY DATA USING A NON-PARAMETRIC AP
 
 \leavevmode\hypertarget{ref-Shoari2018}{}%
 Shoari, N. (2018). {Toward Improved Analysis of Concentration Data : Embracing Nondetects}, \emph{37}(3), 643--656. http://doi.org/\href{https://doi.org/10.1002/etc.4046}{10.1002/etc.4046}
-
-\leavevmode\hypertarget{ref-Walther2005}{}%
-Walther, B. A., \& Moore, J. L. (2005). {The concepts of bias , precision and accuracy , and their use in testing the performance of species richness estimators , with a literature review of estimator performance}, \emph{6}(July).
 
 \leavevmode\hypertarget{ref-Yavuz2017}{}%
 Yavuz, Y., Tekindal, M. A., \& Dog, B. (2017). {Evaluating Left-Censored Data Through Substitution , Parametric , Semi-parametric , and Nonparametric Methods : A Simulation Study}, 153--172. http://doi.org/\href{https://doi.org/10.1007/s12539-015-0132-9}{10.1007/s12539-015-0132-9}

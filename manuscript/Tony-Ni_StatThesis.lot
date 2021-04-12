@@ -1,14 +1,14 @@
 \addvspace {5\p@ }
 \addvspace {5\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Performance metrics of our our 4 methods with data derived from the log-normal distribution with mean = 1 and SD = 0.5.\relax }}{26}{table.caption.10}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces Performance metrics of our our 3 methods (MLE method absent) with data derived from the exponential distribution with a shape parameter = 1.\relax }}{27}{table.caption.11}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces Performance metrics of our our 3 methods (MLE method absent) with data derived from the Weibull distribution with a shape parameter = 1 and scale parameter = 1.\relax }}{28}{table.caption.12}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Performance metrics of our our 4 methods with data derived from the log-normal distribution with mean = 1 and SD = 0.5.\relax }}{25}{table.caption.10}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Performance metrics of our our 3 methods (MLE method absent) with data derived from the exponential distribution with a shape parameter = 1.\relax }}{26}{table.caption.11}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Performance metrics of our our 3 methods (MLE method absent) with data derived from the Weibull distribution with a shape parameter = 1 and scale parameter = 1.\relax }}{27}{table.caption.12}%
 \addvspace {5\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Data dictionary for the coal dataset.\relax }}{39}{table.caption.14}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Health-based thresholds set by EPA.\relax }}{42}{table.caption.16}%
-\contentsline {table}{\numberline {3.3}{\ignorespaces Top 10 most contaminated sites for our baseline (control) implementation.\relax }}{44}{table.caption.17}%
-\contentsline {table}{\numberline {3.4}{\ignorespaces Top 10 most contaminated sites for our substitution method implementation.\relax }}{45}{table.caption.18}%
-\contentsline {table}{\numberline {3.5}{\ignorespaces Top 10 most contaminated sites for our KM method implementation.\relax }}{45}{table.caption.19}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Data dictionary for the coal dataset.\relax }}{37}{table.caption.14}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Health-based thresholds set by EPA.\relax }}{40}{table.caption.16}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Top 10 most contaminated sites for our baseline (control) implementation.\relax }}{42}{table.caption.17}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Top 10 most contaminated sites for our substitution method implementation.\relax }}{43}{table.caption.18}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Top 10 most contaminated sites for our KM method implementation.\relax }}{43}{table.caption.19}%
 \addvspace {5\p@ }
 \addvspace {5\p@ }
 \addvspace {5\p@ }
