@@ -136,15 +136,8 @@
 %%%%%%%%
 
 \Abstract{
-The abstract should be a short summary of your thesis work. A paragraph is usually sufficient here.
-
-Missing data is ubiquitious in statistics: from nonresponse in survey studies to issues with data collection in field studies, it is
-often unavoidable to encounter missing data in practice. Our thesis begins with an overview of missingness, specifically with
-left-censored data, and introduces four different methods: substitution, maxmimum likelihood, kaplan-meier, and regression on order
-statistics to combat this. We explore a simulation study to compare and contrast the effectiveness of these methods when considering
-for the distribution of the data, censoring rates, and the size of the dataset in order to validate several claims made in several
-papers regarding these methods. Finally, we explore left-censored data in the form of coal ash contamination in groundwater wells,
-and apply our findings to this case study. Our results from our simulation study show that BLAH.
+Missing data is ubiquitious in statistics: from nonresponse in survey studies to issues with data collection in field studies, it is often unavoidable to encounter missing data in practice. Our thesis begins with an overview of missingness, specifically with
+left-censored data, and introduces four common methods: substitution, maxmimum likelihood, kaplan-meier, and regression on order statistics, which are commonly used to handle left-censored missingness. We follow this discussion by performing a simulation study, designed to compare and contrast the effectiveness of these methods, while taking into account the distribution of the simulated data, censoring rates, and the size of the dataset. Finally, we explore left-censored data in a case-study focusing on coal ash contamination in groundwater wells and use our four methods to obtain mean estimates of contaminant concentrations to identify the top ten most contaminated wells across the U.S.
 }
 
 \Acknowledgments{
@@ -275,15 +268,8 @@ Use this space to thank those who have helped you in the thesis process (profess
 %\pagestyle{fancy} % this removes page numbers from the frontmatter
 
   \begin{abstract}
-    The abstract should be a short summary of your thesis work. A paragraph is usually sufficient here.
-
-    Missing data is ubiquitious in statistics: from nonresponse in survey studies to issues with data collection in field studies, it is
-    often unavoidable to encounter missing data in practice. Our thesis begins with an overview of missingness, specifically with
-    left-censored data, and introduces four different methods: substitution, maxmimum likelihood, kaplan-meier, and regression on order
-    statistics to combat this. We explore a simulation study to compare and contrast the effectiveness of these methods when considering
-    for the distribution of the data, censoring rates, and the size of the dataset in order to validate several claims made in several
-    papers regarding these methods. Finally, we explore left-censored data in the form of coal ash contamination in groundwater wells,
-    and apply our findings to this case study. Our results from our simulation study show that BLAH.
+    Missing data is ubiquitious in statistics: from nonresponse in survey studies to issues with data collection in field studies, it is often unavoidable to encounter missing data in practice. Our thesis begins with an overview of missingness, specifically with
+    left-censored data, and introduces four common methods: substitution, maxmimum likelihood, kaplan-meier, and regression on order statistics, which are commonly used to handle left-censored missingness. We follow this discussion by performing a simulation study, designed to compare and contrast the effectiveness of these methods, while taking into account the distribution of the simulated data, censoring rates, and the size of the dataset. Finally, we explore left-censored data in a case-study focusing on coal ash contamination in groundwater wells and use our four methods to obtain mean estimates of contaminant concentrations to identify the top ten most contaminated wells across the U.S.
   \end{abstract}
   \begin{acknowledgments}
     Use this space to thank those who have helped you in the thesis process (professors, staff, friends, family, etc.). If you had special funding to conduct your thesis work, that should be acknowledged here as well.
@@ -565,9 +551,7 @@ Claims regarding the effectiveness of methods with regards to censoring rates, d
 \hypertarget{simulations}{%
 \chapter{Simulations}\label{simulations}}
 
-Having discussed four common methods to handle left-censored data in the previous chapter, we now turn to a simulation study in order to evaluate the strengths and weaknesses of each method after varying the censoring rate, sample size, and the underlying distribution of the data.
-
-We will also discuss the implementation of the methods, data generating mechanisms, and specific evaluation metrics to assess the performance of each method.
+Having discussed four common methods to handle left-censored data in the previous chapter, we now turn to a simulation study in order to evaluate the strengths and weaknesses of each method after varying the censoring rate, sample size, and the underlying distribution of the data. We will also discuss the implementation of the methods, data generating mechanisms for the simulation study, and our findings.
 
 \hypertarget{data_generating_mechanisms}{%
 \section{Data-Generating Mechanisms}\label{data_generating_mechanisms}}
@@ -578,21 +562,22 @@ In the following sections of this chapter, we will interchangeably use ``small, 
 
 To artificially induce censoring in our simulated data, we arranged the uncensored observations in ascending order and set those in the lowest \(100R \%\) to be censored, and the remaining observations as uncensored. As an example, if the censoring rate was \(R = 0.10\), the lowest 10\% of the observations would be marked as censored while the rest remained uncensored.
 
-\newpage
-
 \hypertarget{estimands}{%
 \section{Estimands}\label{estimands}}
 
-Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data (Shoari, 2018). Our goal is to estimate the mean of the censored variable of interest. We will be utilizing the four methods we discussed previously to achieve this.
+Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data (Shoari, 2018). In preparation for our case study in the following chapter, we will be utilizing the four methods to estimate the mean of the censored variable of interest in our simulation study.
 
 \hypertarget{implementation}{%
 \section{Implementation in R}\label{implementation}}
 
-All our code will be written using R. For our substitution method, we begin by defining the LOD as the minimum, uncensored value for the variable of interest. We will choose LOD/2 our replacement value. As such, we will replace all censored values in our dataset with LOD/2, and calculate our estimated mean using this newly defined dataset.
+All our code will be written using R. For our substitution method, we begin by defining the LOD as the minimum, uncensored value for the variable of interest. We will choose LOD/2 as our replacement value, calculating our estimated mean using this newly defined dataset.
 
-For the remaining three methods (KM, MLE, and ROS), we will be using specialized functions from the \texttt{NADA} (Nondetects and Data Analysis) package. The code for the MLE method will be handled with the \texttt{cenmle} function in the \texttt{NADA} package, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values.
+For the remaining three methods (KM, MLE, and ROS), we will be using specialized functions from the \texttt{NADA} package. The code for the MLE method will be handled with the \texttt{cenmle} function in the \texttt{NADA} package, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values. The \texttt{cenfit} function allows us to implement KM. This function ``computes an estimate of an empirical cumulative distribution function (ECDF) for censored data using the Kaplan-Meier method,'' from which we can then obtain summary statistics of interest. Similarly, the \texttt{ros} method implements ROS and outputs a dataframe, from which we can then use to also compute our summary statistics of interest.
 
-We use the \texttt{cenfit} function to implement KM. This function ``computes an estimate of an empirical cumulative distribution function (ECDF) for censored data using the Kaplan-Meier method,'' from which we can then obtain summary statistics of interest. Similarly, the \texttt{ros} method implements ROS and outputs a dataframe, from which we can then use to also compute our summary statistics of interest.
+\hypertarget{performance_measures}{%
+\section{Performance Measures}\label{performance_measures}}
+
+The criterions we will use to assess the performance of each of our four methods will consist of: bias, variance, and mean squared error (MSE), which measure the difference between our mean estimate and the true mean, precision, and accuracy -- respectively.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -767,28 +752,34 @@ The results of our simulation study are presented in Tables \ref{tab:lntable}, \
 \bottomrule
 \end{tabular}
 \end{table}
-From the results of our simulation study, we can see that with the data generated from the log-normal distribution, in the case of low censoring (0.10), when dealing with sample sizes of 10 and 100, the methods are largely comparable to one another. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significant worse than KM. MLE and ROS perform rather equally well in all sample sizes for low-censoring.
+\hypertarget{log-normalsimstudy}{%
+\subsection{Log-normal}\label{log-normalsimstudy}}
+
+Table \ref{tab:lntable} shows our simulation results for the log-normal distribution. In the case of low censoring (0.10), when dealing with sample sizes of 10 and 100, the methods are largely comparable to one another. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significantly worse than KM, while MLE and ROS perform rather equally well in all sample sizes for low-censoring.
 
 When considering medium censoring (0.30), much of the same observations still hold true. Substitution performs the worse, followed by KM. MLE and ROS both perform well. However, ROS has a slight edge over MLE, especially as sample sizes increase, attaining lower MSE values than the latter.
 
-All four methods begin to perform worse when the censoring rate is increased to 0.5, which is to be expected. As more and more missingness is introduced within the dataset, it becomes more difficult to obtain accurate estimates for all methods. Once again, substitution and KM attain high absolute bias and MSE values. However, it is now KM which performs worse than substitution in the setting of high censoring. Similarly to before, albeit being more noticeable now, ROS performs better than MLE with all sample sizes.
+In the case of the log-normally distributed data, all four methods begin to perform worse when the censoring rate is increased to 0.5, which is to be expected. As more and more missingness is introduced within the dataset, it becomes more difficult to obtain accurate estimates for all methods. Once again, substitution and KM attain high absolute bias and MSE values. However, it is now KM which performs worse than substitution in the setting of high censoring. Similarly to before, albeit being more noticeable now, ROS performs better than MLE with all sample sizes.
 
-We can see with the exponential and Weibull cases, all three methods perform equally well in the case of low (0.10) censoring with all sample sizes, obtaining similar bias and MSE values across all sample sizes for both the exponential and Weibull datasets. KM consistently performs the worst with with medium (0.30) and high (0.50) censoring when compared to the other methods across all sample sizes. In these censoring settings, it is also the case that ROS performs the best with substitution not far behind.
+\hypertarget{exponentialweibullsimstudy}{%
+\subsection{Exponential and Weibull}\label{exponentialweibullsimstudy}}
 
-In summary, regardless of distributional assumptions all of the methods perform well when censoring is low, with very minute differences in performance metrics. KM does not perform well in the lognormal distribution with high censoring rates and struggles in the exponential and Weibull cases with medium and high censoring rates. While MLE was only used in the case of the lognormal data, it also performs quite well, although not quite as well as ROS. ROS performed the best in the case of medium and high censoring across all 3 distributions.
+The results of the simulation study for the exponential and Weibull-distributed data can be viewed in Tables \ref{tab:exptable} and \ref{tab:wtable}. We can see for these distribution, all three methods perform equally well in the case of low (0.10) censoring with all sample sizes, obtaining similar bias and MSE values across all sample sizes for both the exponential and Weibull datasets. KM consistently performs the worst with with medium (0.30) and high (0.50) censoring when compared to the other methods across all sample sizes. In these censoring settings, it is also the case that ROS performs the best with substitution not far behind.
+
+In summary, regardless of distributional assumptions all of the methods perform well when censoring is low, with very minute differences in performance metrics. KM does not perform well with log-normally distributed data with high censoring rates and struggles in the exponential and Weibull cases with medium and high censoring rates. While MLE was only used in the case of the log-normal data, it performs quite well, although not quite as well as ROS. ROS performed the best in the case of medium and high censoring across all 3 distributions.
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
 It important to note that while there are a large number of papers which discuss the ideal method or strategy to handle left-censored data,these studies have a large number of differences in censoring rates, distribution used, methods used, and other aspects of design setups which make comparisons regarding the results obtained from the studies quite difficult. As such, descriptions of specifics regarding the study design in the following studies will be omitted as necessary.
 
-Several results from our simulation studies agree with previous findings conducted from other investigators in the field. Gilliom \& Helsel (1986) claims that with the lognormal distribution, the ROS method was superior. This claim is furthered with our own results: we find that the ROS method is rather robust, even with censoring and produces an accurate and precise estimate of the mean in all cases in our simulation study.
+Several results from our simulation studies agree with previous findings conducted from other investigators in the field. Gilliom \& Helsel (1986) claims that with the log-normal distribution, the ROS method was superior. This claim is furthered with our own results: we find that the ROS method is rather robust, even with censoring and produces an accurate and precise estimate of the mean in all cases in our simulation study.
 
-Another investigation by Kroll \& Stedinger (1996) found that with regards to a lognormal distribution only, ROS and MLE worked extremely well, with MLE outperforming the other methods especially in highly censored cases. While the MLE method did perform rather well in most cases in our simulation study, it did not outperform the ROS method, which in fact obtained much better estimates of the mean in highly censored settings.
+Another investigation by Kroll \& Stedinger (1996) found that with regards to a log-normal distribution only, ROS and MLE worked extremely well, with MLE outperforming the other methods especially in highly censored cases. While the MLE method did perform rather well in most cases in our simulation study, it did not outperform the ROS method, which in fact obtained much better estimates of the mean in highly censored settings.
 
 There are of course also studies which offer differing results from the ones we obtained in our simulation study.
 
-Schmoyer, Beauchamp, Brandt, \& Hoffman (1996) compared only MLE and KM and found that the KM method performed nearly as well as the MLE in the case of the lognormal distribution. However, this was not the case in our simulation study. While the KM and MLE methods were able to perform adequately in the case of low (0.1) and medium (0.3) censoring, they performed the worst out of all four methods when dealing with highly censored cases. The censoring rates used in their study consisted of 25\%, 50\%, and 70\% -- which far exceeded the censoring values used in this thesis.
+Schmoyer, Beauchamp, Brandt, \& Hoffman (1996) compared only MLE and KM and found that the KM method performed nearly as well as the MLE in the case of the log-normal distribution. However, this was not the case in our simulation study. While the KM and MLE methods were able to perform adequately in the case of low (0.1) and medium (0.3) censoring, they performed the worst out of all four methods when dealing with highly censored cases. The censoring rates used in their study consisted of 25\%, 50\%, and 70\% -- which far exceeded the censoring values used in this thesis.
 
 She (1997) conducted a study investigating censored water quality data with the intent of investigating how well the KM method performs with regards to the same methods we utilize in this thesis. The results from She's study showed that KM outperformed all other methods, which contradicts the findings in the simulation study conducted in this thesis. Upon further investigation, the size of the dataset utilized by She consisted of 56 observations from water monitoring stations, in which around 11 were censored (20\% of the dataset). While the KM method is not ideal for highly censored cases from the results of our simulation study, it certainly is able to be used for smaller sample sizes -- which is further supported with She's findings. There may be a difference in how well the methods perform with actual data as compared to simulated data -- which we will investigate in the next chapter.
 
@@ -903,9 +894,6 @@ The goal of our case study is to employ the techniques we introduced back in cha
 
 \hypertarget{application}{%
 \section{Application}\label{application}}
-
-\hypertarget{background-tentative-title}{%
-\subsection{Background (tentative title)}\label{background-tentative-title}}
 
 As we can see from Figure \ref{fig:usmap}, out of the 265 sites in our dataset, most are concentrated heavily in the mid-western and southern areas of the United States. The report written by Kelderman et al. (2019) pointed out that 91\% of these sites (242 sites, to be precise) had groundwater wells with contaminants at an unsafe level determined by the health-based threshold put out by the EPA.
 \begin{figure}
@@ -1095,19 +1083,23 @@ The ROS method was absent for a similar reason, but with the limitations more-so
 
 The top ten sites obtained using our substitution implementation are the same sites as the ones obtained from our baseline implementation, with the same ordering but slight differences in the composite scores. With our KM method, the Ghent Generating Station replaces the Sebree Generating Station as one of the top ten most contaminated sites, with some slight differences in the ordering of the sites in the latter half of the list.
 
-It is not a surprise that our left-censoring mean estimation techniques did not provide much of a different result than what we obtained with our baseline implementation. Left-censoring techniques are not as useful with this case-study, where we are focused on finding the extremities of the dataset, i.e.~wells with the highest concentration of contaminants. If the research question was instead, identifying wells that were potentially contaminated, the distinction between the results obtained by these methods would be more visible. Kelderman et al. (2019)'s implementation of the substitution method as a way to account for left-censoring is justifiable due to its ease of implementation and the results we just discussed, regarding the lack of differences in top ten sites when comparing all three implementations we used.
+It is not a surprise that our left-censoring mean estimation techniques did not provide much of a different result than what we obtained with our baseline implementation. Left-censoring techniques are not as useful with this case-study, where we are focused on finding the extremities of the dataset, i.e.~wells with the highest concentration of contaminants. If the research question was instead, identifying wells that were potentially contaminated, the distinction between the results obtained by these methods would be more visible. Kelderman et al. (2019)'s implementation of the substitution method as a way to account for left-censoring is justifiable due to its ease of implementation and the results we just discussed. We do not observe any significant differences in the top ten sites when comparing all three implementations we used.
 
 \hypertarget{conclusion}{%
 \chapter{Conclusion}\label{conclusion}}
 
-{[}write a few paragraphs to wrap up entire thesis{]}
+Missing data is is an important problem in the field of statistics which will most likely continue to plague data in the next few decades. As an issue for which there is no one-size-fits-all solution designed to effectively remedy it, it is important for practiced statisticians to understand and carefully consider what type of method to use for the situation at hand. In this thesis, we provided an overview regarding the concept of missingness, specifically with censoring, and the ramifications that it can have on statistical analyses. We discussed methods designed to work with left-censored data: substitution, ML estimation, KM, and ROS, which are designed to obtain parameter estimates for left-censored datasets. After our exploration on the theoretical foundations of these methods, we carefully designed a simulation study to investigate our hypothesis the effectiveness of each of our methods would differ when for different proportions, sizes, and underlying distribution for the dataset. We then introduced the problem of coal ash contamination across groundwater wells in the U.S. and introduced the Kelderman et al. (2019)'s report which contained information regarding the top ten most contaminated coal sites across the U.S. Due to a lack of discussion in Kelderman et al. (2019)'s report regarding how they accounted for left-censoring in their analysis, we believed that conclusions may have differed if different methods of handling the left-censored data were used. Motivated by this report, we conducted a case study to explore using a baseline method, substitution, and KM to identify our own top ten most contaminated sites, and compared our results to those obtained by Kelderman et al. (2019).
+
+Even among the many peer-reviewed papers and reports which compared and contrasted several of these methods via. different scopes of field of study, a common shared idea was the impossibility of pinning one method down as being the ``best.'' Even from our own case study, we had trouble implementing the MLE and ROS methods for our water quality data, due to issues such as the percentage of censoring being too high or our data being too highly skewed for the methods to be used. Future work could involve finding a way to account for these issues, perhaps investigating the efficacy of our methods with transformed data, would be a conducive path to follow.
+
+The motivation for our thesis was largely centered on left-censored data, which is commonly found in environmental sciences with water quality datasets. Due to recent innovations in data storage and data provenance in general, data is becoming increasingly easier to access for the general public. As such, it would be expected that many of these datasets will inevitably contain missing data as well. Further investigation and research in technologies and methods to handle missingness will become increasingly important in order to prevent the discarding information by throwing out missing data.
 
 \appendix
 
 \hypertarget{main-appendix}{%
 \chapter{Main Appendix}\label{main-appendix}}
 
-This first appendix includes all of the R chunks of code that were hidden throughout the document (using the \texttt{include\ =\ FALSE} chunk tag) to help with readibility and/or setup.
+This first appendix includes all of the R chunks of code that were hidden throughout the document (using the \texttt{include\ =\ FALSE} chunk tag) to help with readability and/or setup.
 
 \hypertarget{in-the-main-file-refref-labels}{%
 \section{In the main file \ref{ref-labels}:}\label{in-the-main-file-refref-labels}}
@@ -1115,8 +1107,8 @@ This first appendix includes all of the R chunks of code that were hidden throug
 \hypertarget{in-chapter-refref-labels}{%
 \section{In Chapter \ref{ref-labels}:}\label{in-chapter-refref-labels}}
 
-\hypertarget{in-chapter-3}{%
-\section{In Chapter 3:}\label{in-chapter-3}}
+\hypertarget{in-chapter-refconclusion}{%
+\section{In Chapter @ref(\#conclusion):}\label{in-chapter-refconclusion}}
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#breaking apart into different datasets for each region}
@@ -1137,7 +1129,8 @@ This first appendix includes all of the R chunks of code that were hidden throug
 
 \NormalTok{south }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"WV"}\NormalTok{, }\StringTok{"VA"}\NormalTok{, }\StringTok{"KY"}\NormalTok{, }\StringTok{"TN"}\NormalTok{, }\StringTok{"NC"}\NormalTok{, }\StringTok{"SC"}\NormalTok{, }\StringTok{"GA"}\NormalTok{, }
-                      \StringTok{"FL"}\NormalTok{, }\StringTok{"MS"}\NormalTok{, }\StringTok{"AL"}\NormalTok{, }\StringTok{"LA"}\NormalTok{, }\StringTok{"AR"}\NormalTok{, }\StringTok{"OK"}\NormalTok{, }\StringTok{"TX"}\NormalTok{, }\StringTok{"PR"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+                      \StringTok{"FL"}\NormalTok{, }\StringTok{"MS"}\NormalTok{, }\StringTok{"AL"}\NormalTok{, }\StringTok{"LA"}\NormalTok{, }\StringTok{"AR"}\NormalTok{, }\StringTok{"OK"}\NormalTok{, }\StringTok{"TX"}\NormalTok{, }
+                      \StringTok{"PR"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"south"}\NormalTok{)}
 
 \CommentTok{\#rejoin them back together for future ref. if needed}
@@ -1174,8 +1167,8 @@ This first appendix includes all of the R chunks of code that were hidden throug
 \NormalTok{states\_map }\OtherTok{\textless{}{-}} \FunctionTok{map\_data}\NormalTok{(}\StringTok{"state"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-\hypertarget{simulation-and-case-study-appendix}{%
-\chapter{Simulation and Case Study Appendix}\label{simulation-and-case-study-appendix}}
+\hypertarget{simulationcs-appendix}{%
+\chapter{Simulation/CS Appendix}\label{simulationcs-appendix}}
 
 The second appendix, Appendix B, contains all necessary code required to run the simulation study and for our case study.
 
@@ -1197,7 +1190,7 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \subsection{Generating Data}\label{generating-data}}
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#function will generate a vector of numbers from the lognormal }
+\CommentTok{\#function will generate a vector of numbers from the log{-}normal }
 \CommentTok{\#distribution and censor them at the given rate}
 \CommentTok{\#function will take in arguments for 1) samplesize, 2) logmean, 3)logsd}
 \CommentTok{\#4) censoring rate}
@@ -1292,105 +1285,7 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \end{Shaded}
 \hypertarget{lognormal}{%
 \subsection{Lognormal}\label{lognormal}}
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#LOGNORMAL}
-\FunctionTok{options}\NormalTok{(}\AttributeTok{scipen=}\DecValTok{999}\NormalTok{) }\CommentTok{\#prevent scientific notation}
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{7271999}\NormalTok{)}
 
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ censvalues)\{}
-  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in}\NormalTok{ sampsizes)\{}
-    \ControlFlowTok{for}\NormalTok{(k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{iterations)\{}
-\NormalTok{      m }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{      s }\OtherTok{\textless{}{-}} \FloatTok{0.5}
-\NormalTok{      df }\OtherTok{\textless{}{-}} \FunctionTok{generateLN}\NormalTok{(}\AttributeTok{sampsize =}\NormalTok{ j, }\AttributeTok{m =} \DecValTok{1}\NormalTok{, }\AttributeTok{s =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{censrate =}\NormalTok{ i)}
-      
-      \CommentTok{\#substitution}
-      \CommentTok{\#define LOD to be smallest, uncensored value}
-\NormalTok{      LOD }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value[df}\SpecialCharTok{$}\NormalTok{censored }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{]) }
-\NormalTok{      df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
-        \FunctionTok{mutate}\NormalTok{(}\AttributeTok{impSubValue =} \FunctionTok{if\_else}\NormalTok{(censored }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{, LOD}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, true.value))}
-      
-\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
-        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
-                \AttributeTok{samplesize =}\NormalTok{ j,}
-                \AttributeTok{iteration =}\NormalTok{ k,}
-                \AttributeTok{method =} \StringTok{"substitution"}\NormalTok{,}
-                \AttributeTok{true\_mean =}\NormalTok{ m,}
-                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
-                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue),}
-                \AttributeTok{true\_sd =}\NormalTok{ s,}
-                \AttributeTok{SE\_complete =} 
-                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
-                \AttributeTok{SE\_method =} 
-                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{impSubValue))))}
-      
-      \CommentTok{\#mle}
-\NormalTok{      mle\_res }\OtherTok{=} \FunctionTok{cenmle}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value, df}\SpecialCharTok{$}\NormalTok{censored)}
-      
-\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
-        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
-                \AttributeTok{samplesize =}\NormalTok{ j,}
-                \AttributeTok{iteration =}\NormalTok{ k,}
-                \AttributeTok{method =} \StringTok{"mle"}\NormalTok{,}
-                \AttributeTok{true\_mean =}\NormalTok{ m,}
-                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
-                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(mle\_res)[}\DecValTok{1}\NormalTok{],}
-                \AttributeTok{true\_sd =}\NormalTok{ s,}
-                \AttributeTok{SE\_complete =} 
-                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
-                \AttributeTok{SE\_method =} \FunctionTok{mean}\NormalTok{(mle\_res)[}\DecValTok{2}\NormalTok{])}
-      
-      \CommentTok{\#km}
-\NormalTok{      km\_res }\OtherTok{=} \FunctionTok{cenfit}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value, df}\SpecialCharTok{$}\NormalTok{censored)}
-      
-\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
-        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
-                \AttributeTok{samplesize =}\NormalTok{ j,}
-                \AttributeTok{iteration =}\NormalTok{ k,}
-                \AttributeTok{method =} \StringTok{"km"}\NormalTok{,}
-                \AttributeTok{true\_mean =}\NormalTok{ m,}
-                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
-                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(km\_res)[[}\DecValTok{1}\NormalTok{]],}
-                \AttributeTok{true\_sd =}\NormalTok{ s,}
-                \AttributeTok{SE\_complete =} 
-                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
-                \AttributeTok{SE\_method =} \FunctionTok{mean}\NormalTok{(km\_res)[[}\DecValTok{2}\NormalTok{]])}
-      
-      \CommentTok{\#ros}
-\NormalTok{      ros\_res }\OtherTok{=} \FunctionTok{ros}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value, df}\SpecialCharTok{$}\NormalTok{censored)}
-      
-\NormalTok{      df.tall }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
-        \FunctionTok{add\_row}\NormalTok{(}\AttributeTok{prop\_cens =}\NormalTok{ i,}
-                \AttributeTok{samplesize =}\NormalTok{ j,}
-                \AttributeTok{iteration =}\NormalTok{ k,}
-                \AttributeTok{method =} \StringTok{"ros"}\NormalTok{,}
-                \AttributeTok{true\_mean =}\NormalTok{ m,}
-                \AttributeTok{mean\_complete =} \FunctionTok{mean}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value),}
-                \AttributeTok{mean\_method =} \FunctionTok{mean}\NormalTok{(ros\_res),}
-                \AttributeTok{true\_sd =}\NormalTok{ s,}
-                \AttributeTok{SE\_complete =} 
-                  \FunctionTok{sd}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))),}
-                \AttributeTok{SE\_method =} 
-                  \FunctionTok{sd}\NormalTok{(ros\_res)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{((}\FunctionTok{length}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{true.value))))}
-\NormalTok{    \}}
-    \CommentTok{\#end of \# iterations}
-\NormalTok{  \}}
-\NormalTok{\}}
-
-\CommentTok{\#aggregating performance criteria}
-
-\NormalTok{df.ln }\OtherTok{\textless{}{-}}\NormalTok{ df.tall }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(prop\_cens, samplesize, method) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Avg\_Mean =} \FunctionTok{mean}\NormalTok{(mean\_method),}
-            \AttributeTok{Bias =}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(mean\_method) }\SpecialCharTok{{-}}\NormalTok{ true\_mean),}
-            \AttributeTok{Variance =} \FunctionTok{var}\NormalTok{(mean\_method),}
-            \AttributeTok{MSE =} \FunctionTok{mse}\NormalTok{(true\_mean, mean\_method) }
-\NormalTok{            ) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ungroup}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
 \hypertarget{exponential}{%
 \subsection{Exponential}\label{exponential}}
 \begin{Shaded}
@@ -1644,7 +1539,8 @@ The second appendix, Appendix B, contains all necessary code required to run the
 
 \NormalTok{south }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"WV"}\NormalTok{, }\StringTok{"VA"}\NormalTok{, }\StringTok{"KY"}\NormalTok{, }\StringTok{"TN"}\NormalTok{, }\StringTok{"NC"}\NormalTok{, }\StringTok{"SC"}\NormalTok{, }\StringTok{"GA"}\NormalTok{, }
-                      \StringTok{"FL"}\NormalTok{, }\StringTok{"MS"}\NormalTok{, }\StringTok{"AL"}\NormalTok{, }\StringTok{"LA"}\NormalTok{, }\StringTok{"AR"}\NormalTok{, }\StringTok{"OK"}\NormalTok{, }\StringTok{"TX"}\NormalTok{, }\StringTok{"PR"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+                      \StringTok{"FL"}\NormalTok{, }\StringTok{"MS"}\NormalTok{, }\StringTok{"AL"}\NormalTok{, }\StringTok{"LA"}\NormalTok{, }\StringTok{"AR"}\NormalTok{, }\StringTok{"OK"}\NormalTok{, }\StringTok{"TX"}\NormalTok{, }
+                      \StringTok{"PR"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"south"}\NormalTok{)}
 
 \CommentTok{\#rejoin them back together for future ref. if needed}
@@ -1681,9 +1577,13 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \NormalTok{states\_map }\OtherTok{\textless{}{-}} \FunctionTok{map\_data}\NormalTok{(}\StringTok{"state"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\hypertarget{standardization-of-units}{%
+\subsection{Standardization of Units}\label{standardization-of-units}}
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#we need to standardize values, some wells report concentration of contaminants in different units, we will standardize all units to the units provided by the health{-}based threshold set by the EPA}
+\CommentTok{\#we need to standardize values, some wells report concentration of}
+\CommentTok{\#contaminants in different units, we will standardize all units to }
+\CommentTok{\#the units provided by the health{-}based threshold set by the EPA}
 
 \CommentTok{\#template to find different units}
 \NormalTok{template }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
@@ -1811,12 +1711,14 @@ The second appendix, Appendix B, contains all necessary code required to run the
          \AttributeTok{measurement.unit =} \StringTok{"ug/l"}\NormalTok{)}
 
 
-\CommentTok{\#radium has units mg/l (14), pCi/l (30k+), ug/l (1), we need to change all to pCi}
+\CommentTok{\#radium has units mg/l (14), pCi/l (30k+), ug/l (1), }
+\CommentTok{\#we need to change all to pCi}
 \NormalTok{radium }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Radium"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"pCi/l"}\NormalTok{)}
 
-\CommentTok{\#selenium has units mg/l (23k+), pCi/l (8), ug/l (14k+), we need to change all to ug}
+\CommentTok{\#selenium has units mg/l (23k+), pCi/l (8), ug/l (14k+), }
+\CommentTok{\#we need to change all to ug}
 \NormalTok{selenium }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Radium"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(measurement.unit }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"mg/l, ug/l"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
@@ -1835,7 +1737,8 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \NormalTok{             measurement.unit }\SpecialCharTok{\%in\%} \StringTok{"ug/l"} \SpecialCharTok{\textasciitilde{}}\NormalTok{ concentration}\SpecialCharTok{/}\DecValTok{1000}\NormalTok{),}
          \AttributeTok{measurement.unit =} \StringTok{"mg/l"}\NormalTok{)}
 
-\CommentTok{\#thallium has units mg/l (23k+), pCi/l (16), ug/l (13k+), we need to change all to ug}
+\CommentTok{\#thallium has units mg/l (23k+), pCi/l (16), ug/l (13k+), }
+\CommentTok{\#we need to change all to ug}
 \NormalTok{thallium }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"Thallium"}\NormalTok{, contaminant)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(measurement.unit }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"mg/l, ug/l"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
@@ -1851,9 +1754,12 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \NormalTok{                molybdenum, radium, selenium, sulfate, thallium)}
 \end{Highlighting}
 \end{Shaded}
+\hypertarget{baselinecontrol}{%
+\subsection{Baseline/Control}\label{baselinecontrol}}
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#calculation of avg mean concentration for all contaminants in each well across all dates}
+\CommentTok{\#calculation of avg mean concentration for all contaminants }
+\CommentTok{\#in each well across all dates}
 
 \CommentTok{\#get average mean conc for all contaminants in each well}
 \NormalTok{avg\_control }\OtherTok{\textless{}{-}}\NormalTok{ df\_std }\SpecialCharTok{\%\textgreater{}\%}
@@ -1873,13 +1779,17 @@ The second appendix, Appendix B, contains all necessary code required to run the
   \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Downgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(well.id, contaminant, site, avg\_conc))}
 
-\CommentTok{\#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site}
+\CommentTok{\#remove any wells with average downgradient concentrations lower than }
+\CommentTok{\#the highest average upgradient concentration for that specific }
+\CommentTok{\#contaminant/site}
 
 \NormalTok{downgrad\_control2 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(downgrad\_control, upgrad\_control) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(avg\_conc }\SpecialCharTok{\textgreater{}}\NormalTok{ upgrad\_conc) }\CommentTok{\#remove downgradient mean concentrations that were greater than “background” levels}
+  \CommentTok{\#remove downgradient mean concentrations that were greater than “background” levels}
+  \FunctionTok{filter}\NormalTok{(avg\_conc }\SpecialCharTok{\textgreater{}}\NormalTok{ upgrad\_conc) }
 
 
-\CommentTok{\#for each site, identify the well(s) with the highest mean concentration of each contaminant}
+\CommentTok{\#for each site, identify the well(s) with the highest }
+\CommentTok{\#mean concentration of each contaminant}
 \NormalTok{highest\_control }\OtherTok{\textless{}{-}}\NormalTok{ downgrad\_control2 }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(site, contaminant) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{slice}\NormalTok{(}\FunctionTok{which.max}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
@@ -1907,18 +1817,19 @@ The second appendix, Appendix B, contains all necessary code required to run the
          \StringTok{"unit"} \OtherTok{=} \StringTok{"Unit"}\NormalTok{) }
   
 \NormalTok{top10\_control }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(highest\_control, hbt\_case, }\AttributeTok{by =} \StringTok{"contaminant"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ratio =}\NormalTok{ avg\_conc}\SpecialCharTok{/}\FunctionTok{as.numeric}\NormalTok{(limit)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#calculate the ratios {-}\textgreater{} ‘highest average’ concentrations/hbt}
+  \CommentTok{\#calculate the ratios {-}\textgreater{} ‘highest average’ concentrations/hbt}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ratio =}\NormalTok{ avg\_conc}\SpecialCharTok{/}\FunctionTok{as.numeric}\NormalTok{(limit)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{group\_by}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{composite\_score =} \FunctionTok{sum}\NormalTok{(ratio)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#sum together all contaminants for a site to get a composite score}
+  \CommentTok{\#sum together all contaminants for a site to get a composite score}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{composite\_score =} \FunctionTok{sum}\NormalTok{(ratio)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(composite\_score)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\hypertarget{substitution}{%
+\subsection{Substitution}\label{substitution}}
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#calculation of avg mean concentration for all contaminants in each well across all dates}
-
-\CommentTok{\#get average mean conc for all contaminants in each well}
 \NormalTok{avg\_substitution }\OtherTok{\textless{}{-}}\NormalTok{ df\_std }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{concentration\_new =} \FunctionTok{if\_else}\NormalTok{(below.detection }\SpecialCharTok{\%in\%} \StringTok{"\textless{}"}\NormalTok{, }
 \NormalTok{                                     concentration}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, concentration))}\SpecialCharTok{\%\textgreater{}\%}
@@ -1926,24 +1837,19 @@ The second appendix, Appendix B, contains all necessary code required to run the
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{avg\_conc =} \FunctionTok{mean}\NormalTok{(concentration\_new)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ungroup}\NormalTok{()}
 
-\CommentTok{\#get highest avg. upgradient concentrations for each contaminant/site}
 \NormalTok{upgrad\_substitution }\OtherTok{\textless{}{-}}\NormalTok{ avg\_substitution }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Upgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(contaminant, site) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{upgrad\_conc =} \FunctionTok{min}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ungroup}\NormalTok{()}
 
-\CommentTok{\#remove upgradient wells}
 \NormalTok{downgrad\_substitution }\OtherTok{\textless{}{-}}\NormalTok{ avg\_substitution }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Downgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(well.id, contaminant, site, avg\_conc))}
 
-\CommentTok{\#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site}
 \NormalTok{downgrad\_substitution2 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(downgrad\_substitution, upgrad\_substitution) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(avg\_conc }\SpecialCharTok{\textgreater{}=}\NormalTok{ upgrad\_conc) }\CommentTok{\#remove downgradient mean concentrations that were lower than “background” levels}
+  \FunctionTok{filter}\NormalTok{(avg\_conc }\SpecialCharTok{\textgreater{}=}\NormalTok{ upgrad\_conc) }
 
-
-\CommentTok{\#for each site, identify the well(s) with the highest mean concentration of each contaminant}
 \NormalTok{highest\_substitution }\OtherTok{\textless{}{-}}\NormalTok{ downgrad\_substitution2 }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(site, contaminant) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{slice}\NormalTok{(}\FunctionTok{which.max}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
@@ -1966,13 +1872,15 @@ The second appendix, Appendix B, contains all necessary code required to run the
                               \StringTok{"Thallium, total"} \OtherTok{=} \StringTok{"Thallium"}\NormalTok{))}
 
 \NormalTok{top10\_substitution }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(highest\_substitution, hbt\_case, }\AttributeTok{by =} \StringTok{"contaminant"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ratio =}\NormalTok{ avg\_conc}\SpecialCharTok{/}\FunctionTok{as.numeric}\NormalTok{(limit)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#calculate the ratios {-}\textgreater{} ‘highest average’ concentrations/hbt}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ratio =}\NormalTok{ avg\_conc}\SpecialCharTok{/}\FunctionTok{as.numeric}\NormalTok{(limit)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{group\_by}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{composite\_score =} \FunctionTok{sum}\NormalTok{(ratio)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#sum together all contaminants for a site to get a composite score}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{composite\_score =} \FunctionTok{sum}\NormalTok{(ratio)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(composite\_score)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\hypertarget{km}{%
+\subsection{KM}\label{km}}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{get\_km\_mean }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(values, censored)\{}
@@ -1980,9 +1888,6 @@ The second appendix, Appendix B, contains all necessary code required to run the
   \FunctionTok{mean}\NormalTok{(km)[[}\DecValTok{1}\NormalTok{]]}
 \NormalTok{\}}
 
-\CommentTok{\#calculation of avg mean concentration for all contaminants in each well across all dates}
-
-\CommentTok{\#get average mean conc for all contaminants in each well}
 \NormalTok{avg\_km }\OtherTok{\textless{}{-}}\NormalTok{ df\_std }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{censored =} \FunctionTok{if\_else}\NormalTok{(below.detection }\SpecialCharTok{\%in\%} \StringTok{"\textless{}"}\NormalTok{, }
                                      \ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
@@ -1990,24 +1895,19 @@ The second appendix, Appendix B, contains all necessary code required to run the
   \FunctionTok{do}\NormalTok{(}\FunctionTok{summarize}\NormalTok{(., }\AttributeTok{avg\_conc =} \FunctionTok{get\_km\_mean}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{concentration, .}\SpecialCharTok{$}\NormalTok{censored))) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ungroup}\NormalTok{()}
 
-\CommentTok{\#get highest avg. upgradient concentrations for each contaminant/site}
 \NormalTok{upgrad\_km }\OtherTok{\textless{}{-}}\NormalTok{ avg\_km }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Upgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(contaminant, site) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{upgrad\_conc =} \FunctionTok{min}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ungroup}\NormalTok{()}
 
-\CommentTok{\#remove upgradient wells}
 \NormalTok{downgrad\_km }\OtherTok{\textless{}{-}}\NormalTok{ avg\_km }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(gradient }\SpecialCharTok{\%in\%} \StringTok{"Downgradient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(well.id, contaminant, site, avg\_conc))}
 
-\CommentTok{\#remove any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant/site}
 \NormalTok{downgrad\_km2 }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(downgrad\_km, upgrad\_km) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(avg\_conc }\SpecialCharTok{\textgreater{}=}\NormalTok{ upgrad\_conc) }\CommentTok{\#remove downgradient mean concentrations that were lower than “background” levels}
+  \FunctionTok{filter}\NormalTok{(avg\_conc }\SpecialCharTok{\textgreater{}=}\NormalTok{ upgrad\_conc)}
 
-
-\CommentTok{\#for each site, identify the well(s) with the highest mean concentration of each contaminant}
 \NormalTok{highest\_km }\OtherTok{\textless{}{-}}\NormalTok{ downgrad\_km2 }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(site, contaminant) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{slice}\NormalTok{(}\FunctionTok{which.max}\NormalTok{(avg\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
@@ -2030,13 +1930,19 @@ The second appendix, Appendix B, contains all necessary code required to run the
                               \StringTok{"Thallium, total"} \OtherTok{=} \StringTok{"Thallium"}\NormalTok{))}
 
 \NormalTok{top10\_km }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(highest\_km, hbt\_case, }\AttributeTok{by =} \StringTok{"contaminant"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ratio =}\NormalTok{ avg\_conc}\SpecialCharTok{/}\FunctionTok{as.numeric}\NormalTok{(limit)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#calculate the ratios {-}\textgreater{} ‘highest average’ concentrations/hbt}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ratio =}\NormalTok{ avg\_conc}\SpecialCharTok{/}\FunctionTok{as.numeric}\NormalTok{(limit)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{composite\_score =} \FunctionTok{sum}\NormalTok{(ratio)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#sum together all contaminants for a site to get a composite score}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{composite\_score =} \FunctionTok{sum}\NormalTok{(ratio)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(composite\_score)) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\hypertarget{mle-excluded}{%
+\subsection{MLE (excluded)}\label{mle-excluded}}
+
+\hypertarget{ros-excluded}{%
+\subsection{ROS (excluded)}\label{ros-excluded}}
+
 \hypertarget{corrections}{%
 \chapter*{Corrections}\label{corrections}}
 \addcontentsline{toc}{chapter}{Corrections}

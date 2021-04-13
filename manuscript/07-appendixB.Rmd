@@ -1,4 +1,4 @@
-# Simulation and Case Study Appendix
+# Simulation/CS Appendix
 
 The second appendix, Appendix B, contains all necessary code required to run the simulation study and for our case study.
 
@@ -36,20 +36,39 @@ The second appendix, Appendix B, contains all necessary code required to run the
 
 ## Case Study
 
-###  Preliminary
+### Preliminary
 
 ```{r app_prelim, ref.label= "prelim", echo=TRUE, eval=FALSE}
 ```
 
+### Standardization of Units
+
 ```{r app_standardize, ref.label= "standardize", echo=TRUE, eval=FALSE}
 ```
+
+### Baseline/Control
 
 ```{r app_baseline, ref.label= "baseline", echo=TRUE, eval=FALSE}
 ```
 
+### Substitution
+
 ```{r app_substitution, ref.label= "substitution", echo=TRUE, eval=FALSE}
 ```
 
+### KM
+
 ```{r app_km, ref.label= "km", echo=TRUE, eval=FALSE}
 ```
+
+### MLE (excluded)
+
+```{r app_mle, ref.label= "mle", echo=TRUE, eval=FALSE}
+```
+
+### ROS (excluded)
+
+```{r app_ros, ref.label= "ros", echo=TRUE, eval=FALSE}
+```
+
 

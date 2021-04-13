@@ -6,9 +6,7 @@ output:
 
 # Simulations {#simulations}
 
-Having discussed four common methods to handle left-censored data in the previous chapter, we now turn to a simulation study in order to evaluate the strengths and weaknesses of each method after varying the censoring rate, sample size, and the underlying distribution of the data. 
-
-We will also discuss the implementation of the methods, data generating mechanisms, and specific evaluation metrics to assess the performance of each method.
+Having discussed four common methods to handle left-censored data in the previous chapter, we now turn to a simulation study in order to evaluate the strengths and weaknesses of each method after varying the censoring rate, sample size, and the underlying distribution of the data. We will also discuss the implementation of the methods, data generating mechanisms for the simulation study, and our findings.
 
 ## Data-Generating Mechanisms {#data_generating_mechanisms}
 
@@ -18,25 +16,21 @@ In the following sections of this chapter, we will interchangeably use "small, m
 
 To artificially induce censoring in our simulated data, we arranged the uncensored observations in ascending order and set those in the lowest $100R \%$ to be censored, and the remaining observations as uncensored. As an example, if the censoring rate was $R = 0.10$, the lowest 10% of the observations would be marked as censored while the rest remained uncensored.
 
-\newpage
-
 ## Estimands {#estimands}
 
-Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data [@Shoari2018]. Our goal is to estimate the mean of the censored variable of interest. We will be utilizing the four methods we discussed previously to achieve this.
+Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data [@Shoari2018]. In preparation for our case study in the following chapter, we will be utilizing the four methods to estimate the mean of the censored variable of interest in our simulation study.
 
 ## Implementation in R {#implementation}
 
-All our code will be written using R. For our substitution method, we begin by defining the LOD as the minimum, uncensored value for the variable of interest. We will choose LOD/2 our replacement value. As such, we will replace all censored values in our dataset with LOD/2, and calculate our estimated mean using this newly defined dataset.
+All our code will be written using R. For our substitution method, we begin by defining the LOD as the minimum, uncensored value for the variable of interest. We will choose LOD/2 as our replacement value, calculating our estimated mean using this newly defined dataset.
 
-For the remaining three methods (KM, MLE, and ROS), we will be using specialized functions from the `NADA` (Nondetects and Data Analysis) package. The code for the MLE method will be handled with the `cenmle` function in the `NADA` package, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values.
-
-We use the `cenfit` function to implement KM. This function "computes an estimate of an empirical cumulative distribution function (ECDF) for censored data using the Kaplan-Meier method," from which we can then obtain summary statistics of interest. Similarly, the `ros` method implements ROS and outputs a dataframe, from which we can then use to also compute our summary statistics of interest.
-
-<!--
+For the remaining three methods (KM, MLE, and ROS), we will be using specialized functions from the `NADA` package. The code for the MLE method will be handled with the `cenmle` function in the `NADA` package, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values. The `cenfit` function allows us to implement KM. This function "computes an estimate of an empirical cumulative distribution function (ECDF) for censored data using the Kaplan-Meier method," from which we can then obtain summary statistics of interest. Similarly, the `ros` method implements ROS and outputs a dataframe, from which we can then use to also compute our summary statistics of interest.
 
 ## Performance Measures {#performance_measures}
 
-The criterion we will use to assess the performance of each of our four methods will consist of: bias, variance, and mean squared error (MSE).
+The criterions we will use to assess the performance of each of our four methods will consist of: bias, variance, and mean squared error (MSE), which measure the difference between our mean estimate and the true mean, precision, and accuracy -- respectively. 
+
+<!--
 
 ### Variance
 
@@ -96,7 +90,7 @@ library(kableExtra)
 ```
 
 ```{r generateLN, include = FALSE}
-#function will generate a vector of numbers from the lognormal 
+#function will generate a vector of numbers from the log-normal 
 #distribution and censor them at the given rate
 #function will take in arguments for 1) samplesize, 2) logmean, 3)logsd
 #4) censoring rate
@@ -192,8 +186,8 @@ df.tall <- data.frame(prop_cens = numeric(),
                       SE_method = numeric())
 ```
 
-```{r lognormal, echo = FALSE, message = FALSE, cache = TRUE}
-#LOGNORMAL
+```{r log-normal, echo = FALSE, message = FALSE, cache = TRUE}
+#log-normal
 options(scipen=999) #prevent scientific notation
 set.seed(7271999)
 
@@ -568,27 +562,31 @@ knitr::kable(w.table, caption = "Performance metrics of our our 3 methods
   pack_rows("Censoring Rate = 0.5", 25, 36, latex_gap_space = "1em")
 ```
 
-From the results of our simulation study, we can see that with the data generated from the log-normal distribution, in the case of low censoring (0.10), when dealing with sample sizes of 10 and 100, the methods are largely comparable to one another. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significant worse than KM. MLE and ROS perform rather equally well in all sample sizes for low-censoring. 
+### Log-normal {#log-normalsimstudy}
+
+Table \@ref(tab:lntable) shows our simulation results for the log-normal distribution. In the case of low censoring (0.10), when dealing with sample sizes of 10 and 100, the methods are largely comparable to one another. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significantly worse than KM, while MLE and ROS perform rather equally well in all sample sizes for low-censoring. 
 
 When considering medium censoring (0.30), much of the same observations still hold true. Substitution performs the worse, followed by KM. MLE and ROS both perform well. However, ROS has a slight edge over MLE, especially as sample sizes increase, attaining lower MSE values than the latter.
 
-All four methods begin to perform worse when the censoring rate is increased to 0.5, which is to be expected. As more and more missingness is introduced within the dataset, it becomes more difficult to obtain accurate estimates for all methods. Once again, substitution and KM attain high absolute bias and MSE values. However, it is now KM which performs worse than substitution in the setting of high censoring. Similarly to before, albeit being more noticeable now, ROS performs better than MLE with all sample sizes.
+In the case of the log-normally distributed data, all four methods begin to perform worse when the censoring rate is increased to 0.5, which is to be expected. As more and more missingness is introduced within the dataset, it becomes more difficult to obtain accurate estimates for all methods. Once again, substitution and KM attain high absolute bias and MSE values. However, it is now KM which performs worse than substitution in the setting of high censoring. Similarly to before, albeit being more noticeable now, ROS performs better than MLE with all sample sizes.
 
-We can see with the exponential and Weibull cases, all three methods perform equally well in the case of low (0.10) censoring with all sample sizes, obtaining similar bias and MSE values across all sample sizes for both the exponential and Weibull datasets. KM consistently performs the worst with with medium (0.30) and high (0.50) censoring when compared to the other methods across all sample sizes. In these censoring settings, it is also the case that ROS performs the best with substitution not far behind.
+### Exponential and Weibull {#exponentialweibullsimstudy}
 
-In summary, regardless of distributional assumptions all of the methods perform well when censoring is low, with very minute differences in performance metrics. KM does not perform well in the lognormal distribution with high censoring rates and struggles in the exponential and Weibull cases with medium and high censoring rates. While MLE was only used in the case of the lognormal data, it also performs quite well, although not quite as well as ROS. ROS performed the best in the case of medium and high censoring across all 3 distributions.
+The results of the simulation study for the exponential and Weibull-distributed data can be viewed in Tables \@ref(tab:exptable) and \@ref(tab:wtable). We can see for these distribution, all three methods perform equally well in the case of low (0.10) censoring with all sample sizes, obtaining similar bias and MSE values across all sample sizes for both the exponential and Weibull datasets. KM consistently performs the worst with with medium (0.30) and high (0.50) censoring when compared to the other methods across all sample sizes. In these censoring settings, it is also the case that ROS performs the best with substitution not far behind.
+
+In summary, regardless of distributional assumptions all of the methods perform well when censoring is low, with very minute differences in performance metrics. KM does not perform well with log-normally distributed data with high censoring rates and struggles in the exponential and Weibull cases with medium and high censoring rates. While MLE was only used in the case of the log-normal data, it performs quite well, although not quite as well as ROS. ROS performed the best in the case of medium and high censoring across all 3 distributions.
 
 ## Discussion {#discussion}
 
 It important to note that while there are a large number of papers which discuss the ideal method or strategy to handle left-censored data,these studies have a large number of differences in censoring rates, distribution used, methods used, and other aspects of design setups which make comparisons regarding the results obtained from the studies quite difficult. As such, descriptions of specifics regarding the study design in the following studies will be omitted as necessary.
 
-Several results from our simulation studies agree with previous findings conducted from other investigators in the field. @Gilliom1986 claims that with the lognormal distribution, the ROS method was superior. This claim is furthered with our own results: we find that the ROS method is rather robust, even with censoring and produces an accurate and precise estimate of the mean in all cases in our simulation study. 
+Several results from our simulation studies agree with previous findings conducted from other investigators in the field. @Gilliom1986 claims that with the log-normal distribution, the ROS method was superior. This claim is furthered with our own results: we find that the ROS method is rather robust, even with censoring and produces an accurate and precise estimate of the mean in all cases in our simulation study. 
 
-Another investigation by @Kroll1996 found that with regards to a lognormal distribution only, ROS and MLE worked extremely well, with MLE outperforming the other methods especially in highly censored cases. While the MLE method did perform rather well in most cases in our simulation study, it did not outperform the ROS method, which in fact obtained much better estimates of the mean in highly censored settings. 
+Another investigation by @Kroll1996 found that with regards to a log-normal distribution only, ROS and MLE worked extremely well, with MLE outperforming the other methods especially in highly censored cases. While the MLE method did perform rather well in most cases in our simulation study, it did not outperform the ROS method, which in fact obtained much better estimates of the mean in highly censored settings. 
 
 There are of course also studies which offer differing results from the ones we obtained in our simulation study.
 
-@Schmoyer1996 compared only MLE and KM and found that the KM method performed nearly as well as the MLE in the case of the lognormal distribution. However, this was not the case in our simulation study. While the KM and MLE methods were able to perform adequately in the case of low (0.1) and medium (0.3) censoring, they performed the worst out of all four methods when dealing with highly censored cases. The censoring rates used in their study consisted of 25%, 50%, and 70% -- which far exceeded the censoring values used in this thesis. 
+@Schmoyer1996 compared only MLE and KM and found that the KM method performed nearly as well as the MLE in the case of the log-normal distribution. However, this was not the case in our simulation study. While the KM and MLE methods were able to perform adequately in the case of low (0.1) and medium (0.3) censoring, they performed the worst out of all four methods when dealing with highly censored cases. The censoring rates used in their study consisted of 25%, 50%, and 70% -- which far exceeded the censoring values used in this thesis. 
 
 @She1997 conducted a study investigating censored water quality data with the intent of investigating how well the KM method performs with regards to the same methods we utilize in this thesis. The results from She's study showed that KM outperformed all other methods, which contradicts the findings in the simulation study conducted in this thesis. Upon further investigation, the size of the dataset utilized by She consisted of 56 observations from water monitoring stations, in which around 11 were censored (20% of the dataset). While the KM method is not ideal for highly censored cases from the results of our simulation study, it certainly is able to be used for smaller sample sizes -- which is further supported with She's findings. There may be a difference in how well the methods perform with actual data as compared to simulated data -- which we will investigate in the next chapter. 
 

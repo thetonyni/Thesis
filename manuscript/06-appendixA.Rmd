@@ -7,7 +7,7 @@ The first appendix must start with the above text. Do not remove!
 
 # Main Appendix
 
-This first appendix includes all of the R chunks of code that were hidden throughout the document (using the `include = FALSE` chunk tag) to help with readibility and/or setup.
+This first appendix includes all of the R chunks of code that were hidden throughout the document (using the `include = FALSE` chunk tag) to help with readability and/or setup.
 
 ## In the main file \@ref(ref-labels):
 
@@ -16,7 +16,7 @@ This first appendix includes all of the R chunks of code that were hidden throug
 
 ## In Chapter \@ref(ref-labels):
 
-## In Chapter 3:
+## In Chapter \@ref(#conclusion):
 
 ```{r ref.label="prelim", echo=TRUE, eval=FALSE}
 ```
