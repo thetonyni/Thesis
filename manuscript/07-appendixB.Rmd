@@ -36,6 +36,11 @@ The second appendix, Appendix B, contains all necessary code required to run the
 
 ## Case Study
 
+### Libraries
+
+```{r app_ch3libraries, ref.label= "ch3libraries", echo=TRUE, eval=FALSE}
+```
+
 ### Preliminary
 
 ```{r app_prelim, ref.label= "prelim", echo=TRUE, eval=FALSE}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  13 APR 2021 11:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  14 APR 2021 10:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -804,14 +804,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.c
 fg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-) [5]
-
-LaTeX Warning: Reference `ref-labels' on page vi undefined on input line 38.
-
-
-LaTeX Warning: Reference `ref-labels' on page vi undefined on input line 39.
-
-[6])
+) [5] [6])
 \tf@toc=\write5
 \openout5 = `Tony-Ni_StatThesis.toc'.
 
@@ -842,7 +835,7 @@ l.304
        [1
 
 ]
-<figures/right_censoring_example.png, id=400, 1078.32564pt x 605.3507pt>
+<figures/right_censoring_example.png, id=437, 1078.32564pt x 605.3507pt>
 File: figures/right_censoring_example.png Graphic file (type png)
 <use figures/right_censoring_example.png>
 Package pdftex.def Info: figures/right_censoring_example.png  used on input lin
@@ -858,14 +851,14 @@ been already used, duplicate ignored
 l.317 A
        s illustrated by individual A in Figure \ref{fig:rightcensoringexampl...
 [2] [3 <./figures/right_censoring_example.png>]
-<figures/left_censoring_example_fix.png, id=415, 740.58861pt x 314.8396pt>
+<figures/left_censoring_example_fix.png, id=452, 740.58861pt x 314.8396pt>
 File: figures/left_censoring_example_fix.png Graphic file (type png)
 <use figures/left_censoring_example_fix.png>
 Package pdftex.def Info: figures/left_censoring_example_fix.png  used on input 
 line 329.
 (pdftex.def)             Requested size: 433.62pt x 184.34616pt.
 [4 <./figures/left_censoring_example_fix.png>]
-<figures/interval_censoring_example_fix.png, id=421, 684.77614pt x 220.38773pt>
+<figures/interval_censoring_example_fix.png, id=458, 684.77614pt x 220.38773pt>
 
 File: figures/interval_censoring_example_fix.png Graphic file (type png)
 <use figures/interval_censoring_example_fix.png>
@@ -942,7 +935,7 @@ Chapter 3.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [31]
-<figures/upgradientdowngradient.jpg, id=589, 1042.31662pt x 581.21367pt>
+<figures/upgradientdowngradient.jpg, id=624, 1042.31662pt x 581.21367pt>
 File: figures/upgradientdowngradient.jpg Graphic file (type jpg)
 <use figures/upgradientdowngradient.jpg>
 Package pdftex.def Info: figures/upgradientdowngradient.jpg  used on input line
@@ -951,13 +944,23 @@ Package pdftex.def Info: figures/upgradientdowngradient.jpg  used on input line
 [32 <./figures/upgradientdowngradient.jpg>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[33] [34] [35]
+[33] [34]
+
+LaTeX Warning: Reference `tab:datadictionary' on page 35 undefined on input lin
+e 836.
+
+[35]
+
+LaTeX Warning: Reference `tab:datadictionary' on page 36 undefined on input lin
+e 842.
+
+
 Overfull \hbox (11.25261pt too wide) in paragraph at lines 847--885
  [][] 
  []
 
 [36] [37]
-<Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf, id=624, 469.755pt x 325.215
+<Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf, id=657, 469.755pt x 325.215
 pt>
 File: Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf Graphic file (type pdf)
 
@@ -991,98 +994,105 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [47] [48]
 Appendix A.
-
-LaTeX Warning: Reference `ref-labels' on page 49 undefined on input line 1105.
-
-
-LaTeX Warning: Reference `ref-labels' on page 49 undefined on input line 1108.
-
 [49
 
 ] [50]
-Appendix B.
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1198.
-[51
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
+1210.
+(c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[51] [52] [53] [54
 
 ]
-Underfull \vbox (badness 10000) detected at line 1265
+Appendix B.
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1344.
+[55]
+Underfull \vbox (badness 10000) detected at line 1411
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1265
+Underfull \vbox (badness 10000) detected at line 1411
  []
 
-[52]
+[56]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[53] [54]
-Underfull \vbox (badness 10000) detected at line 1400
+[57] [58]
+Underfull \vbox (badness 10000) detected at line 1546
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1400
+Underfull \vbox (badness 10000) detected at line 1546
  []
 
-[55] [56]
-Underfull \vbox (badness 10000) detected at line 1516
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1516
- []
-
-[57]
-Underfull \vbox (badness 10000) detected at line 1516
+[59] [60]
+Underfull \vbox (badness 10000) detected at line 1662
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1516
+Underfull \vbox (badness 10000) detected at line 1662
  []
 
-[58] [59]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[60] [61]
-Underfull \vbox (badness 10000) detected at line 1756
+[61]
+Underfull \vbox (badness 10000) detected at line 1662
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1756
+Underfull \vbox (badness 10000) detected at line 1662
  []
 
-[62]
-Underfull \vbox (badness 10000) detected at line 1756
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1756
- []
-
-[63]
-Underfull \vbox (badness 10000) detected at line 1756
+[62] [63]
+Underfull \vbox (badness 10000) detected at line 1735
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1756
+Underfull \vbox (badness 10000) detected at line 1735
  []
 
 [64] [65]
+Underfull \vbox (badness 10000) detected at line 1912
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1912
+ []
+
+[66]
+Underfull \vbox (badness 10000) detected at line 1912
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1912
+ []
+
+[67]
+Underfull \vbox (badness 10000) detected at line 1912
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1912
+ []
+
+[68] [69]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[66] [67] [68] [69] [70
+[70] [71] [72] [73] [74
 
-] [71] [72
+] [75] [76
 
 ]
-Underfull \hbox (badness 3872) in paragraph at lines 1977--1979
+Underfull \hbox (badness 3872) in paragraph at lines 2133--2135
  \T1/lmr/m/n/12 (+20) Left-Censored En-vi-ron-men-tal Data Us-ing R. \T1/lmr/m/
 it/12 (+20) Tech-notes\T1/lmr/m/n/12 (+20) , \T1/lmr/m/it/12 (+20) 9\T1/lmr/m/n
 /12 (+20) (2), 153--172.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1977--1979
+Underfull \hbox (badness 10000) in paragraph at lines 2133--2135
  \T1/lmr/m/n/12 (+20) Re-trieved from [][]$\T1/lmtt/m/n/12 https : / / www . ep
 a . gov / sites / production / files / 2016 -[]
  []
@@ -1090,16 +1100,16 @@ a . gov / sites / production / files / 2016 -[]
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[73
+[77
 
 ]
-Underfull \hbox (badness 2932) in paragraph at lines 1989--1991
+Underfull \hbox (badness 2932) in paragraph at lines 2145--2147
  [][]\T1/lmr/m/n/12 (+20) Environmental In-tegrity Project. (2020). Coal Ash Gr
 ound-wa-ter Con-
  []
 
 
-Underfull \hbox (badness 1859) in paragraph at lines 1989--1991
+Underfull \hbox (badness 1859) in paragraph at lines 2145--2147
  \T1/lmr/m/n/12 (+20) tam-i-na-tion: Doc-u-ment-ing Coal Ash Pol-lu-tion. Re-tr
 ieved from [][]$\T1/lmtt/m/n/12 https :
  []
@@ -1107,8 +1117,8 @@ ieved from [][]$\T1/lmtt/m/n/12 https :
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[74]
-Underfull \hbox (badness 1237) in paragraph at lines 2025--2027
+[78]
+Underfull \hbox (badness 1237) in paragraph at lines 2181--2183
  \T1/lmr/m/n/12 (+20) tiles us-ing cen-sored data. \T1/lmr/m/it/12 (+20) Wa-ter
  Re-sources Re-search\T1/lmr/m/n/12 (+20) , \T1/lmr/m/it/12 (+20) 32\T1/lmr/m/n
 /12 (+20) (4), 1005--1012.
@@ -1117,9 +1127,9 @@ Underfull \hbox (badness 1237) in paragraph at lines 2025--2027
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[75] [76] (./Tony-Ni_StatThesis.aux)
+[79] [80] (./Tony-Ni_StatThesis.aux)
 Package rerunfilecheck Info: File `Tony-Ni_StatThesis.out' has not changed.
-(rerunfilecheck)             Checksum: 51F07EE52EFBD945549BC4C598DF3F8D;3792.
+(rerunfilecheck)             Checksum: 1F4029104B1296FD1FF5DB31E568303E;4204.
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.5pt have occurred.
@@ -1133,39 +1143,40 @@ LaTeX Warning: There were undefined references.
 ### semi simple group (level 1) entered at line 261 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 12856 strings out of 481466
- 204161 string characters out of 5920170
- 588130 words of memory out of 5000000
- 28882 multiletter control sequences out of 15000+600000
- 607655 words of font info for 142 fonts, out of 8000000 for 9000
+ 12922 strings out of 481466
+ 205244 string characters out of 5920170
+ 588987 words of memory out of 5000000
+ 28928 multiletter control sequences out of 15000+600000
+ 607961 words of font info for 143 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 66i,14n,72p,1746b,700s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 66i,14n,72p,1746b,725s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dv
 ips/lm/lm-ec.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/d
-vips/lm/lm-mathit.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/
-enc/dvips/lm/lm-mathex.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/f
-onts/enc/dvips/lm/lm-mathsy.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-d
-ist/fonts/enc/dvips/lm/lm-rm.enc}<c:/Users/theto/AppData/Roaming/TinyTeX/texmf-
-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/t
-exmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/theto/AppData/Roaming/Tin
-yTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/theto/AppData/Roamin
-g/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/theto/AppData/R
-oaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/Users/theto/AppDa
-ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/theto/A
-ppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/the
-to/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users
-/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Us
-ers/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb><
-c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.
-pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lm
-sy8.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/l
-m/lmtk10.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/pub
-lic/lm/lmtt12.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
-1/public/lm/lmtti10.pfb>
-Output written on Tony-Ni_StatThesis.pdf (90 pages, 542567 bytes).
+vips/lm/lm-ts1.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc
+/dvips/lm/lm-mathit.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/font
+s/enc/dvips/lm/lm-mathex.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist
+/fonts/enc/dvips/lm/lm-mathsy.enc}{c:/Users/theto/AppData/Roaming/TinyTeX/texmf
+-dist/fonts/enc/dvips/lm/lm-rm.enc}<c:/Users/theto/AppData/Roaming/TinyTeX/texm
+f-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/theto/AppData/Roaming/TinyTeX
+/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/theto/AppData/Roaming/T
+inyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/theto/AppData/Roam
+ing/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/theto/AppData
+/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/Users/theto/App
+Data/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/theto
+/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/t
+heto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Use
+rs/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/
+Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb
+><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy1
+0.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/
+lmsy8.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public
+/lm/lmtk10.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
+ublic/lm/lmtt12.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/ty
+pe1/public/lm/lmtti10.pfb>
+Output written on Tony-Ni_StatThesis.pdf (94 pages, 548887 bytes).
 PDF statistics:
- 990 PDF objects out of 1000 (max. 8388607)
- 867 compressed objects within 9 object streams
- 264 named destinations out of 1000 (max. 500000)
- 10730 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 1056 PDF objects out of 1200 (max. 8388607)
+ 928 compressed objects within 10 object streams
+ 280 named destinations out of 1000 (max. 500000)
+ 10778 words of extra memory for PDF output out of 12000 (max. 10000000)
 

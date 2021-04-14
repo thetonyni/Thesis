@@ -16,7 +16,7 @@ The introduction should provide an overview of the work you set out to do and pr
 
 -->
 
-```{r, warning = FALSE, echo = FALSE}
+```{r ch3libraries, warning = FALSE, echo = FALSE}
 library(tidyverse)
 library(kableExtra)
 library(mosaic)
@@ -70,7 +70,7 @@ The remaining variables in our dataset are mostly self explanatory, containing i
 
 <!-- TABLE OF DATA DICTIONARY TO INSERT HERE -->
 
-```{r, echo = FALSE}
+```{r datadict, echo = FALSE}
 dd_var <- c("State", "Site", "Disposal Area", "Type of Well",
             "ID of Well", "Gradient Type", 
             "Sample Date", 
@@ -110,9 +110,6 @@ dd <- as.data.frame(cbind(dd_var, dd_varname, dd_desc)) %>%
          "Variable Name" = "dd_varname",
          "Description" = "dd_desc") 
 
-```
-
-```{r, datadictionary, echo = FALSE}
 knitr::kable(dd, caption = "Data dictionary for the coal dataset.",
              booktabs = "T", linesep = "\\addlinespace") %>%
              column_spec(3, width = "7.6cm")
@@ -221,7 +218,7 @@ After these values are obtained, any wells with average downgradient concentrati
 
 These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table \ref{tab:hbt}.
 
-```{r echo = FALSE}
+```{r hbttable, echo = FALSE}
 #CODE TO MAKE HEALTH BASED THRESHOLDS TABLE
 
 hbt_names <- c("Antimony", "Arsenic", "Barium", "Beryllium",

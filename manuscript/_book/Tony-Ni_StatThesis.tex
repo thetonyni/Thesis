@@ -842,7 +842,7 @@ Coal plants may also follow different reporting protocols, which necessitates th
 The remaining variables in our dataset are mostly self explanatory, containing information regarding the date when sample was collected, unique ID of the well, and whether if the measurement is below the limit of detection. A data dictionary of all variables in the dataset can be viewed in Table \ref{tab:datadictionary}.
 \begin{table}
 
-\caption{\label{tab:datadictionary}Data dictionary for the coal dataset.}
+\caption{\label{tab:datadict}Data dictionary for the coal dataset.}
 \centering
 \begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{7.6cm}}
 \toprule
@@ -1101,72 +1101,218 @@ The motivation for our thesis was largely centered on left-censored data, which 
 
 This first appendix includes all of the R chunks of code that were hidden throughout the document (using the \texttt{include\ =\ FALSE} chunk tag) to help with readability and/or setup.
 
-\hypertarget{in-the-main-file-refref-labels}{%
-\section{In the main file \ref{ref-labels}:}\label{in-the-main-file-refref-labels}}
+\hypertarget{in-chapter-1-introduction}{%
+\section{\texorpdfstring{In \protect\hyperlink{intro}{Chapter 1: Introduction}}{In Chapter 1: Introduction}}\label{in-chapter-1-introduction}}
 
-\hypertarget{in-chapter-refref-labels}{%
-\section{In Chapter \ref{ref-labels}:}\label{in-chapter-refref-labels}}
+No noteworthy code for this chapter.
 
-\hypertarget{in-chapter-refconclusion}{%
-\section{In Chapter @ref(\#conclusion):}\label{in-chapter-refconclusion}}
+\hypertarget{in-chapter-2-simulations}{%
+\section{\texorpdfstring{In \protect\hyperlink{simulations}{Chapter 2: Simulations}}{In Chapter 2: Simulations}}\label{in-chapter-2-simulations}}
+
+Code for the reorganization of dataframes in order to create tables.
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#breaking apart into different datasets for each region}
-\NormalTok{northeast }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ME"}\NormalTok{, }\StringTok{"NH"}\NormalTok{, }\StringTok{"VT"}\NormalTok{, }\StringTok{"NY"}\NormalTok{, }\StringTok{"PA"}\NormalTok{, }\StringTok{"NJ"}\NormalTok{, }\StringTok{"MD"}\NormalTok{, }
-                      \StringTok{"MA"}\NormalTok{, }\StringTok{"DE"}\NormalTok{, }\StringTok{"RI"}\NormalTok{, }\StringTok{"CT"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"northeast"}\NormalTok{)}
+\NormalTok{ln.table }\OtherTok{\textless{}{-}}\NormalTok{ df.ln }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{"prop\_cens"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{3}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\StringTok{" "} \OtherTok{=} \StringTok{"method"}\NormalTok{, }\StringTok{"Sample Size"} \OtherTok{=} \StringTok{"samplesize"}\NormalTok{, }
+         \StringTok{"Avg. Mean"} \OtherTok{=} \StringTok{"Avg\_Mean"}\NormalTok{)}
 
-\NormalTok{midwest }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"OH"}\NormalTok{, }\StringTok{"IN"}\NormalTok{, }\StringTok{"MI"}\NormalTok{, }\StringTok{"IL"}\NormalTok{, }\StringTok{"WI"}\NormalTok{, }\StringTok{"MN"}\NormalTok{, }\StringTok{"IA"}\NormalTok{, }
-                      \StringTok{"MO"}\NormalTok{, }\StringTok{"ND"}\NormalTok{, }\StringTok{"SD"}\NormalTok{, }\StringTok{"NE"}\NormalTok{, }\StringTok{"KS"}\NormalTok{))}\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"midwest"}\NormalTok{)}
+\NormalTok{exp.table }\OtherTok{\textless{}{-}}\NormalTok{ df.exp }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{"prop\_cens"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{3}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\StringTok{" "} \OtherTok{=} \StringTok{"method"}\NormalTok{, }\StringTok{"Sample Size"} \OtherTok{=} \StringTok{"samplesize"}\NormalTok{, }
+         \StringTok{"Avg. Mean"} \OtherTok{=} \StringTok{"Avg\_Mean"}\NormalTok{)}
 
-\NormalTok{west }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"WA"}\NormalTok{, }\StringTok{"MT"}\NormalTok{, }\StringTok{"OR"}\NormalTok{, }\StringTok{"ID"}\NormalTok{, }\StringTok{"WY"}\NormalTok{, }\StringTok{"CA"}\NormalTok{, }\StringTok{"NV"}\NormalTok{, }
-                      \StringTok{"UT"}\NormalTok{, }\StringTok{"CO"}\NormalTok{, }\StringTok{"AZ"}\NormalTok{, }\StringTok{"NM"}\NormalTok{, }\StringTok{"AK"}\NormalTok{, }\StringTok{"HI"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"west"}\NormalTok{)}
-
-\NormalTok{south }\OtherTok{\textless{}{-}}\NormalTok{ import\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(state }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"WV"}\NormalTok{, }\StringTok{"VA"}\NormalTok{, }\StringTok{"KY"}\NormalTok{, }\StringTok{"TN"}\NormalTok{, }\StringTok{"NC"}\NormalTok{, }\StringTok{"SC"}\NormalTok{, }\StringTok{"GA"}\NormalTok{, }
-                      \StringTok{"FL"}\NormalTok{, }\StringTok{"MS"}\NormalTok{, }\StringTok{"AL"}\NormalTok{, }\StringTok{"LA"}\NormalTok{, }\StringTok{"AR"}\NormalTok{, }\StringTok{"OK"}\NormalTok{, }\StringTok{"TX"}\NormalTok{, }
-                      \StringTok{"PR"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region =} \StringTok{"south"}\NormalTok{)}
-
-\CommentTok{\#rejoin them back together for future ref. if needed}
-\NormalTok{full }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(northeast, midwest, west, south) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{reduce}\NormalTok{(full\_join) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"qualifier"}\NormalTok{, }\StringTok{"link"}\NormalTok{))}
-
-\CommentTok{\#getting \# of sites in each state}
-
-\NormalTok{midwest\_n }\OtherTok{\textless{}{-}}\NormalTok{ midwest }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
-
-\NormalTok{northeast\_n }\OtherTok{\textless{}{-}}\NormalTok{ northeast }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
-
-\NormalTok{south\_n }\OtherTok{\textless{}{-}}\NormalTok{ south }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
-
-\NormalTok{west\_n }\OtherTok{\textless{}{-}}\NormalTok{ west }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{distinct}\NormalTok{(site) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{())}
-
-\NormalTok{states\_n }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(midwest\_n, northeast\_n, south\_n, west\_n)}
-
-\NormalTok{state\_name }\OtherTok{\textless{}{-}}\NormalTok{ state.name}
-\NormalTok{state\_abb }\OtherTok{\textless{}{-}}\NormalTok{ state.abb}
-\NormalTok{states\_map }\OtherTok{\textless{}{-}} \FunctionTok{map\_data}\NormalTok{(}\StringTok{"state"}\NormalTok{)}
+\NormalTok{w.table }\OtherTok{\textless{}{-}}\NormalTok{ df.w }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{"prop\_cens"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{3}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\StringTok{" "} \OtherTok{=} \StringTok{"method"}\NormalTok{, }\StringTok{"Sample Size"} \OtherTok{=} \StringTok{"samplesize"}\NormalTok{, }
+         \StringTok{"Avg. Mean"} \OtherTok{=} \StringTok{"Avg\_Mean"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(ln.table, }\AttributeTok{caption =} \StringTok{"Performance metrics of our our }
+\StringTok{             4 methods with data derived from the log{-}normal }
+\StringTok{             distribution with mean = 1 and SD = 0.5."}\NormalTok{, }
+             \AttributeTok{digits =} \DecValTok{5}\NormalTok{, }\AttributeTok{booktabs =} \StringTok{"T"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{font\_size =} \FloatTok{11.5}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pack\_rows}\NormalTok{(}\StringTok{"Censoring Rate = 0.1"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{12}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pack\_rows}\NormalTok{(}\StringTok{"Censoring Rate = 0.3"}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{24}\NormalTok{, }\AttributeTok{latex\_gap\_space =} \StringTok{"1em"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pack\_rows}\NormalTok{(}\StringTok{"Censoring Rate = 0.5"}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{36}\NormalTok{, }\AttributeTok{latex\_gap\_space =} \StringTok{"1em"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(exp.table, }\AttributeTok{caption =} \StringTok{"Performance metrics of our our 3 }
+\StringTok{             methods (MLE method absent) with data derived from the }
+\StringTok{             exponential distribution with a shape parameter = 1."}\NormalTok{, }
+             \AttributeTok{digits =} \DecValTok{5}\NormalTok{, }\AttributeTok{booktabs =} \StringTok{"T"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{font\_size =} \FloatTok{11.5}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pack\_rows}\NormalTok{(}\StringTok{"Censoring Rate = 0.1"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{12}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pack\_rows}\NormalTok{(}\StringTok{"Censoring Rate = 0.3"}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{24}\NormalTok{, }\AttributeTok{latex\_gap\_space =} \StringTok{"1em"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pack\_rows}\NormalTok{(}\StringTok{"Censoring Rate = 0.5"}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{36}\NormalTok{, }\AttributeTok{latex\_gap\_space =} \StringTok{"1em"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(w.table, }\AttributeTok{caption =} \StringTok{"Performance metrics of our our 3 methods }
+\StringTok{             (MLE method absent) with data derived from the Weibull }
+\StringTok{             distribution with a shape parameter = 1 and }
+\StringTok{             scale parameter = 1."}\NormalTok{, }
+             \AttributeTok{digits =} \DecValTok{5}\NormalTok{, }\AttributeTok{booktabs =} \StringTok{"T"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{font\_size =} \FloatTok{11.5}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pack\_rows}\NormalTok{(}\StringTok{"Censoring Rate = 0.1"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{12}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pack\_rows}\NormalTok{(}\StringTok{"Censoring Rate = 0.3"}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{24}\NormalTok{, }\AttributeTok{latex\_gap\_space =} \StringTok{"1em"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pack\_rows}\NormalTok{(}\StringTok{"Censoring Rate = 0.5"}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{36}\NormalTok{, }\AttributeTok{latex\_gap\_space =} \StringTok{"1em"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{in-chapter-3-case-study}{%
+\section{\texorpdfstring{In \protect\hyperlink{casestudy}{Chapter 3: Case Study}}{In Chapter 3: Case Study}}\label{in-chapter-3-case-study}}
+
+\hypertarget{data-dictionary}{%
+\subsection{Data Dictionary}\label{data-dictionary}}
+
+Code for the creation of the data dictionary for our dataset.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dd\_var }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"State"}\NormalTok{, }\StringTok{"Site"}\NormalTok{, }\StringTok{"Disposal Area"}\NormalTok{, }\StringTok{"Type of Well"}\NormalTok{,}
+            \StringTok{"ID of Well"}\NormalTok{, }\StringTok{"Gradient Type"}\NormalTok{, }
+            \StringTok{"Sample Date"}\NormalTok{, }
+            \StringTok{"Contaminant Name"}\NormalTok{, }\StringTok{"Measurement Unit"}\NormalTok{,}
+            \StringTok{"Below Detection"}\NormalTok{, }\StringTok{"Concentration"}\NormalTok{)}
+
+\NormalTok{dd\_varname}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"state"}\NormalTok{, }\StringTok{"site"}\NormalTok{, }\StringTok{"disposal.area"}\NormalTok{, }\StringTok{"type"}\NormalTok{, }\StringTok{"well.id"}\NormalTok{,}
+             \StringTok{"gradient"}\NormalTok{, }\StringTok{"samp.date"}\NormalTok{, }\StringTok{"contaminant"}\NormalTok{,}
+             \StringTok{"measurement.unit"}\NormalTok{, }\StringTok{"below.detection"}\NormalTok{,}
+             \StringTok{"concentration"}\NormalTok{)}
+
+\NormalTok{dd\_desc }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"The state where the site is located."}\NormalTok{,}
+             \StringTok{"The name of the site as it is presented in its}
+\StringTok{             groundwater monitoring report."}\NormalTok{,}
+             \StringTok{"The name of the disposal area(s) as they are presented }
+\StringTok{             in the groundwater monitoring report. Note: some wells }
+\StringTok{             monitor groundwater from more than one disposal unit."}\NormalTok{,}
+             \StringTok{"The type of disposal unit. SI = surface impoundment, }
+\StringTok{             L= landfill, M = mixed multi{-}unit (landfill and surface }
+\StringTok{             impoundment), and U = unknown."}\NormalTok{,}
+             \StringTok{"The identifier given to each monitoring well in the }
+\StringTok{             groundwater monitoring report."}\NormalTok{,}
+             \StringTok{"The location of the groundwater monitoring well }
+\StringTok{             relative to the regulated ash disposal unit it }
+\StringTok{             monitors."}\NormalTok{,}
+             \StringTok{"The date the well was sampled."}\NormalTok{,}
+             \StringTok{"The contaminant name. These have been standardized to }
+\StringTok{             allow for analyses across plants."}\NormalTok{,}
+             \StringTok{"The concentration units. These include mg/l, ug/l, }
+\StringTok{             pCi/l, and standard units (SU) for pH."}\NormalTok{,}
+             \StringTok{"LOD status for the concentration, \textquotesingle{}\textless{}\textquotesingle{} indicates that }
+\StringTok{             the concentration was below the LOD."}\NormalTok{,}
+             \StringTok{"The concentration of the contaminant."}\NormalTok{)}
+
+\NormalTok{dd }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(dd\_var, dd\_varname, dd\_desc)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\StringTok{"Variable"} \OtherTok{=} \StringTok{"dd\_var"}\NormalTok{,}
+         \StringTok{"Variable Name"} \OtherTok{=} \StringTok{"dd\_varname"}\NormalTok{,}
+         \StringTok{"Description"} \OtherTok{=} \StringTok{"dd\_desc"}\NormalTok{) }
+
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(dd, }\AttributeTok{caption =} \StringTok{"Data dictionary for the coal dataset."}\NormalTok{,}
+             \AttributeTok{booktabs =} \StringTok{"T"}\NormalTok{, }\AttributeTok{linesep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{addlinespace"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+             \FunctionTok{column\_spec}\NormalTok{(}\DecValTok{3}\NormalTok{, }\AttributeTok{width =} \StringTok{"7.6cm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{map}{%
+\subsection{Map}\label{map}}
+
+Code for the creation of the US map visualization.
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_usmap}\NormalTok{(}\AttributeTok{data =}\NormalTok{ states\_n, }\AttributeTok{values =} \StringTok{"n"}\NormalTok{, }\AttributeTok{regions =} \StringTok{"states"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_continuous}\NormalTok{(}\AttributeTok{low =} \StringTok{"white"}\NormalTok{, }\AttributeTok{high =} \StringTok{"red"}\NormalTok{, }
+                        \AttributeTok{name =} \StringTok{"Site Counts (2018)"}\NormalTok{, }
+                        \AttributeTok{label =}\NormalTok{ scales}\SpecialCharTok{::}\NormalTok{comma) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"right"}\NormalTok{,}
+        \AttributeTok{panel.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{color =} \StringTok{"white"}\NormalTok{, }
+                                        \AttributeTok{fill =} \StringTok{"white"}\NormalTok{),}
+        \AttributeTok{plot.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{color =} \StringTok{"white"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{health-based-thresholds}{%
+\subsection{Health-based Thresholds}\label{health-based-thresholds}}
+
+Code for the creation of the health-based thresholds dataframe.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#CODE TO MAKE HEALTH BASED THRESHOLDS TABLE}
+
+\NormalTok{hbt\_names }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Antimony"}\NormalTok{, }\StringTok{"Arsenic"}\NormalTok{, }\StringTok{"Barium"}\NormalTok{, }\StringTok{"Beryllium"}\NormalTok{,}
+               \StringTok{"Boron"}\NormalTok{, }\StringTok{"Cadmium"}\NormalTok{, }\StringTok{"Chromium"}\NormalTok{, }\StringTok{"Cobalt"}\NormalTok{, }\StringTok{"Fluoride"}\NormalTok{,}
+               \StringTok{"Lead"}\NormalTok{, }\StringTok{"Lithium"}\NormalTok{, }\StringTok{"Mercury"}\NormalTok{, }\StringTok{"Molybdenum"}\NormalTok{,}
+               \StringTok{"Radium"}\NormalTok{, }\StringTok{"Selenium"}\NormalTok{, }\StringTok{"Sulfate"}\NormalTok{, }\StringTok{"Thallium"}\NormalTok{)}
+
+\NormalTok{hbt\_values }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }
+                \DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{4}\NormalTok{,}
+                \DecValTok{15}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{40}\NormalTok{, }
+                \DecValTok{5}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{500}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+
+\NormalTok{hbt\_units }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"ug/L"}\NormalTok{, }\StringTok{"ug/L"}\NormalTok{, }\StringTok{"mg/L"}\NormalTok{, }\StringTok{"ug/L"}\NormalTok{, }
+               \StringTok{"mg/L"}\NormalTok{, }\StringTok{"ug/L"}\NormalTok{, }\StringTok{"ug/L"}\NormalTok{, }\StringTok{"ug/L"}\NormalTok{, }\StringTok{"mg/L"}\NormalTok{,}
+               \StringTok{"ug/L"}\NormalTok{, }\StringTok{"ug/L"}\NormalTok{, }\StringTok{"ug/L"}\NormalTok{,}\StringTok{"ug/L"}\NormalTok{, }
+               \StringTok{"pCi/L"}\NormalTok{, }\StringTok{"ug/L"}\NormalTok{, }\StringTok{"mg/L"}\NormalTok{, }\StringTok{"ug/L"}\NormalTok{)}
+
+\NormalTok{hbt }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(hbt\_names, hbt\_values, hbt\_units)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\StringTok{"Contaminant"} \OtherTok{=} \StringTok{"hbt\_names"}\NormalTok{,}
+         \StringTok{"Exceedance Limit"} \OtherTok{=} \StringTok{"hbt\_values"}\NormalTok{,}
+         \StringTok{"Unit"} \OtherTok{=} \StringTok{"hbt\_units"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{top-10-tables}{%
+\subsection{Top 10 Tables}\label{top-10-tables}}
+
+Code for the creation of our tables for the top 10 sites, according to a specified method.
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{options}\NormalTok{(}\AttributeTok{scipen=}\DecValTok{999}\NormalTok{) }\CommentTok{\#prevent scientific notation}
+
+\NormalTok{top10\_control.table }\OtherTok{\textless{}{-}}\NormalTok{ top10\_control }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\StringTok{"Site"} \OtherTok{=} \StringTok{"site"}\NormalTok{, }
+         \StringTok{"Composite Score"} \OtherTok{=} \StringTok{"composite\_score"}\NormalTok{)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(top10\_control.table, }\AttributeTok{caption =} \StringTok{"Top 10 most contaminated sites }
+\StringTok{             for our baseline (control) implementation."}\NormalTok{, }
+             \AttributeTok{digits =} \DecValTok{5}\NormalTok{, }\AttributeTok{booktabs =} \StringTok{"T"}\NormalTok{, }\AttributeTok{linesep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{addlinespace"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{font\_size =} \FloatTok{11.5}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{top10\_substitution.table }\OtherTok{\textless{}{-}}\NormalTok{ top10\_substitution }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\StringTok{"Site"} \OtherTok{=} \StringTok{"site"}\NormalTok{, }
+         \StringTok{"Composite Score"} \OtherTok{=} \StringTok{"composite\_score"}\NormalTok{)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(top10\_substitution.table, }\AttributeTok{caption =} \StringTok{"Top 10 most contaminated sites }
+\StringTok{             for our substitution method implementation."}\NormalTok{, }
+             \AttributeTok{digits =} \DecValTok{5}\NormalTok{, }\AttributeTok{booktabs =} \StringTok{"T"}\NormalTok{, }\AttributeTok{linesep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{addlinespace"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{font\_size =} \FloatTok{11.5}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{top10\_km.table }\OtherTok{\textless{}{-}}\NormalTok{ top10\_km }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\StringTok{"Site"} \OtherTok{=} \StringTok{"site"}\NormalTok{, }
+         \StringTok{"Composite Score"} \OtherTok{=} \StringTok{"composite\_score"}\NormalTok{)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(top10\_km.table, }\AttributeTok{caption =} \StringTok{"Top 10 most contaminated sites }
+\StringTok{             for our KM method implementation."}\NormalTok{, }
+             \AttributeTok{digits =} \DecValTok{5}\NormalTok{, }\AttributeTok{booktabs =} \StringTok{"T"}\NormalTok{, }\AttributeTok{linesep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{addlinespace"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{font\_size =} \FloatTok{11.5}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{in-chapter-4-conclusion}{%
+\section{\texorpdfstring{In \protect\hyperlink{conclusion}{Chapter 4: Conclusion}}{In Chapter 4: Conclusion}}\label{in-chapter-4-conclusion}}
+
+No noteworthy code for this chapter.
+
 \hypertarget{simulationcs-appendix}{%
 \chapter{Simulation/CS Appendix}\label{simulationcs-appendix}}
 
@@ -1517,6 +1663,16 @@ The second appendix, Appendix B, contains all necessary code required to run the
 \hypertarget{case-study}{%
 \section{Case Study}\label{case-study}}
 
+\hypertarget{libraries-1}{%
+\subsection{Libraries}\label{libraries-1}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\FunctionTok{library}\NormalTok{(mosaic)}
+\FunctionTok{library}\NormalTok{(usmap)}
+\end{Highlighting}
+\end{Shaded}
 \hypertarget{preliminary}{%
 \subsection{Preliminary}\label{preliminary}}
 \begin{Shaded}

@@ -506,7 +506,7 @@ df.w <- df.tall %>%
   ungroup()
 ```
 
-```{r, echo = FALSE, message = FALSE, cache = TRUE}
+```{r tablesorg, echo = FALSE, message = FALSE, cache = TRUE}
 ln.table <- df.ln %>%
   select(-"prop_cens") %>%
   select(c(2, 1, 3:6)) %>%

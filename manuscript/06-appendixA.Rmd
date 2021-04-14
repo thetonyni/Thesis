@@ -9,15 +9,62 @@ The first appendix must start with the above text. Do not remove!
 
 This first appendix includes all of the R chunks of code that were hidden throughout the document (using the `include = FALSE` chunk tag) to help with readability and/or setup.
 
-## In the main file \@ref(ref-labels):
+## In [Chapter 1: Introduction](#intro)
 
-```{r ref.label = 'include_packages', results = 'hide', echo = TRUE}
+No noteworthy code for this chapter.
+
+## In [Chapter 2: Simulations](#simulations)
+
+Code for the reorganization of dataframes in order to create tables.
+
+```{r app_tablesorg, ref.label="tablesorg", echo=TRUE, eval=FALSE}
 ```
 
-## In Chapter \@ref(ref-labels):
-
-## In Chapter \@ref(#conclusion):
-
-```{r ref.label="prelim", echo=TRUE, eval=FALSE}
+```{r app_lntable, ref.label="lntable", echo=TRUE, eval=FALSE}
 ```
 
+```{r app_exptable, ref.label="exptable", echo=TRUE, eval=FALSE}
+```
+
+```{r app_wtable, ref.label="wtable", echo=TRUE, eval=FALSE}
+```
+
+## In [Chapter 3: Case Study](#casestudy)
+
+### Data Dictionary
+
+Code for the creation of the data dictionary for our dataset.
+
+```{r app_datadict, ref.label="datadict", echo=TRUE, eval=FALSE}
+```
+
+### Map
+
+Code for the creation of the US map visualization.
+
+```{r app_usmap, ref.label="usmap", echo=TRUE, eval=FALSE}
+```
+
+### Health-based Thresholds
+
+Code for the creation of the health-based thresholds dataframe.
+
+```{r app_hbttable, ref.label="hbttable", echo=TRUE, eval=FALSE}
+```
+
+### Top 10 Tables
+
+Code for the creation of our tables for the top 10 sites, according to a specified method.
+
+```{r app_top10baseline, ref.label="top10baseline", echo=TRUE, eval=FALSE}
+```
+
+```{r app_top10substitution, ref.label="top10substitution", echo=TRUE, eval=FALSE}
+```
+
+```{r app_top10km, ref.label="top10km", echo=TRUE, eval=FALSE}
+```
+
+## In [Chapter 4: Conclusion](#conclusion)
+
+No noteworthy code for this chapter.
