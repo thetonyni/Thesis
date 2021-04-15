@@ -141,7 +141,15 @@ left-censored data, and introduces four common methods: substitution, maxmimum l
 }
 
 \Acknowledgments{
-Use this space to thank those who have helped you in the thesis process (professors, staff, friends, family, etc.). If you had special funding to conduct your thesis work, that should be acknowledged here as well.
+Throughout the writing of this thesis, I have garnered an immense amount of guidance and support from my advisors, professors, and friends.
+
+I would first like to thank my thesis advisor, Brittney Bailey, for her unwavering belief in me and my skills during the writing of this thesis. Her expertise and knowledge in the field has aided me in all stages of my thesis writing process: from the formulation of a research topic, literature search, and the writing of the actual thesis itself. I would not have been able to write my thesis in this period of tumultuous events if it were not for her steadfast support and encouragement, and for that, I cannot express my utmost gratitude.
+
+I would also like to thank all of my professors who have guided me thus far in my academic journey in statistics. Professor Amy Wagaman for her countless help throughout the years as my major advisor, professor, and mentor. Professor Nick Horton for helping instill values of statistical integrity and sharing his love of all fields of statistics to me; Professor Donges for fostering my knowledge in probability and theory; and Professor Katharine Correia for cultivating my enthusiasm for data science and statistical applications. I don't think that I would be here writing a thesis, without their teachings, guidance, and support over my four years at Amherst.
+
+I also need to thank my friends who have been alongside me throughout our statistical journey at Amherst: Breanna Richards, Jasper Flint, and Sabir Meah, our early morning, mid-afternoon, and even late night homework and study sessions, especially after the pandemic, helped keep me sane and motivated in a time where I had trouble keeping hope. Perhaps also just for the good conversation too.
+
+Thank you also to all the people in the Greenway Group over my four years at Amherst who have motivated me in my times of darkness, lifted me up in times of doubt, and cheered me on in all my pursuits.
 }
 
 \Dedication{
@@ -272,7 +280,15 @@ Use this space to thank those who have helped you in the thesis process (profess
     left-censored data, and introduces four common methods: substitution, maxmimum likelihood, kaplan-meier, and regression on order statistics, which are commonly used to handle left-censored missingness. We follow this discussion by performing a simulation study, designed to compare and contrast the effectiveness of these methods, while taking into account the distribution of the simulated data, censoring rates, and the size of the dataset. Finally, we explore left-censored data in a case-study focusing on coal ash contamination in groundwater wells and use our four methods to obtain mean estimates of contaminant concentrations to identify the top ten most contaminated wells across the U.S.
   \end{abstract}
   \begin{acknowledgments}
-    Use this space to thank those who have helped you in the thesis process (professors, staff, friends, family, etc.). If you had special funding to conduct your thesis work, that should be acknowledged here as well.
+    Throughout the writing of this thesis, I have garnered an immense amount of guidance and support from my advisors, professors, and friends.
+
+    I would first like to thank my thesis advisor, Brittney Bailey, for her unwavering belief in me and my skills during the writing of this thesis. Her expertise and knowledge in the field has aided me in all stages of my thesis writing process: from the formulation of a research topic, literature search, and the writing of the actual thesis itself. I would not have been able to write my thesis in this period of tumultuous events if it were not for her steadfast support and encouragement, and for that, I cannot express my utmost gratitude.
+
+    I would also like to thank all of my professors who have guided me thus far in my academic journey in statistics. Professor Amy Wagaman for her countless help throughout the years as my major advisor, professor, and mentor. Professor Nick Horton for helping instill values of statistical integrity and sharing his love of all fields of statistics to me; Professor Donges for fostering my knowledge in probability and theory; and Professor Katharine Correia for cultivating my enthusiasm for data science and statistical applications. I don't think that I would be here writing a thesis, without their teachings, guidance, and support over my four years at Amherst.
+
+    I also need to thank my friends who have been alongside me throughout our statistical journey at Amherst: Breanna Richards, Jasper Flint, and Sabir Meah, our early morning, mid-afternoon, and even late night homework and study sessions, especially after the pandemic, helped keep me sane and motivated in a time where I had trouble keeping hope. Perhaps also just for the good conversation too.
+
+    Thank you also to all the people in the Greenway Group over my four years at Amherst who have motivated me in my times of darkness, lifted me up in times of doubt, and cheered me on in all my pursuits.
   \end{acknowledgments}
 
   \hypersetup{linkcolor=black}
@@ -833,7 +849,7 @@ The data used in the study are from a collection of results published by each co
 
 The coal dataset contains information regarding chemical concentrations at coal plants. A coal plant consists of multiple disposal areas for the coal ash that it produces. At each disposal area, there are specific locations that groundwater is being measured, known as wells, which represent an observation in the dataset. There are over 265 coal plants, also known as ``sites,'' in this dataset. A single site is divided into multiple subsections, known as ``disposal areas.'' Each well can be associated with a disposal area and subsequently, a site.
 
-Specifics regarding the variables in the coal dataset can be viewed in Table \ref{tab:datadictionary}. Each observation in the dataset represents a well which measures the concentration of the contaminant in question. Most of the variables are explanatory, such as the state, site, and disposal area in which the well is located in. However, there are several variables specific to groundwater data collection which are important to note.
+Specifics regarding the variables in the coal dataset can be viewed in Table \ref{tab:datadict}. Each observation in the dataset represents a well which measures the concentration of the contaminant in question. Most of the variables are explanatory, such as the state, site, and disposal area in which the well is located in. However, there are several variables specific to groundwater data collection which are important to note.
 
 There are four different types that each well can be classified as, which is represented in the \texttt{type} variable. These consist of: \texttt{L}, \texttt{M}, \texttt{SI}, and \texttt{U} which stand for ``landfill,'' ``mixed,'' ``surface-impacted,'' and ``unknown.'' We have already mentioned downgradient and upgradient wells during our discussion of the coal ash rule, but we will provide more detail now. In a groundwater monitoring system it is common to have designated wells for specific purposes. A common approach in a coal site is to have separate wells, upgradient wells, whose purpose is to measure ``natural'' water conditions and downgradient wells, which measures water conditions after it passes through a coal ash disposal area.
 

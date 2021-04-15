@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  15 APR 2021 08:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  15 APR 2021 09:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -654,8 +654,8 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \FrameSep=\dimen260
 )
 \cslhangindent=\skip83
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 25
-9.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 26
+7.
 (c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -667,30 +667,30 @@ File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
 ) (./Tony-Ni_StatThesis.aux)
 \openout1 = `Tony-Ni_StatThesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 259.
-LaTeX Font Info:    ... okay on input line 259.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 259.
-LaTeX Font Info:    ... okay on input line 259.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 259.
-LaTeX Font Info:    ... okay on input line 259.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 259.
-LaTeX Font Info:    ... okay on input line 259.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 259.
-LaTeX Font Info:    ... okay on input line 259.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 259.
-LaTeX Font Info:    ... okay on input line 259.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 259.
-LaTeX Font Info:    ... okay on input line 259.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 259.
-LaTeX Font Info:    ... okay on input line 259.
-LaTeX Info: Redefining \microtypecontext on input line 259.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 267.
+LaTeX Font Info:    ... okay on input line 267.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 267.
+LaTeX Font Info:    ... okay on input line 267.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 267.
+LaTeX Font Info:    ... okay on input line 267.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 267.
+LaTeX Font Info:    ... okay on input line 267.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 267.
+LaTeX Font Info:    ... okay on input line 267.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 267.
+LaTeX Font Info:    ... okay on input line 267.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 267.
+LaTeX Font Info:    ... okay on input line 267.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 267.
+LaTeX Font Info:    ... okay on input line 267.
+LaTeX Info: Redefining \microtypecontext on input line 267.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
-LaTeX Info: Redefining \showhyphens on input line 259.
+LaTeX Info: Redefining \showhyphens on input line 267.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -711,7 +711,7 @@ df-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring ON on input line 259.
+Package hyperref Info: Link coloring ON on input line 267.
 
 (c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.s
 ty
@@ -727,9 +727,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count302
 )
-LaTeX Info: Redefining \ref on input line 259.
-LaTeX Info: Redefining \pageref on input line 259.
-LaTeX Info: Redefining \nameref on input line 259.
+LaTeX Info: Redefining \ref on input line 267.
+LaTeX Info: Redefining \pageref on input line 267.
+LaTeX Info: Redefining \nameref on input line 267.
 (./Tony-Ni_StatThesis.out) (./Tony-Ni_StatThesis.out)
 \@outlinefile=\write4
 \openout4 = `Tony-Ni_StatThesis.out'.
@@ -754,10 +754,10 @@ x.map}] [2
 ] [2
 
 
-] [3] [4
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-] (./Tony-Ni_StatThesis.toc
+[3] [4] (./Tony-Ni_StatThesis.toc
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
 .
 (c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
@@ -804,7 +804,10 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.c
 fg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-) [5] [6])
+) [5
+
+
+] [6])
 \tf@toc=\write5
 \openout5 = `Tony-Ni_StatThesis.toc'.
 
@@ -831,7 +834,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.304 
+l.320 
        [1
 
 ]
@@ -839,7 +842,7 @@ l.304
 File: figures/right_censoring_example.png Graphic file (type png)
 <use figures/right_censoring_example.png>
 Package pdftex.def Info: figures/right_censoring_example.png  used on input lin
-e 311.
+e 327.
 (pdftex.def)             Requested size: 433.62pt x 243.4199pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -848,14 +851,14 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.317 A
+l.333 A
        s illustrated by individual A in Figure \ref{fig:rightcensoringexampl...
 [2] [3 <./figures/right_censoring_example.png>]
 <figures/left_censoring_example_fix.png, id=452, 740.58861pt x 314.8396pt>
 File: figures/left_censoring_example_fix.png Graphic file (type png)
 <use figures/left_censoring_example_fix.png>
 Package pdftex.def Info: figures/left_censoring_example_fix.png  used on input 
-line 329.
+line 345.
 (pdftex.def)             Requested size: 433.62pt x 184.34616pt.
 [4 <./figures/left_censoring_example_fix.png>]
 <figures/interval_censoring_example_fix.png, id=458, 684.77614pt x 220.38773pt>
@@ -863,10 +866,10 @@ line 329.
 File: figures/interval_censoring_example_fix.png Graphic file (type png)
 <use figures/interval_censoring_example_fix.png>
 Package pdftex.def Info: figures/interval_censoring_example_fix.png  used on in
-put line 345.
+put line 361.
 (pdftex.def)             Requested size: 433.62pt x 139.55792pt.
 [5 <./figures/interval_censoring_example_fix.png>] [6]
-Underfull \hbox (badness 1546) in paragraph at lines 379--379
+Underfull \hbox (badness 1546) in paragraph at lines 395--395
 |[]\T1/lmr/bx/n/14.4 Parameter Es-ti-ma-tion Tech-niques for Left-Censored
  []
 
@@ -900,26 +903,26 @@ Underfull \vbox (badness 1194) has occurred while \output is active []
 
 [21]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 5
-75.
+91.
 (c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [22]
-LaTeX Font Info:    Calculating math sizes for size <11.5> on input line 593.
+LaTeX Font Info:    Calculating math sizes for size <11.5> on input line 609.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <11.5> on input line 593.
+(Font)              <11.5> on input line 609.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8.04996> on input line 593.
+(Font)              <8.04996> on input line 609.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5.75> on input line 593.
+(Font)              <5.75> on input line 609.
 
 LaTeX Font Warning: Font shape `U/lasy/m/n' in size <11.5> not available
-(Font)              size <12> substituted on input line 593.
+(Font)              size <12> substituted on input line 609.
 
 
-LaTeX Warning: Float too large for page by 9.06178pt on input line 697.
+LaTeX Warning: Float too large for page by 9.06178pt on input line 713.
 
 
-LaTeX Warning: Float too large for page by 9.06178pt on input line 754.
+LaTeX Warning: Float too large for page by 9.06178pt on input line 770.
 
 [23] [24] [25] [26]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -939,37 +942,32 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 File: figures/upgradientdowngradient.jpg Graphic file (type jpg)
 <use figures/upgradientdowngradient.jpg>
 Package pdftex.def Info: figures/upgradientdowngradient.jpg  used on input line
- 804.
+ 820.
 (pdftex.def)             Requested size: 433.62pt x 241.79337pt.
 [32 <./figures/upgradientdowngradient.jpg>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[33] [34]
-
-LaTeX Warning: Reference `tab:datadictionary' on page 35 undefined on input lin
-e 836.
-
-[35]
+[33] [34] [35]
 
 LaTeX Warning: Reference `tab:datadictionary' on page 36 undefined on input lin
-e 842.
+e 858.
 
 
-Overfull \hbox (11.25261pt too wide) in paragraph at lines 847--885
+Overfull \hbox (11.25261pt too wide) in paragraph at lines 863--901
  [][] 
  []
 
 [36] [37]
-<Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf, id=657, 469.755pt x 325.215
+<Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf, id=658, 469.755pt x 325.215
 pt>
 File: Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf Graphic file (type pdf)
 
 <use Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf>
 Package pdftex.def Info: Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf  use
-d on input line 901.
+d on input line 917.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (36.13387pt too wide) in paragraph at lines 901--902
+Overfull \hbox (36.13387pt too wide) in paragraph at lines 917--918
  [][] 
  []
 
@@ -998,7 +996,7 @@ Appendix A.
 
 ] [50]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-1210.
+1226.
 (c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -1009,72 +1007,72 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 ]
 Appendix B.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1344.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1360.
 [55]
-Underfull \vbox (badness 10000) detected at line 1411
+Underfull \vbox (badness 10000) detected at line 1427
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1411
+Underfull \vbox (badness 10000) detected at line 1427
  []
 
 [56]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [57] [58]
-Underfull \vbox (badness 10000) detected at line 1546
+Underfull \vbox (badness 10000) detected at line 1562
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1546
+Underfull \vbox (badness 10000) detected at line 1562
  []
 
 [59] [60]
-Underfull \vbox (badness 10000) detected at line 1662
+Underfull \vbox (badness 10000) detected at line 1678
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1662
+Underfull \vbox (badness 10000) detected at line 1678
  []
 
 [61]
-Underfull \vbox (badness 10000) detected at line 1662
+Underfull \vbox (badness 10000) detected at line 1678
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1662
+Underfull \vbox (badness 10000) detected at line 1678
  []
 
 [62] [63]
-Underfull \vbox (badness 10000) detected at line 1735
+Underfull \vbox (badness 10000) detected at line 1751
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1735
+Underfull \vbox (badness 10000) detected at line 1751
  []
 
 [64] [65]
-Underfull \vbox (badness 10000) detected at line 1912
+Underfull \vbox (badness 10000) detected at line 1928
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1912
+Underfull \vbox (badness 10000) detected at line 1928
  []
 
 [66]
-Underfull \vbox (badness 10000) detected at line 1912
+Underfull \vbox (badness 10000) detected at line 1928
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1912
+Underfull \vbox (badness 10000) detected at line 1928
  []
 
 [67]
-Underfull \vbox (badness 10000) detected at line 1912
+Underfull \vbox (badness 10000) detected at line 1928
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1912
+Underfull \vbox (badness 10000) detected at line 1928
  []
 
 [68] [69]
@@ -1085,14 +1083,14 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 ] [75] [76
 
 ]
-Underfull \hbox (badness 3872) in paragraph at lines 2133--2135
+Underfull \hbox (badness 3872) in paragraph at lines 2149--2151
  \T1/lmr/m/n/12 (+20) Left-Censored En-vi-ron-men-tal Data Us-ing R. \T1/lmr/m/
 it/12 (+20) Tech-notes\T1/lmr/m/n/12 (+20) , \T1/lmr/m/it/12 (+20) 9\T1/lmr/m/n
 /12 (+20) (2), 153--172.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2133--2135
+Underfull \hbox (badness 10000) in paragraph at lines 2149--2151
  \T1/lmr/m/n/12 (+20) Re-trieved from [][]$\T1/lmtt/m/n/12 https : / / www . ep
 a . gov / sites / production / files / 2016 -[]
  []
@@ -1103,13 +1101,13 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [77
 
 ]
-Underfull \hbox (badness 2932) in paragraph at lines 2145--2147
+Underfull \hbox (badness 2932) in paragraph at lines 2161--2163
  [][]\T1/lmr/m/n/12 (+20) Environmental In-tegrity Project. (2020). Coal Ash Gr
 ound-wa-ter Con-
  []
 
 
-Underfull \hbox (badness 1859) in paragraph at lines 2145--2147
+Underfull \hbox (badness 1859) in paragraph at lines 2161--2163
  \T1/lmr/m/n/12 (+20) tam-i-na-tion: Doc-u-ment-ing Coal Ash Pol-lu-tion. Re-tr
 ieved from [][]$\T1/lmtt/m/n/12 https :
  []
@@ -1118,7 +1116,7 @@ ieved from [][]$\T1/lmtt/m/n/12 https :
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [78]
-Underfull \hbox (badness 1237) in paragraph at lines 2181--2183
+Underfull \hbox (badness 1237) in paragraph at lines 2197--2199
  \T1/lmr/m/n/12 (+20) tiles us-ing cen-sored data. \T1/lmr/m/it/12 (+20) Wa-ter
  Re-sources Re-search\T1/lmr/m/n/12 (+20) , \T1/lmr/m/it/12 (+20) 32\T1/lmr/m/n
 /12 (+20) (4), 1005--1012.
@@ -1140,12 +1138,12 @@ LaTeX Warning: There were undefined references.
  )
 (\end occurred inside a group at level 1)
 
-### semi simple group (level 1) entered at line 261 (\begingroup)
+### semi simple group (level 1) entered at line 269 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
  12922 strings out of 481466
  205244 string characters out of 5920170
- 588987 words of memory out of 5000000
+ 590722 words of memory out of 5000000
  28928 multiletter control sequences out of 15000+600000
  607961 words of font info for 143 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -1173,10 +1171,10 @@ lmsy8.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public
 /lm/lmtk10.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
 ublic/lm/lmtt12.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/ty
 pe1/public/lm/lmtti10.pfb>
-Output written on Tony-Ni_StatThesis.pdf (94 pages, 548881 bytes).
+Output written on Tony-Ni_StatThesis.pdf (94 pages, 550659 bytes).
 PDF statistics:
- 1056 PDF objects out of 1200 (max. 8388607)
- 928 compressed objects within 10 object streams
+ 1057 PDF objects out of 1200 (max. 8388607)
+ 929 compressed objects within 10 object streams
  280 named destinations out of 1000 (max. 500000)
  10778 words of extra memory for PDF output out of 12000 (max. 10000000)
 
