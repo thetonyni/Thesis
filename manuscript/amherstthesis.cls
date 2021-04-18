@@ -244,7 +244,7 @@
     \singlespacing
     \setcounter{page}{1}
     \null\vfil
-    {\fontsize{24}{26}\selectfont \@title}\\
+    {\fontsize{22}{24}\selectfont \@title}\\
     \vfil
     \vfil
     \textit{\@author}\\

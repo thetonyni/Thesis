@@ -65,15 +65,3 @@ The second appendix, Appendix B, contains all necessary code required to run the
 
 ```{r app_km, ref.label= "km", echo=TRUE, eval=FALSE}
 ```
-
-### MLE (excluded)
-
-```{r app_mle, ref.label= "mle", echo=TRUE, eval=FALSE}
-```
-
-### ROS (excluded)
-
-```{r app_ros, ref.label= "ros", echo=TRUE, eval=FALSE}
-```
-
-

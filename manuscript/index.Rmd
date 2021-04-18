@@ -1,5 +1,5 @@
 ---
-title: 'Parameter Estimation Methods with Left-Censored Missingness'
+title: 'Evaluation of Parameter Estimation Methods to Handle Left-Censored Missingness'
 author: 'Tony Ni'
 date: 'April 28, 2021'
 institution: 'Amherst College'
@@ -29,8 +29,9 @@ acknowledgments: |
 bibliography: bib/library.bib #change
 csl: csl/apa.csl
 # Uncomment the following to include any additional LaTeX packages
-# header-includes:
+header-includes:
 # - \usepackage{latexPackageName}
+- \raggedbottom
 ---
 
 <!-----------------------------------------------------------------------------

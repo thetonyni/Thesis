@@ -24,6 +24,7 @@
 \usepackage{rotating}
 \usepackage{fancyvrb}
 % User-added packages:
+	\raggedbottom
 	\usepackage{booktabs}
  \usepackage{longtable}
  \usepackage{array}
@@ -145,11 +146,13 @@ Throughout the writing of this thesis, I have garnered an immense amount of guid
 
 I would first like to thank my thesis advisor, Brittney Bailey, for her unwavering belief in me and my skills during the writing of this thesis. Her expertise and knowledge in the field has aided me in all stages of my thesis writing process: from the formulation of a research topic, literature search, and the writing of the actual thesis itself. I would not have been able to write my thesis in this period of tumultuous events if it were not for her steadfast support and encouragement, and for that, I cannot express my utmost gratitude.
 
-I would also like to thank all of my professors who have guided me thus far in my academic journey in statistics. Professor Amy Wagaman for her countless help throughout the years as my major advisor, professor, and mentor. Professor Nick Horton for helping instill values of statistical integrity and sharing his love of all fields of statistics to me; Professor Donges for fostering my knowledge in probability and theory; and Professor Katharine Correia for cultivating my enthusiasm for data science and statistical applications. I don't think that I would be here writing a thesis, without their teachings, guidance, and support over my four years at Amherst.
+I would also like to thank all of my professors who have guided me thus far in my academic journey in statistics. I don't think that I would be here writing a thesis, without their teachings, guidance, and support over my four years at Amherst.
 
-I also need to thank my friends who have been alongside me throughout our statistical journey at Amherst: Breanna Richards, Jasper Flint, and Sabir Meah, our early morning, mid-afternoon, and even late night homework and study sessions, especially after the pandemic, helped keep me sane and motivated in a time where I had trouble keeping hope. Perhaps also just for the good conversation too.
+I also need to thank my friends who have been alongside me throughout our statistical journey at Amherst: Breanna Richards, Jasper Flint, and Sabir Meah. Our early morning, mid-afternoon, and even late night homework and study sessions, especially after the pandemic, helped keep me sane and motivated in a time where I had trouble keeping hope. Perhaps also just for the good conversation too.
 
 Thank you also to all the people in the Greenway Group over my four years at Amherst who have motivated me in my times of darkness, lifted me up in times of doubt, and cheered me on in all my pursuits.
+
+This has been a wonderful endeavor to pursue and I'm very grateful for all my supporters who have enabled me to write this thesis.
 }
 
 \Dedication{
@@ -219,7 +222,7 @@ Thank you also to all the people in the Greenway Group over my four years at Amh
   framerule = 1.5mm, rulecolor = \color{black!15}
   }
 
-\title{Parameter Estimation Methods with Left-Censored Missingness}
+\title{Evaluation of Parameter Estimation Methods to Handle Left-Censored Missingness}
 \author{Tony Ni}
 \date{April 28, 2021}
 \division{}
@@ -284,11 +287,13 @@ Thank you also to all the people in the Greenway Group over my four years at Amh
 
     I would first like to thank my thesis advisor, Brittney Bailey, for her unwavering belief in me and my skills during the writing of this thesis. Her expertise and knowledge in the field has aided me in all stages of my thesis writing process: from the formulation of a research topic, literature search, and the writing of the actual thesis itself. I would not have been able to write my thesis in this period of tumultuous events if it were not for her steadfast support and encouragement, and for that, I cannot express my utmost gratitude.
 
-    I would also like to thank all of my professors who have guided me thus far in my academic journey in statistics. Professor Amy Wagaman for her countless help throughout the years as my major advisor, professor, and mentor. Professor Nick Horton for helping instill values of statistical integrity and sharing his love of all fields of statistics to me; Professor Donges for fostering my knowledge in probability and theory; and Professor Katharine Correia for cultivating my enthusiasm for data science and statistical applications. I don't think that I would be here writing a thesis, without their teachings, guidance, and support over my four years at Amherst.
+    I would also like to thank all of my professors who have guided me thus far in my academic journey in statistics. I don't think that I would be here writing a thesis, without their teachings, guidance, and support over my four years at Amherst.
 
-    I also need to thank my friends who have been alongside me throughout our statistical journey at Amherst: Breanna Richards, Jasper Flint, and Sabir Meah, our early morning, mid-afternoon, and even late night homework and study sessions, especially after the pandemic, helped keep me sane and motivated in a time where I had trouble keeping hope. Perhaps also just for the good conversation too.
+    I also need to thank my friends who have been alongside me throughout our statistical journey at Amherst: Breanna Richards, Jasper Flint, and Sabir Meah. Our early morning, mid-afternoon, and even late night homework and study sessions, especially after the pandemic, helped keep me sane and motivated in a time where I had trouble keeping hope. Perhaps also just for the good conversation too.
 
     Thank you also to all the people in the Greenway Group over my four years at Amherst who have motivated me in my times of darkness, lifted me up in times of doubt, and cheered me on in all my pursuits.
+
+    This has been a wonderful endeavor to pursue and I'm very grateful for all my supporters who have enabled me to write this thesis.
   \end{acknowledgments}
 
   \hypersetup{linkcolor=black}
@@ -392,9 +397,9 @@ Berthouex (1993) discusses the prevalence in regards to the practice of censorin
 Further supporting the stance of keeping all concentration measurements rather than only those above the detection limit, Monte-Carlo experiments were conducted by Gllllom, Kirsch, Gilroy, \& Survey (1984) to investigate trend-detection for water-quality data. Trend detection is the practice of determining whether the values of a random variable generally increase or decrease over a period of time. They found a general relationship of decreasing trend detection percentages with increased censoring levels, attributing this to the limited availability of information in censored data.
 
 \hypertarget{Approaches}{%
-\section{Parameter Estimation Techniques for Left-Censored Data}\label{Approaches}}
+\section{Parameter Estimation for Left-Censored Data}\label{Approaches}}
 
-It is important to note that the values below the LOD still contain information, specifically that the values is between the lower bound value (if it exists) and the LOD (Chen et al., 2011). As such, there are a variety of statistical treatments to handle censored data which have been popularized in the statistical literature.
+It is important to note that the values below the LOD still contain information, specifically that the values is between the lower bound value (if it exists) and the LOD (Chen, Quandt, Grzywacz, \& Arcury, 2011). As such, there are a variety of statistical treatments to handle censored data which have been popularized in the statistical literature.
 
 Before we discuss the techniques which have been popularized through literature and studies regarding parameter estimation with left-censored data, it important to discuss \emph{omission}, the deletion of data points which are deemed to be invalid as a result of left-censoring or any other deficiencies in the data. As a result of being simple to comprehend and implement, omission is a common technique used in lieu of specialized techniques designed to handle missing data.
 
@@ -403,7 +408,7 @@ One type of omission is known as \emph{available-case analysis}, in which statis
 Over the past century, a myriad of methods to deal with censoring have been developed to counter this issue of discarding data with omission-based techniques -- some more statistically sound than others. We will review some of the more common methods to estimate descriptive statistics involving censored data, which include: substitution, maximum likelihood estimation, Kaplan-Meier, and regression on order statistics.
 
 \hypertarget{Substitution}{%
-\subsection{Substitution Method}\label{Substitution}}
+\subsection{Substitution}\label{Substitution}}
 
 The first technique we will discuss is the substitution method, which involves imputing in a replacement value in lieu of the censored data point. As a method commonly condemned in papers as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences (Canales, 2018).
 
@@ -413,7 +418,7 @@ Proponents of the substitution method claim that the replacement value \(\frac{L
 
 Regardless of which replacement value is used, once a dataset is generated containing these replacement values, analysis continues as is, utilizing this new dataset.
 
-As mentioned previously, contention between whether this method is statistically sound or not remains to the present day. The lack of a global, standardized replacement value to substitute is one of the most pronounced downsides of this method. Different disciplines have their own suggested ``best'' replacement value to use, an example being \(\frac{3}{4}\) times the LOD being a common replacement value in geochemistry (Crovelli, 1993). Due to the lack of standardization, many regard substitution techniques as a non-rigorous, statistically unsound method for handling left-censored data (Chen et al., 2011).
+As mentioned previously, contention between whether this method is statistically sound or not remains to the present day. The lack of a global, standardized replacement value to substitute is one of the most pronounced downsides of this method. Different disciplines have their own suggested ``best'' replacement value to use, an example being \(\frac{3}{4}\) times the LOD being a common replacement value in geochemistry (Crovelli, 1993). Due to the lack of standardization, many regard substitution techniques as a non-rigorous, statistically unsound method for handling left-censored data (Chen, Quandt, Grzywacz, \& Arcury, 2011).
 
 Lee \& Helsel (2005) also provides a critique on substitution methods and claim that they can often introduce a ``signal'' which was not originally present within the data, or even obstruct an actual signal which was originally present in the data -- leading to misleading and/or inaccurate results. Supporting Lee \& Helsel (2005)'s claim, Glass and Gray (2001) found the substitution method to introduce large errors and biases when calculating descriptive statistics of interest with left-censored data. Thompson and Nelson (2001) conducted a study in which they found similar results, in that it often led to biased parameter estimates and ``artificially small standard error estimates.'' Hewett and Ganser (2007) also found in their simulation study that the substitution method yielded the lowest average bias and root mean squared error values (comparison metrics to measure accuracy) in their estimation of the mean. Overall, the overall consensus seems to advise against the practice of these substitution techniques.
 
@@ -451,7 +456,7 @@ Yavuz, Tekindal, \& Dog (2017) discusses the usage of ML estimation when missing
 ML estimation is one of the most well-known parametric approaches to handling left-censored data. Many studies use ML estimation as a baseline method of handling censored values, to which they compare their new techniques (Ganser \& Hewett, 2010). Despite its prevalence, ML estimation has its weaknesses. Canales (2018) found that the ML estimation seems to underperform when the data in question was highly skewed, producing overinflated mean squared errors. Additionally, because ML estimation is so heavily dependent upon distributional assumptions, an incorrect specification of the distribution of the censored data will inevitably lead to misleading results (Bolks, DeWire, \& Harcum, 2014). Regardless of these limitations, it is a definite staple in the field of parameter estimation with regards to censored data.
 
 \hypertarget{rkm}{%
-\subsection{Kaplan-Meier Method}\label{rkm}}
+\subsection{Kaplan-Meier}\label{rkm}}
 
 As a phenomenon, censoring is most often discussed in survival analysis, which concerns itself with techniques to analyze a \emph{time to an event} variable. As its name suggests, these variables measure the time which passes until some event of interest occurs. This can be as innocuous as the time until a device breaks, time until birds migrate away from their homes, time until a person passes away, etc. In all cases, there is a possibility of the data being censored.
 
@@ -588,12 +593,12 @@ Each of the four methods discussed in the previous chapter are designed for usag
 
 All our code will be written using R. For our substitution method, we begin by defining the LOD as the minimum, uncensored value for the variable of interest. We will choose LOD/2 as our replacement value, calculating our estimated mean using this newly defined dataset.
 
-For the remaining three methods (KM, MLE, and ROS), we will be using specialized functions from the \texttt{NADA} package. The code for the MLE method will be handled with the \texttt{cenmle} function in the \texttt{NADA} package, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values. The \texttt{cenfit} function allows us to implement KM. This function ``computes an estimate of an empirical cumulative distribution function (ECDF) for censored data using the Kaplan-Meier method,'' from which we can then obtain summary statistics of interest. Similarly, the \texttt{ros} method implements ROS and outputs a dataframe, from which we can then use to also compute our summary statistics of interest.
+For the remaining three methods (KM, MLE, and ROS), we will be using specialized functions from the \texttt{NADA} package. The code for the MLE method will be handled with the \texttt{cenmle} function in the \texttt{NADA} package, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. As this method is not an imputation technique, values are not replaced. This method allows us to calculate the summary statistics for the entire data set -- including the censored values. The \texttt{cenfit} function allows us to implement KM. This function ``computes an estimate of an empirical cumulative distribution function for censored data using the Kaplan-Meier method,'' from which we can then obtain summary statistics of interest. Similarly, the \texttt{ros} method implements ROS and outputs a dataframe, from which we can then use to also compute our summary statistics of interest.
 
 \hypertarget{performance_measures}{%
 \section{Performance Measures}\label{performance_measures}}
 
-The criterions we will use to assess the performance of each of our four methods will consist of: bias, variance, and mean squared error (MSE), which measure the difference between our mean estimate and the true mean, precision, and accuracy -- respectively.
+The criterions we will use to assess the performance of each of our four methods will consist of: bias, variance, and mean squared error, which measure the difference between our mean estimate and the true mean, precision, and accuracy -- respectively.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -797,12 +802,12 @@ There are of course also studies which offer differing results from the ones we 
 
 Schmoyer, Beauchamp, Brandt, \& Hoffman (1996) compared only MLE and KM and found that the KM method performed nearly as well as the MLE in the case of the log-normal distribution. However, this was not the case in our simulation study. While the KM and MLE methods were able to perform adequately in the case of low (0.1) and medium (0.3) censoring, they performed the worst out of all four methods when dealing with highly censored cases. The censoring rates used in their study consisted of 25\%, 50\%, and 70\% -- which far exceeded the censoring values used in this thesis.
 
-She (1997) conducted a study investigating censored water quality data with the intent of investigating how well the KM method performs with regards to the same methods we utilize in this thesis. The results from She's study showed that KM outperformed all other methods, which contradicts the findings in the simulation study conducted in this thesis. Upon further investigation, the size of the dataset utilized by She consisted of 56 observations from water monitoring stations, in which around 11 were censored (20\% of the dataset). While the KM method is not ideal for highly censored cases from the results of our simulation study, it certainly is able to be used for smaller sample sizes -- which is further supported with She's findings. There may be a difference in how well the methods perform with actual data as compared to simulated data -- which we will investigate in the next chapter.
+She (1997) conducted a study investigating censored water quality data with the intent of investigating how well the KM method performs with regards to the same methods we utilize in this thesis. The results from She's study showed that KM outperformed all other methods, which contradicts the findings in the simulation study conducted in this thesis. Upon further investigation, the size of the dataset utilized by She consisted of 56 observations from water monitoring stations, in which around 11 were censored (around 20\% of the dataset). While the KM method is not ideal for highly censored cases from the results of our simulation study, it certainly is able to be used for smaller sample sizes -- which is further supported with She's findings. There may be a difference in how well the methods perform with actual data as compared to simulated data -- which we will investigate in the next chapter.
 
 \hypertarget{limitations}{%
 \subsection{Limitations}\label{limitations}}
 
-Shortcomings in the results presented in this study may come from the fact that we generated data with known distributional parameters. It could be the case that the effectiveness of our methods were only due to having such artificial data. Alterations in our study to instead generate data from methods such as randomized pulls from an a real-world dataset of interest via. methods such as bootstrapping could provide different insights. As we discussed previously with the results from She (1997), methods may perform differently when utilized with artificial datasets as compared to real world, left censored data. We do not claim our findings in the simulation study to be representative for all cases of left censored data.
+Shortcomings in the results presented in this study may come from the fact that we generated data with known distributional parameters. It could be the case that the effectiveness of our methods were only due to having such artificial data. Alterations in our study to instead generate data from methods such as randomized pulls from an a real-world dataset of interest through methods such as bootstrapping could provide different insights. As we discussed previously with the results from She (1997)'s study, methods may perform differently when utilized with artificial datasets as compared to real world, left censored data. We do not claim our findings in the simulation study to be representative for all cases of left censored data.
 
 \hypertarget{casestudy}{%
 \chapter{Case Study}\label{casestudy}}
@@ -855,7 +860,7 @@ There are four different types that each well can be classified as, which is rep
 
 Coal plants may also follow different reporting protocols, which necessitates the ``measurement unit'' column. While some contaminants such as radium, are measured only in one unit (pCi/L) -- most others are measured differently across sites. One site may measure arsenic with using milligrams/L while another site uses micrograms/L.
 
-The remaining variables in our dataset are mostly self explanatory, containing information regarding the date when sample was collected, unique ID of the well, and whether if the measurement is below the limit of detection. A data dictionary of all variables in the dataset can be viewed in Table \ref{tab:datadictionary}.
+The remaining variables in our dataset are mostly self explanatory, containing information regarding the date when sample was collected, unique ID of the well, and whether if the measurement is below the limit of detection. A data dictionary of all variables in the dataset can be viewed in Table \ref{tab:datadict}.
 \begin{table}
 
 \caption{\label{tab:datadict}Data dictionary for the coal dataset.}
@@ -906,7 +911,7 @@ The investigation conducted by Kelderman et al. (2019) mentions certain restrict
 
 Our end goal remains the same as the original research question proposed by Kelderman et al. (2019), which is to identify (the top ten most) contaminated coal plants. Around 2/3 of all wells in the dataset have concentrations found to be below the detection limit. This is a significant portion of the data being censored, which we believe may have significant consequences in the results obtained during analysis. Kelderman et al. (2019) handled these censored values by assuming that their concentration was one half of the detection limit. In essence, they employed the substitution method we discussed previously, with a replacement value of \(\frac{1}{2}\) LOD for the values below the detection limit.
 
-The goal of our case study is to employ the techniques we introduced back in chapter 2 to see if they would result in potential differently conclusions. Specifically, we wish to check if the proportion of wells in the U.S. in which contamination is present would be altered if we used our mean estimation techniques to calculate the average concentrations of the contaminants. We would also like to implement a baseline (control) method in which we calculate mean estimates while disregarding the censoring status of the observations and see if our methods truly offer any different conclusions than the claims made by Kelderman et al. (2019) regarding the top 10 most contaminated wells in the U.S.
+The goal of our case study is to employ the techniques we introduced back in Chapter 2 to see if they would result in potential differently conclusions. Specifically, we wish to check if the proportion of wells in the U.S. in which contamination is present would be altered if we used our mean estimation techniques to calculate the average concentrations of the contaminants. We would also like to implement a baseline (control) method in which we calculate mean estimates while disregarding the censoring status of the observations and see if our methods truly offer any different conclusions than the claims made by Kelderman et al. (2019) regarding the top 10 most contaminated wells in the U.S.
 
 \hypertarget{application}{%
 \section{Application}\label{application}}
@@ -920,8 +925,8 @@ As we can see from Figure \ref{fig:usmap}, out of the 265 sites in our dataset, 
 
 \caption{Counts of Coal Sites in the United States (gray indicates no sites for that state).}\label{fig:usmap}
 \end{figure}
-\hypertarget{keldermans-top-10-sites}{%
-\subsection{Kelderman's Top 10 Sites}\label{keldermans-top-10-sites}}
+\hypertarget{keldermans-top-ten-sites}{%
+\subsection{Kelderman's Top Ten Sites}\label{keldermans-top-ten-sites}}
 
 As stated previously, Kelderman et al. (2019) compiled a list of the top ten most contaminated sites across the U.S., following the EPA's health-based threshold for specific contaminants. We will briefly follow with a discussion on their methodology in determining these top ten most contaminated sites.
 
@@ -2109,20 +2114,6 @@ The second appendix, Appendix B, contains all necessary code required to run the
   \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-\hypertarget{mle-excluded}{%
-\subsection{MLE (excluded)}\label{mle-excluded}}
-
-\hypertarget{ros-excluded}{%
-\subsection{ROS (excluded)}\label{ros-excluded}}
-
-\hypertarget{corrections}{%
-\chapter*{Corrections}\label{corrections}}
-\addcontentsline{toc}{chapter}{Corrections}
-
-A list of corrections after submission to department.
-
-Corrections may be made to the body of the thesis, but every such correction will be acknowledged in a list under the heading ``Corrections,'' along with the statement ``When originally submitted, this honors thesis contained some errors which have been corrected in the current version. Here is a list of the errors that were corrected.'' This list will be given on a sheet or sheets to be appended to the thesis. Corrections to spelling, grammar, or typography may be acknowledged by a general statement such as ``30 spellings were corrected in various places in the thesis, and the notation for definite integral was changed in approximately 10 places.'' However, any correction that affects the meaning of a sentence or paragraph should be described in careful detail. The files samplethesis.tex and samplethesis.pdf show what the ``Corrections'' section should look like. Questions about what should appear in the ``Corrections'' should be directed to the Chair.
-
 \backmatter
 
 \hypertarget{references}{%
@@ -2153,7 +2144,7 @@ Bolks, A., DeWire, A., \& Harcum, J. B. (2014). {Baseline Assessment of Left-Cen
 Canales, R. (2018). {Methods for Handling Left-Censored Data in Quantitative Microbial Risk Assessment}, \emph{84}(20), 1--10.
 
 \leavevmode\hypertarget{ref-Chen2011}{}%
-Chen, H., Quandt, S. A., Grzywacz, J. G., Arcury, T. A., Environmental, S., Perspectives, H., \ldots{} Arcury, T. A. (2011). {A Distribution-Based Multiple Imputation Method for Handling Bivariate Pesticide Data with Values below the Limit of Detection}, \emph{119}(3), 351--356. http://doi.org/\href{https://doi.org/10.1289/ehp.l002124}{10.1289/ehp.l002124}
+Chen, H., Quandt, S. A., Grzywacz, J. G., \& Arcury, T. A. (2011). {A Distribution-Based Multiple Imputation Method for Handling Bivariate Pesticide Data with Values below the Limit of Detection}, \emph{119}(3), 351--356. http://doi.org/\href{https://doi.org/10.1289/ehp.l002124}{10.1289/ehp.l002124}
 
 \leavevmode\hypertarget{ref-Crovelli1993}{}%
 Crovelli, R. A. (1993). {An Objective Replacement Method for Censored Geochemical Data}, \emph{25}(1), 59--80.
@@ -2162,7 +2153,7 @@ Crovelli, R. A. (1993). {An Objective Replacement Method for Censored Geochemica
 Environmental Integrity Project. (2020). {Coal Ash Groundwater Contamination: Documenting Coal Ash Pollution}. Retrieved from \url{https://environmentalintegrity.org/coal-ash-groundwater-contamination/}
 
 \leavevmode\hypertarget{ref-EPA2009}{}%
-Environmental Protection Agency. (2009). \emph{{STATISTICAL ANALYSIS OF GROUNDWATER MONITORING DATA AT RCRA FACILITIES UNIFIED GUIDANCE}}.
+Environmental Protection Agency. (2009). \emph{{Statistical Analysis of Groundwater Monitoring Data at RCRA Facilities}}.
 
 \leavevmode\hypertarget{ref-Car2020}{}%
 Environmental Protection Agency. (2020). {Disposal of Coal Combustion Residuals from Electric Utilities Rulemakings}. Retrieved from \url{https://www.epa.gov/coalash/coal-ash-rule}
@@ -2192,7 +2183,7 @@ Hornung, R., \& Reed, L. (1989). {Estimation of Average Concentration in the Pre
 Kelderman, K., Kunstman, B., Roy, H., Sivakumar, N., Mccormick, S., \& Bernhardt, C. (2019). {Coal's Poisonous Legacy: Groundwater Contaminated by Coal Ash Across the U.S.}
 
 \leavevmode\hypertarget{ref-Klein2003}{}%
-Klein, J. P., \& Moeschberge, M. L. (2003). \emph{{SURVIVAL ANALYSIS: Techniques for Censored and Truncated Data}} (2nd ed., pp. 92--104). New York: Springer-Verlag.
+Klein, J. P., \& Moeschberge, M. L. (2003). \emph{{Survival Analysis: Techniques for Censored and Truncated Data}} (2nd ed., pp. 92--104). New York: Springer-Verlag.
 
 \leavevmode\hypertarget{ref-Kroll1996}{}%
 Kroll, C. N., \& Stedinger, J. R. (1996). {Estimation of moments and quantiles using censored data}. \emph{Water Resources Research}, \emph{32}(4), 1005--1012. http://doi.org/\href{https://doi.org/10.1029/95WR03294}{10.1029/95WR03294}
@@ -2204,19 +2195,19 @@ Lee, L., \& Helsel, D. (2005). {Statistical analysis of water-quality data conta
 May, R. C. (2012). {Estimation Methods for Data Subject to Detection Limits}, 82.
 
 \leavevmode\hypertarget{ref-Ruhl2010}{}%
-Ruhl, L., Vengosh, A., Dwyer, G., Hsu-Kim, H., \& Deonarine, A. (2010). {Environmental Impacts of the Coal Ash Spill in Kingston , Tennessee: An 18-Month Survey}, \emph{44}(24), 9272--9278.
+Ruhl, L., Vengosh, A., Dwyer, G., Hsu-Kim, H., \& Deonarine, A. (2010). {Environmental Impacts of the Coal Ash Spill in Kingston, Tennessee: An 18-Month Survey}, \emph{44}(24), 9272--9278.
 
 \leavevmode\hypertarget{ref-Schmoyer1996}{}%
 Schmoyer, R. L., Beauchamp, J. J., Brandt, C. C., \& Hoffman, F. O. (1996). {Difficulties with the lognormal model in mean estimation and testing}. \emph{Environmental and Ecological Statistics}, \emph{3}(1), 81--97. http://doi.org/\href{https://doi.org/10.1007/bf00577325}{10.1007/bf00577325}
 
 \leavevmode\hypertarget{ref-She1997}{}%
-She, N. (1997). {ANALYZING CENSORED WATER QUALITY DATA USING A NON-PARAMETRIC APPROACh}, \emph{33}(3).
+She, N. (1997). {Analyzing Censored Water Quality Data Using a Non-Parametric Approach}, \emph{33}(3).
 
 \leavevmode\hypertarget{ref-Shoari2018}{}%
 Shoari, N. (2018). {Toward Improved Analysis of Concentration Data : Embracing Nondetects}, \emph{37}(3), 643--656. http://doi.org/\href{https://doi.org/10.1002/etc.4046}{10.1002/etc.4046}
 
 \leavevmode\hypertarget{ref-Yavuz2017}{}%
-Yavuz, Y., Tekindal, M. A., \& Dog, B. (2017). {Evaluating Left-Censored Data Through Substitution , Parametric , Semi-parametric , and Nonparametric Methods : A Simulation Study}, 153--172. http://doi.org/\href{https://doi.org/10.1007/s12539-015-0132-9}{10.1007/s12539-015-0132-9}
+Yavuz, Y., Tekindal, M. A., \& Dog, B. (2017). {Evaluating Left-Censored Data Through Substitution, Parametric, Semi-parametric, and Nonparametric Methods: A Simulation Study}, 153--172. http://doi.org/\href{https://doi.org/10.1007/s12539-015-0132-9}{10.1007/s12539-015-0132-9}
 
 \end{CSLReferences}
 % Index?

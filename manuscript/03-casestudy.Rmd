@@ -66,7 +66,7 @@ There are four different types that each well can be classified as, which is rep
 
 Coal plants may also follow different reporting protocols, which necessitates the "measurement unit" column. While some contaminants such as radium, are measured only in one unit (pCi/L) -- most others are measured differently across sites. One site may measure arsenic with using milligrams/L while another site uses micrograms/L. 
 
-The remaining variables in our dataset are mostly self explanatory, containing information regarding the date when sample was collected, unique ID of the well, and whether if the measurement is below the limit of detection. A data dictionary of all variables in the dataset can be viewed in Table \ref{tab:datadictionary}.
+The remaining variables in our dataset are mostly self explanatory, containing information regarding the date when sample was collected, unique ID of the well, and whether if the measurement is below the limit of detection. A data dictionary of all variables in the dataset can be viewed in Table \ref{tab:datadict}.
 
 <!-- TABLE OF DATA DICTIONARY TO INSERT HERE -->
 
@@ -121,7 +121,7 @@ The investigation conducted by @Kelderman2019 mentions certain restrictions with
 
 Our end goal remains the same as the original research question proposed by @Kelderman2019, which is to identify (the top ten most) contaminated coal plants. Around 2/3 of all wells in the dataset have concentrations found to be below the detection limit. This is a significant portion of the data being censored, which we believe may have significant consequences in the results obtained during analysis. @Kelderman2019 handled these censored values by assuming that their concentration was one half of the detection limit. In essence, they employed the substitution method we discussed previously, with a replacement value of $\frac{1}{2}$ LOD for the values below the detection limit. 
 
-The goal of our case study is to employ the techniques we introduced back in chapter 2 to see if they would result in potential differently conclusions. Specifically, we wish to check if the proportion of wells in the U.S. in which contamination is present would be altered if we used our mean estimation techniques to calculate the average concentrations of the contaminants. We would also like to implement a baseline (control) method in which we calculate mean estimates while disregarding the censoring status of the observations and see if our methods truly offer any different conclusions than the claims made by @Kelderman2019 regarding the top 10 most contaminated wells in the U.S.
+The goal of our case study is to employ the techniques we introduced back in Chapter 2 to see if they would result in potential differently conclusions. Specifically, we wish to check if the proportion of wells in the U.S. in which contamination is present would be altered if we used our mean estimation techniques to calculate the average concentrations of the contaminants. We would also like to implement a baseline (control) method in which we calculate mean estimates while disregarding the censoring status of the observations and see if our methods truly offer any different conclusions than the claims made by @Kelderman2019 regarding the top 10 most contaminated wells in the U.S.
 
 ## Application
 
@@ -208,7 +208,7 @@ plot_usmap(data = states_n, values = "n", regions = "states") +
         plot.background = element_rect(color = "white"))
 ```
 
-### Kelderman's Top 10 Sites
+### Kelderman's Top Ten Sites
 
 As stated previously, @Kelderman2019 compiled a list of the top ten most contaminated sites across the U.S., following the EPA's health-based threshold for specific contaminants. We will briefly follow with a discussion on their methodology in determining these top ten most contaminated sites.
 
