@@ -26,11 +26,15 @@ library(usmap)
 
 ## Background {#background}
 
-Coal is one of the most prevalent combustible fuels being utilized all over the world, as it is one of the easiest methods of obtaining energy due to the abundance of the substance. Generally, coal plants produce electricity by burning coal, which produces coal ash as a byproduct. Over 100 million tons of coal ash are produced every year at these plants, which are then disposed through landfills and waste ponds at these plants. The main concern of ecologists regarding this matter is that the coal ash produced by these plants can often contaminate the local groundwater, leading to toxic contaminants being found in local water sources. Coal ash is dangerous due to its composition, which contains a long list of dangerous chemicals including -- but not limited to: arsenic, radium, boron, and other contaminants which have been found to be toxic to humans and animals alike [@Kelderman2019]. 
+In a report detailing the extensive dangers and risks posed by coal plants and the waste they produce, @Kelderman2019 explains how coal is one of the most prevalent combustible fuels being utilized all over the world, as it is one of the easiest methods of obtaining energy due to the abundance of the substance. 
+
+Generally, coal plants produce electricity by burning coal, which produces coal ash as a byproduct. Over 100 million tons of coal ash are produced every year at these plants, which are then disposed through landfills and waste ponds at these plants. The main concern of ecologists regarding this matter is that the coal ash produced by these plants can often contaminate the local groundwater, leading to toxic contaminants being found in local water sources. 
+
+@Kelderman2019 disseminates the long list of dangers posed by coal ash by detailing the chemical composition in coal, which contains a long list of dangerous chemicals including -- but not limited to: arsenic, radium, boron, and other contaminants which have been found to be toxic to humans and animals alike.
 
 Only recently has there been an increase in the frequency of complaints and concerns regarding the disposing practices of coal plants. This is due to disturbances at coal plants, such as the 2010 Kingston Fossil Plant coal ash incident in Tennessee. This area has become an attractive location in which many sites of ecological studies have been conducted the years following the incident. Leaching experiments conducted by @Ruhl2010 has revealed significant levels of dissolved arsenic, boron, strontium, and barium in the water which has been in contact with the coal ash, which they specifically note to be threat to aquatic life in the surrounding area. Prompted by environmental organizations, groups, and individuals alike, an onslaught of pressure was put on the Environmental Protection Agency, which resulted in the Coal Ash Rule being put into effect in 2015 [@Kelderman2019].
 
-This rule has forced over 265 coal plants -- about 3/4 of all coal plants in the US -- to make data regarding chemical concentrations publicly available to the general population. In their analysis using this data, the @EIP2020, a non-profit organization dedicated to environmental justice issues, have discussed the prevalence of groundwater contamination for in the wells located in these coal related facilities. 
+This rule has forced over 265 coal plants -- about 3/5 of all coal plants in the US -- to make data regarding chemical concentrations publicly available to the general population. In their analysis using this data, the @EIP2020, a non-profit organization dedicated to environmental justice issues, has discussed the prevalence of groundwater contamination in the wells located in these coal related facilities. 
 
 <!-- insert picture here -->
 
@@ -38,7 +42,7 @@ This rule has forced over 265 coal plants -- about 3/4 of all coal plants in the
 knitr::include_graphics(path = "figures/upgradientdowngradient.jpg")
 ```
 
-Typically in a coal ash plant, there exists two types of wells: upgradient wells and downgradient wells. These wells are essential to measure the amount of contamination being caused by coal ash. Upgradient wells, also known as background wells, measures the concentrations of chemicals in groundwater before it passes through an coal ash dump. Conversely, downgradient wells measure the concentrations of chemicals in groundwater after it passes through a coal ash dump. Figure \ref{fig:upgradientdowngradient} is a useful visualization detailing the specifics regarding the differences between the two types of wells. While both types of well are susceptible to contamination through coal ash related means, it is more frequently the case that we focus on the concentrations of downgradient wells as they are good indicators of possible contamination in the water being accessed by the general public.
+Typically in a coal ash plant, there exist two types of wells: upgradient wells and downgradient wells. These wells are essential to measure the amount of contamination being caused by coal ash. Upgradient wells, also known as background wells, measure the concentrations of chemicals in groundwater before it passes through an coal ash dump. Conversely, downgradient wells measure the concentrations of chemicals in groundwater after it passes through a coal ash dump. Figure \ref{fig:upgradientdowngradient} is a useful visualization detailing the specifics regarding the differences between the two types of wells. While both types of well are susceptible to contamination through coal ash related means, it is more frequently the case that we focus on the concentrations of downgradient wells as they are good indicators of possible contamination in the water being accessed by the general public.
 
 The goal of the study conducted by @Kelderman2019 was to identify the percentage of coal plants which have unsafe levels of contamination. High concentrations of toxic chemicals are what classify a well as being contaminated or not. More specifically, we obtain the mean concentrations of the contaminant in question for all the wells measuring a specific chemical in a site. If the mean contamination of a contaminant in question, say, arsenic, was above the health-based thresholds set by the EPA, then that well would be marked as an "exceedance," and deemed to be contaminated.  
 
@@ -50,7 +54,7 @@ It is important to note where the data used originated from, before we delve int
 
 ### Coal Ash Rule {#coalashrule}
 
-A large coal ash spill at the Tennessee Valley Authority which occurred on December 22, 2008 in Kingston, TN -- prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US. This was known as the Coal Ash Rule, which passed legislation on December 19, 2014 [@Car2020]. Over the years, several changes were made to the Coal Ash Rule in the form of amendments. One of these amendments (published on the April 15, 2015) stated that coal plants would be required to publish data regarding the concentrations of contaminants in the wells and other facility information to the general public. 
+A large coal ash spill at the Tennessee Valley Authority which occurred on December 22, 2008 in Kingston, TN prompted the Environmental Protection Agency (EPA) to propose a set of standardized regulations and procedures to address the concerns regarding coal ash plants nationwide in the US. This was known as the Coal Ash Rule, which passed legislation on December 19, 2014 [@Car2020]. Over the years, several changes were made to the Coal Ash Rule in the form of amendments. One of these amendments (published on the April 15, 2015) stated that coal plants would be required to publish data regarding the concentrations of contaminants in the wells and other facility information to the general public. 
 
 ### Source of Data
 
@@ -62,11 +66,11 @@ The coal dataset contains information regarding chemical concentrations at coal 
 
 Specifics regarding the variables in the coal dataset can be viewed in Table \ref{tab:datadict}. Each observation in the dataset represents a well which measures the concentration of the contaminant in question. Most of the variables are explanatory, such as the state, site, and disposal area in which the well is located in. However, there are several variables specific to groundwater data collection which are important to note.
 
-There are four different types that each well can be classified as, which is represented in the `type` variable. These consist of: `L`, `M`, `SI`, and `U` which stand for "landfill," "mixed," "surface-impacted," and "unknown." We have already mentioned downgradient and upgradient wells during our discussion of the coal ash rule, but we will provide more detail now. In a groundwater monitoring system it is common to have designated wells for specific purposes. A common approach in a coal site is to have separate wells, upgradient wells, whose purpose is to measure "natural" water conditions and downgradient wells, which measures water conditions after it passes through a coal ash disposal area.
+There are four different types that each well can be classified as, which is represented in the `type` variable. These consist of: "landfill," "mixed," and "surface-impacted" wells. We have already mentioned downgradient and upgradient wells during our discussion of the coal ash rule, but we will provide more detail now. In a groundwater monitoring system it is common to have designated wells for specific purposes. A common approach in a coal site is to have separate wells, upgradient wells, whose purpose is to measure "natural" water conditions and downgradient wells, which measures water conditions after it passes through a coal ash disposal area.
 
 Coal plants may also follow different reporting protocols, which necessitates the "measurement unit" column. While some contaminants such as radium, are measured only in one unit (pCi/L) -- most others are measured differently across sites. One site may measure arsenic with using milligrams/L while another site uses micrograms/L. 
 
-The remaining variables in our dataset are mostly self explanatory, containing information regarding the date when sample was collected, unique ID of the well, and whether if the measurement is below the limit of detection. A data dictionary of all variables in the dataset can be viewed in Table \ref{tab:datadict}.
+The remaining variables in our dataset are mostly self explanatory, containing information regarding the date when sample was collected, unique ID of the well, and an indicator on whether the measurement is below the limit of detection or not. A data dictionary of all variables in the dataset can be viewed in Table \ref{tab:datadict}.
 
 <!-- TABLE OF DATA DICTIONARY TO INSERT HERE -->
 
@@ -77,49 +81,39 @@ dd_var <- c("State", "Site", "Disposal Area", "Type of Well",
             "Contaminant Name", "Measurement Unit",
             "Below Detection", "Concentration")
 
-dd_varname<- c("state", "site", "disposal.area", "type", "well.id",
-             "gradient", "samp.date", "contaminant",
-             "measurement.unit", "below.detection",
-             "concentration")
-
 dd_desc <- c("The state where the site is located.",
-             "The name of the site as it is presented in its
+             "The name of the site, as presented in the
              groundwater monitoring report.",
-             "The name of the disposal area(s) as they are presented 
-             in the groundwater monitoring report. Note: some wells 
-             monitor groundwater from more than one disposal unit.",
-             "The type of disposal unit. SI = surface impoundment, 
-             L= landfill, M = mixed multi-unit (landfill and surface 
-             impoundment), and U = unknown.",
+             "The name of the disposal area(s), as presented 
+             in the groundwater monitoring report.",
+             "The type of disposal unit: surface impoundment, 
+             landfill, and mixed multi-unit.",
              "The identifier given to each monitoring well in the 
              groundwater monitoring report.",
-             "The location of the groundwater monitoring well 
-             relative to the regulated ash disposal unit it 
-             monitors.",
+             "The location of the groundwater monitoring well: 
+             upgradient or downgradient.",
              "The date the well was sampled.",
-             "The contaminant name. These have been standardized to 
-             allow for analyses across plants.",
+             "The contaminant name.",
              "The concentration units. These include mg/l, ug/l, 
-             pCi/l, and standard units (SU) for pH.",
-             "LOD status for the concentration, '<' indicates that 
-             the concentration was below the LOD.",
+             and pCi/l.",
+             "LOD status: '<' indicates
+             the concentration is below the LOD.",
              "The concentration of the contaminant.")
 
-dd <- as.data.frame(cbind(dd_var, dd_varname, dd_desc)) %>%
+dd <- as.data.frame(cbind(dd_var, dd_desc)) %>%
   rename("Variable" = "dd_var",
-         "Variable Name" = "dd_varname",
          "Description" = "dd_desc") 
 
 knitr::kable(dd, caption = "Data dictionary for the coal dataset.",
              booktabs = "T", linesep = "\\addlinespace") %>%
-             column_spec(3, width = "7.6cm")
+             kable_styling(latex_options="scale_down")
 ```
 
 ### Plan of Action
 
 The investigation conducted by @Kelderman2019 mentions certain restrictions within the data that we believe may have caused their analysis to potentially be inaccurate. The limit of detection problem arises when measuring devices used to measure chemical concentrations are unable to detect below a certain threshold, causing large numbers of observations to be considered "below detection." These values are often encoded as NA or even mistakenly marked as 0. 
 
-Our end goal remains the same as the original research question proposed by @Kelderman2019, which is to identify (the top ten most) contaminated coal plants. Around 2/3 of all wells in the dataset have concentrations found to be below the detection limit. This is a significant portion of the data being censored, which we believe may have significant consequences in the results obtained during analysis. @Kelderman2019 handled these censored values by assuming that their concentration was one half of the detection limit. In essence, they employed the substitution method we discussed previously, with a replacement value of $\frac{1}{2}$ LOD for the values below the detection limit. 
+Our end goal remains the same as the original research question proposed by @Kelderman2019, which is to identify the top ten most contaminated coal plants. Around 2/3 of all wells in the dataset have concentrations found to be below the detection limit. This is a significant portion of the data being censored, which we believe may have significant consequences in the results obtained during analysis. @Kelderman2019 handled these censored values by assuming that their concentration was one half of the detection limit. In essence, they employed the substitution method we discussed previously, with a replacement value of $\frac{1}{2}$ LOD for the values below the detection limit. Recalling the discussion regarding the statistical feasibility of the substitution method from Chapter 1, their usage of this method may pose some questions regarding the viability of their results.
 
 The goal of our case study is to employ the techniques we introduced back in Chapter 2 to see if they would result in potential differently conclusions. Specifically, we wish to check if the proportion of wells in the U.S. in which contamination is present would be altered if we used our mean estimation techniques to calculate the average concentrations of the contaminants. We would also like to implement a baseline (control) method in which we calculate mean estimates while disregarding the censoring status of the observations and see if our methods truly offer any different conclusions than the claims made by @Kelderman2019 regarding the top 10 most contaminated wells in the U.S.
 
@@ -212,11 +206,22 @@ plot_usmap(data = states_n, values = "n", regions = "states") +
 
 As stated previously, @Kelderman2019 compiled a list of the top ten most contaminated sites across the U.S., following the EPA's health-based threshold for specific contaminants. We will briefly follow with a discussion on their methodology in determining these top ten most contaminated sites.
 
-First, they calculated the average mean concentration for all contaminants in each well across all dates. To ensure that all observations used in this calculation were attributable to the coal site in question, there are several guidelines that were followed.
+First, they calculated the average concentration for all contaminants in each well across all dates. To ensure that all observations used in this calculation were attributable to the coal site in question, there are several procedures which will be detailed next.
 
-After these values are obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area were removed. It is also important to note that since upgradient wells measure the quality of the water _before_ it passes through a coal site, they are also removed.
+After these values were obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area were removed. It is also important to note that since upgradient wells measure the quality of the water _before_ it passes through a coal site, they are also removed.
 
-These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average mean concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table \ref{tab:hbt}.
+These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table \ref{tab:hbt}.
+
+```{r hbtrange, echo = FALSE}
+#code to obtain ranges for each contaminant
+
+ranges <- full %>%
+  group_by(contaminant) %>%
+  summarize(min = min(concentration),
+            max = max(concentration))
+
+```
+
 
 ```{r hbttable, echo = FALSE}
 #CODE TO MAKE HEALTH BASED THRESHOLDS TABLE
@@ -236,10 +241,17 @@ hbt_units <- c("ug/L", "ug/L", "mg/L", "ug/L",
                "ug/L", "ug/L", "ug/L","ug/L", 
                "pCi/L", "ug/L", "mg/L", "ug/L")
 
-hbt <- as.data.frame(cbind(hbt_names, hbt_values, hbt_units)) %>%
+hbt_ranges <- c("(0, 50)", "(0, 1890)", "(0.00010, 429000)", "(0, 57)",
+               "(0, 62248)", "(0, 197)", "(0, 1300)", "(0, 4750)", 
+               "(0, 100000)", "(0, 475)", "(0.00007, 10050)", 
+               "(0, 5.84)", "(0, 8300)", "(-63.335, 302)", 
+               "(0, 642)", "(0.01, 1340000)", "(0, 474)")
+
+hbt <- as.data.frame(cbind(hbt_names, hbt_values, hbt_units, hbt_ranges)) %>%
   rename("Contaminant" = "hbt_names",
          "Exceedance Limit" = "hbt_values",
-         "Unit" = "hbt_units") 
+         "Unit" = "hbt_units",
+         "Range" = "hbt_ranges") 
 ```
 
 ```{r hbt, echo = FALSE}
@@ -250,6 +262,8 @@ knitr::kable(hbt, caption = "Health-based thresholds set by EPA.",
 For each site, the wells with the highest average concentration of each contaminant were identified and compared to their respective health-based thresholds. A ratio is then calculated for each of these highest average contaminants to the health-based thresholds. These contaminant-specific ratios are then summed together in order to get a cumulative "contamination score" for each site. Contamination scores of a higher magnitude indicates more "severe" contamination, with the top ten highest contamination scores comprising the top ten most contaminated sites.
 
 While the contamination scores are not explicitly published in @Kelderman2019's report, the site names of the top ten most contaminated sites in the country according to their analysis which in descending order severity are as follows:
+
+\newpage
 
       1. San Miguel Plant,
       2. Allen Steam Station
@@ -262,7 +276,7 @@ While the contamination scores are not explicitly published in @Kelderman2019's 
       9. R.D. Morrow, Sr. Generating Station
       10. Ghent Generating Station
 
-We will follow their criterion(s) for determining if a well is contaminated, with the only difference being how we obtain the average concentrations of the contaminants in the wells. We will use our several left-censored estimation techniques to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if our results significantly differ from the top ten list of most contaminated sites obtained by @Kelderman2019. We will also have a baseline implementation of the methods described by @Kelderman2019, without any attempts to account for the censored data. This implementation will serve as our control in which we will compare our left-censored estimation techniques towards.
+We will follow their criteria for determining if a well is contaminated, with the only difference being how we obtain the average concentrations of the contaminants in the wells. We will use our left-censored estimation techniques to obtain mean estimates of the concentrations while accounting for the values below the limit of detection and see if our results significantly differ from the top ten list of most contaminated sites obtained by @Kelderman2019. We will also have a baseline implementation of the methods described by @Kelderman2019, without any attempts to account for the censored data. This implementation will serve as our control in which we will compare our left-censored estimation techniques towards.
 
 ### (Our) Top Ten Most Contaminated Sites
 
@@ -527,7 +541,8 @@ downgrad_substitution <- avg_substitution %>%
   filter(gradient %in% "Downgradient") %>%
   select(c(well.id, contaminant, site, avg_conc))
 
-downgrad_substitution2 <- left_join(downgrad_substitution, upgrad_substitution) %>%
+downgrad_substitution2 <- left_join(downgrad_substitution, 
+                                    upgrad_substitution) %>%
   filter(avg_conc >= upgrad_conc) 
 
 highest_substitution <- downgrad_substitution2 %>%
@@ -551,7 +566,8 @@ highest_substitution <- downgrad_substitution2 %>%
                               "Selenium, total" = "Selenium",
                               "Thallium, total" = "Thallium"))
 
-top10_substitution <- left_join(highest_substitution, hbt_case, by = "contaminant") %>%
+top10_substitution <- left_join(highest_substitution, 
+                                hbt_case, by = "contaminant") %>%
   mutate(ratio = avg_conc/as.numeric(limit)) %>% 
   group_by(site) %>%
   summarize(composite_score = sum(ratio)) %>% 
@@ -775,10 +791,10 @@ The results from our baseline implementation which calculates mean estimates wit
 
 Something unexpected to note is that although we followed the procedures outlined by @Kelderman2019 in their implementation of the substitution method, our top ten sites presented in Table \ref{tab:top10km} somewhat differ from theirs. Reproducible code was not provided in their report and attempts to completely reproduce their top ten list would not be conducive to the goal of this report. As such, from now on, we will proceed with the analysis with _our_ top ten list produced by the substitution method as the norm, for the sake of comparability with our other methods.
 
-It is also important to note that the MLE method and the ROS method are absent from this case-study. It can be recalled that in our previous discussion regarding the MLE method, we discussed noted a limitation of the MLE method being how it can obtain overinflated estimates when the data is highly skewed. In our attempt to use the MLE method, we found that the estimates we obtained did not provide very useful information. To exemplify this, we had one well with an abnormally large concentration, a sign that it was most likely contaminated, and hundreds of smaller wells in which the concentration is 0. The MLE method gave us mean estimates nearing infinity, which threw our analysis into disarray. As such, we refrained from utilizing the MLE method in this specific case study.
+It is also important to note that the MLE method and the ROS method are absent from this case-study. It can be recalled that in our previous discussion regarding the MLE method, we noted a limitation of the MLE method is that it can obtain overinflated estimates when the data is highly skewed. In our attempt to use the MLE method, we found that the estimates we obtained did not provide very useful information. To exemplify this, we had one well with an abnormally large concentration, a sign that it was most likely contaminated, and hundreds of smaller wells in which the concentration is 0. The MLE method gave us mean estimates nearing infinity, which threw our analysis into disarray. As such, we refrained from utilizing the MLE method in this specific case study.
 
 The ROS method was absent for a similar reason, but with the limitations more-so being on the capabilities of the method itself. As we discussed previously, the ROS method can only be used in settings when more than half the data is uncensored. Unfortunately with our data, censoring far exceeds 50%, and as such, the ROS method is unable to be implemented [@EPA2009].
 
 The top ten sites obtained using our substitution implementation are the same sites as the ones obtained from our baseline implementation, with the same ordering but slight differences in the composite scores. With our KM method, the Ghent Generating Station replaces the Sebree Generating Station as one of the top ten most contaminated sites, with some slight differences in the ordering of the sites in the latter half of the list. 
 
-It is not a surprise that our left-censoring mean estimation techniques did not provide much of a different result than what we obtained with our baseline implementation. Left-censoring techniques are not as useful with this case-study, where we are focused on finding the extremities of the dataset, i.e. wells with the highest concentration of contaminants. If the research question was instead, identifying wells that were potentially contaminated, the distinction between the results obtained by these methods would be more visible. @Kelderman2019's implementation of the substitution method as a way to account for left-censoring is justifiable due to its ease of implementation and the results we just discussed. We do not observe any significant differences in the top ten sites when comparing all three implementations we used.
+It is not a surprise that our left-censoring mean estimation techniques did not provide much of a different result than what we obtained with our baseline implementation. Left-censoring techniques are not as useful with this case-study, where we are focused on finding the extremities of the dataset, i.e. wells with the highest concentration of contaminants. If the research question was instead, identifying wells that were potentially contaminated, the distinction between the results obtained by these methods would be more visible. @Kelderman2019's implementation of the substitution method as a way to account for left-censoring is justifiable due to its ease of implementation and the results we just discussed. We do not observe any significant differences in top ten sites when comparing all three implementations.

@@ -21,9 +21,15 @@ This thesis will go into a more specific instance of missing data known as censo
 
 As discussed previously, censored data is a specific type of missingness where one has only partial information regarding the values of a measurement in a dataset. There are three types of censoring which can occur: right censoring, interval censoring, and left censoring.
 
-### Right Censoring {#right}
+### Three Types of Censoring {#right}
 
-Right censoring is a specific instance in which we only know that the true value of a data point lies above a certain threshold, but it is unknown by how much. Suppose a study on income and mortality is conducted with the variable of interest, $T$, being the time measured from the start of the study to the death of the participant. The study has a duration of 5 years, in which participants are expected to submit a form regarding their annual income. The value for the participant would be considered to be right-censored if at any point during the study, they failed to follow-up, or if the participant was still alive at the conclusion of the 5 year study. In this design study, several possibilities can occur, illustrated in Figure \@ref(fig:rightcensoringexample).
+Right censoring is a specific instance of censoring in which we only know that the true value of a data point lies _above_ a certain threshold, but it is unknown by how much. This is the most common type of censoring and can often be found in clinical trial studies, mortality studies, and other forms of survival analyses.
+
+In contrast with right censoring, in the case of left censoring, we only know that the true value of a data point falls _below_ a certain threshold which we call the _limit of detection_ (LOD), and similarly to right censoring, it is unknown by how much. Left censoring is commonly found in environmental, water quality, and chemical-related research where the focus is on the concentration of an analyte.
+
+Right and left-censoring are both special cases of interval censoring. Interval censoring is when the random variable of interest is known to be between an interval of two values. Considering a random variable $T$, which denotes the survival time of interest. If interval censoring present, we can denote the interval containing $T$ to be $I = [t_1, t_2]$, with $t_1$ being the beginning of the interval and $t_2$ being the end of the interval. In the case of left censoring, $t_1 = 0$; and conversely in the case of right censoring, $t_2 = \infty$.
+
+<!--Suppose a study on income and mortality is conducted with the variable of interest, $T$, being the time measured from the start of the study to the death of the participant. The study has a duration of 5 years, in which participants are expected to submit a form regarding their annual income. The value for the participant would be considered to be right-censored if at any point during the study, they failed to follow-up, or if the participant was still alive at the conclusion of the 5 year study. In this design study, several possibilities can occur, illustrated in Figure \@ref(fig:rightcensoringexample).
 
 ```{r, echo = FALSE, rightcensoringexample, fig.cap="Right Censoring Example", out.width = '100%'}
 knitr::include_graphics(path = "figures/right_censoring_example.png")
@@ -36,18 +42,17 @@ If an individual does pass away at some point, $t_i$, _during_ the study, then $
 There is a final possibility for individuals who choose to censor themselves. Illustrated in Figure \@ref(fig:rightcensoringexample) by individuals E and F, we can see that they are marked as censored at $T = 3$ and $T = 1$, respectively. These individuals may have chosen to stop submitting information to the study or drop out of the study entirely without warning. As we have no information about whether or not if they died or simply did not submit their form, all we know is that the individual died/will die at some point after the point at which they were censored.
 
 Right censoring is the most common type of censoring and can often be found in clinical trial studies, mortality studies, and other forms of surival analyses.
+-->
 
 ### Left Censoring {#left}
 
-```{r, echo = FALSE, leftcensoringexample, fig.cap="Left Censoring Example", out.width = '100%'}
+```{r, leftcensoringexample, echo = FALSE, fig.cap="Left Censoring Example", out.width = '100%'}
 knitr::include_graphics(path = "figures/left_censoring_example_fix.png")
 ```
 
-In contrast with right censoring, left censoring is a specific instance of censoring in which we only know that the true value of a data point falls below a certain threshold which we call the _limit of detection_ (LOD). 
+To clarify the concept of left-censoring, consider the following example illustrated with Figure \ref{fig:leftcensoringexample}. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You plan to wake up every morning far before the sun rises, but on the first day of the study, you oversleep and wake up at 7:00 A.M. with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit (7:00 A.M.). As the focus of my thesis, left-censoring poses many challenges in regards to how individuals should report and work with left-censored data.
 
-To understand this concept better, consider the following example. Imagine a scenario in which you are attempting to estimate the time at which the sun rises each morning. You plan to wake up every morning far before the sun rises, but on the first day of the study, you oversleep and wake up at 7:00 A.M. with the sun already out. We now have an instance of left-censored data. We want to know the time at which the sun rose, but all we have is an upper limit (7:00 A.M.). 
-
-Left censoring is commonly found in environmental, water quality, and chemical-related research where the focus is on the concentration of an analyte. Due to limitations on measuring instruments, left censored data are commonly found in these types of studies. The most pressing issue of left-censored data mostly lie in the difficulty of distinguishing between extremely low values and statistical noise [@Hall2020]. 
+<!--
 
 ### Interval Censoring {#interval}
 
@@ -59,11 +64,11 @@ Interval censoring is another form of censoring in which the random variable of 
 
 To conceptualize interval censoring, we can consider a example study on virus testing in which participants get their blood drawn in order to detect whether or not they test positive for a virus or not. The random variable in question is $T$, which represents the exact timepoint at which the subject contracted the virus. If an individual was first tested at time $t_1$ and tested negative, but was tested again at a later time $t_2$ and tested positive, the specific time $t$ at which the subject contracted the virus is unknown. All we know is that it lies somewhere between the interval, $I = [t_1, t_2]$, but not the exact time at which they contracted it.
 
-The focus of my thesis deals specifically with the challenges of reporting and working with left-censored data.
+-->
 
 ## Challenges of Reporting Censored Data {#challenges}
 
-There is no universal reporting practice for values below the LOD which can lead to confusion amongst researchers. The lack of standardization makes it difficult to distinguish values below the LOD and uncensored values. This can lead to values below the LOD unintentionally being overlooked, causing faulty analysis or conclusions which are heavily flawed.
+The most pressing issue in regards to the reporting practices for left-censored data is the lack of a universal standard as to how to report values below the LOD, which can lead to confusion amongst researchers. This lack of standardization makes it difficult to distinguish values below the LOD and uncensored values, which can lead to values below the LOD unintentionally being overlooked, causing faulty analysis or conclusions which are heavily flawed.
 
 In a study involving the precision of lead measurements near concentrations of the limit of detection, @Berthouex1993 discusses the disparity among chemists regarding practices involving the recording values below the LOD. He enumerates the following list.
 
