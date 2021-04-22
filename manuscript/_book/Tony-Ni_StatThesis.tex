@@ -937,9 +937,6 @@ First, they calculated the average concentration for all contaminants in each we
 After these values were obtained, any wells with average downgradient concentrations lower than the highest average upgradient concentration for that specific contaminant and disposal area were removed. It is also important to note that since upgradient wells measure the quality of the water \emph{before} it passes through a coal site, they are also removed.
 
 These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table \ref{tab:hbt}.
-\begin{verbatim}
-   `summarise()` ungrouping output (override with `.groups` argument)
-\end{verbatim}
 \begin{table}
 
 \caption{\label{tab:hbt}Health-based thresholds set by EPA.}
@@ -1309,7 +1306,8 @@ Code for the calculating of range of values in dataset:
 \NormalTok{ranges }\OtherTok{\textless{}{-}}\NormalTok{ full }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{group\_by}\NormalTok{(contaminant) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{min =} \FunctionTok{min}\NormalTok{(concentration),}
-            \AttributeTok{max =} \FunctionTok{max}\NormalTok{(concentration))}
+            \AttributeTok{max =} \FunctionTok{max}\NormalTok{(concentration))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 Code for the creation of the health-based thresholds dataframe:

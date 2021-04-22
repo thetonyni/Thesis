@@ -212,18 +212,19 @@ After these values were obtained, any wells with average downgradient concentrat
 
 These two exclusion principles are followed to ensure that we did not use any wells that potentially had contamination from an external source, apart from the coal site. The remaining average concentrations of the contaminants in question for each site are then compared to the health-based thresholds set by the EPA, these thresholds can be viewed in Table \ref{tab:hbt}.
 
-```{r hbtrange, echo = FALSE}
+```{r hbtrange, echo = FALSE, message = FALSE}
 #code to obtain ranges for each contaminant
 
 ranges <- full %>%
   group_by(contaminant) %>%
   summarize(min = min(concentration),
-            max = max(concentration))
+            max = max(concentration))%>%
+  ungroup()
 
 ```
 
 
-```{r hbttable, echo = FALSE}
+```{r hbttable, echo = FALSE, message = FALSE}
 #CODE TO MAKE HEALTH BASED THRESHOLDS TABLE
 
 hbt_names <- c("Antimony", "Arsenic", "Barium", "Beryllium",
