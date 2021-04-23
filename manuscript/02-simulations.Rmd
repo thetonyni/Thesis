@@ -543,7 +543,7 @@ The results of our simulation study are presented in Tables \@ref(tab:lntable), 
 knitr::kable(ln.table, caption = "Performance metrics of our our 
              4 methods with data derived from the log-normal 
              distribution with mean = 1 and SD = 0.5.", 
-             digits = 5, booktabs = "T") %>%
+             digits = 5, booktabs = "T", linesep = c('', '', '', '\\hline')) %>%
   kable_styling(font_size = 11.5) %>%
   pack_rows("Censoring Rate = 0.1", 1, 12) %>%
   pack_rows("Censoring Rate = 0.3", 13, 24, latex_gap_space = "1em") %>%
@@ -565,7 +565,7 @@ ggplot(data = df.ln, aes(x = samplesize, y = MSE, group = method, color = method
 knitr::kable(exp.table, caption = "Performance metrics of our our 3 
              methods (MLE method absent) with data derived from the 
              exponential distribution with a shape parameter = 1.", 
-             digits = 5, booktabs = "T") %>%
+             digits = 5, booktabs = "T", linesep = c('', '', '', '\\hline')) %>%
   kable_styling(font_size = 11.5) %>%
   pack_rows("Censoring Rate = 0.1", 1, 12) %>%
   pack_rows("Censoring Rate = 0.3", 13, 24, latex_gap_space = "1em") %>%
@@ -591,7 +591,7 @@ knitr::kable(w.table, caption = "Performance metrics of our our 3 methods
              (MLE method absent) with data derived from the Weibull 
              distribution with a shape parameter = 1 and 
              scale parameter = 1.", 
-             digits = 5, booktabs = "T") %>%
+             digits = 5, booktabs = "T", linesep = c('', '', '', '\\hline')) %>%
   kable_styling(font_size = 11.5) %>%
   pack_rows("Censoring Rate = 0.1", 1, 12) %>%
   pack_rows("Censoring Rate = 0.3", 13, 24, latex_gap_space = "1em") %>%

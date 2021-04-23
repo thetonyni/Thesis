@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  22 APR 2021 13:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  23 APR 2021 09:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -872,10 +872,10 @@ File: Tony-Ni_StatThesis_files/figure-latex/lnfigure-1.pdf Graphic file (type p
 df)
 <use Tony-Ni_StatThesis_files/figure-latex/lnfigure-1.pdf>
 Package pdftex.def Info: Tony-Ni_StatThesis_files/figure-latex/lnfigure-1.pdf  
-used on input line 638.
+used on input line 646.
 (pdftex.def)             Requested size: 433.62pt x 200.13257pt.
 
-LaTeX Warning: Float too large for page by 9.06178pt on input line 699.
+LaTeX Warning: Float too large for page by 12.26173pt on input line 715.
 
 [21] [22]
 <Tony-Ni_StatThesis_files/figure-latex/expfigure-1.pdf, id=557, 469.755pt x 216
@@ -884,10 +884,10 @@ File: Tony-Ni_StatThesis_files/figure-latex/expfigure-1.pdf Graphic file (type
 pdf)
 <use Tony-Ni_StatThesis_files/figure-latex/expfigure-1.pdf>
 Package pdftex.def Info: Tony-Ni_StatThesis_files/figure-latex/expfigure-1.pdf 
- used on input line 702.
+ used on input line 718.
 (pdftex.def)             Requested size: 433.62pt x 200.13257pt.
 
-LaTeX Warning: Float too large for page by 9.06178pt on input line 764.
+LaTeX Warning: Float too large for page by 12.26173pt on input line 788.
 
 <Tony-Ni_StatThesis_files/figure-latex/wfigure-1.pdf, id=558, 469.755pt x 216.8
 1pt>
@@ -895,7 +895,7 @@ File: Tony-Ni_StatThesis_files/figure-latex/wfigure-1.pdf Graphic file (type pd
 f)
 <use Tony-Ni_StatThesis_files/figure-latex/wfigure-1.pdf>
 Package pdftex.def Info: Tony-Ni_StatThesis_files/figure-latex/wfigure-1.pdf  u
-sed on input line 767.
+sed on input line 791.
 (pdftex.def)             Requested size: 433.62pt x 200.13257pt.
 [23 <./Tony-Ni_StatThesis_files/figure-latex/lnfigure-1.pdf> <./Tony-Ni_StatThe
 sis_files/figure-latex/expfigure-1.pdf>] [24] [25] [26 <./Tony-Ni_StatThesis_fi
@@ -908,7 +908,7 @@ Chapter 3.
 File: figures/upgradientdowngradient.jpg Graphic file (type jpg)
 <use figures/upgradientdowngradient.jpg>
 Package pdftex.def Info: figures/upgradientdowngradient.jpg  used on input line
- 830.
+ 854.
 (pdftex.def)             Requested size: 433.62pt x 241.79337pt.
 [32 <./figures/upgradientdowngradient.jpg>] [33] [34] [35] [36]
 <Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf, id=652, 469.755pt x 325.215
@@ -917,10 +917,10 @@ File: Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf Graphic file (type pdf)
 
 <use Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf>
 Package pdftex.def Info: Tony-Ni_StatThesis_files/figure-latex/usmap-1.pdf  use
-d on input line 924.
+d on input line 948.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (36.13387pt too wide) in paragraph at lines 924--925
+Overfull \hbox (36.13387pt too wide) in paragraph at lines 948--949
  [][] 
  []
 
@@ -933,106 +933,106 @@ Chapter 4.
 Appendix A.
 [47
 
-] [48]
+]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-1269.
+1188.
 (c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [49] [50] [51] [52] [53] [54
+) [48] [49] [50] [51] [52] [53] [54
 
 ]
 Appendix B.
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1421.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1445.
 [55]
-Underfull \vbox (badness 10000) detected at line 1488
+Underfull \vbox (badness 10000) detected at line 1512
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1488
+Underfull \vbox (badness 10000) detected at line 1512
  []
 
 [56] [57] [58]
-Underfull \vbox (badness 10000) detected at line 1625
+Underfull \vbox (badness 10000) detected at line 1649
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1625
+Underfull \vbox (badness 10000) detected at line 1649
  []
 
 [59] [60]
-Underfull \vbox (badness 10000) detected at line 1743
+Underfull \vbox (badness 10000) detected at line 1767
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1743
+Underfull \vbox (badness 10000) detected at line 1767
  []
 
 [61]
-Underfull \vbox (badness 10000) detected at line 1743
+Underfull \vbox (badness 10000) detected at line 1767
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1743
+Underfull \vbox (badness 10000) detected at line 1767
  []
 
 [62] [63]
-Underfull \vbox (badness 10000) detected at line 1816
+Underfull \vbox (badness 10000) detected at line 1840
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1816
+Underfull \vbox (badness 10000) detected at line 1840
  []
 
 [64] [65]
-Underfull \vbox (badness 10000) detected at line 1993
+Underfull \vbox (badness 10000) detected at line 2017
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1993
+Underfull \vbox (badness 10000) detected at line 2017
  []
 
 [66]
-Underfull \vbox (badness 10000) detected at line 1993
+Underfull \vbox (badness 10000) detected at line 2017
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1993
+Underfull \vbox (badness 10000) detected at line 2017
  []
 
 [67]
-Underfull \vbox (badness 10000) detected at line 1993
+Underfull \vbox (badness 10000) detected at line 2017
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1993
+Underfull \vbox (badness 10000) detected at line 2017
  []
 
 [68] [69]
-Underfull \vbox (badness 10000) detected at line 2065
+Underfull \vbox (badness 10000) detected at line 2089
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2065
+Underfull \vbox (badness 10000) detected at line 2089
  []
 
 [70] [71] [72] [73] [74
 
 ]
-Underfull \hbox (badness 3872) in paragraph at lines 2202--2204
+Underfull \hbox (badness 3872) in paragraph at lines 2226--2228
  \T1/lmr/m/n/12 (+20) Left-Censored En-vi-ron-men-tal Data Us-ing R. \T1/lmr/m/
 it/12 (+20) Tech-notes\T1/lmr/m/n/12 (+20) , \T1/lmr/m/it/12 (+20) 9\T1/lmr/m/n
 /12 (+20) (2), 153--172.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2202--2204
+Underfull \hbox (badness 10000) in paragraph at lines 2226--2228
  \T1/lmr/m/n/12 (+20) Re-trieved from [][]$\T1/lmtt/m/n/12 https : / / www . ep
 a . gov / sites / production / files / 2016 -[]
  []
 
 
-Underfull \hbox (badness 5064) in paragraph at lines 2208--2210
+Underfull \hbox (badness 5064) in paragraph at lines 2232--2234
  \T1/lmr/m/n/12 (+20) Distribution-Based Mul-ti-ple Im-pu-ta-tion Method for Ha
 n-dling Bi-vari-ate
  []
@@ -1040,19 +1040,19 @@ n-dling Bi-vari-ate
 [75
 
 ]
-Underfull \hbox (badness 2932) in paragraph at lines 2214--2216
+Underfull \hbox (badness 2932) in paragraph at lines 2238--2240
  [][]\T1/lmr/m/n/12 (+20) Environmental In-tegrity Project. (2020). Coal Ash Gr
 ound-wa-ter Con-
  []
 
 
-Underfull \hbox (badness 1859) in paragraph at lines 2214--2216
+Underfull \hbox (badness 1859) in paragraph at lines 2238--2240
  \T1/lmr/m/n/12 (+20) tam-i-na-tion: Doc-u-ment-ing Coal Ash Pol-lu-tion. Re-tr
 ieved from [][]$\T1/lmtt/m/n/12 https :
  []
 
 [76]
-Underfull \hbox (badness 1237) in paragraph at lines 2250--2252
+Underfull \hbox (badness 1237) in paragraph at lines 2274--2276
  \T1/lmr/m/n/12 (+20) tiles us-ing cen-sored data. \T1/lmr/m/it/12 (+20) Wa-ter
  Re-sources Re-search\T1/lmr/m/n/12 (+20) , \T1/lmr/m/it/12 (+20) 32\T1/lmr/m/n
 /12 (+20) (4), 1005--1012.
@@ -1101,7 +1101,7 @@ lmsy8.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public
 /lm/lmtk10.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
 ublic/lm/lmtt12.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/ty
 pe1/public/lm/lmtti10.pfb>
-Output written on Tony-Ni_StatThesis.pdf (92 pages, 552319 bytes).
+Output written on Tony-Ni_StatThesis.pdf (92 pages, 552728 bytes).
 PDF statistics:
  1045 PDF objects out of 1200 (max. 8388607)
  915 compressed objects within 10 object streams
