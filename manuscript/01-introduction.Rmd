@@ -73,12 +73,12 @@ The most pressing issue in regards to the reporting practices for left-censored 
 In a study involving the precision of lead measurements near concentrations of the limit of detection, @Berthouex1993 discusses the disparity among chemists regarding practices involving the recording values below the LOD. He enumerates the following list.
 
 \begin{enumerate}
-  \item Reporting the letters ND, "not detected"
+  \item Reporting the letters ND, ``not detected''
   \item Reporting the numeric value of the LOD
-  \item Reporting "< LOD", where LOD is the numeric value of the LOD 
+  \item Reporting ``< LOD'', where LOD is the numeric value of the LOD 
   \item Reporting some value between 0 and the LOD, such as one-half the LOD
   \item Reporting the actual measured concentration, even if it falls below the LOD
-  \item Reporting the actual measured concentration, followed by "(LOD)" 
+  \item Reporting the actual measured concentration, followed by ``(LOD)''
   \item Reporting the actual measured concentration with a precision ($\pm$) statement
 \end{enumerate}
 
@@ -175,12 +175,15 @@ The transformation algorithm works as follows: First, all the left-censored valu
 The KM-method is not an imputation procedure, but instead an estimation technique that allows for the calculation of descriptive statistics for left-censored datasets. @She1997 gives the expressions to calculate the estimated mean, median, and variance:
 
 \begin{table}[h]
+\begin{center}
 \begin{tabular}{ll}
 \textbf{Descriptive Statistic} & \textbf{Expression}                                                                                              \\
 Mean ($\hat{\mu}$)             & $\hat{\mu} = \displaystyle \int_{0}^{\infty} \hat{S}(t) \ dt$                                                    \\
 Median ($\hat{M}$)             & $\hat{M} = \displaystyle \hat{S}^{-1} \left (\frac{1}{2} \right)$                                                              \\
 Variance ($Var(\hat{\mu}$)     & $Var(\hat{\mu}) = \displaystyle \sum_{i=1}^{r} \left( \int_{t_i}^{\infty}\hat{S}(t) \ dt \right)^2 \frac{d_i}{n_i(n_i - d_i)}$
 \end{tabular}
+\caption{\label{tab:KMDesc}Three descriptive statistics for the KM-method.}
+\end{center}
 \end{table}
 
 
@@ -188,11 +191,33 @@ Variance ($Var(\hat{\mu}$)     & $Var(\hat{\mu}) = \displaystyle \sum_{i=1}^{r} 
 
 Lastly, regression on order statistics (ROS) combines both the parametric nature of the MLE approach and nonparametric nature of the KM method. ROS is a semi-parametric method which assumes an underlying distribution (usually lognormal) for the censored measurements but makes no assumption towards the distribution of uncensored measurements.
 
+<!--
 @EPA2009 provides a a more detailed explanation to the methodology of ROS, but the basic procedures will be outlined in this thesis. 
 
 A brief explanation as to how ROS works is as follows. ROS begins with the estimation of the cumulative probability associated with each distinct LOD within a variable. This cumulative probability is distributed equally between the censored values with a common LOD. Once the censored values are ranked, a linear regression model is fit between the uncensored values and the distributional z-scores from the censored probability plot. The parameters of the regression model (slope and intercept of the regression line) are then used to estimate the mean and standard deviation of the distributional model which are then used to generate imputed values for the censored observations.
+-->
 
-Delving into the mathematics behind this procedure, we need to first define several variables. 
+ROS begins with estimation of the cumulative probability of each uncensored value. Then, these cumulative probabilities are used to calculate z-scores from the normal distribution. We then plot the values against these z-scores, an example visualization can be seen in Figure \ref{fig:rosexample}. The uncensored observations are regressed on their corresponding z-scores. If needed, the uncensored values are transformed to better satisfy linearity of the relationship. Finally using the regression line, we use the z-scores for the censored observations to predict an estimated value.
+
+```{r, rosexample, echo = FALSE, fig.height = 3, , fig.cap="An example visualization of the censored probability plot, from ROS.", out.width = '100%'} 
+values <- c(16, 18, 19, 23, 24, 25, 25, 28, 29, 29, 30, 30, 32, 33, 35)
+censored <-c("Censored", "Censored", "Censored", "Uncensored",
+             "Uncensored","Uncensored","Uncensored","Uncensored",
+             "Uncensored","Uncensored","Uncensored","Uncensored",
+             "Uncensored","Uncensored","Uncensored")
+zscores <- c(-1, -0.8, -0.5, -0.46, -0.44, -0.32, -0.05, 
+             0.09, 0.2, 0.27, 0.34, 0.5, 0.7, 1.0, 1.5)
+
+df <- cbind.data.frame(values, zscores, censored)
+
+ggplot(df, aes(x = zscores, y = values, color = censored)) + 
+  geom_point(size = 2) +
+  labs(x = "Z-Score", y = "Value", color = "Censoring Status") +
+  ggtitle("Example Censored Probability Plot") +
+  theme_bw()
+```
+
+Delving into the mathematics behind this procedure, we need to first define several variables.
 
 Let $LOD_k$ be the $k^{th}$ distinct LOD value for a variable with $K$ distinct limits of detection. $A_k$ as the number of uncensored values between the $k$th and $(k+1)$th LOD for $k=1$ to $K-1$, and $A_k$ as the number of uncensored values above the highest LOD, $A_0$ as the number of uncensored values below the lowest LOD.
 
@@ -209,33 +234,33 @@ where $p^e_0 = 1$ and $p^e_{k+1} = 0$.
 
 The cumulative probability associated with the $i^{th}$ uncensored value between $LOD_k$ and $LOD_{k+1}$ is then:
 
-$$\textrm{Eq. 1.3:} \ \  p^u_{ij} = (1-p^e_i)+ \left(\frac{j}{A_i+1}\right)*(p^e_i-p^e_{i+1})$$
+$$\textrm{Eq. 1.3:} \ \  p^u_{kj} = (1-p^e_k)+ \left(\frac{j}{A_k+1}\right)*(p^e_k-p^e_{k+1})$$
 
 for $j = 1$ to $A_i$ and for $k = 0$ to $k$.
 
 Similarly, the cumulative probability associated with the $j^{th}$ censored value, censored at $LOD_k$ is:
 
-$$\textrm{Eq. 1.4:} \ \  p^c_{ij} = \left(\frac{j}{C_i+1}\right)(1-p^e_i)$$
+$$\textrm{Eq. 1.4:} \ \  p^c_{kj} = \left(\frac{j}{C_k+1}\right)(1-p^e_k)$$
 
-for $j = 1$ to $C_i$ and for $k = 1$ to $K$.
+for $j = 1$ to $C_k$ and for $k = 1$ to $K$.
 
 With these prerequisite variables and expression defined, we can begin outlining the general procedure for obtaining parameter estimates using ROS.
 
-1. Compute normal quantiles (z-scores) by computing $z_{ij}^{u} = \Phi^{-1}(p^u_{ij})$, where $\Phi^{-1}$ is the inverse standard normal CDF.
+1. Compute normal quantiles (z-scores) by computing $z_{kj}^{u} = \Phi^{-1}(p^u_{kj})$, where $\Phi^{-1}$ is the inverse standard normal CDF.
 
-2. Construct censored probability plots using the z-scores from step 6.
+2. Construct censored probability plots using the z-scores from step 1.
 
-3. Plot $z_{ij}^{u}$ against a transformation, $f(\cdot)$, (ex: log, square root, inverse, etc.) of the uncensored values $x_{ij}^{u}$.
+3. If a linear trend is not visible, we may want to plot $z_{kj}^{u}$ against a transformation, $f(\cdot)$, (ex: log, square root, inverse, etc.) of the uncensored values $x_{kj}^{u}$.
 
-4. Compute correlation coefficient between the $z_{ij}^{u}$ and $f(x_{ij}^{u})$ pairs. The transformation which yields the highest correlation coefficient is the one which most optimizes the left-censored values.
+4. Compute correlation coefficient between the $z_{kj}^{u}$ and $f(x_{kj}^{u})$ pairs. The transformation which yields the highest correlation coefficient is the one which most optimizes the left-censored values.
 
-5. Compute a linear regression of the transformed values, $f(x_{ij}^{u})$ against the z-scores, $z_{ij}^{u}$.
+5. Compute a linear regression of the transformed values, $f(x_{kj}^{u})$ against the z-scores, $z_{kj}^{u}$.
 
-6. Use Eq. 1.4 to compute $p^c_{ij}$ and repeat steps 1 through 3, to obtain z-scores for the censored values.
+6. Use Eq. 1.4 to compute $p^c_{kj}$ and repeat steps 1 through 3, to obtain z-scores for the censored values.
 
 7. Obtain the transformed imputed values using the slope and intercept from the regression model in step 10 and the censored z-scores from step 11 using the following expression:
 
-$$f(\hat{x}_{ij}^c) = {Intercept} \ + Slope \ * z_{ij}^{c}$$
+$$f(\hat{x}_{kj}^c) = {Intercept} \ + Slope \ * z_{kj}^{c}$$
 
 8. Combine the transformed imputed values for the censored values with the transformed uncensored values to obtain estimates for the population mean and standard deviation as normal.
 

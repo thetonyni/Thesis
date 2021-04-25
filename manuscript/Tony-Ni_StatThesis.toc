@@ -37,10 +37,10 @@
 \contentsline {chapter}{Appendix A: Main Appendix}{45}{appendix.A}%
 \contentsline {section}{\numberline {A.1}In \hyperlink {intro}{Chapter 1: Introduction}}{45}{section.A.1}%
 \contentsline {section}{\numberline {A.2}In \hyperlink {simulations}{Chapter 2: Simulations}}{45}{section.A.2}%
-\contentsline {section}{\numberline {A.3}In \hyperlink {casestudy}{Chapter 3: Case Study}}{47}{section.A.3}%
-\contentsline {subsection}{\numberline {A.3.1}Data Dictionary}{47}{subsection.A.3.1}%
-\contentsline {subsection}{\numberline {A.3.2}Map}{48}{subsection.A.3.2}%
-\contentsline {subsection}{\numberline {A.3.3}Health-based Thresholds}{48}{subsection.A.3.3}%
+\contentsline {section}{\numberline {A.3}In \hyperlink {casestudy}{Chapter 3: Case Study}}{48}{section.A.3}%
+\contentsline {subsection}{\numberline {A.3.1}Data Dictionary}{48}{subsection.A.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Map}{49}{subsection.A.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}Health-based Thresholds}{49}{subsection.A.3.3}%
 \contentsline {subsection}{\numberline {A.3.4}Top 10 Tables}{50}{subsection.A.3.4}%
 \contentsline {section}{\numberline {A.4}In \hyperlink {conclusion}{Chapter 4: Conclusion}}{51}{section.A.4}%
 \contentsline {chapter}{Appendix B: Simulation/CS Appendix}{53}{appendix.B}%
@@ -58,5 +58,5 @@
 \contentsline {subsection}{\numberline {B.2.4}Baseline/Control}{67}{subsection.B.2.4}%
 \contentsline {subsection}{\numberline {B.2.5}Substitution}{68}{subsection.B.2.5}%
 \contentsline {subsection}{\numberline {B.2.6}KM}{70}{subsection.B.2.6}%
-\contentsline {chapter}{Corrections}{73}{appendix*.21}%
-\contentsline {chapter}{References}{75}{appendix*.22}%
+\contentsline {chapter}{Corrections}{73}{appendix*.22}%
+\contentsline {chapter}{References}{75}{appendix*.23}%

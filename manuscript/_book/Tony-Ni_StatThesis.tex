@@ -351,12 +351,12 @@ The most pressing issue in regards to the reporting practices for left-censored 
 
 In a study involving the precision of lead measurements near concentrations of the limit of detection, Berthouex (1993) discusses the disparity among chemists regarding practices involving the recording values below the LOD. He enumerates the following list.
 \begin{enumerate}
-  \item Reporting the letters ND, "not detected"
+  \item Reporting the letters ND, ``not detected''
   \item Reporting the numeric value of the LOD
-  \item Reporting "< LOD", where LOD is the numeric value of the LOD 
+  \item Reporting ``< LOD'', where LOD is the numeric value of the LOD 
   \item Reporting some value between 0 and the LOD, such as one-half the LOD
   \item Reporting the actual measured concentration, even if it falls below the LOD
-  \item Reporting the actual measured concentration, followed by "(LOD)" 
+  \item Reporting the actual measured concentration, followed by ``(LOD)''
   \item Reporting the actual measured concentration with a precision ($\pm$) statement
 \end{enumerate}
 According to Gilbert (1987), the latter three methods are the best procedures to follow, especially from a practical and statistical point of view. He argues that assuming the small concentration values are not from some sort of measurement error during data collection, then the measured concentration holds value. As such, recording a measurement as ``below LOD'' without any sort of accompanying value would be discarding useful information which could have been used in practice and analysis.
@@ -445,22 +445,30 @@ The transformation algorithm works as follows: First, all the left-censored valu
 
 The KM-method is not an imputation procedure, but instead an estimation technique that allows for the calculation of descriptive statistics for left-censored datasets. She (1997) gives the expressions to calculate the estimated mean, median, and variance:
 \begin{table}[h]
+\begin{center}
 \begin{tabular}{ll}
 \textbf{Descriptive Statistic} & \textbf{Expression}                                                                                              \\
 Mean ($\hat{\mu}$)             & $\hat{\mu} = \displaystyle \int_{0}^{\infty} \hat{S}(t) \ dt$                                                    \\
 Median ($\hat{M}$)             & $\hat{M} = \displaystyle \hat{S}^{-1} \left (\frac{1}{2} \right)$                                                              \\
 Variance ($Var(\hat{\mu}$)     & $Var(\hat{\mu}) = \displaystyle \sum_{i=1}^{r} \left( \int_{t_i}^{\infty}\hat{S}(t) \ dt \right)^2 \frac{d_i}{n_i(n_i - d_i)}$
 \end{tabular}
+\caption{\label{tab:KMDesc}Three descriptive statistics for the KM-method.}
+\end{center}
 \end{table}
 \hypertarget{ROS}{%
 \subsection{Regression on Order Statistics}\label{ROS}}
 
 Lastly, regression on order statistics (ROS) combines both the parametric nature of the MLE approach and nonparametric nature of the KM method. ROS is a semi-parametric method which assumes an underlying distribution (usually lognormal) for the censored measurements but makes no assumption towards the distribution of uncensored measurements.
 
-Environmental Protection Agency (2009) provides a a more detailed explanation to the methodology of ROS, but the basic procedures will be outlined in this thesis.
+ROS begins with estimation of the cumulative probability of each uncensored value. Then, these cumulative probabilities are used to calculate z-scores from the normal distribution. We then plot the values against these z-scores, an example visualization can be seen in Figure \ref{fig:rosexample}. The uncensored observations are regressed on their corresponding z-scores. If needed, the uncensored values are transformed to better satisfy linearity of the relationship. Finally using the regression line, we use the z-scores for the censored observations to predict an estimated value.
+\begin{figure}
 
-A brief explanation as to how ROS works is as follows. ROS begins with the estimation of the cumulative probability associated with each distinct LOD within a variable. This cumulative probability is distributed equally between the censored values with a common LOD. Once the censored values are ranked, a linear regression model is fit between the uncensored values and the distributional z-scores from the censored probability plot. The parameters of the regression model (slope and intercept of the regression line) are then used to estimate the mean and standard deviation of the distributional model which are then used to generate imputed values for the censored observations.
+{\centering \includegraphics[width=1\linewidth]{Tony-Ni_StatThesis_files/figure-latex/rosexample-1} 
 
+}
+
+\caption{An example visualization of the censored probability plot, from ROS.}\label{fig:rosexample}
+\end{figure}
 Delving into the mathematics behind this procedure, we need to first define several variables.
 
 Let \(LOD_k\) be the \(k^{th}\) distinct LOD value for a variable with \(K\) distinct limits of detection. \(A_k\) as the number of uncensored values between the \(k\)th and \((k+1)\)th LOD for \(k=1\) to \(K-1\), and \(A_k\) as the number of uncensored values above the highest LOD, \(A_0\) as the number of uncensored values below the lowest LOD.
@@ -471,8 +479,6 @@ We can then write the number of censored values below the \(k\)th LOD (\(C_k\)) 
 
 \[\textrm{Eq. 1.1:} \ \  C_k = B_k - B_{k-1}-A_{k-1}\]
 
-for \(i = 1\) to \(k\).
-
 Using these values we can calculate what is known as the \emph{exceedance probability} (\(p^e_{k}\)) for each of our \(k\) LOD values, defined recursively as:
 
 \[\textrm{Eq. 1.2:} \ \  p^e_k = p^e_{k+1} + \frac{A_k}{A_k+B_k}(1 - p^e_{k+1})\]
@@ -480,35 +486,35 @@ where \(p^e_0 = 1\) and \(p^e_{k+1} = 0\).
 
 The cumulative probability associated with the \(i^{th}\) uncensored value between \(LOD_k\) and \(LOD_{k+1}\) is then:
 
-\[\textrm{Eq. 1.3:} \ \  p^u_{ij} = (1-p^e_i)+ \left(\frac{j}{A_i+1}\right)*(p^e_i-p^e_{i+1})\]
+\[\textrm{Eq. 1.3:} \ \  p^u_{kj} = (1-p^e_k)+ \left(\frac{j}{A_k+1}\right)*(p^e_k-p^e_{k+1})\]
 
 for \(j = 1\) to \(A_i\) and for \(k = 0\) to \(k\).
 
 Similarly, the cumulative probability associated with the \(j^{th}\) censored value, censored at \(LOD_k\) is:
 
-\[\textrm{Eq. 1.4:} \ \  p^c_{ij} = \left(\frac{j}{C_i+1}\right)(1-p^e_i)\]
+\[\textrm{Eq. 1.4:} \ \  p^c_{kj} = \left(\frac{j}{C_k+1}\right)(1-p^e_k)\]
 
-for \(j = 1\) to \(C_i\) and for \(k = 1\) to \(K\).
+for \(j = 1\) to \(C_k\) and for \(k = 1\) to \(K\).
 
 With these prerequisite variables and expression defined, we can begin outlining the general procedure for obtaining parameter estimates using ROS.
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Compute normal quantiles (z-scores) by computing \(z_{ij}^{u} = \Phi^{-1}(p^u_{ij})\), where \(\Phi^{-1}\) is the inverse standard normal CDF.
+  Compute normal quantiles (z-scores) by computing \(z_{kj}^{u} = \Phi^{-1}(p^u_{kj})\), where \(\Phi^{-1}\) is the inverse standard normal CDF.
 \item
-  Construct censored probability plots using the z-scores from step 6.
+  Construct censored probability plots using the z-scores from step 1.
 \item
-  Plot \(z_{ij}^{u}\) against a transformation, \(f(\cdot)\), (ex: log, square root, inverse, etc.) of the uncensored values \(x_{ij}^{u}\).
+  If a linear trend is not visible, we may want to plot \(z_{kj}^{u}\) against a transformation, \(f(\cdot)\), (ex: log, square root, inverse, etc.) of the uncensored values \(x_{kj}^{u}\).
 \item
-  Compute correlation coefficient between the \(z_{ij}^{u}\) and \(f(x_{ij}^{u})\) pairs. The transformation which yields the highest correlation coefficient is the one which most optimizes the left-censored values.
+  Compute correlation coefficient between the \(z_{kj}^{u}\) and \(f(x_{kj}^{u})\) pairs. The transformation which yields the highest correlation coefficient is the one which most optimizes the left-censored values.
 \item
-  Compute a linear regression of the transformed values, \(f(x_{ij}^{u})\) against the z-scores, \(z_{ij}^{u}\).
+  Compute a linear regression of the transformed values, \(f(x_{kj}^{u})\) against the z-scores, \(z_{kj}^{u}\).
 \item
-  Use Eq. 1.4 to compute \(p^c_{ij}\) and repeat steps 1 through 3, to obtain z-scores for the censored values.
+  Use Eq. 1.4 to compute \(p^c_{kj}\) and repeat steps 1 through 3, to obtain z-scores for the censored values.
 \item
   Obtain the transformed imputed values using the slope and intercept from the regression model in step 10 and the censored z-scores from step 11 using the following expression:
 \end{enumerate}
-\[f(\hat{x}_{ij}^c) = {Intercept} \ + Slope \ * z_{ij}^{c}\]
+\[f(\hat{x}_{kj}^c) = {Intercept} \ + Slope \ * z_{kj}^{c}\]
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{7}
@@ -539,7 +545,7 @@ Having discussed four common methods to handle left-censored data in the previou
 \hypertarget{data_generating_mechanisms}{%
 \section{Data-Generating Mechanisms}\label{data_generating_mechanisms}}
 
-To reflect the typical distributions of left-censored data, we generated data for use in our simulation study with parametric draws from each of three distributions: (1) a log-normal distribution with mean, \(\mu = 1\) and standard deviation, \(\sigma = 0.5\), an exponential distribution with rate, \(\lambda = 1\), and Weibull distribution with shape, \(k = 1\) and scale, \(\lambda = 1\). By choosing these specific parameters for each of the three distributions, the mean for each distribution is \(\mu = 1\).
+To reflect the typical distributions of left-censored data, we generated data for use in our simulation study with parametric draws from each of three distributions: (1) a log-normal distribution with mean, \(\mu = 1\) and standard deviation, \(\sigma = 0.5\), an exponential distribution with rate, \(\lambda = 1\), and Weibull distribution with shape, \(k = 1\) and scale, \(\lambda = 1\). We chose these specific parameters for each of the three distributions, so that the mean for each distribution would come out to be \(\mu = 1\).
 
 We also varied sample sizes, \(n = \{10, 100, 1000\}\), and censoring rates, \(R = \{0.10, 0.30, 0.50\}\). The sample sizes are chosen as such to reflect realistic sizes for water quality datasets, which we plan to investigate in the following chapter with a case-study on coal ash contamination in water wells. Regarding the values we chose for \(R\), if we recall from the previous chapter, the ROS method is unable to be implemented when more than half the data is censored, which is why we chose our censoring rates as such.
 
@@ -550,19 +556,19 @@ To artificially induce censoring in our simulated data, we arranged the uncensor
 \hypertarget{estimands}{%
 \section{Estimands}\label{estimands}}
 
-Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data (Shoari, 2018). In preparation for our case study in the following chapter, we will be utilizing the four methods to estimate the mean of the censored variable of interest in our simulation study.
+Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data (Shoari, 2018). In preparation for our case study in the following chapter, we used our four methods: substitution, MLE, KM, and ROS, to estimate the mean of the censored variable of interest in our simulation study.
 
 \hypertarget{implementation}{%
 \section{Implementation in R}\label{implementation}}
 
-All our code will be written using R. For our substitution method, we begin by defining the LOD as the minimum uncensored value for the variable of interest. We will choose LOD/2 as our replacement value, calculating our estimated mean using this newly defined dataset.
+All our code was written using R. For our substitution method, we began by defining the LOD as the minimum uncensored value for the variable of interest. We chose LOD/2 as our replacement value and calculated our estimated mean using this newly defined dataset.
 
-For the remaining three methods (KM, MLE, and ROS), we will be using specialized functions from the \texttt{NADA} package (Lee, 2020). The code for the MLE method will be handled with the \texttt{cenmle} function, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. This method allows us to calculate the summary statistics for the entire data set -- including the censored values. The \texttt{cenfit} function allows us to implement KM. This function ``computes an estimate of an empirical cumulative distribution function for censored data using the Kaplan-Meier method,'' from which we can then obtain summary statistics of interest. Similarly, the \texttt{ros} function implements ROS and outputs a dataframe containing the original uncensored values and the estimates for the censored values, from which we can then use to also compute our summary statistics of interest.
+For the remaining three methods (KM, MLE, and ROS), we used specialized functions from the \texttt{NADA} package (Lee, 2020). The code for the MLE method was handled with the \texttt{cenmle} function, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. This method allows us to calculate the summary statistics for the entire data set including the censored values. The \texttt{cenfit} function allows us to implement KM. This function ``computes an estimate of an empirical cumulative distribution function for censored data using the Kaplan-Meier method,'' from which we obtained summary statistics of interest (Lee, 2020). Similarly, the \texttt{ros} function implements ROS and outputs a dataframe containing the original uncensored values and the estimates for the censored values, from which used to obtain our summary statistics of interest.
 
 \hypertarget{performance_measures}{%
 \section{Performance Measures}\label{performance_measures}}
 
-We will run our simulation with 1000 iterations and assess the performance of each of our four methods based on: bias, variance, and mean squared error in estimating the true mean. Bias is calculated by obtaining the difference between the average of the 1000 estimated means and the true mean (\(\mu = 1\)). Variance is calculated as the average of the squared difference between each estimated mean and the average of the 1000 estimated means, squared. The MSE is calculated by: \(MSE = Var(\hat{\mu})+[Bias(\hat{\mu})]^2\).
+We ran our simulation with 1000 iterations and assessed the performance of each of our four methods based on: bias, variance, and mean squared error in estimating the true mean. Bias is calculated by obtaining the difference between the average of the 1000 estimated means and the true mean (\(\mu = 1\)). Variance is calculated as the average of the squared difference between each estimated mean and the average of the 1000 estimated means, squared. The MSE is calculated by: \(MSE = Var(\hat{\mu})+[Bias(\hat{\mu})]^2\).
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -788,7 +794,7 @@ The results of our simulation study are presented in Tables \ref{tab:lntable}, \
 \hypertarget{log-normalsimstudy}{%
 \subsection{Log-normal}\label{log-normalsimstudy}}
 
-Table \ref{tab:lntable} shows our simulation results for the log-normal distribution. In the case of low censoring (0.10), when dealing with sample sizes of 10 and 100, the difference in the performances of the methods are not very pronounced, but they exist. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significantly worse than KM, while MLE and ROS perform rather equally well in all sample sizes for low-censoring.
+Table \ref{tab:lntable} and Figure \ref{fig:lnfigure} shows our simulation results for the log-normal distribution. In the case of low censoring (0.10), the difference in the performances of the methods are not very pronounced, but they exist. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significantly worse than KM, while MLE and ROS perform rather equally well in all sample sizes for low-censoring.
 
 When considering medium censoring (0.30), much of the same observations still hold true. Substitution performs the worst, followed by KM. MLE and ROS both perform well. However, ROS has a slight edge over MLE, especially as sample sizes increase, attaining lower MSE values than the latter.
 
@@ -797,7 +803,7 @@ In the case of the log-normally distributed data, all four methods begin to perf
 \hypertarget{exponentialweibullsimstudy}{%
 \subsection{Exponential and Weibull}\label{exponentialweibullsimstudy}}
 
-The results of the simulation study for the exponential and Weibull-distributed data can be viewed in Tables \ref{tab:exptable} and \ref{tab:wtable}. It must be noted that results for MLE are absent due to the inability of NADA's \texttt{cenmle} function to work with non-lognormally distributed data. In future works, we may want to write a custom function to apply MLE for such cases.
+The results of the simulation study for the exponential distributed data can be viewed in Table \ref{tab:exptable} and Figure \ref{fig:expfigure}. Similarly, the results for our Weibull-distributed data can be viewed in Table \ref{tab:wtable} and Figure \ref{fig:wfigure}. It must be noted that results for MLE are absent due to the inability of NADA's \texttt{cenmle} function to work with non-lognormally distributed data. In future works, we may want to write a custom function to apply MLE for such cases.
 
 We can see for both the exponential and weibull distributed data, all three methods, substitution, KM, and ROS, perform equally well in the case of low (0.10) censoring with all sample sizes, obtaining similar bias and MSE values across all sample sizes. Unfortunately, in the case of medium (0.30) and high (0.50) censoring, KM consistently performs the worst when compared to the other methods across all sample sizes. In contrast to the bad performance by the KM method, ROS on the other hand, performs the best with substitution not far behind.
 
@@ -1144,8 +1150,26 @@ This first appendix includes all of the R chunks of code that were hidden throug
 \hypertarget{in-chapter-1-introduction}{%
 \section{\texorpdfstring{In \protect\hyperlink{intro}{Chapter 1: Introduction}}{In Chapter 1: Introduction}}\label{in-chapter-1-introduction}}
 
-No noteworthy code for this chapter.
+Code for the creation of the probability plot figure for ROS:
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{values }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{16}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{19}\NormalTok{, }\DecValTok{23}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{29}\NormalTok{, }\DecValTok{29}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{33}\NormalTok{, }\DecValTok{35}\NormalTok{)}
+\NormalTok{censored }\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"Censored"}\NormalTok{, }\StringTok{"Censored"}\NormalTok{, }\StringTok{"Censored"}\NormalTok{, }\StringTok{"Uncensored"}\NormalTok{,}
+             \StringTok{"Uncensored"}\NormalTok{,}\StringTok{"Uncensored"}\NormalTok{,}\StringTok{"Uncensored"}\NormalTok{,}\StringTok{"Uncensored"}\NormalTok{,}
+             \StringTok{"Uncensored"}\NormalTok{,}\StringTok{"Uncensored"}\NormalTok{,}\StringTok{"Uncensored"}\NormalTok{,}\StringTok{"Uncensored"}\NormalTok{,}
+             \StringTok{"Uncensored"}\NormalTok{,}\StringTok{"Uncensored"}\NormalTok{,}\StringTok{"Uncensored"}\NormalTok{)}
+\NormalTok{zscores }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.8}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.46}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.44}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.32}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.05}\NormalTok{, }
+             \FloatTok{0.09}\NormalTok{, }\FloatTok{0.2}\NormalTok{, }\FloatTok{0.27}\NormalTok{, }\FloatTok{0.34}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.7}\NormalTok{, }\FloatTok{1.0}\NormalTok{, }\FloatTok{1.5}\NormalTok{)}
 
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{cbind.data.frame}\NormalTok{(values, zscores, censored)}
+
+\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ zscores, }\AttributeTok{y =}\NormalTok{ values, }\AttributeTok{color =}\NormalTok{ censored)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Z{-}Score"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Value"}\NormalTok{, }\AttributeTok{color =} \StringTok{"Censoring Status"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Example Censored Probability Plot"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 \hypertarget{in-chapter-2-simulations}{%
 \section{\texorpdfstring{In \protect\hyperlink{simulations}{Chapter 2: Simulations}}{In Chapter 2: Simulations}}\label{in-chapter-2-simulations}}
 

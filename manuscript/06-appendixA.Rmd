@@ -12,7 +12,10 @@ This first appendix includes all of the R chunks of code that were hidden throug
 
 ## In [Chapter 1: Introduction](#intro)
 
-No noteworthy code for this chapter.
+Code for the creation of the probability plot figure for ROS:
+
+```{r app_rosexample, ref.label="rosexample", echo=TRUE, eval=FALSE}
+```
 
 ## In [Chapter 2: Simulations](#simulations)
 

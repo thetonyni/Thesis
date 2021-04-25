@@ -1,12 +1,13 @@
 \addvspace {5\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Left Censoring Example\relax }}{3}{figure.caption.6}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces An example visualization of the censored probability plot, from ROS.\relax }}{13}{figure.caption.8}%
 \addvspace {5\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces MSE values of lognormal simulations, faceted by censoring rates.\relax }}{21}{figure.caption.9}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces MSE values of exponential simulations, faceted by censoring rates.\relax }}{21}{figure.caption.11}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces MSE values of Weibull simulations, faceted by censoring rates.\relax }}{24}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces MSE values of lognormal simulations, faceted by censoring rates.\relax }}{21}{figure.caption.10}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces MSE values of exponential simulations, faceted by censoring rates.\relax }}{21}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces MSE values of Weibull simulations, faceted by censoring rates.\relax }}{24}{figure.caption.14}%
 \addvspace {5\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Difference Between Upgradient and Downgradient Wells\relax }}{30}{figure.caption.14}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Counts of Coal Sites in the United States (gray indicates no sites for that state).\relax }}{36}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Difference Between Upgradient and Downgradient Wells\relax }}{30}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Counts of Coal Sites in the United States (gray indicates no sites for that state).\relax }}{36}{figure.caption.17}%
 \addvspace {5\p@ }
 \addvspace {5\p@ }
 \addvspace {5\p@ }

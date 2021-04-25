@@ -10,7 +10,7 @@ Having discussed four common methods to handle left-censored data in the previou
 
 ## Data-Generating Mechanisms {#data_generating_mechanisms}
 
-To reflect the typical distributions of left-censored data, we generated data for use in our simulation study with parametric draws from each of three distributions: (1) a log-normal distribution with mean, $\mu = 1$ and standard deviation, $\sigma = 0.5$, an exponential distribution with rate, $\lambda = 1$, and Weibull distribution with shape, $k = 1$ and scale, $\lambda = 1$. By choosing these specific parameters for each of the three distributions, the mean for each distribution is $\mu = 1$.
+To reflect the typical distributions of left-censored data, we generated data for use in our simulation study with parametric draws from each of three distributions: (1) a log-normal distribution with mean, $\mu = 1$ and standard deviation, $\sigma = 0.5$, an exponential distribution with rate, $\lambda = 1$, and Weibull distribution with shape, $k = 1$ and scale, $\lambda = 1$. We chose these specific parameters for each of the three distributions, so that the mean for each distribution would come out to be $\mu = 1$.
 
 We also varied sample sizes, $n = \{10, 100, 1000\}$, and censoring rates, $R = \{0.10, 0.30, 0.50\}$. The sample sizes are chosen as such to reflect realistic sizes for water quality datasets, which we plan to investigate in the following chapter with a case-study on coal ash contamination in water wells. Regarding the values we chose for $R$, if we recall from the previous chapter, the ROS method is unable to be implemented when more than half the data is censored, which is why we chose our censoring rates as such. 
 
@@ -20,17 +20,17 @@ To artificially induce censoring in our simulated data, we arranged the uncensor
 
 ## Estimands {#estimands}
 
-Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data [@Shoari2018]. In preparation for our case study in the following chapter, we will be utilizing the four methods to estimate the mean of the censored variable of interest in our simulation study.
+Each of the four methods discussed in the previous chapter are designed for usage in obtaining summary statistics for left censored data [@Shoari2018]. In preparation for our case study in the following chapter, we used our four methods: substitution, MLE, KM, and ROS, to estimate the mean of the censored variable of interest in our simulation study. 
 
 ## Implementation in R {#implementation}
 
-All our code will be written using R. For our substitution method, we begin by defining the LOD as the minimum uncensored value for the variable of interest. We will choose LOD/2 as our replacement value, calculating our estimated mean using this newly defined dataset.
+All our code was written using R. For our substitution method, we began by defining the LOD as the minimum uncensored value for the variable of interest. We chose LOD/2 as our replacement value and calculated our estimated mean using this newly defined dataset.
 
-For the remaining three methods (KM, MLE, and ROS), we will be using specialized functions from the `NADA` package [@NADA]. The code for the MLE method will be handled with the `cenmle` function, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. This method allows us to calculate the summary statistics for the entire data set -- including the censored values. The `cenfit` function allows us to implement KM. This function "computes an estimate of an empirical cumulative distribution function for censored data using the Kaplan-Meier method," from which we can then obtain summary statistics of interest. Similarly, the `ros` function implements ROS and outputs a dataframe containing the original uncensored values and the estimates for the censored values, from which we can then use to also compute our summary statistics of interest.
+For the remaining three methods (KM, MLE, and ROS), we used specialized functions from the `NADA` package [@NADA]. The code for the MLE method was handled with the `cenmle` function, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. This method allows us to calculate the summary statistics for the entire data set including the censored values. The `cenfit` function allows us to implement KM. This function "computes an estimate of an empirical cumulative distribution function for censored data using the Kaplan-Meier method," from which we obtained summary statistics of interest [@NADA]. Similarly, the `ros` function implements ROS and outputs a dataframe containing the original uncensored values and the estimates for the censored values, from which used to obtain our summary statistics of interest.
 
 ## Performance Measures {#performance_measures}
 
-We will run our simulation with 1000 iterations and assess the performance of each of our four methods based on: bias, variance, and mean squared error in estimating the true mean. Bias is calculated by obtaining the difference between the average of the 1000 estimated means and the true mean ($\mu = 1$). Variance is calculated as the average of the squared difference between each estimated mean and the average of the 1000 estimated means, squared. The MSE is calculated by: $MSE = Var(\hat{\mu})+[Bias(\hat{\mu})]^2$.
+We ran our simulation with 1000 iterations and assessed the performance of each of our four methods based on: bias, variance, and mean squared error in estimating the true mean. Bias is calculated by obtaining the difference between the average of the 1000 estimated means and the true mean ($\mu = 1$). Variance is calculated as the average of the squared difference between each estimated mean and the average of the 1000 estimated means, squared. The MSE is calculated by: $MSE = Var(\hat{\mu})+[Bias(\hat{\mu})]^2$.
 
 
 <!--
@@ -590,7 +590,7 @@ ggplot(data = df.w, aes(x = samplesize, y = MSE, group = method, color = method)
 
 ### Log-normal {#log-normalsimstudy}
 
-Table \@ref(tab:lntable) shows our simulation results for the log-normal distribution. In the case of low censoring (0.10), when dealing with sample sizes of 10 and 100, the difference in the performances of the methods are not very pronounced, but they exist. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significantly worse than KM, while MLE and ROS perform rather equally well in all sample sizes for low-censoring. 
+Table \@ref(tab:lntable) and Figure \ref{fig:lnfigure} shows our simulation results for the log-normal distribution. In the case of low censoring (0.10), the difference in the performances of the methods are not very pronounced, but they exist. Substitution and KM do not perform quite as well as ROS and MLE, both displaying an increase in absolute bias and MSE when compared to the latter two. Substitution performs significantly worse than KM, while MLE and ROS perform rather equally well in all sample sizes for low-censoring. 
 
 When considering medium censoring (0.30), much of the same observations still hold true. Substitution performs the worst, followed by KM. MLE and ROS both perform well. However, ROS has a slight edge over MLE, especially as sample sizes increase, attaining lower MSE values than the latter.
 
@@ -598,7 +598,7 @@ In the case of the log-normally distributed data, all four methods begin to perf
 
 ### Exponential and Weibull {#exponentialweibullsimstudy}
 
-The results of the simulation study for the exponential and Weibull-distributed data can be viewed in Tables \@ref(tab:exptable) and \@ref(tab:wtable). It must be noted that results for MLE are absent due to the inability of NADA's `cenmle` function to work with non-lognormally distributed data. In future works, we may want to write a custom function to apply MLE for such cases. 
+The results of the simulation study for the exponential distributed data can be viewed in Table \@ref(tab:exptable) and Figure \ref{fig:expfigure}. Similarly, the results for our Weibull-distributed data can be viewed in Table \@ref(tab:wtable) and Figure \@ref(fig:wfigure). It must be noted that results for MLE are absent due to the inability of NADA's `cenmle` function to work with non-lognormally distributed data. In future works, we may want to write a custom function to apply MLE for such cases. 
 
 We can see for both the exponential and weibull distributed data, all three methods, substitution, KM, and ROS, perform equally well in the case of low (0.10) censoring with all sample sizes, obtaining similar bias and MSE values across all sample sizes. Unfortunately, in the case of medium (0.30) and high (0.50) censoring, KM consistently performs the worst when compared to the other methods across all sample sizes. In contrast to the bad performance by the KM method, ROS on the other hand, performs the best with substitution not far behind.
 
