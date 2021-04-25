@@ -101,11 +101,13 @@ One type of omission is known as *available-case analysis*, in which statistical
 
 Over the past century, a myriad of methods to deal with censoring have been developed to counter this issue of discarding data with omission-based techniques -- some more statistically sound than others. We will review some of the more common methods to estimate descriptive statistics involving censored data, which include: substitution, maximum likelihood estimation, Kaplan-Meier, and regression on order statistics.
 
+These methods can be classified as either imputation-based techniques, in the case of substitution and ROS, or parameter-estimation techniques, in the case of MLE and KM.
+
 ### Substitution {#Substitution} 
 
 The first technique we will discuss is the substitution method, which involves imputing in a replacement value in lieu of the censored data point. As a method commonly condemned in papers as a statistically unsound method to handle censored data, substitution methods are ubiquitous in the chemical and environmental sciences [@Canales2018].
 
-Substitution techniques are easy to understand and to implement, akin to the omission techniques we discussed previously. Observations for which measurements fall below the LOD are replaced with a replacement value, which is non-specific and can vary between studies. A non-exhaustive list of common replacement values include: $\frac{LOD}{2}, \frac{LOD}{\sqrt2}$, and the $LOD$ itself [@Lee2005]. 
+Substitution techniques are easy to understand and to implement, akin to the omission techniques we discussed previously. Observations for which measurements fall below the LOD are replaced with a replacement value, which is non-specific and can vary between studies. A non-exhaustive list of common replacement values include: $\frac{LOD}{2}$, $\frac{LOD}{\sqrt2}$, and the $LOD$ itself [@Lee2005]. 
 
 Proponents of the substitution method claim that the replacement value $\frac{LOD}{2}$ is useful for data sets in which the majority of the data are below the LOD or when the distribution of the data is highly skewed; the definition of "highly skewed" being any distribution with a geometric standard deviation (a measure of spread commonly used in tandem with log-normal distributions) of 3 or more [@Hornung1989]. They also suggest using $\frac{LOD}{\sqrt2}$ when there are only a few data points below the LOD or when the data is not highly skewed.
 
@@ -119,9 +121,7 @@ As mentioned previously, contention between whether this method is statistically
 
 Maximum likelihood (ML) estimation is a parametric technique which allows us to estimate the parameters of a model when the data are from a known distribution.
 
-Let the random variables $X_i, \cdots, X_n$ be independent and identically distributed with probability function $f(x_i|\theta)$, where $\theta$ is the parameter we are interested in estimating.
-
-For every observed random sample $x_1,\cdots,x_n$, the joint density function is:
+Let the random variables $X_1, \cdots, X_n$ be independent and identically distributed with probability function $f(x_i|\theta)$, where $\theta$ is the parameter we are interested in estimating. For every observed random sample $x_1,\cdots,x_n$, the joint density function is:
 
 $$f(x_1,...,x_n|\theta) = f(x_1|\theta)...f(x_n|\theta) = \prod_{i=1}^{n}f(x_i|\theta)$$
 
@@ -132,7 +132,7 @@ Our *maximum likelihood estimate* of our parameter $\theta$, then, is the value 
 
 When left censoring is present, the likelihood function changes in order to account for both the censored observations and the uncensored observations. We define $F(x_i|\theta)$ to the cumulative distribution function for our RVs conditioned on $\theta$. Our new likelihood function when left censoring is present is:
 
-$$lik(\theta) = \prod_{i=1}^n f(x_i|\theta)^{\delta_{i}} \ \times F(x_i|\theta)^{1-{\delta_{i}}}$$
+$$L(\theta) = \prod_{i=1}^n f(x_i|\theta)^{\delta_{i}} \ \times F(x_i|\theta)^{1-{\delta_{i}}}$$
 
 \noindent where $\delta_{i}$ indicates whether or not the $i$th observation is censored:
 
@@ -183,83 +183,81 @@ Variance ($Var(\hat{\mu}$)     & $Var(\hat{\mu}) = \displaystyle \sum_{i=1}^{r} 
 \end{tabular}
 \end{table}
 
+
 ### Regression on Order Statistics {#ROS}
 
 Lastly, regression on order statistics (ROS) combines both the parametric nature of the MLE approach and nonparametric nature of the KM method. ROS is a semi-parametric method which assumes an underlying distribution (usually lognormal) for the censored measurements but makes no assumption towards the distribution of uncensored measurements.
 
 @EPA2009 provides a a more detailed explanation to the methodology of ROS, but the basic procedures will be outlined in this thesis. 
 
-A brief explanation as to how ROS works is as follows. ROS begins with the estimation of the cumulative probability associated with each distinct LOD. This cumulative probability is distributed equally between the censored values with a common LOD. Once the censored values are ranked, a linear regression model is fit between the uncensored values and the distributional z-scores from the censored probability plot. The parameters of the regression model (slope and intercept of the regression line) is then used to estimate the mean and standard deviation of the distributional model which are then used to generate imputed values for the censored observations.
-
-<!-- how do we use the slope and intercept to FIND the mean  and sd of the model? check book from library once it gets in? -->
+A brief explanation as to how ROS works is as follows. ROS begins with the estimation of the cumulative probability associated with each distinct LOD within a variable. This cumulative probability is distributed equally between the censored values with a common LOD. Once the censored values are ranked, a linear regression model is fit between the uncensored values and the distributional z-scores from the censored probability plot. The parameters of the regression model (slope and intercept of the regression line) are then used to estimate the mean and standard deviation of the distributional model which are then used to generate imputed values for the censored observations.
 
 Delving into the mathematics behind this procedure, we need to first define several variables. 
 
-We define $k$ be the number of distinct LOD values in the data, $A_i$ as the number of uncensored values between the $i$th and $(i+1)$th LOD for $i=1$ to $k-1$, and $A_k$ as the number of uncensored values above the highest LOD, $A_0$ as the number of uncensored values below the lowest LOD.
+Let $LOD_k$ be the $k^{th}$ distinct LOD value for a variable with $K$ distinct limits of detection. $A_k$ as the number of uncensored values between the $i$th and $(i+1)$th LOD for $k=1$ to $K-1$, and $A_k$ as the number of uncensored values above the highest LOD, $A_0$ as the number of uncensored values below the lowest LOD.
 
 We also define $B_i$ as the total number of observations (both uncensored and censored) with values below the $i$th LOD and $B_0 = 0$.
 
-We can then write the number of uncensored values below the $i$th LOD ($C_i$) as:
+We can then write the number of censored values below the $i$th LOD ($C_i$) as:
 
 $$\textrm{Eq. 1.1:} \ \  C_i = B_i - B_{i-1}-A_{i-1}$$ 
 
 for $i = 1$ to $k$.
 
-We can also calculate what is known as the _exceedance probability_ ($pe_{i}$) for each of our $k$ LOD values, which represents the proportion of the data greater than or equal to each distinct LOD:
+Using these values we can calculate what is known as the _exceedance probability_ ($pe_{i}$) for each of our $k$ LOD values, defined recursively as:
 
-$$\textrm{Eq. 1.2:} \ \  pe_i = pe_{i+1} + \frac{A_i}{A_i+B_i}(1 - pe_{i+1})$$
-where $pe_i$ is the proportion of the data which exceeds the $i$th LOD.
+$$\textrm{Eq. 1.2:} \ \  p^e_i = p^e_{i+1} + \frac{A_i}{A_i+B_i}(1 - p^e_{i+1})$$
+where $p^e_0 = 1$ and $p^e_{k+1} = 0$.
 
-Once we obtain exceedance probabilities for each of our distinct LOD values, we compute the plotting positions, aka. the cumulative probabilities, for each of our uncensored values between the $i$th and $(i+1)$th LOD values with the following equation:
+The cumulative probability associated with the $i^{th}$ uncensored value between $LOD_k$ and $LOD_{k+1}$ is then:
 
-$$\textrm{Eq. 1.3:} \ \  pu_{ij} = (1-pe_i)+(\frac{j}{A_i+1})*(pe_i-pe_{i+1})$$
+$$\textrm{Eq. 1.3:} \ \  p^u_{ij} = (1-p^e_i)+ \left(\frac{j}{A_i+1}\right)*(p^e_i-p^e_{i+1})$$
 
-for $j = 1$ to $A_i$ and for $i = 0$ to $k$.
+for $j = 1$ to $A_i$ and for $k = 0$ to $k$.
 
-We also similarly compute the plotting positions for our censored values with:
+Similarly, the cumulative probability associated with the $j^{th}$ censored value, censored at $LOD_k$ is:
 
-$$\textrm{Eq. 1.4:} \ \  pc_{ij} = (\frac{j}{C_i+1})*(1-pe_i)$$
+$$\textrm{Eq. 1.4:} \ \  p^c_{ij} = \left(\frac{j}{C_i+1}\right)(1-p^e_i)$$
 
-for $j = 1$ to $C_i$ and for $i = 1$ to $k$.
+for $j = 1$ to $C_i$ and for $k = 1$ to $K$.
 
-Having defined the relevant variables and equations, we can detail a step-by-step algorithmic procedure on how the ROS method works.
+With these prerequisite variables and expression defined, we can begin outlining the general procedure for obtaining parameter estimates using ROS.
 
-1. Given a dataset with $n$ observations, identify and sort the $k$ distinct LOD values. 
+1. Compute normal quantiles (z-scores) by computing $z_{ij}^{u} = \Phi^{-1}(p^u_{ij})$, where $\Phi^{-1}$ is the inverse standard normal CDF.
 
-2. Compute $A_0$, $A_k$, $A_i$'s for $i=1$ to $k-1$, and $B_i$ for $i=1$ to $k$.
+2. Construct censored probability plots using the z-scores from step 6.
 
-3. Use Eq. 1.1 to compute $C_i$ for $i=1$ to $k$.
+3. Plot $z_{ij}^{u}$ against a transformation, $f(\cdot)$, (ex: log, square root, inverse, etc.) of the uncensored values $x_{ij}^{u}$.
 
-4. Let $pe_0 = 1$ and $pe_{k+1} = 0$. Use Eq. 1.2 to compute $pe_i$ for $i=1$ to $k$.
+4. Compute correlation coefficient between the $z_{ij}^{u}$ and $f(x_{ij}^{u})$ pairs. The transformation which yields the highest correlation coefficient is the one which most optimizes the left-censored values.
 
-5. Sort all $pe_i$ from $i=1$ to $k$. Use Eq. 1.3 to compute $pu_{ij}$.
+5. Compute a linear regression of the transformed values, $f(x_{ij}^{u})$ against the z-scores, $z_{ij}^{u}$.
 
-6. Compute normal quantiles (z-scores) by computing $z_{ij}^{d} = \Phi^{-1}(pd_{ij})$, where $\Phi^{-1}$ is the inverse standard normal CDF.
+6. Use Eq. 1.4 to compute $p^c_{ij}$ and repeat steps 1 through 3, to obtain z-scores for the censored values.
 
-7. Construct censored probability plots using the z-scores from step 6.
-
-8. Plot $z_{ij}^{d}$ against a transformation, $f(\cdot)$, (ex: log, square root, inverse, etc.) of the uncensored values $x_{ij}^{d}$.
-
-9. Compute correlation coefficient between the $z_{ij}^{d}$ and $f(x_{ij}^{d})$ pairs. The transformation which yields the highest correlation coefficient is the one which most optimizes the left-censored values.
-
-10. Compute a linear regression of the transformed values, $f(x_{ij}^{d})$ against the z-scores, $z_{ij}^{d}$.
-
-11. Use Eq. 1.4 to compute $pc_{ij}$ and repeat steps 6 through 8, to obtain z-scores for the censored values.
-
-12. Obtain the transformed imputed values using the slope and intercept from the regression model in step 10 and the censored z-scores from step 11 using the following expression:
+7. Obtain the transformed imputed values using the slope and intercept from the regression model in step 10 and the censored z-scores from step 11 using the following expression:
 
 $$f(\hat{x}_{ij}^c) = {Intercept} \ + Slope \ * z_{ij}^{c}$$
 
-13. Combine the transformed imputed values for the censored values with the transformed uncensored values to obtain estimates for the population mean and standard deviation as normal.
+8. Combine the transformed imputed values for the censored values with the transformed uncensored values to obtain estimates for the population mean and standard deviation as normal.
 
-There are of course, also limitations to the ROS method. In order for ROS to be utilized, there needs to be at least 5 known values and more than half the values within the censored variables must be known. As regression is utilized in this method, the response variable must also be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance [@Lee2005].
+As we have now finished discussing how the ROS method works, we must turn to the limitations of the ROS method. In order for ROS to be utilized, there needs to be at least 5 known values and more than half the values within the censored variables must be known. As regression is utilized in this method, the response variable must also be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance [@Lee2005].
 
-We have now covered the techniques that are commonly used to handle left-censored data. These methods can be classified as either imputation-based techniques, in the case of substitution and ROS, or parameter-estimation techniques, in the case of MLE and KM. How then, can we compare the effectiveness of each of these methods?
+## Aims {#aims}
 
-Several studies have already been conducted over the years to evaluate the performance of different methods for handling left-censored data, with the results being widely varied and largely inconclusive. However, each study varies wildly in the methods being investigated and the scope of the study -- some leaning more towards seeking theoretical conclusions while others focus on applications to real-world data, such as water-quality data. For example, @Antweiler2015 evaluates the effectiveness of 11 different methods with several censoring rates and distributional assumptions, using the median absolute deviation as their performance metric of choice. Meanwhile, @Hall2020 investigated the performance of the four methods used in this thesis while disregarding distributional assumptions and censoring rates, using a water-quality dataset.
+Several studies have been conducted over the years to evaluate and compare the performance of different methods for handling left-censored data, with largely differing results and thoughts on the performance of these methods.
 
-As each of these studies are concerned with their own goals -- specifics of their study will inevitably be different. Studies that are more focused on a general, broad audience, with no assumptions as to what sort of data the individual is working with -- may find more use with the conclusion and results that investigators like Antweiler come up with. There may also be individuals who are more focused on the performance of such methods in a specific context, as in the study conducted by Hall. There is no common ground between statisticians on the optimality of methods, prompting our own foray into this topic. I wish to incorporate the detailed specifications of a simulation study, in essence, taking into consideration distributional parameters of the data-generating mechanism, censoring rates, and sample sizes for each run, while also keeping it applicable to our case-study specific data.
+@Hall2020 applied each of the four methods to a water quality dataset and found that each method obtained similar estimates of the mean except for MLE which produced different (usually higher) estimates than the other methods.
 
-Regarding the simulation study that we will conduct in the following chapter, we wish to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. Several investigators in this field have found issues with certain methods underperforming under certain conditions, and brings up the possibility of particular methods being more equipped than others to deal with different rates of censoring. To provide an example of an instance when investigators have found a certain method to perform better than others, we can take a look at @Canales2018's study on methods to handle left-censored microbial risk assessment. They found that the substitution method seemed to work much better than expected while other methods, such as the MLE method, seemed to have trouble when applied to highly skewed data. Meanwhile @Antweiler2015's report suggest that regardless of the method or sample size, obtaining reliable estimates from datasets where censoring was greater than 40% was unfeasible.
+@Antweiler2015 compared estimates of the median absolute deviation across these four methods (and several more) with varying censoring rates and distributional assumptions. Their study also suggested that the substitution method actually led to estimates that were not far off from the other methods, especially in the case of low censoring (<25%). They also claim that regardless of the method or sample size, obtaining reliable estimates from datasets where censoring was greater than 40% was unfeasible. 
 
-Claims regarding the effectiveness of methods with regards to censoring rates, distribution of data, and sample size are all highly contentious. In order to get a better idea of sense of how these claims hold up, our goal is to evaluate the validity of those claims by conducting a simulation study of our own to put these methods into practice, comparing and contrasting the effectiveness of our four techniques with regards to censoring rate and sample size.
+Finally, @Canales2018 performed a study using simulated water quality data and found MLE to be ineffective, especially with highly skewed data. Similarly to @Antweiler2015, they found that the substitution method actually outperformed both MLE and KM.
+
+As we can see, there is no common ground between statisticians on the optimality of methods, prompting our own foray into this topic. Claims regarding the effectiveness of methods with regards to censoring rates, distribution of data, and sample size are all highly contentious. In order to get a better idea of sense of how these claims hold up, our goal is to evaluate the validity of those claims by conducting a simulation study of our own to put these methods into practice, comparing and contrasting the effectiveness of our four techniques with regards to censoring rate and sample size. I wish to incorporate the detailed specifications of a simulation study, taking into consideration distributional parameters of the data-generating mechanism, censoring rates, and sample sizes for each run, while also keeping it applicable to our case-study specific data.
+
+<!--
+
+Regarding the simulation study that we will conduct in the following chapter, we wish to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. Several investigators in this field have found issues with certain methods underperforming under certain conditions, and brings up the possibility of particular methods being more equipped than others to deal with different rates of censoring.
+
+-->
+

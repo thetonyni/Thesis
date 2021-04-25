@@ -121,7 +121,8 @@ The goal of our case study is to employ the techniques we introduced back in Cha
 
 ```{r, echo = FALSE, message = FALSE}
 #importing in full dataset
-import_df <- read_csv("code/current/data/chemical_data.csv", col_types = cols())
+import_df <- read_csv("code/current/data/chemical_data.csv", 
+                      col_types = cols())
 ```
 
 ```{r, echo = FALSE, results = FALSE, message = FALSE, include = FALSE}
@@ -248,7 +249,8 @@ hbt_ranges <- c("(0, 50)", "(0, 1890)", "(0.00010, 429000)", "(0, 57)",
                "(0, 5.84)", "(0, 8300)", "(-63.335, 302)", 
                "(0, 642)", "(0.01, 1340000)", "(0, 474)")
 
-hbt <- as.data.frame(cbind(hbt_names, hbt_values, hbt_units, hbt_ranges)) %>%
+hbt <- as.data.frame(cbind(hbt_names, hbt_values, hbt_units, 
+                           hbt_ranges)) %>%
   rename("Contaminant" = "hbt_names",
          "Exceedance Limit" = "hbt_values",
          "Unit" = "hbt_units",
@@ -288,7 +290,7 @@ We will follow their criteria for determining if a well is contaminated, with th
 
 #template to find different units
 template <- full %>%
-  filter(grepl("Antimony", contaminant)) %>% #select all rows containing __
+  filter(grepl("Antimony", contaminant)) %>% #select all rows of ___
   group_by(measurement.unit) %>%
   summarize(n = n())
 
@@ -482,7 +484,7 @@ downgrad_control <- avg_control %>%
 #contaminant/site
 
 downgrad_control2 <- left_join(downgrad_control, upgrad_control) %>%
-  #remove downgradient mean concentrations that were greater than “background” levels
+  #remove downgradient mean concentrations greater than “background”
   filter(avg_conc > upgrad_conc) 
 
 
@@ -514,7 +516,8 @@ hbt_case <- hbt %>% #case sensitivity
          "limit" = "Exceedance Limit",
          "unit" = "Unit") 
   
-top10_control <- left_join(highest_control, hbt_case, by = "contaminant") %>%
+top10_control <- left_join(highest_control, hbt_case, 
+                           by = "contaminant") %>%
   #calculate the ratios -> ‘highest average’ concentrations/hbt
   mutate(ratio = avg_conc/as.numeric(limit)) %>% 
   group_by(site) %>%
@@ -527,7 +530,8 @@ top10_control <- left_join(highest_control, hbt_case, by = "contaminant") %>%
 ```{r, substitution, echo = FALSE, message = FALSE, warning = FALSE, cache = TRUE}
 avg_substitution <- df_std %>%
   mutate(concentration_new = if_else(below.detection %in% "<", 
-                                     concentration/2, concentration))%>%
+                                     concentration/2, 
+                                     concentration))%>%
   group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
   summarize(avg_conc = mean(concentration_new)) %>%
   ungroup()
@@ -589,7 +593,8 @@ avg_mle <- df_std %>%
 
 avg_mle2 <- avg_mle %>%
   group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
-  do(summarize(., avg_conc = get_mle_mean(.$concentration, .$censored))) %>%
+  do(summarize(., avg_conc = 
+                 get_mle_mean(.$concentration, .$censored))) %>%
   ungroup()
 
 upgrad_mle <- avg_mle2 %>%
@@ -644,7 +649,8 @@ avg_km <- df_std %>%
   mutate(censored = if_else(below.detection %in% "<", 
                                      TRUE, FALSE)) %>%
   group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
-  do(summarize(., avg_conc = get_km_mean(.$concentration, .$censored))) %>%
+  do(summarize(., avg_conc = 
+                 get_km_mean(.$concentration, .$censored))) %>%
   ungroup()
 
 upgrad_km <- avg_km %>%
@@ -699,7 +705,8 @@ avg_ros <- df_std %>%
   mutate(censored = if_else(below.detection %in% "<", 
                                      TRUE, FALSE)) %>%
   group_by(well.id, contaminant, measurement.unit, gradient, site) %>%
-  do(summarize(., avg_conc = get_ros_mean(.$concentration, .$censored))) %>%
+  do(summarize(., avg_conc = 
+                 get_ros_mean(.$concentration, .$censored))) %>%
 
 test <- cbind.data.frame(obs, censored, groups) %>%
   group_by(groups) %>%
@@ -760,9 +767,11 @@ top10_control.table <- top10_control %>%
   rename("Site" = "site", 
          "Composite Score" = "composite_score")
 
-knitr::kable(top10_control.table, caption = "Top 10 most contaminated sites 
-             for our baseline (control) implementation.", 
-             digits = 5, booktabs = "T", linesep = "\\addlinespace") %>%
+knitr::kable(top10_control.table, 
+  caption = "Top 10 most contaminated sites 
+  for our baseline (control) implementation.", 
+             digits = 5, booktabs = "T", 
+  linesep = "\\addlinespace") %>%
   kable_styling(font_size = 11.5) 
 ```
 
@@ -771,9 +780,11 @@ top10_substitution.table <- top10_substitution %>%
   rename("Site" = "site", 
          "Composite Score" = "composite_score")
 
-knitr::kable(top10_substitution.table, caption = "Top 10 most contaminated sites 
-             for our substitution method implementation.", 
-             digits = 5, booktabs = "T", linesep = "\\addlinespace") %>%
+knitr::kable(top10_substitution.table, 
+  caption = "Top 10 most contaminated sites 
+  for our substitution method implementation.", 
+             digits = 5, booktabs = "T", 
+  linesep = "\\addlinespace") %>%
   kable_styling(font_size = 11.5) 
 ```
 
@@ -782,9 +793,11 @@ top10_km.table <- top10_km %>%
   rename("Site" = "site", 
          "Composite Score" = "composite_score")
 
-knitr::kable(top10_km.table, caption = "Top 10 most contaminated sites 
-             for our KM method implementation.", 
-             digits = 5, booktabs = "T", linesep = "\\addlinespace") %>%
+knitr::kable(top10_km.table, 
+  caption = "Top 10 most contaminated sites 
+  for our KM method implementation.", 
+             digits = 5, booktabs = "T", 
+  linesep = "\\addlinespace") %>%
   kable_styling(font_size = 11.5) 
 ```
 

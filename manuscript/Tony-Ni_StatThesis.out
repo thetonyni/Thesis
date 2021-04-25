@@ -1,0 +1,62 @@
+\BOOKMARK [0][-]{chapter*.1}{Abstract}{}% 1
+\BOOKMARK [0][-]{chapter*.2}{Acknowledgments}{}% 2
+\BOOKMARK [0][-]{chapter*.3}{List of Tables}{}% 3
+\BOOKMARK [0][-]{chapter*.4}{List of Figures}{}% 4
+\BOOKMARK [0][-]{chapter.1}{Chapter 1: Introduction}{}% 5
+\BOOKMARK [1][-]{section.1.1}{Censored Data}{chapter.1}% 6
+\BOOKMARK [2][-]{subsection.1.1.1}{Three Types of Censoring}{section.1.1}% 7
+\BOOKMARK [2][-]{subsection.1.1.2}{Left Censoring}{section.1.1}% 8
+\BOOKMARK [1][-]{section.1.2}{Challenges of Reporting Censored Data}{chapter.1}% 9
+\BOOKMARK [1][-]{section.1.3}{Parameter Estimation for Left-Censored Data}{chapter.1}% 10
+\BOOKMARK [2][-]{subsection.1.3.1}{Substitution}{section.1.3}% 11
+\BOOKMARK [2][-]{subsection.1.3.2}{Maximum Likelihood Estimation}{section.1.3}% 12
+\BOOKMARK [2][-]{subsection.1.3.3}{Kaplan-Meier}{section.1.3}% 13
+\BOOKMARK [2][-]{subsection.1.3.4}{Regression on Order Statistics}{section.1.3}% 14
+\BOOKMARK [1][-]{section.1.4}{Aims}{chapter.1}% 15
+\BOOKMARK [0][-]{chapter.2}{Chapter 2: Simulations}{}% 16
+\BOOKMARK [1][-]{section.2.1}{Data-Generating Mechanisms}{chapter.2}% 17
+\BOOKMARK [1][-]{section.2.2}{Estimands}{chapter.2}% 18
+\BOOKMARK [1][-]{section.2.3}{Implementation in R}{chapter.2}% 19
+\BOOKMARK [1][-]{section.2.4}{Performance Measures}{chapter.2}% 20
+\BOOKMARK [1][-]{section.2.5}{Results}{chapter.2}% 21
+\BOOKMARK [2][-]{subsection.2.5.1}{Log-normal}{section.2.5}% 22
+\BOOKMARK [2][-]{subsection.2.5.2}{Exponential and Weibull}{section.2.5}% 23
+\BOOKMARK [1][-]{section.2.6}{Discussion}{chapter.2}% 24
+\BOOKMARK [2][-]{subsection.2.6.1}{Limitations}{section.2.6}% 25
+\BOOKMARK [0][-]{chapter.3}{Chapter 3: Case Study}{}% 26
+\BOOKMARK [1][-]{section.3.1}{Background}{chapter.3}% 27
+\BOOKMARK [1][-]{section.3.2}{Data}{chapter.3}% 28
+\BOOKMARK [2][-]{subsection.3.2.1}{Coal Ash Rule}{section.3.2}% 29
+\BOOKMARK [2][-]{subsection.3.2.2}{Source of Data}{section.3.2}% 30
+\BOOKMARK [2][-]{subsection.3.2.3}{Variables}{section.3.2}% 31
+\BOOKMARK [2][-]{subsection.3.2.4}{Plan of Action}{section.3.2}% 32
+\BOOKMARK [1][-]{section.3.3}{Application}{chapter.3}% 33
+\BOOKMARK [2][-]{subsection.3.3.1}{Kelderman's Top Ten Sites}{section.3.3}% 34
+\BOOKMARK [2][-]{subsection.3.3.2}{\(Our\) Top Ten Most Contaminated Sites}{section.3.3}% 35
+\BOOKMARK [0][-]{chapter.4}{Chapter 4: Conclusion}{}% 36
+\BOOKMARK [0][-]{appendix.A}{Appendix A: Main Appendix}{}% 37
+\BOOKMARK [1][-]{section.A.1}{In Chapter 1: Introduction}{appendix.A}% 38
+\BOOKMARK [1][-]{section.A.2}{In Chapter 2: Simulations}{appendix.A}% 39
+\BOOKMARK [1][-]{section.A.3}{In Chapter 3: Case Study}{appendix.A}% 40
+\BOOKMARK [2][-]{subsection.A.3.1}{Data Dictionary}{section.A.3}% 41
+\BOOKMARK [2][-]{subsection.A.3.2}{Map}{section.A.3}% 42
+\BOOKMARK [2][-]{subsection.A.3.3}{Health-based Thresholds}{section.A.3}% 43
+\BOOKMARK [2][-]{subsection.A.3.4}{Top 10 Tables}{section.A.3}% 44
+\BOOKMARK [1][-]{section.A.4}{In Chapter 4: Conclusion}{appendix.A}% 45
+\BOOKMARK [0][-]{appendix.B}{Appendix B: Simulation/CS Appendix}{}% 46
+\BOOKMARK [1][-]{section.B.1}{Simulation Study}{appendix.B}% 47
+\BOOKMARK [2][-]{subsection.B.1.1}{Libraries}{section.B.1}% 48
+\BOOKMARK [2][-]{subsection.B.1.2}{Generating Data}{section.B.1}% 49
+\BOOKMARK [2][-]{subsection.B.1.3}{Setup}{section.B.1}% 50
+\BOOKMARK [2][-]{subsection.B.1.4}{Lognormal}{section.B.1}% 51
+\BOOKMARK [2][-]{subsection.B.1.5}{Exponential}{section.B.1}% 52
+\BOOKMARK [2][-]{subsection.B.1.6}{Weibull}{section.B.1}% 53
+\BOOKMARK [1][-]{section.B.2}{Case Study}{appendix.B}% 54
+\BOOKMARK [2][-]{subsection.B.2.1}{Libraries}{section.B.2}% 55
+\BOOKMARK [2][-]{subsection.B.2.2}{Preliminary}{section.B.2}% 56
+\BOOKMARK [2][-]{subsection.B.2.3}{Standardization of Units}{section.B.2}% 57
+\BOOKMARK [2][-]{subsection.B.2.4}{Baseline/Control}{section.B.2}% 58
+\BOOKMARK [2][-]{subsection.B.2.5}{Substitution}{section.B.2}% 59
+\BOOKMARK [2][-]{subsection.B.2.6}{KM}{section.B.2}% 60
+\BOOKMARK [0][-]{appendix*.21}{Corrections}{}% 61
+\BOOKMARK [0][-]{appendix*.22}{References}{}% 62

@@ -1,0 +1,62 @@
+\contentsline {chapter}{Abstract}{i}{chapter*.1}%
+\contentsline {chapter}{Acknowledgments}{iii}{chapter*.2}%
+\contentsline {chapter}{List of Tables}{vii}{chapter*.3}%
+\contentsline {chapter}{List of Figures}{ix}{chapter*.4}%
+\contentsline {chapter}{Chapter 1: Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Censored Data}{2}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Three Types of Censoring}{2}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Left Censoring}{3}{subsection.1.1.2}%
+\contentsline {section}{\numberline {1.2}Challenges of Reporting Censored Data}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Parameter Estimation for Left-Censored Data}{5}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Substitution}{6}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Maximum Likelihood Estimation}{8}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Kaplan-Meier}{10}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}Regression on Order Statistics}{12}{subsection.1.3.4}%
+\contentsline {section}{\numberline {1.4}Aims}{15}{section.1.4}%
+\contentsline {chapter}{Chapter 2: Simulations}{17}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Data-Generating Mechanisms}{17}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Estimands}{18}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Implementation in R}{18}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Performance Measures}{19}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Results}{19}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Log-normal}{24}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Exponential and Weibull}{25}{subsection.2.5.2}%
+\contentsline {section}{\numberline {2.6}Discussion}{26}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Limitations}{27}{subsection.2.6.1}%
+\contentsline {chapter}{Chapter 3: Case Study}{29}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Background}{29}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Data}{32}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Coal Ash Rule}{32}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Source of Data}{32}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Variables}{33}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Plan of Action}{34}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}Application}{35}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Kelderman's Top Ten Sites}{36}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}(Our) Top Ten Most Contaminated Sites}{39}{subsection.3.3.2}%
+\contentsline {chapter}{Chapter 4: Conclusion}{43}{chapter.4}%
+\contentsline {chapter}{Appendix A: Main Appendix}{45}{appendix.A}%
+\contentsline {section}{\numberline {A.1}In \hyperlink {intro}{Chapter 1: Introduction}}{45}{section.A.1}%
+\contentsline {section}{\numberline {A.2}In \hyperlink {simulations}{Chapter 2: Simulations}}{45}{section.A.2}%
+\contentsline {section}{\numberline {A.3}In \hyperlink {casestudy}{Chapter 3: Case Study}}{47}{section.A.3}%
+\contentsline {subsection}{\numberline {A.3.1}Data Dictionary}{47}{subsection.A.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Map}{48}{subsection.A.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}Health-based Thresholds}{48}{subsection.A.3.3}%
+\contentsline {subsection}{\numberline {A.3.4}Top 10 Tables}{50}{subsection.A.3.4}%
+\contentsline {section}{\numberline {A.4}In \hyperlink {conclusion}{Chapter 4: Conclusion}}{51}{section.A.4}%
+\contentsline {chapter}{Appendix B: Simulation/CS Appendix}{53}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Simulation Study}{53}{section.B.1}%
+\contentsline {subsection}{\numberline {B.1.1}Libraries}{53}{subsection.B.1.1}%
+\contentsline {subsection}{\numberline {B.1.2}Generating Data}{53}{subsection.B.1.2}%
+\contentsline {subsection}{\numberline {B.1.3}Setup}{55}{subsection.B.1.3}%
+\contentsline {subsection}{\numberline {B.1.4}Lognormal}{55}{subsection.B.1.4}%
+\contentsline {subsection}{\numberline {B.1.5}Exponential}{55}{subsection.B.1.5}%
+\contentsline {subsection}{\numberline {B.1.6}Weibull}{58}{subsection.B.1.6}%
+\contentsline {section}{\numberline {B.2}Case Study}{61}{section.B.2}%
+\contentsline {subsection}{\numberline {B.2.1}Libraries}{61}{subsection.B.2.1}%
+\contentsline {subsection}{\numberline {B.2.2}Preliminary}{61}{subsection.B.2.2}%
+\contentsline {subsection}{\numberline {B.2.3}Standardization of Units}{62}{subsection.B.2.3}%
+\contentsline {subsection}{\numberline {B.2.4}Baseline/Control}{67}{subsection.B.2.4}%
+\contentsline {subsection}{\numberline {B.2.5}Substitution}{68}{subsection.B.2.5}%
+\contentsline {subsection}{\numberline {B.2.6}KM}{70}{subsection.B.2.6}%
+\contentsline {chapter}{Corrections}{73}{appendix*.21}%
+\contentsline {chapter}{References}{75}{appendix*.22}%

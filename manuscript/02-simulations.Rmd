@@ -10,7 +10,9 @@ Having discussed four common methods to handle left-censored data in the previou
 
 ## Data-Generating Mechanisms {#data_generating_mechanisms}
 
-To reflect the typical distributions of left-censored data, we generated data for use in our simulation study with parametric draws from the log-normal, exponential, and Weibull distributions. We also varied sample sizes, $n = \{10, 100, 1000\}$, and censoring rates, $R = \{0.10, 0.30, 0.50\}$. The sample sizes are chosen as such to reflect realistic sizes for water quality datasets, which we plan to investigate in the following chapter with a case-study on coal ash contamination in water wells. Regarding the values we chose for $R$, if we recall from the previous chapter, the ROS method is unable to be implemented when more than half the data is censored, which is why we chose our censoring rates as such. 
+To reflect the typical distributions of left-censored data, we generated data for use in our simulation study with parametric draws from each of three distributions: (1) a log-normal distribution with mean, $\mu = 1$ and standard deviation, $\sigma = 0.5$, an exponential distribution with rate, $\lambda = 1$, and Weibull distribution with shape, $k = 1$ and scale, $\lambda = 1$. By choosing these specific parameters for each of the three distributions, the mean for each distribution is $\mu = 1$.
+
+We also varied sample sizes, $n = \{10, 100, 1000\}$, and censoring rates, $R = \{0.10, 0.30, 0.50\}$. The sample sizes are chosen as such to reflect realistic sizes for water quality datasets, which we plan to investigate in the following chapter with a case-study on coal ash contamination in water wells. Regarding the values we chose for $R$, if we recall from the previous chapter, the ROS method is unable to be implemented when more than half the data is censored, which is why we chose our censoring rates as such. 
 
 In the following sections of this chapter, we will interchangeably use "small, medium, large" and "low, medium, and high" to differentiate between the values for sample size and censoring rate, respectively. For example, "small sample size" is equivalent to $n = 10$ and "high censoring rate" is equivalent to $R = {0.50}$.
 
@@ -28,11 +30,7 @@ For the remaining three methods (KM, MLE, and ROS), we will be using specialized
 
 ## Performance Measures {#performance_measures}
 
-The criteria we will use to assess the performance of each of our four methods will consist of: bias, variance, and mean squared error, which measure the difference between our mean estimate and the true mean, precision, and accuracy -- respectively. 
-
-Bias is calculated by obtaining the difference between the expectation of $\hat{\mu}$ and the true value of $\mu$:  $Bias = E(\hat{\mu}) - \mu$. Variance is calculated by obtaining the average squared deviation of the estimator, $\mu$, from its average: $Variance = E[(\hat{\mu}-E(\hat{\mu}))^2]$. The MSE is calculated by: $MSE = E[(\hat{\mu} -\mu)^2] = Var(\hat{\mu})+[Bias(\hat{\mu})]^2$.
-
-We will run our simulation with 1000 iterations and calculate our aforementioned performance measures using the results from the runs. 
+We will run our simulation with 1000 iterations and assess the performance of each of our four methods based on: bias, variance, and mean squared error in estimating the true mean. Bias is calculated by obtaining the difference between the average of the 1000 estimated means and the true mean ($\mu = 1$). Variance is calculated as the average of the squared difference between each estimated mean and the average of the 1000 estimated means, squared. The MSE is calculated by: $MSE = Var(\hat{\mu})+[Bias(\hat{\mu})]^2$.
 
 
 <!--
@@ -99,7 +97,6 @@ library(kableExtra)
 #distribution and censor them at the given rate
 #function will take in arguments for 1) samplesize, 2) logmean, 3)logsd
 #4) censoring rate
-
 generateLN <- function(sampsize, m, s, censrate){
   true.value <- rlnorm(sampsize, 
                meanlog=log(m^2 / sqrt(s^2 + m^2)),
@@ -114,7 +111,6 @@ generateLN <- function(sampsize, m, s, censrate){
   
   #full join original df and sliced df
   return_df <- full_join(uncensored_df, censored_df, by = "true.value")
-
   #replace NAs with FALSE
   return_df$censored <- replace_na(return_df$censored, replace = FALSE)
   
@@ -127,7 +123,6 @@ generateLN <- function(sampsize, m, s, censrate){
 #distribution and censor them at the given rate
 #function will take in arguments for 1) samplesize, 2) rate,
 #3) censoring rate
-
 generateEXP <- function(sampsize, r, censrate){
   true.value <- rexp(sampsize, rate = r)
   
@@ -140,7 +135,6 @@ generateEXP <- function(sampsize, r, censrate){
   
   #full join original df and sliced df
   return_df <- full_join(uncensored_df, censored_df, by = "true.value")
-
   #replace NAs with FALSE
   return_df$censored <- replace_na(return_df$censored, replace = FALSE)
   
@@ -153,7 +147,6 @@ generateEXP <- function(sampsize, r, censrate){
 #distribution and censor them at the given rate
 #function will take in arguments for 1) samplesize, 2) rate,
 #3) censoring rate
-
 generateW <- function(sampsize, sh, sc, censrate){
   true.value <- rweibull(sampsize, shape = sh, scale = sc)
   
@@ -166,7 +159,6 @@ generateW <- function(sampsize, sh, sc, censrate){
   
   #full join original df and sliced df
   return_df <- full_join(uncensored_df, censored_df, by = "true.value")
-
   #replace NAs with FALSE
   return_df$censored <- replace_na(return_df$censored, replace = FALSE)
   
@@ -178,7 +170,6 @@ generateW <- function(sampsize, sh, sc, censrate){
 iterations <- 1000 #number of iterations
 censvalues <- c(0.10, 0.30, 0.50)
 sampsizes <- c(10, 100, 1000)
-
 df.tall <- data.frame(prop_cens = numeric(),
                       samplesize = numeric(),
                       iteration = numeric(),
@@ -195,7 +186,6 @@ df.tall <- data.frame(prop_cens = numeric(),
 #log-normal
 options(scipen=999) #prevent scientific notation
 set.seed(7271999)
-
 for(i in censvalues){
   for(j in sampsizes){
     for(k in 1:iterations){
@@ -275,9 +265,7 @@ for(i in censvalues){
     #end of # iterations
   }
 }
-
 #aggregating performance criteria
-
 df.ln <- df.tall %>%
   group_by(prop_cens, samplesize, method) %>%
   summarize(Avg_Mean = mean(mean_method),
@@ -295,13 +283,11 @@ df.ln <- df.tall %>%
 #EXPONENTIAL
 options(scipen=999) #prevent scientific notation
 set.seed(7271999)
-
 for(i in censvalues){
   for(j in sampsizes){
     for(k in 1:iterations){
       r = 1
       df <- generateEXP(sampsize = j, r = r, censrate = i)
-
       #substitution
       #define LOD to be smallest, uncensored value
       LOD <- min(df$true.value[df$censored == FALSE]) 
@@ -386,9 +372,7 @@ for(i in censvalues){
     #end of # iterations
   }
 }
-
 #aggregating performance criteria
-
 df.exp <- df.tall %>%
   group_by(prop_cens, samplesize, method) %>%
   summarize(Avg_Mean = mean(mean_method),
@@ -406,14 +390,12 @@ df.exp <- df.tall %>%
 #WEIBULL
 options(scipen=999) #prevent scientific notation
 set.seed(7271999)
-
 for(i in censvalues){
   for(j in sampsizes){
     for(k in 1:iterations){
       sh = 1
       sc = 1
       df <- generateW(sampsize = j, sh = sh, sc = sc, censrate = i)
-
       #substitution
       #define LOD to be smallest, uncensored value
       LOD <- min(df$true.value[df$censored == FALSE]) 
@@ -501,9 +483,7 @@ for(i in censvalues){
     #end of # iterations
   }
 }
-
 #aggregating performance criteria
-
 df.w <- df.tall %>%
   group_by(prop_cens, samplesize, method) %>%
   summarize(Avg_Mean = mean(mean_method),
@@ -523,13 +503,11 @@ ln.table <- df.ln %>%
   select(c(2, 1, 3:6)) %>%
   rename(" " = "method", "Sample Size" = "samplesize", 
          "Avg. Mean" = "Avg_Mean")
-
 exp.table <- df.exp %>%
   select(-"prop_cens") %>%
   select(c(2, 1, 3:6)) %>%
   rename(" " = "method", "Sample Size" = "samplesize", 
          "Avg. Mean" = "Avg_Mean")
-
 w.table <- df.w %>%
   select(-"prop_cens") %>%
   select(c(2, 1, 3:6)) %>%
@@ -575,7 +553,6 @@ knitr::kable(exp.table, caption = "Performance metrics of our our 3
 ```{r, expfigure, echo = FALSE, fig.height = 3, fig.cap="MSE values of exponential simulations, faceted by censoring rates.", out.width = '100%'}
 df.exp <- df.exp %>%
   filter(method != "mle")
-
 ggplot(data = df.exp, aes(x = samplesize, y = MSE, group = method, color = method)) + 
   geom_point() +
   facet_wrap(~prop_cens) +
@@ -601,7 +578,6 @@ knitr::kable(w.table, caption = "Performance metrics of our our 3 methods
 ```{r, wfigure, echo = FALSE, fig.height = 3, , fig.cap="MSE values of Weibull simulations, faceted by censoring rates.", out.width = '100%'}
 df.w <- df.w %>%
   filter(method != "mle")
-
 ggplot(data = df.w, aes(x = samplesize, y = MSE, group = method, color = method)) + 
   geom_point() +
   facet_wrap(~prop_cens) +
