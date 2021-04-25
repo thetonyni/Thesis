@@ -194,19 +194,17 @@ A brief explanation as to how ROS works is as follows. ROS begins with the estim
 
 Delving into the mathematics behind this procedure, we need to first define several variables. 
 
-Let $LOD_k$ be the $k^{th}$ distinct LOD value for a variable with $K$ distinct limits of detection. $A_k$ as the number of uncensored values between the $i$th and $(i+1)$th LOD for $k=1$ to $K-1$, and $A_k$ as the number of uncensored values above the highest LOD, $A_0$ as the number of uncensored values below the lowest LOD.
+Let $LOD_k$ be the $k^{th}$ distinct LOD value for a variable with $K$ distinct limits of detection. $A_k$ as the number of uncensored values between the $k$th and $(k+1)$th LOD for $k=1$ to $K-1$, and $A_k$ as the number of uncensored values above the highest LOD, $A_0$ as the number of uncensored values below the lowest LOD.
 
-We also define $B_i$ as the total number of observations (both uncensored and censored) with values below the $i$th LOD and $B_0 = 0$.
+We also define $B_k$ as the total number of observations (both uncensored and censored) with values below the $k$th LOD and $B_0 = 0$.
 
-We can then write the number of censored values below the $i$th LOD ($C_i$) as:
+We can then write the number of censored values below the $k$th LOD ($C_k$) as:
 
-$$\textrm{Eq. 1.1:} \ \  C_i = B_i - B_{i-1}-A_{i-1}$$ 
+$$\textrm{Eq. 1.1:} \ \  C_k = B_k - B_{k-1}-A_{k-1}$$ 
 
-for $i = 1$ to $k$.
+Using these values we can calculate what is known as the _exceedance probability_ ($p^e_{k}$) for each of our $k$ LOD values, defined recursively as:
 
-Using these values we can calculate what is known as the _exceedance probability_ ($pe_{i}$) for each of our $k$ LOD values, defined recursively as:
-
-$$\textrm{Eq. 1.2:} \ \  p^e_i = p^e_{i+1} + \frac{A_i}{A_i+B_i}(1 - p^e_{i+1})$$
+$$\textrm{Eq. 1.2:} \ \  p^e_k = p^e_{k+1} + \frac{A_k}{A_k+B_k}(1 - p^e_{k+1})$$
 where $p^e_0 = 1$ and $p^e_{k+1} = 0$.
 
 The cumulative probability associated with the $i^{th}$ uncensored value between $LOD_k$ and $LOD_{k+1}$ is then:
