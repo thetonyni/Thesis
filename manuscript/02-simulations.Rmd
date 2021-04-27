@@ -30,8 +30,7 @@ For the remaining three methods (KM, MLE, and ROS), we used specialized function
 
 ## Performance Measures {#performance_measures}
 
-We ran our simulation with 1000 iterations and assessed the performance of each of our four methods based on: bias, variance, and mean squared error in estimating the true mean. Bias is calculated by obtaining the difference between the average of the 1000 estimated means and the true mean ($\mu = 1$). Variance is calculated as the average of the squared difference between each estimated mean and the average of the 1000 estimated means, squared. The MSE is calculated by: $MSE = Var(\hat{\mu})+[Bias(\hat{\mu})]^2$.
-
+We ran our simulation with 1000 iterations and assessed the performance of each of our four methods based on bias, variance, and mean squared error in estimating the true mean. Bias was calculated by obtaining the difference between the average of the 1000 estimated means ($\hat{\mu} = \frac{1}{1000}\sum_{j=1}^{1000} \hat \mu_j$) and the true mean ($\mu = 1$). Variance was calculated as $\widehat{\text{Var}}(\hat{\mu}) = \frac{1}{999}\sum_{j = 1}^{1000} (\hat \mu_j - \hat \mu)^2$. The MSE is calculated by: $\text{MSE} = \widehat{\text{Var}}(\hat{\mu})+[\text{Bias}(\hat{\mu})]^2$.
 
 <!--
 

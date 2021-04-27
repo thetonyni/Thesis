@@ -197,7 +197,7 @@ Lastly, regression on order statistics (ROS) combines both the parametric nature
 A brief explanation as to how ROS works is as follows. ROS begins with the estimation of the cumulative probability associated with each distinct LOD within a variable. This cumulative probability is distributed equally between the censored values with a common LOD. Once the censored values are ranked, a linear regression model is fit between the uncensored values and the distributional z-scores from the censored probability plot. The parameters of the regression model (slope and intercept of the regression line) are then used to estimate the mean and standard deviation of the distributional model which are then used to generate imputed values for the censored observations.
 -->
 
-ROS begins with estimation of the cumulative probability of each uncensored value. Then, these cumulative probabilities are used to calculate z-scores from the normal distribution. We then plot the values against these z-scores, an example visualization can be seen in Figure \ref{fig:rosexample}. The uncensored observations are regressed on their corresponding z-scores. If needed, the uncensored values are transformed to better satisfy linearity of the relationship. Finally using the regression line, we use the z-scores for the censored observations to predict an estimated value.
+ROS begins with estimation of the cumulative probabilities of each observation, both censored and uncensored. These cumulative probabilities are used to calculate z-scores from the normal distribution. We then plot the uncensored values against these z-scores, as can be seen in Figure \ref{fig:rosexample}. The uncensored observations are regressed on their corresponding z-scores. If needed, the uncensored values are transformed to better satisfy linearity of the relationship. Finally using the regression line, we use the z-scores for the censored observations to predict an estimated value.
 
 ```{r, rosexample, echo = FALSE, fig.height = 3, , fig.cap="An example visualization of the censored probability plot, from ROS.", out.width = '100%'} 
 values <- c(16, 18, 19, 23, 24, 25, 25, 28, 29, 29, 30, 30, 32, 33, 35)
@@ -217,26 +217,21 @@ ggplot(df, aes(x = zscores, y = values, color = censored)) +
   theme_bw()
 ```
 
-Delving into the mathematics behind this procedure, we need to first define several variables.
+As the most involved portions of this method deal with calculating the cumulative probabilities themselves. We describe this process here:
 
-Let $LOD_k$ be the $k^{th}$ distinct LOD value for a variable with $K$ distinct limits of detection. $A_k$ as the number of uncensored values between the $k$th and $(k+1)$th LOD for $k=1$ to $K-1$, and $A_k$ as the number of uncensored values above the highest LOD, $A_0$ as the number of uncensored values below the lowest LOD.
+Let $LOD_k$ be the $k^{th}$ distinct LOD value for a variable with $K$ distinct limits of detection. Define $A_k$ as the number of uncensored values between the $k$th and $(k+1)^{th}$ LOD for $k=0$ to $K$, where $A_K$ is the number of uncensored values above the $LOD_K$, and $A_0$ is the number of uncensored values below the lowest LOD. Define $B_k$ as the total number of observations (both uncensored and censored) with values below the $k$th LOD, where $B_0 = 0$. We can then write the number of censored values below the $k$th LOD as
 
-We also define $B_k$ as the total number of observations (both uncensored and censored) with values below the $k$th LOD and $B_0 = 0$.
-
-We can then write the number of censored values below the $k$th LOD ($C_k$) as:
-
-$$\textrm{Eq. 1.1:} \ \  C_k = B_k - B_{k-1}-A_{k-1}$$ 
+$$\textrm{Eq. 1.1:} \ \  C_k = B_k - B_{k-1}-A_{k-1}$$. 
 
 Using these values we can calculate what is known as the _exceedance probability_ ($p^e_{k}$) for each of our $k$ LOD values, defined recursively as:
 
 $$\textrm{Eq. 1.2:} \ \  p^e_k = p^e_{k+1} + \frac{A_k}{A_k+B_k}(1 - p^e_{k+1})$$
 where $p^e_0 = 1$ and $p^e_{k+1} = 0$.
 
-The cumulative probability associated with the $i^{th}$ uncensored value between $LOD_k$ and $LOD_{k+1}$ is then:
+The cumulative probability associated with the $i^{th}$ uncensored value between $LOD_k$ and $LOD_{k+1}$ is then
 
-$$\textrm{Eq. 1.3:} \ \  p^u_{kj} = (1-p^e_k)+ \left(\frac{j}{A_k+1}\right)*(p^e_k-p^e_{k+1})$$
-
-for $j = 1$ to $A_i$ and for $k = 0$ to $k$.
+$$\textrm{Eq. 1.3:} \ \  p^u_{kj} = (1-p^e_k)+ \left(\frac{j}{A_k+1}\right)(p^e_k-p^e_{k+1})$$
+for $j = 1$ to $A_k$ and for $k = 0$ to $K$.
 
 Similarly, the cumulative probability associated with the $j^{th}$ censored value, censored at $LOD_k$ is:
 
@@ -244,27 +239,23 @@ $$\textrm{Eq. 1.4:} \ \  p^c_{kj} = \left(\frac{j}{C_k+1}\right)(1-p^e_k)$$
 
 for $j = 1$ to $C_k$ and for $k = 1$ to $K$.
 
-With these prerequisite variables and expression defined, we can begin outlining the general procedure for obtaining parameter estimates using ROS.
+With these prerequisite variables and expression defined, the general procedure for obtaining parameter estimates using ROS is as follows:
 
-1. Compute normal quantiles (z-scores) by computing $z_{kj}^{u} = \Phi^{-1}(p^u_{kj})$, where $\Phi^{-1}$ is the inverse standard normal CDF.
+1. Compute normal quantiles (z-scores) by computing $z_{kj}^{u} = \Phi^{-1}(p^u_{kj})$ for the uncensored values and $z_{kj}^{c} = \Phi^{-1}(p^c_{kj})$ where $\Phi^{-1}$ is the inverse standard normal CDF.
 
-2. Construct censored probability plots using the z-scores from step 1.
+2. Plot the uncensored values against their z-scores, this is what is known as the censored probability plot.
 
-3. If a linear trend is not visible, we may want to plot $z_{kj}^{u}$ against a transformation, $f(\cdot)$, (ex: log, square root, inverse, etc.) of the uncensored values $x_{kj}^{u}$.
+3. If a linear trend is not visible, we may want to transform the uncensored values using some function $f(\cdot)$ to better satisfy linearity.
 
-4. Compute correlation coefficient between the $z_{kj}^{u}$ and $f(x_{kj}^{u})$ pairs. The transformation which yields the highest correlation coefficient is the one which most optimizes the left-censored values.
+4. Regress $f(x_{kj}^{u})$ against the z-scores, $z_{kj}^{u}$.
 
-5. Compute a linear regression of the transformed values, $f(x_{kj}^{u})$ against the z-scores, $z_{kj}^{u}$.
+5. Obtain the transformed imputed values using the slope and intercept from the regression model from step 4 and the censored z-scores from step 1 using the following expression:
 
-6. Use Eq. 1.4 to compute $p^c_{kj}$ and repeat steps 1 through 3, to obtain z-scores for the censored values.
+$$f(\hat{x}_{kj}^c) = {\beta_0} \ + \beta_1 \ (z_{kj}^{c})$$
 
-7. Obtain the transformed imputed values using the slope and intercept from the regression model in step 10 and the censored z-scores from step 11 using the following expression:
+6. Backtransform the imputed values for the censored values (if necessary) and combine them with the uncensored values to obtain a new dataset from which we can obtain estimates for the parameters of interest.
 
-$$f(\hat{x}_{kj}^c) = {Intercept} \ + Slope \ * z_{kj}^{c}$$
-
-8. Combine the transformed imputed values for the censored values with the transformed uncensored values to obtain estimates for the population mean and standard deviation as normal.
-
-As we have now finished discussing how the ROS method works, we must turn to the limitations of the ROS method. In order for ROS to be utilized, there needs to be at least 5 known values and more than half the values within the censored variables must be known. As regression is utilized in this method, the response variable must also be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance [@Lee2005].
+As we have now finished discussing how the ROS method works, we must turn to the limitations of the ROS method. While ROS has been seen as a popular method for cases when it is unclear if the data can be properly modeled with a parametric distribution, it has several limitations as well [@Lafleur2011]. In order for ROS to be utilized, there needs to be at least 5 known values and more than half the values within the censored variables must be known. As regression is utilized in this method, the response variable must also be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance [@Lee2005].
 
 ## Aims {#aims}
 
@@ -276,11 +267,8 @@ Several studies have been conducted over the years to evaluate and compare the p
 
 Finally, @Canales2018 performed a study using simulated water quality data and found MLE to be ineffective, especially with highly skewed data. Similarly to @Antweiler2015, they found that the substitution method actually outperformed both MLE and KM.
 
-As we can see, there is no common ground between statisticians on the optimality of methods, prompting our own foray into this topic. Claims regarding the effectiveness of methods with regards to censoring rates, distribution of data, and sample size are all highly contentious. In order to get a better idea of sense of how these claims hold up, our goal is to evaluate the validity of those claims by conducting a simulation study of our own to put these methods into practice, comparing and contrasting the effectiveness of our four techniques with regards to censoring rate and sample size. I wish to incorporate the detailed specifications of a simulation study, taking into consideration distributional parameters of the data-generating mechanism, censoring rates, and sample sizes for each run, while also keeping it applicable to our case-study specific data.
+In order to evaluate these claims, we will conduct a simulation study in Chapter 2, taking into consideration different data-generating mechanisms, censoring rates, and sample sizes for each run, while also keeping it applicable to our case-study specific data. We will then apply and compare these methods in a case study investigating coal ash contamination in water wells in Chapter 3.
 
 <!--
-
 Regarding the simulation study that we will conduct in the following chapter, we wish to identify settings where a method can be effective but also those in which the methods may not be able to perform quite as well. Several investigators in this field have found issues with certain methods underperforming under certain conditions, and brings up the possibility of particular methods being more equipped than others to deal with different rates of censoring.
-
 -->
-

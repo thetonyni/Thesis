@@ -460,7 +460,7 @@ Variance ($Var(\hat{\mu}$)     & $Var(\hat{\mu}) = \displaystyle \sum_{i=1}^{r} 
 
 Lastly, regression on order statistics (ROS) combines both the parametric nature of the MLE approach and nonparametric nature of the KM method. ROS is a semi-parametric method which assumes an underlying distribution (usually lognormal) for the censored measurements but makes no assumption towards the distribution of uncensored measurements.
 
-ROS begins with estimation of the cumulative probability of each uncensored value. Then, these cumulative probabilities are used to calculate z-scores from the normal distribution. We then plot the values against these z-scores, an example visualization can be seen in Figure \ref{fig:rosexample}. The uncensored observations are regressed on their corresponding z-scores. If needed, the uncensored values are transformed to better satisfy linearity of the relationship. Finally using the regression line, we use the z-scores for the censored observations to predict an estimated value.
+ROS begins with estimation of the cumulative probabilities of each observation, both censored and uncensored. These cumulative probabilities are used to calculate z-scores from the normal distribution. We then plot the uncensored values against these z-scores, as can be seen in Figure \ref{fig:rosexample}. The uncensored observations are regressed on their corresponding z-scores. If needed, the uncensored values are transformed to better satisfy linearity of the relationship. Finally using the regression line, we use the z-scores for the censored observations to predict an estimated value.
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{Tony-Ni_StatThesis_files/figure-latex/rosexample-1} 
@@ -469,26 +469,21 @@ ROS begins with estimation of the cumulative probability of each uncensored valu
 
 \caption{An example visualization of the censored probability plot, from ROS.}\label{fig:rosexample}
 \end{figure}
-Delving into the mathematics behind this procedure, we need to first define several variables.
+As the most involved portions of this method deal with calculating the cumulative probabilities themselves. We describe this process here:
 
-Let \(LOD_k\) be the \(k^{th}\) distinct LOD value for a variable with \(K\) distinct limits of detection. \(A_k\) as the number of uncensored values between the \(k\)th and \((k+1)\)th LOD for \(k=1\) to \(K-1\), and \(A_k\) as the number of uncensored values above the highest LOD, \(A_0\) as the number of uncensored values below the lowest LOD.
+Let \(LOD_k\) be the \(k^{th}\) distinct LOD value for a variable with \(K\) distinct limits of detection. Define \(A_k\) as the number of uncensored values between the \(k\)th and \((k+1)^{th}\) LOD for \(k=0\) to \(K\), where \(A_K\) is the number of uncensored values above the \(LOD_K\), and \(A_0\) is the number of uncensored values below the lowest LOD. Define \(B_k\) as the total number of observations (both uncensored and censored) with values below the \(k\)th LOD, where \(B_0 = 0\). We can then write the number of censored values below the \(k\)th LOD as
 
-We also define \(B_k\) as the total number of observations (both uncensored and censored) with values below the \(k\)th LOD and \(B_0 = 0\).
-
-We can then write the number of censored values below the \(k\)th LOD (\(C_k\)) as:
-
-\[\textrm{Eq. 1.1:} \ \  C_k = B_k - B_{k-1}-A_{k-1}\]
+\[\textrm{Eq. 1.1:} \ \  C_k = B_k - B_{k-1}-A_{k-1}\].
 
 Using these values we can calculate what is known as the \emph{exceedance probability} (\(p^e_{k}\)) for each of our \(k\) LOD values, defined recursively as:
 
 \[\textrm{Eq. 1.2:} \ \  p^e_k = p^e_{k+1} + \frac{A_k}{A_k+B_k}(1 - p^e_{k+1})\]
 where \(p^e_0 = 1\) and \(p^e_{k+1} = 0\).
 
-The cumulative probability associated with the \(i^{th}\) uncensored value between \(LOD_k\) and \(LOD_{k+1}\) is then:
+The cumulative probability associated with the \(i^{th}\) uncensored value between \(LOD_k\) and \(LOD_{k+1}\) is then
 
-\[\textrm{Eq. 1.3:} \ \  p^u_{kj} = (1-p^e_k)+ \left(\frac{j}{A_k+1}\right)*(p^e_k-p^e_{k+1})\]
-
-for \(j = 1\) to \(A_i\) and for \(k = 0\) to \(k\).
+\[\textrm{Eq. 1.3:} \ \  p^u_{kj} = (1-p^e_k)+ \left(\frac{j}{A_k+1}\right)(p^e_k-p^e_{k+1})\]
+for \(j = 1\) to \(A_k\) and for \(k = 0\) to \(K\).
 
 Similarly, the cumulative probability associated with the \(j^{th}\) censored value, censored at \(LOD_k\) is:
 
@@ -496,33 +491,29 @@ Similarly, the cumulative probability associated with the \(j^{th}\) censored va
 
 for \(j = 1\) to \(C_k\) and for \(k = 1\) to \(K\).
 
-With these prerequisite variables and expression defined, we can begin outlining the general procedure for obtaining parameter estimates using ROS.
+With these prerequisite variables and expression defined, the general procedure for obtaining parameter estimates using ROS is as follows:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Compute normal quantiles (z-scores) by computing \(z_{kj}^{u} = \Phi^{-1}(p^u_{kj})\), where \(\Phi^{-1}\) is the inverse standard normal CDF.
+  Compute normal quantiles (z-scores) by computing \(z_{kj}^{u} = \Phi^{-1}(p^u_{kj})\) for the uncensored values and \(z_{kj}^{c} = \Phi^{-1}(p^c_{kj})\) where \(\Phi^{-1}\) is the inverse standard normal CDF.
 \item
-  Construct censored probability plots using the z-scores from step 1.
+  Plot the uncensored values against their z-scores, this is what is known as the censored probability plot.
 \item
-  If a linear trend is not visible, we may want to plot \(z_{kj}^{u}\) against a transformation, \(f(\cdot)\), (ex: log, square root, inverse, etc.) of the uncensored values \(x_{kj}^{u}\).
+  If a linear trend is not visible, we may want to transform the uncensored values using some function \(f(\cdot)\) to better satisfy linearity.
 \item
-  Compute correlation coefficient between the \(z_{kj}^{u}\) and \(f(x_{kj}^{u})\) pairs. The transformation which yields the highest correlation coefficient is the one which most optimizes the left-censored values.
+  Regress \(f(x_{kj}^{u})\) against the z-scores, \(z_{kj}^{u}\).
 \item
-  Compute a linear regression of the transformed values, \(f(x_{kj}^{u})\) against the z-scores, \(z_{kj}^{u}\).
-\item
-  Use Eq. 1.4 to compute \(p^c_{kj}\) and repeat steps 1 through 3, to obtain z-scores for the censored values.
-\item
-  Obtain the transformed imputed values using the slope and intercept from the regression model in step 10 and the censored z-scores from step 11 using the following expression:
+  Obtain the transformed imputed values using the slope and intercept from the regression model from step 4 and the censored z-scores from step 1 using the following expression:
 \end{enumerate}
-\[f(\hat{x}_{kj}^c) = {Intercept} \ + Slope \ * z_{kj}^{c}\]
+\[f(\hat{x}_{kj}^c) = {\beta_0} \ + \beta_1 \ (z_{kj}^{c})\]
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{7}
+\setcounter{enumi}{5}
 \tightlist
 \item
-  Combine the transformed imputed values for the censored values with the transformed uncensored values to obtain estimates for the population mean and standard deviation as normal.
+  Backtransform the imputed values for the censored values (if necessary) and combine them with the uncensored values to obtain a new dataset from which we can obtain estimates for the parameters of interest.
 \end{enumerate}
-As we have now finished discussing how the ROS method works, we must turn to the limitations of the ROS method. In order for ROS to be utilized, there needs to be at least 5 known values and more than half the values within the censored variables must be known. As regression is utilized in this method, the response variable must also be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance (Lee \& Helsel, 2005).
+As we have now finished discussing how the ROS method works, we must turn to the limitations of the ROS method. While ROS has been seen as a popular method for cases when it is unclear if the data can be properly modeled with a parametric distribution, it has several limitations as well (Lafleur et al., 2011). In order for ROS to be utilized, there needs to be at least 5 known values and more than half the values within the censored variables must be known. As regression is utilized in this method, the response variable must also be a linear function of the explanatory variable (quantiles). Additionally, the errors should have constant variance (Lee \& Helsel, 2005).
 
 \hypertarget{aims}{%
 \section{Aims}\label{aims}}
@@ -535,7 +526,7 @@ Antweiler (2015) compared estimates of the median absolute deviation across thes
 
 Finally, Canales (2018) performed a study using simulated water quality data and found MLE to be ineffective, especially with highly skewed data. Similarly to Antweiler (2015), they found that the substitution method actually outperformed both MLE and KM.
 
-As we can see, there is no common ground between statisticians on the optimality of methods, prompting our own foray into this topic. Claims regarding the effectiveness of methods with regards to censoring rates, distribution of data, and sample size are all highly contentious. In order to get a better idea of sense of how these claims hold up, our goal is to evaluate the validity of those claims by conducting a simulation study of our own to put these methods into practice, comparing and contrasting the effectiveness of our four techniques with regards to censoring rate and sample size. I wish to incorporate the detailed specifications of a simulation study, taking into consideration distributional parameters of the data-generating mechanism, censoring rates, and sample sizes for each run, while also keeping it applicable to our case-study specific data.
+In order to evaluate these claims, we will conduct a simulation study in Chapter 2, taking into consideration different data-generating mechanisms, censoring rates, and sample sizes for each run, while also keeping it applicable to our case-study specific data. We will then apply and compare these methods in a case study investigating coal ash contamination in water wells in Chapter 3.
 
 \hypertarget{simulations}{%
 \chapter{Simulations}\label{simulations}}
@@ -563,12 +554,12 @@ Each of the four methods discussed in the previous chapter are designed for usag
 
 All our code was written using R. For our substitution method, we began by defining the LOD as the minimum uncensored value for the variable of interest. We chose LOD/2 as our replacement value and calculated our estimated mean using this newly defined dataset.
 
-For the remaining three methods (KM, MLE, and ROS), we used specialized functions from the \texttt{NADA} package (Lee, 2020). The code for the MLE method was handled with the \texttt{cenmle} function, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. This method allows us to calculate the summary statistics for the entire data set including the censored values. The \texttt{cenfit} function allows us to implement KM. This function ``computes an estimate of an empirical cumulative distribution function for censored data using the Kaplan-Meier method,'' from which we obtained summary statistics of interest (Lee, 2020). Similarly, the \texttt{ros} function implements ROS and outputs a dataframe containing the original uncensored values and the estimates for the censored values, from which used to obtain our summary statistics of interest.
+For the remaining three methods (KM, MLE, and ROS), we used specialized functions from the \texttt{NADA} package (\textbf{NADA?}). The code for the MLE method was handled with the \texttt{cenmle} function, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. This method allows us to calculate the summary statistics for the entire data set including the censored values. The \texttt{cenfit} function allows us to implement KM. This function ``computes an estimate of an empirical cumulative distribution function for censored data using the Kaplan-Meier method,'' from which we obtained summary statistics of interest (\textbf{NADA?}). Similarly, the \texttt{ros} function implements ROS and outputs a dataframe containing the original uncensored values and the estimates for the censored values, from which used to obtain our summary statistics of interest.
 
 \hypertarget{performance_measures}{%
 \section{Performance Measures}\label{performance_measures}}
 
-We ran our simulation with 1000 iterations and assessed the performance of each of our four methods based on: bias, variance, and mean squared error in estimating the true mean. Bias is calculated by obtaining the difference between the average of the 1000 estimated means and the true mean (\(\mu = 1\)). Variance is calculated as the average of the squared difference between each estimated mean and the average of the 1000 estimated means, squared. The MSE is calculated by: \(MSE = Var(\hat{\mu})+[Bias(\hat{\mu})]^2\).
+We ran our simulation with 1000 iterations and assessed the performance of each of our four methods based on bias, variance, and mean squared error in estimating the true mean. Bias was calculated by obtaining the difference between the average of the 1000 estimated means (\(\hat{\mu} = \frac{1}{1000}\sum_{j=1}^{1000} \hat \mu_j\)) and the true mean (\(\mu = 1\)). Variance was calculated as \(\widehat{\text{Var}}(\hat{\mu}) = \frac{1}{999}\sum_{j = 1}^{1000} (\hat \mu_j - \hat \mu)^2\). The MSE is calculated by: \(\text{MSE} = \widehat{\text{Var}}(\hat{\mu})+[\text{Bias}(\hat{\mu})]^2\).
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -2288,8 +2279,8 @@ Klein, J. P., \& Moeschberge, M. L. (2003). \emph{{Survival Analysis: Techniques
 \leavevmode\hypertarget{ref-Kroll1996}{}%
 Kroll, C. N., \& Stedinger, J. R. (1996). {Estimation of moments and quantiles using censored data}. \emph{Water Resources Research}, \emph{32}(4), 1005--1012. http://doi.org/\href{https://doi.org/10.1029/95WR03294}{10.1029/95WR03294}
 
-\leavevmode\hypertarget{ref-NADA}{}%
-Lee, L. (2020). \emph{NADA: Nondetects and data analysis for environmental data}. Retrieved from \url{https://CRAN.R-project.org/package=NADA}
+\leavevmode\hypertarget{ref-Lafleur2011}{}%
+Lafleur, B., Lee, W., Billhiemer, D., Lockhart, C., Liu, J., \& Merchant, N. (2011). {Statistical methods for assays with limits of detection: Serum bile acid as a differentiator between patients with normal colons, adenomas, and colorectal cancer}. \emph{Journal of Carcinogenesis}, \emph{10}, 1--8. http://doi.org/\href{https://doi.org/10.4103/1477-3163.79681}{10.4103/1477-3163.79681}
 
 \leavevmode\hypertarget{ref-Lee2005}{}%
 Lee, L., \& Helsel, D. (2005). {Statistical analysis of water-quality data containing multiple detection limits : S-language software for regression on order statistics {\$}}, \emph{31}, 1241--1248. http://doi.org/\href{https://doi.org/10.1016/j.cageo.2005.03.012}{10.1016/j.cageo.2005.03.012}
