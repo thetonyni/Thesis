@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  27 APR 2021 13:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.2)  28 APR 2021 09:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1078,8 +1078,8 @@ LaTeX Font Warning: Size substitutions with differences
 ### semi simple group (level 1) entered at line 272 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 12920 strings out of 481466
- 205913 string characters out of 5920170
+ 12921 strings out of 481466
+ 205921 string characters out of 5920170
  579847 words of memory out of 5000000
  28936 multiletter control sequences out of 15000+600000
  607916 words of font info for 142 fonts, out of 8000000 for 9000
@@ -1108,10 +1108,10 @@ lmsy8.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public
 /lm/lmtk10.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
 ublic/lm/lmtt12.pfb><c:/Users/theto/AppData/Roaming/TinyTeX/texmf-dist/fonts/ty
 pe1/public/lm/lmtti10.pfb>
-Output written on Tony-Ni_StatThesis.pdf (92 pages, 558666 bytes).
+Output written on Tony-Ni_StatThesis.pdf (92 pages, 558342 bytes).
 PDF statistics:
- 1062 PDF objects out of 1200 (max. 8388607)
- 930 compressed objects within 10 object streams
- 270 named destinations out of 1000 (max. 500000)
+ 1065 PDF objects out of 1200 (max. 8388607)
+ 933 compressed objects within 10 object streams
+ 271 named destinations out of 1000 (max. 500000)
  10772 words of extra memory for PDF output out of 12000 (max. 10000000)
 

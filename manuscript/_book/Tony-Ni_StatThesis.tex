@@ -554,7 +554,7 @@ Each of the four methods discussed in the previous chapter are designed for usag
 
 All our code was written using R. For our substitution method, we began by defining the LOD as the minimum uncensored value for the variable of interest. We chose LOD/2 as our replacement value and calculated our estimated mean using this newly defined dataset.
 
-For the remaining three methods (KM, MLE, and ROS), we used specialized functions from the \texttt{NADA} package (\textbf{NADA?}). The code for the MLE method was handled with the \texttt{cenmle} function, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. This method allows us to calculate the summary statistics for the entire data set including the censored values. The \texttt{cenfit} function allows us to implement KM. This function ``computes an estimate of an empirical cumulative distribution function for censored data using the Kaplan-Meier method,'' from which we obtained summary statistics of interest (\textbf{NADA?}). Similarly, the \texttt{ros} function implements ROS and outputs a dataframe containing the original uncensored values and the estimates for the censored values, from which used to obtain our summary statistics of interest.
+For the remaining three methods (KM, MLE, and ROS), we used specialized functions from the \texttt{NADA} package (Lee, 2020). The code for the MLE method was handled with the \texttt{cenmle} function, which allows the user to specify censored and uncensored data, and uses the LOD as the placeholder. This method allows us to calculate the summary statistics for the entire data set including the censored values. The \texttt{cenfit} function allows us to implement KM. This function ``computes an estimate of an empirical cumulative distribution function for censored data using the Kaplan-Meier method,'' from which we obtained summary statistics of interest (Lee, 2020). Similarly, the \texttt{ros} function implements ROS and outputs a dataframe containing the original uncensored values and the estimates for the censored values, from which used to obtain our summary statistics of interest.
 
 \hypertarget{performance_measures}{%
 \section{Performance Measures}\label{performance_measures}}
@@ -2281,6 +2281,9 @@ Kroll, C. N., \& Stedinger, J. R. (1996). {Estimation of moments and quantiles u
 
 \leavevmode\hypertarget{ref-Lafleur2011}{}%
 Lafleur, B., Lee, W., Billhiemer, D., Lockhart, C., Liu, J., \& Merchant, N. (2011). {Statistical methods for assays with limits of detection: Serum bile acid as a differentiator between patients with normal colons, adenomas, and colorectal cancer}. \emph{Journal of Carcinogenesis}, \emph{10}, 1--8. http://doi.org/\href{https://doi.org/10.4103/1477-3163.79681}{10.4103/1477-3163.79681}
+
+\leavevmode\hypertarget{ref-NADA}{}%
+Lee, L. (2020). \emph{NADA: Nondetects and data analysis for environmental data}. Retrieved from \url{https://CRAN.R-project.org/package=NADA}
 
 \leavevmode\hypertarget{ref-Lee2005}{}%
 Lee, L., \& Helsel, D. (2005). {Statistical analysis of water-quality data containing multiple detection limits : S-language software for regression on order statistics {\$}}, \emph{31}, 1241--1248. http://doi.org/\href{https://doi.org/10.1016/j.cageo.2005.03.012}{10.1016/j.cageo.2005.03.012}
