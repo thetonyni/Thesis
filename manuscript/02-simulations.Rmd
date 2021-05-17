@@ -531,7 +531,7 @@ knitr::kable(ln.table, caption = "Performance metrics of our our
 ggplot(data = df.ln, aes(x = samplesize, y = MSE, group = method, color = method)) + 
   geom_point() +
   facet_wrap(~prop_cens) +
-  geom_line() + 
+  geom_line(linetype = "dashed", size = 0.6) + 
   theme_bw() +
   ggtitle("Log-normal Simulation Results: MSE Values") +
   scale_x_discrete(name = "Sample Size") +
@@ -555,7 +555,7 @@ df.exp <- df.exp %>%
 ggplot(data = df.exp, aes(x = samplesize, y = MSE, group = method, color = method)) + 
   geom_point() +
   facet_wrap(~prop_cens) +
-  geom_line() + 
+  geom_line(linetype = "dashed", size = 0.6) + 
   theme_bw() +
   ggtitle("Exponential Simulation Results: MSE Values") +
   scale_x_discrete(name = "Sample Size") +
@@ -580,7 +580,7 @@ df.w <- df.w %>%
 ggplot(data = df.w, aes(x = samplesize, y = MSE, group = method, color = method)) + 
   geom_point() +
   facet_wrap(~prop_cens) +
-  geom_line() + 
+  geom_line(linetype = "dashed", size = 0.6) + 
   theme_bw() +
   ggtitle("Weibull Simulation Results: MSE Values") +
   scale_x_discrete(name = "Sample Size") +
@@ -622,3 +622,24 @@ There may be a difference in how well the methods perform with actual data as co
 ### Limitations {#limitations}
 
 Shortcomings in the results presented in this study may come from the fact that we generated data with known distributional parameters. It could be the case that the effectiveness of our methods were only due to having such artificial data. Alterations in our study to instead generate data from methods such as randomized pulls from an a real-world dataset of interest via methods such as bootstrapping could provide different insights. As we discussed previously with the results from @She1997's study, methods may perform differently when utilized with artificial datasets as compared to real world, left censored data. As such, we do not claim our findings in the simulation study to be representative for all cases of left censored data.
+
+```{r}
+df_ln <- generateLN(sampsize = 10000, m = 1, s = 1, censrate = 0) %>%
+  mutate(Distribution = "Lognormal")
+df_exp <- generateEXP(sampsize = 10000, r = 1, censrate = 0) %>%
+    mutate(Distribution = "Exponential")
+df_w <- generateW(sampsize = 10000, sh = 1, sc = 1, censrate = 0) %>%
+    mutate(Distribution = "Weibull")
+
+df <- rbind(df_ln, df_exp, df_w)
+
+ggplot(data=df, aes(x=true.value, group=Distribution, fill=Distribution)) +
+    geom_density(adjust=1.5, alpha=.4) +
+    theme_bw() +
+  xlim(0, 6) +
+  ggtitle("Density Plot of Our Distributions (n=10000)") +
+  xlab("Value") +
+  ylab("Density")
+
+```
+

@@ -1227,7 +1227,7 @@ Code for the creation of figures/plots:
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ df.ln, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ samplesize, }\AttributeTok{y =}\NormalTok{ MSE, }\AttributeTok{group =}\NormalTok{ method, }\AttributeTok{color =}\NormalTok{ method)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{prop\_cens) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+} 
   \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Log{-}normal Simulation Results: MSE Values"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{name =} \StringTok{"Sample Size"}\NormalTok{) }\SpecialCharTok{+}
@@ -1241,7 +1241,7 @@ Code for the creation of figures/plots:
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ df.exp, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ samplesize, }\AttributeTok{y =}\NormalTok{ MSE, }\AttributeTok{group =}\NormalTok{ method, }\AttributeTok{color =}\NormalTok{ method)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{prop\_cens) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+} 
   \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Exponential Simulation Results: MSE Values"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{name =} \StringTok{"Sample Size"}\NormalTok{) }\SpecialCharTok{+}
@@ -1255,7 +1255,7 @@ Code for the creation of figures/plots:
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ df.w, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ samplesize, }\AttributeTok{y =}\NormalTok{ MSE, }\AttributeTok{group =}\NormalTok{ method, }\AttributeTok{color =}\NormalTok{ method)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{prop\_cens) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+} 
   \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Weibull Simulation Results: MSE Values"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{name =} \StringTok{"Sample Size"}\NormalTok{) }\SpecialCharTok{+}
